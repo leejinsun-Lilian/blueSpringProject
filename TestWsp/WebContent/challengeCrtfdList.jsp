@@ -19,8 +19,8 @@
                 <h1>챌린져스 인증 게시판</h1>
             </div>
             <div id="ch-s" class="ch-float">
-                <ul>
-                    <li><a href="#">챌린지 <strong>인증</strong>하러가기 -></a></li>
+                <ul>  
+                    <li><a href="challengeCrtfdInsert.jsp">챌린지 <strong>인증</strong>하러가기 -></a></li>
                 </ul>
             </div>
         </div>
@@ -57,7 +57,7 @@
 			</form>
 		</div>
 
-		<!-- 인증 글 목록 -->
+		<!-- 인증 글 목록 --> <!-- 번갈아가면서 색깔주는거 나중에 추가하기 -->
 		<div class="list-wrapper">
 			<table class="table" id="list-table">
 				<thead>
@@ -121,7 +121,6 @@
 
 	</div>
 	
-	<!-- 페이징 조절하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 	
 	
 	

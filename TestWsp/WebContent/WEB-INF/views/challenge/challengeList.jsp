@@ -22,7 +22,7 @@
             <div id="ch-s" class="ch-float">
                 <ul>
                     <li><a href="challengeInsert.jsp">챌린지 <strong>개설</strong>하러 가기 -></a></li>
-                    <li><a href="#">챌린지 <strong>인증 게시판</strong> 가기 -></a></li>
+                    <li><a href="challengeCrtfdList.jsp">챌린지 <strong>인증 게시판</strong> 가기 -></a></li>
                 </ul>
             </div>
         </div>
