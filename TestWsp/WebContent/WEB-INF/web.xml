@@ -6,6 +6,6 @@
   <welcome-file-list>
     <welcome-file>challengeCrtfdList.jsp</welcome-file>
   </welcome-file-list>
-  
+  <!-- 테스트증 -->
   
 </web-app>
