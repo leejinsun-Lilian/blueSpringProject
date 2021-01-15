@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 비밀번호 찾기</title>
 
-<link href="${contextPath}/resources/css/find.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/member/find.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"

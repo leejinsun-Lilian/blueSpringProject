@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 참여중인 챌린지</title>
 
-<link href="${contextPath}/resources/css/progressChallenge.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/mypage/progressChallenge.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
@@ -19,7 +19,7 @@
 	<div class="wrap">
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
-			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
+			<jsp:include page="../common/mypageSideMenu.jsp"></jsp:include>
 			<div class="content">
 				<div class="challenge_wrap">
 				<h3>참여중인 챌린지</h3>

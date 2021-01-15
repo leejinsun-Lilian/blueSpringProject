@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>푸른봄: 아이디 찾기</title>
-<link href="${contextPath}/resources/css/findComplete.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/member/findComplete.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
@@ -14,8 +14,8 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-.container {
-	padding : 172px 0 181px;
+.wrap > .container {
+	padding : 100px 0 255px;
 }
 </style>
 </head>

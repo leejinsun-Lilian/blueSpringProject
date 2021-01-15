@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<link href="${contextPath}/resources/css/login.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/member/login.css" rel="stylesheet" type="text/css">
 
 
   

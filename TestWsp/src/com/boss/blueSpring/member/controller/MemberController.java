@@ -44,6 +44,14 @@ public class MemberController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
+			// 회원가입 완료 Controller
+			else if(command.equals("/signupComplete.do")) {
+				path="/WEB-INF/views/member/signUpComplete.jsp";
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
 			
 			// 아이디 찾기 Controller
 			else if(command.equals("/idfind.do")) {
@@ -54,6 +62,7 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
+			// 아이디 찾기 완료 Controller
 			else if(command.equals("/idfindcomplete.do")) {
 				path="/WEB-INF/views/member/idFindComplete.jsp";
 				

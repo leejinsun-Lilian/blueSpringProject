@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 회원가입</title>
 
-<link href="${contextPath}/resources/css/signUp.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/member/signUp.css" rel="stylesheet" type="text/css">
 
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,7 +22,7 @@
 		
 		
 		<div id="container">
-			<form id="signUp" method="post" action="#">
+			<form id="signUp" method="post" action="${contextPath}/member/signupComplete.do">
 				<div id="content">
 					<div id="signUp_form">
 						<!-- 아이디 -->

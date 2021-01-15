@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 작성한 글 조회</title>
 
-<link href="${contextPath}/resources/css/boardList.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/mypage/boardList.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
@@ -58,7 +58,7 @@
 		<jsp:include page="../common/header.jsp"></jsp:include>
 
 		<div class="container">
-			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
+			<jsp:include page="../common/mypageSideMenu.jsp"></jsp:include>
 			<div class="content">
 				<h3>작성한 게시글 조회</h3>
 				<div class="list-wrapper">
