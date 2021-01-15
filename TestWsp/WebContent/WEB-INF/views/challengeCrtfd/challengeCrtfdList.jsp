@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<!-- 해더 영역 -->
+	<!-- 해더 영역 -->
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
     <div class="wrapper">
