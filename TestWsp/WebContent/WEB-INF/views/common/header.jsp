@@ -1,18 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="resources/css/header.css" type="text/css">
+<link rel="stylesheet" href="${contextPath}/resources/css/header.css" type="text/css">
 <title>header</title>
 </head>
 <body>
+	<c:set var="contextPath" scope="application" value="${pageContext.servletContext.contextPath}"></c:set>
+
 	<div class="header_wrap">
 
 		<div class="header_menu">
-			<a id="logo_link" href="#"><img id="logo" src="resources/img/bluespringlogo.png"></a>
+			<a id="logo_link" href="#"><img id="logo" src="${contextPath}/resources/img/bluespringlogo.png"></a>
 			<ul id="nav">
 				<li>
 					<div class="notice nav_title">공지사항</div>
