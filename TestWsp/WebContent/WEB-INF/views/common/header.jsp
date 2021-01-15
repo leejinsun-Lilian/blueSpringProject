@@ -7,6 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="resources/css/header.css" type="text/css">
 <title>header</title>
+</head>
+<body>
 	<div class="header_wrap">
 
 		<div class="header_menu">
