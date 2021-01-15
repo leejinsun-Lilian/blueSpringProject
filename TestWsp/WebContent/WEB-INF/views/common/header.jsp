@@ -39,7 +39,7 @@
 					<div class="sub">
 						<ul>
 							<li><a href="${contextPath}/challenge/list.do">챌린지</a></li>
-							<li><a href="${contextPath}/challengecrtfd/list.do">인증게시판</a></li>
+							<li><a href="${contextPath}/challengeCrtfd/list.do">인증게시판</a></li>
 						</ul>				
 					</div>
 				</li>

@@ -20,20 +20,20 @@
     padding: 0;
 	}
 	
-	.senter_content { 
+	.center_content { 
 	    width: 70%; 
 	    height: 100%;
 	    margin: auto;
 	}
 	
-	#senter_title{
+	#center_title{
 	    width: 100%;
 	    height: 40px;
 	    color: black;
 	    text-align: center;
 	}
 	
-	.senter_add{
+	.center_add{
 	    width: 25%;
 	    height: 100%;
 	    margin: auto;
@@ -47,13 +47,13 @@
 	    margin-bottom: 10px;
 	}
 	
-	#senter_nm, #senter_cel, #senter_home{ 
+	#center_nm, #center_cel, #center_home{ 
 	    width: 99%;
 	    height: 20px;
 	    margin-bottom: 10px;
 	}
 	
-	#sen_zip {
+	#cen_zip {
 	    width: 30%;
 	    height: 20px;
 	    margin-bottom: 10px;
@@ -70,40 +70,40 @@
     <div class="wrapper">
     	<jsp:include page="../common/header.jsp"></jsp:include>
 		
-        <div class="senter_content">
-            <div id="senter_title" class="senter_page">
+        <div class="center_content">
+            <div id="center_title" class="center_page">
                 <h2>
                     기관수정
                 </h2>
             </div>
-            <form id="senter_add_form" method="post" action="#">
-                <div class="senter_add">
-                    <div id="senter_type"><label for="type">분류</label></div>
-                    <div class="senter_type_select"><select id="type_select" name="type" required>
+            <form id="center_add_form" method="post" action="#">
+                <div class="center_add">
+                    <div id="center_type"><label for="type">분류</label></div>
+                    <div class="center_type_select"><select id="type_select" name="type" required>
                             <option selected>분류</option>
                             <option>상담센터</option>
                             <option>정신병원</option>
                         </select></div>
 
-                    <div id="senter_ctiy"><label for="city">지역선택</label></div>
-                    <div class="senter_city_select"><select name="sido1" id="sido1"></select>
+                    <div id="center_ctiy"><label for="city">지역선택</label></div>
+                    <div class="center_city_select"><select name="sido1" id="sido1"></select>
                     <select name="gugun1" id="gugun1"></select></div>
 
                 
-                    <div id="senter_name"><label for="type">기관명</label></div>
-                    <div id="senter_name_input"><input type="text" id="senter_nm" name="senter_nm" readonly></div>
+                    <div id="center_name"><label for="type">기관명</label></div>
+                    <div id="center_name_input"><input type="text" id="center_nm" name="center_nm" readonly></div>
 
-                    <div id="senter_cell"><label for="type">전화번호</label></div>
-                    <div id="senter_cell_input"><input type="text" id="senter_cel" name="senter_cel" required></div>
+                    <div id="center_cell"><label for="type">전화번호</label></div>
+                    <div id="center_cell_input"><input type="text" id="center_cel" name="center_cel" required></div>
 
-                    <div id="senter_homepage"><label for="type">홈페이지</label></div>
-                    <div id="senter_homepage_input"><input type="text" id="senter_home" name="senter_home"></div>
+                    <div id="center_homepage"><label for="type">홈페이지</label></div>
+                    <div id="center_homepage_input"><input type="text" id="center_home" name="center_home"></div>
 
-                    <div id="senter_zip"><label for="type">우편번호</label></div>
-                    <div class="senter_zip_input"><input type="text" id="sen_zip" name="sen_zip" size="5">
+                    <div id="center_zip"><label for="type">우편번호</label></div>
+                    <div class="center_zip_input"><input type="text" id="cen_zip" name="cen_zip" size="5">
                     <button type="button">검색</button></div>
-                    <div id="senter_addr_input1"><input type="text" id="addr1" name="senter_address">도로명주소</div>
-                    <div id="senter_addr_input2"><input type="text" id="addr2" name="senter_address">상세주소</div>
+                    <div id="center_addr_input1"><input type="text" id="addr1" name="center_address">도로명주소</div>
+                    <div id="center_addr_input2"><input type="text" id="addr2" name="center_address">상세주소</div>
                 </div>
             </form>
 

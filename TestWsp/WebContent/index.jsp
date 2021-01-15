@@ -65,7 +65,7 @@
 						</table>
 					</div>
 					<div class="board_more">
-						<a href="#">더보기</a>
+						<a href="${contextPath}/notice/list.do">더보기</a>
 					</div>
 				</div>
 				<div class="board_item">
@@ -105,7 +105,7 @@
 						</table>
 					</div>
 					<div class="board_more">
-						<a href="#">더보기</a>
+						<a href="${contextPath}/board/list.do">더보기</a>
 					</div>
 				</div>
 				<div class="board_item">
@@ -146,7 +146,7 @@
 						</table>
 					</div>
 					<div class="board_more">
-						<a href="#">더보기</a>
+						<a href="${contextPath}/challenge/list.do">더보기</a>
 					</div>
 				</div>
 				<div class="board_item">
@@ -186,7 +186,7 @@
 						</table>
 					</div>
 					<div class="board_more">
-						<a href="#">더보기</a>
+						<a href="${contextPath}/challengeCrtfd/list.do">더보기</a>
 					</div>
 				</div>
 			</div>
