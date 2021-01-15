@@ -6,156 +6,242 @@ public class Member {
 	private int memberNo; // 번호
 	private String memberId; // 아이디
 	private String memberPwd; // 비밀번호
-	private String memberName; // 이름
+	private String memberNm; // 이름
+	private String memberBirth; // 생년월일
+	private char memberGender; // 성별
 	private String memberPhone; // 전화번호
-	private String memberEmail; // 이메일
-	private String memberAddress; // 주소
-	private String memberInterest; // 관심분야
-	private Date memberEnrollDate; // 가입일
-	private String memberStatus; // 상태
-	private String memberGrade; // 등급
+	private String memberAddr; // 주소
+	//private String memberEmail; // 이메일  ---> 컬럼 추가해야함
+	private Date memberJoined; // 가입일
+	private char memberScsnFl; // 탈퇴여부
+	private char memberBlackList; // 블랙리스트 여부
+	private char memberLevel; // 등급
 	
-	public Member() {}
+public Member() {
+	// TODO Auto-generated constructor stub
+}
 
-//	회원가입용 생성자
-	public Member(String memberId, String memberPwd, String memberName, String memberPhone, String memberEmail,
-			String memberAddress, String memberInterest) {
-		super();
-		this.memberId = memberId;
-		this.memberPwd = memberPwd;
-		this.memberName = memberName;
-		this.memberPhone = memberPhone;
-		this.memberEmail = memberEmail;
-		this.memberAddress = memberAddress;
-		this.memberInterest = memberInterest;
-	}
-	
-//	로그인용 생성자
-	public Member(int memberNo, String memberId, String memberName, String memberPhone,
-			String memberEmail, String memberAddress, String memberInterest, String memberGrade) {
-		super();
-		this.memberNo = memberNo;
-		this.memberId = memberId;
-		this.memberName = memberName;
-		this.memberPhone = memberPhone;
-		this.memberEmail = memberEmail;
-		this.memberAddress = memberAddress;
-		this.memberInterest = memberInterest;
-		this.memberGrade = memberGrade;
-	}
 
-	public Member(int memberNo, String memberId, String memberPwd, String memberName, String memberPhone,
-			String memberEmail, String memberAddress, String memberInterest, Date memberEnrollDate, String memberStatus,
-			String memberGrade) {
-		super();
-		this.memberNo = memberNo;
-		this.memberId = memberId;
-		this.memberPwd = memberPwd;
-		this.memberName = memberName;
-		this.memberPhone = memberPhone;
-		this.memberEmail = memberEmail;
-		this.memberAddress = memberAddress;
-		this.memberInterest = memberInterest;
-		this.memberEnrollDate = memberEnrollDate;
-		this.memberStatus = memberStatus;
-		this.memberGrade = memberGrade;
-	}
 
-	public int getMemberNo() {
-		return memberNo;
-	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
-	}
+// 로그인용 생성자
+public Member(int memberNo, String memberId, String memberNm, String memberBirth, char memberGender, String memberPhone,
+		String memberAddr, char memberScsnFl, char memberBlackList, char memberLevel) {
+	super();
+	this.memberNo = memberNo;
+	this.memberId = memberId;
+	this.memberNm = memberNm;
+	this.memberBirth = memberBirth;
+	this.memberGender = memberGender;
+	this.memberPhone = memberPhone;
+	this.memberAddr = memberAddr;
+	this.memberScsnFl = memberScsnFl;
+	this.memberBlackList = memberBlackList;
+	this.memberLevel = memberLevel;
+}
 
-	public String getMemberId() {
-		return memberId;
-	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
 
-	public String getMemberPwd() {
-		return memberPwd;
-	}
 
-	public void setMemberPwd(String memberPwd) {
-		this.memberPwd = memberPwd;
-	}
+public Member(int memberNo, String memberId, String memberPwd, String memberNm, String memberBirth, char memberGender,
+		String memberPhone, String memberAddr, Date memberJoined, char memberScsnFl, char memberBlackList,
+		char memberLevel) {
+	super();
+	this.memberNo = memberNo;
+	this.memberId = memberId;
+	this.memberPwd = memberPwd;
+	this.memberNm = memberNm;
+	this.memberBirth = memberBirth;
+	this.memberGender = memberGender;
+	this.memberPhone = memberPhone;
+	this.memberAddr = memberAddr;
+	this.memberJoined = memberJoined;
+	this.memberScsnFl = memberScsnFl;
+	this.memberBlackList = memberBlackList;
+	this.memberLevel = memberLevel;
+}
 
-	public String getMemberName() {
-		return memberName;
-	}
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
 
-	public String getMemberPhone() {
-		return memberPhone;
-	}
 
-	public void setMemberPhone(String memberPhone) {
-		this.memberPhone = memberPhone;
-	}
+public int getMemberNo() {
+	return memberNo;
+}
 
-	public String getMemberEmail() {
-		return memberEmail;
-	}
 
-	public void setMemberEmail(String memberEmail) {
-		this.memberEmail = memberEmail;
-	}
 
-	public String getMemberAddress() {
-		return memberAddress;
-	}
 
-	public void setMemberAddress(String memberAddress) {
-		this.memberAddress = memberAddress;
-	}
+public void setMemberNo(int memberNo) {
+	this.memberNo = memberNo;
+}
 
-	public String getMemberInterest() {
-		return memberInterest;
-	}
 
-	public void setMemberInterest(String memberInterest) {
-		this.memberInterest = memberInterest;
-	}
 
-	public Date getMemberEnrollDate() {
-		return memberEnrollDate;
-	}
 
-	public void setMemberEnrollDate(Date memberEnrollDate) {
-		this.memberEnrollDate = memberEnrollDate;
-	}
+public String getMemberId() {
+	return memberId;
+}
 
-	public String getMemberStatus() {
-		return memberStatus;
-	}
 
-	public void setMemberStatus(String memberStatus) {
-		this.memberStatus = memberStatus;
-	}
 
-	public String getMemberGrade() {
-		return memberGrade;
-	}
 
-	public void setMemberGrade(String memberGrade) {
-		this.memberGrade = memberGrade;
-	}
+public void setMemberId(String memberId) {
+	this.memberId = memberId;
+}
 
-	@Override
-	public String toString() {
-		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
-				+ memberName + ", memberPhone=" + memberPhone + ", memberEmail=" + memberEmail + ", memberAddress="
-				+ memberAddress + ", memberInterest=" + memberInterest + ", memberEnrollDate=" + memberEnrollDate
-				+ ", memberStatus=" + memberStatus + ", memberGrade=" + memberGrade + "]";
-	}
-	
+
+
+
+public String getMemberPwd() {
+	return memberPwd;
+}
+
+
+
+
+public void setMemberPwd(String memberPwd) {
+	this.memberPwd = memberPwd;
+}
+
+
+
+
+public String getMemberNm() {
+	return memberNm;
+}
+
+
+
+
+public void setMemberNm(String memberNm) {
+	this.memberNm = memberNm;
+}
+
+
+
+
+public String getMemberBirth() {
+	return memberBirth;
+}
+
+
+
+
+public void setMemberBirth(String memberBirth) {
+	this.memberBirth = memberBirth;
+}
+
+
+
+
+public char getMemberGender() {
+	return memberGender;
+}
+
+
+
+
+public void setMemberGender(char memberGender) {
+	this.memberGender = memberGender;
+}
+
+
+
+
+public String getMemberPhone() {
+	return memberPhone;
+}
+
+
+
+
+public void setMemberPhone(String memberPhone) {
+	this.memberPhone = memberPhone;
+}
+
+
+
+
+public String getMemberAddr() {
+	return memberAddr;
+}
+
+
+
+
+public void setMemberAddr(String memberAddr) {
+	this.memberAddr = memberAddr;
+}
+
+
+
+
+public Date getMemberJoined() {
+	return memberJoined;
+}
+
+
+
+
+public void setMemberJoined(Date memberJoined) {
+	this.memberJoined = memberJoined;
+}
+
+
+
+
+public char getMemberScsnFl() {
+	return memberScsnFl;
+}
+
+
+
+
+public void setMemberScsnFl(char memberScsnFl) {
+	this.memberScsnFl = memberScsnFl;
+}
+
+
+
+
+public char getMemberBlackList() {
+	return memberBlackList;
+}
+
+
+
+
+public void setMemberBlackList(char memberBlackList) {
+	this.memberBlackList = memberBlackList;
+}
+
+
+
+
+public char getMemberLevel() {
+	return memberLevel;
+}
+
+
+
+
+public void setMemberLevel(char memberLevel) {
+	this.memberLevel = memberLevel;
+}
+
+
+
+
+@Override
+public String toString() {
+	return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberNm="
+			+ memberNm + ", memberBirth=" + memberBirth + ", memberGender=" + memberGender + ", memberPhone="
+			+ memberPhone + ", memberAddr=" + memberAddr + ", memberJoined=" + memberJoined + ", memberScsnFl="
+			+ memberScsnFl + ", memberBlackList=" + memberBlackList + ", memberLevel=" + memberLevel + "]";
+}
+
+
+
+
 	
 }

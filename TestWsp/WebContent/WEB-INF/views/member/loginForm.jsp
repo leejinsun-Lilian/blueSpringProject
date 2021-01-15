@@ -27,18 +27,18 @@
 
 
 		<div id="container">
-			<form action="${contextPath}" id="login_form" method="POST">
+			<form action="${contextPath}/member/loginAction.do" id="login_form" method="POST">
 				<fieldset>
 					<legend class="blind">로그인</legend>
 					<div id="login_middle">
 						<div id="id_wrap">
 							<div id="id_input_area">
-								<input id="id_input" type="text" placeholder="아이디" required>
+								<input id="id_input" name="id_input" type="text" placeholder="아이디" required>
 							</div>
 						</div>
 						<div id="pw_wrap">
 							<div id="pw_input_area">
-								<input id="pw_input" type="password" placeholder="비밀번호" required>
+								<input id="pw_input" name="pw_input" type="password" placeholder="비밀번호" required>
 							</div>
 						</div>
 
@@ -47,16 +47,16 @@
 						</div>
 
 
-						<div id="login_btn_area">
-							<button type="submit" id="login_btn">로그인</button>
-						</div>
 
 						<div id="id_save_area">
-							<input type="checkbox" id="id_chk"> <label for="id_chk">
+							<input type="checkbox" id="id_chk" name="id_chk"> <label for="id_chk">
 								<span>아이디 저장</span>
 							</label>
 						</div>
 						<br>
+						<div id="login_btn_area">
+							<button type="submit" id="login_btn">로그인</button>
+						</div>
 						<hr>
 					</div>
 				</fieldset>
