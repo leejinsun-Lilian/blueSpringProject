@@ -1,0 +1,59 @@
+h1 {
+    margin: 50px 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* 공지사항 메인 */
+#notice-main {
+    height: 800px;
+    border: 1px solid black;
+}
+
+/* 공지사항 하단 */
+#notice-bottom {
+    height: 50px;
+    width: 70%;
+    margin: auto;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+/*  */
+#notice-write {
+    border-radius: 10%;
+    text-decoration: none;
+    background-color: blue;
+    color: white;
+    padding: 5px;
+}
+
+#notice-write:hover {
+    background-color: lightblue;
+}
+
+#notice-nav a:hover {
+    font-weight: bold;
+    color: blue;
+}
+
+/*  */
+#notice-nav{
+    display: flex;
+}
+#notice-nav li {
+    margin: 0 5px;
+    padding: 0 5px;
+    list-style: none;
+    background-color: lightgray;
+    border-radius: 10%;
+}
+#notice-nav a{
+    text-decoration: none;
+    color: black;
+}
+
+/*  */
+#notice-search {
+    display: flex;
+}
