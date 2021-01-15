@@ -28,7 +28,7 @@
              <div class="admin_title">
                 <h1>관리자 페이지</h1>
              </div>
-
+				<!-- 안녕하세요 -->
 
         </div>
 		
