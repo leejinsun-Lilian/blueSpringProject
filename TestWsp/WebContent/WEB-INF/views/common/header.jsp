@@ -22,7 +22,7 @@
 					<div class="notice nav_title">공지사항</div>
 					<div class="sub">
 						<ul>
-							<li><a href="#">정부정책</a></li>
+							<li><a href="${contextPath}/notice/list.do">정부정책</a></li>
 						</ul>
 					</div>
 				</li>
@@ -38,8 +38,8 @@
 					<div class="challengers nav_title">챌린지</div>
 					<div class="sub">
 						<ul>
-							<li><a href="/challenge/challengeList.jsp">챌린지</a></li>
-							<li><a href="/challengeCrtfd/challengeCrtfdList.jsp">인증게시판</a></li>
+							<li><a href="${contextPath}/challenge/list.do">챌린지</a></li>
+							<li><a href="${contextPath}/challengecrtfd/list.do">인증게시판</a></li>
 						</ul>				
 					</div>
 				</li>
@@ -55,8 +55,8 @@
 		</div>
 	
 		<div class="login">
-			<button type="button" id="header_login">로그인</button>
-			<button type="button" id="header_join">회원가입</button>
+			<button type="button" id="header_login" onclick="location.href = '${contextPath}/member/login.do'">로그인</button>
+        	<button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
 		</div>
 	
 		

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>챌린지 메인 페이지</title>
-<link rel="stylesheet" href="resources/css/ch_list.css" type="text/css">
+<link rel="stylesheet" href="${contextPath}/resources/css/ch_list.css" type="text/css">
 </head>
 
 <body>
