@@ -199,7 +199,7 @@
 					<!-- 이메일  -->
 					<div class="row_group">
 						<span class="signUp_text">
-							<label for="email" stype="margin-bottom : 5px;">이메일</label>
+							<label for="email" style="margin-bottom : 5px;">이메일</label>
 						</span>
 						<div id="emailForm">
 							<div class="emailForm" id="fEmail">
@@ -213,7 +213,7 @@
 							</div>
 							
 							<div class="emailForm" id="tEmail">
-								<span class="sign_input input_email" id="email_addr" name="email_addr" class="signUp_int">
+								<span class="sign_input input_email" id="email_addr" class="signUp_int">
 									<select id="email_sel" class="sel" required>
 									<option hidden="true">선택</option>
 									<option value="naver.com">naver.com</option>
@@ -244,7 +244,7 @@
 					
 					<!-- 가입하기 버튼 -->
 					<div class="btn_area">
-						<button type="sumbit" id="signBtn" class="btn">가입하기</button>
+						<button type="submit" id="signBtn" class="btn">가입하기</button>
 					</div>
 					
 					
