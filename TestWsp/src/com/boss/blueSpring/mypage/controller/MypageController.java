@@ -32,50 +32,72 @@ public class MypageController extends HttpServlet {
 			}
 			
 			// mypage 정보수정 비밀번호 입력
-			else if(command.equals("/myinfochangepw.do")) {
+			else if(command.equals("/myInfoChangePw.do")) {
 				path="/WEB-INF/views/mypage/myInfoChangePw.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// mypage 정보수정
-			else if(command.equals("/myinfochange.do")) {
+			else if(command.equals("/myInfoChange.do")) {
 				path="/WEB-INF/views/mypage/myInfoChange.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// mypage 비밀번호 변경
-			else if(command.equals("/pwchange.do")) {
+			else if(command.equals("/changePw.do")) {
 				path="/WEB-INF/views/common/newPwForm.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// 작성한 게시글 조회
-			else if(command.equals("/myboardlist.do")) {
+			else if(command.equals("/myBoardList.do")) {
 				path="/WEB-INF/views/mypage/myBoardList.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// 작성한 댓글 조회
-			else if(command.equals("/myreplylist.do")) {
+			else if(command.equals("/myReplyList.do")) {
 				path="/WEB-INF/views/mypage/myReplyList.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// 참여중인 챌린지 조회
-			else if(command.equals("/progresschallenge.do")) {
+			else if(command.equals("/progressChallenge.do")) {
 				path="/WEB-INF/views/mypage/progressChallenge.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// 역대 챌린지 조회
-			else if(command.equals("/alltimechallenge.do")) {
+			else if(command.equals("/allTimeChallenge.do")) {
 				path="/WEB-INF/views/mypage/allTimeChallenge.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			
+			// 인증 게시글 조회
+			else if(command.equals("/challengeCrtfd.do")) {
+				path="/WEB-INF/views/mypage/challengeCrtfdList.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			// 회원 탈퇴
+			else if(command.equals("/deleteAccount.do")) {
+				path="/WEB-INF/views/mypage/deleteAccount.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			// 회원 탈퇴 완료 
+			else if(command.equals("/deleteAccountComplete.do")) {
+				path="/WEB-INF/views/mypage/deleteAccountComplete.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}

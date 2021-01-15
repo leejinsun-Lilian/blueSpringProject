@@ -27,10 +27,12 @@
 						<h2>설정되었습니다.</h2>
 						<div class="btn_area">
 							<span>
-								<button type="button" id="btn_main" class="btn">메인으로</button>
+								<button type="button" id="btn_main" class="btn"
+								onclick="location.href='${contextPath}'">메인으로</button>
 							</span> 
 							<span>
-								<button type="button" id="btn_login" class="btn">로그인</button>
+								<button type="button" id="btn_login" class="btn"
+								onclick="location.href ='${contextPath}/member/login.do'">로그인</button>
 							</span>
 						</div>
 					</div>

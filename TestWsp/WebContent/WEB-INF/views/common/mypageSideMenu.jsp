@@ -48,37 +48,37 @@
 		<ul>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a id="changeInfo" class="sideMenu_title" href="${contextPath}/mypage/myinfochangepw.do">회원 정보 수정</a>
+					<a id="changeInfo" class="sideMenu_title" href="${contextPath}/mypage/myInfoChangePw.do">회원 정보 수정</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a class="sideMenu_title" href="${contextPath}/mypage/myboardlist.do">작성한 게시글</a>
+					<a class="sideMenu_title" href="${contextPath}/mypage/myBoardList.do">작성한 게시글</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a class="sideMenu_title" href="${contextPath}/mypage/myreplylist.do">작성한 댓글</a>
+					<a class="sideMenu_title" href="${contextPath}/mypage/myReplyList.do">작성한 댓글</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a class="sideMenu_title" href="${contextPath}/mypage/progresschallenge.do">참여중인 챌린지</a>
+					<a class="sideMenu_title" href="${contextPath}/mypage/progressChallenge.do">참여중인 챌린지</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a class="sideMenu_title" href="${contextPath}/mypage/alltimechallenge.do">역대 챌린지</a>
+					<a class="sideMenu_title" href="${contextPath}/mypage/allTimeChallenge.do">역대 챌린지</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a class="sideMenu_title" href="#">인증게시글</a>
+					<a class="sideMenu_title" href="${contextPath}/mypage/challengeCrtfd.do">인증 게시글</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a class="sideMenu_title" href="#">회원 탈퇴</a>
+					<a class="sideMenu_title" href="${contextPath}/mypage/deleteAccount.do">회원 탈퇴</a>
 				</div>
 			</li>
 		</ul>

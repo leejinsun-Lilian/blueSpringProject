@@ -21,7 +21,7 @@
 	<div class="wrap">
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
-			<jsp:include page="../common/mypageSideMenu.jsp"></jsp:include>
+			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
 			<div class="content">
 			<h3>역대 챌린지</h3>
 				<div class="cBack">
@@ -57,12 +57,79 @@
 									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
 								</div>
 							</td>
+							
+							<td>
+								<div class="cThumbnail_area">
+									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
+								</div>
+								<div class="cTitle_area">
+									<h4 class="title">강아지 사진 찍기</h4>
+								</div>
+								<div class="cPeriod_area">
+									<span class="period">2021/01/02 - 2021/03/02</span>
+								</div>
+								<div class="check_area">
+									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
+								</div>
+							</td>
+						</tr>
+						
+						
+						
+						<tr>
+							<td>
+								<div class="cThumbnail_area">
+									<img class="cThumbnail" src="${contextPath}/resources/img/dog.JPG"></img>
+								</div>
+								<div class="cTitle_area">
+									<h4 class="title">강아지 사진 찍기</h4>
+								</div>
+								<div class="cPeriod_area">
+									<span class="period">2021/01/02 - 2021/03/02</span>
+								</div>
+								<div class="check_area">
+									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
+								</div>
+							</td>
+
+
+							<td>
+								<div class="cThumbnail_area">
+									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
+								</div>
+								<div class="cTitle_area">
+									<h4 class="title">강아지 사진 찍기</h4>
+								</div>
+								<div class="cPeriod_area">
+									<span class="period">2021/01/02 - 2021/03/02</span>
+								</div>
+								<div class="check_area">
+									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
+								</div>
+							</td>
+							
+							<td>
+								<div class="cThumbnail_area">
+									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
+								</div>
+								<div class="cTitle_area">
+									<h4 class="title">강아지 사진 찍기</h4>
+								</div>
+								<div class="cPeriod_area">
+									<span class="period">2021/01/02 - 2021/03/02</span>
+								</div>
+								<div class="check_area">
+									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
+								</div>
+							</td>
 						</tr>
 						
 					</table>
 				</div>
 			</div>
 		</div>
+		
+		<jsp:include page="../common/footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

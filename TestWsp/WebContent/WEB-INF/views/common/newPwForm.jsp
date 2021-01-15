@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 비밀번호 찾기</title>
 
-<link href="${contextPath}/resources/css/find.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/common/find.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
@@ -15,8 +15,8 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-.content{
-	padding : 104px 0 277px;
+.container > .content{
+	padding : 104px 0 213px;
 }
 
 .row_group{
@@ -35,7 +35,7 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form action="#" method="post" name="newPwForm">
+				<form action="${contextPath}/member/changePwComplete.do" method="post" name="newPwForm">
 					<div class="idFindForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>

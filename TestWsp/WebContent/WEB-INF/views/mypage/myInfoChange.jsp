@@ -54,7 +54,7 @@
 						</div>
 						<div class="input_area" style="border:0;">
 							<button type="button" class="pwChangeBtn" id="pwBtn" 
-								onclick="location.href='${contextPath}/mypage/changepw.do'">
+								onclick="location.href='${contextPath}/mypage/changePw.do'">
 								비밀번호 변경
 							</button>
 						</div>

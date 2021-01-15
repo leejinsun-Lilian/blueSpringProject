@@ -4,8 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>푸른봄: 아이디 찾기</title>
-<link href="${contextPath}/resources/css/member/findComplete.css" rel="stylesheet" type="text/css">
+<title>푸른봄: 회원탈퇴</title>
+<link href="${contextPath}/resources/css/common/find.css"
+	rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
@@ -14,8 +15,25 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-.wrap > .container {
-	padding : 100px 0 255px;
+.container {
+	padding: 133px 0 270px;
+}
+
+.text {
+	display: inline-block;
+	text-align: right;
+}
+
+.text>span {
+	padding-right: 10px;
+}
+
+.content>h1 {
+	text-align: center;
+}
+
+.backgroundColor {
+	border: 1px solid #f1833c;
 }
 </style>
 </head>
@@ -24,22 +42,16 @@
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<div class="idFind">
-					<h1>푸른봄</h1>
-					<div class="findBackground">
-						<h2>가입하신 아이디 조회 결과</h2>
-						<h3>회원님의 아이디는 xxx 입니다.</h3>
-						<div class="btn_area">
-							<span>
-								<button type="button" id="btn_main" class="btn"
-								onclick="location.href='${contextPath}'">
-								메인으로</button>
-							</span> 
-							<span>
-								<button type="button" id="btn_login" class="btn"
-								onclick="location.href ='${contextPath}/member/login.do'">
-								로그인</button>
-							</span>
+				<h1>푸른봄</h1>
+				<div class="backgroundColor">
+					<div class="findForm">
+						<div class="text_area">
+							<h3>회원 탈퇴가 완료되었습니다.</h3>
+						</div>
+						<div class="row_group">
+							<div class="nextBtn_area">
+								<button type="submit" class="btn" id="nextBtn">메인으로</button>
+							</div>
 						</div>
 					</div>
 				</div>

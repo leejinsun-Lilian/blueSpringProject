@@ -23,7 +23,7 @@
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form action="${contextPath}/member/idfindcomplete.do" method="post" name="idFind">
+				<form action="${contextPath}/member/idFindComplete.do" method="post" name="idFind">
 					<div class="findForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
