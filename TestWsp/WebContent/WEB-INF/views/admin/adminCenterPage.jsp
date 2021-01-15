@@ -11,18 +11,18 @@
         height: 100%;
         margin: auto;
     }
-    .senterPage_category { 
+    .centerPage_category { 
         width: 100%;
         height: 10%;
         font-weight: bold;
     }
-    .senterPage_title{
+    .centerPage_title{
         border-top: 2px solid gray;
         border-bottom : 2px solid gray;
         width: 100%;
         height: 30%;
     }
-    .senterPage_content{
+    .centerPage_content{
         width: 100%;
         height: 60%;
     }
@@ -33,14 +33,14 @@
     	<jsp:include page="../common/header.jsp"></jsp:include>
 
         <div class="admin_content">
-            <div class="senterPage_view">
-                <div class="senterPage_category">
+            <div class="centerPage_view">
+                <div class="centerPage_category">
                     <p>상담센터</p>
                 </div>
-                <div class="senterPage_title">
+                <div class="centerPage_title">
                     <p>강남구정신건강복지센터</p>
                 </div>
-                <div class="senterPage_content">
+                <div class="centerPage_content">
                     <p></p>
                     지역(시/도) : 서울특별시<br>
                     지역(구/군) : 강남구<br>

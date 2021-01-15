@@ -65,7 +65,7 @@
 			</li>
 			<li class="adminMenu_list">
 				<div class="adminMenu_title_area">
-					<a class="adminMenu_title" href="${contextPath}/admin/adminSenterInfo.do">기관정보 조회</a>
+					<a class="adminMenu_title" href="${contextPath}/admin/adminCenterInfo.do">기관정보 조회</a>
 				</div>
 			</li>
 			<li class="adminMenu_list">
@@ -80,7 +80,7 @@
 			</li>
 			<li class="adminMenu_list">
 				<div class="adminMenu_title_area">
-					<a class="adminMenu_title" href="${contextPath}/admin/adminChallSub.do">인증게시판 관리</a>
+					<a class="adminMenu_title" href="${contextPath}/admin/adminCrtfd.do">인증게시판 관리</a>
 				</div>
 			</li>
 		</ul>

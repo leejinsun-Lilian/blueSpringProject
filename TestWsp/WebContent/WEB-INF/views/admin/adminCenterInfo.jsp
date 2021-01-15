@@ -24,13 +24,13 @@
 	
 	 }
 	
-	.senter_title{
+	.center_title{
 	    margin: 3% 0 3% 0;
 	    color:rgb(40, 62, 105);
 	    
 	}
 	
-	.senter_board{ 
+	.center_board{ 
 	    width: 100%;
 	    height: 100%;
 	}
@@ -42,31 +42,31 @@
 	
 	.page_area{ margin-top: 2%; }
 	
-	.senter_search{ text-align: center; }
+	.center_search{ text-align: center; }
 	
 	.page-item > a, .page-item > a:hover{ color: black; }
 	
-	#senter_btn { 
+	#center_btn { 
 	    background-color: #343a40;
 	    color: snow;
 	}
 	
-	#senter_btn2 { 
+	#center_btn2 { 
 	    background-color: rgb(40, 62, 105);
 	    color: snow;
 	}
 	
-	#senter_btn3 { 
+	#center_btn3 { 
 	    background-color: rgb(152, 173, 216);
 	    color: snow;
 	}
 	
-	#senter_btn4 { 
+	#center_btn4 { 
 	    background-color: #dc3545;
 	    color: snow;
 	}
 	
-	.senter_page_btn {
+	.center_page_btn {
 	    width: 22%;
 	    height: 100%;
 	    margin-top: 1%;
@@ -81,10 +81,10 @@
     	<jsp:include page="../common/adminMenu.jsp"></jsp:include>
 
         <div class="admin_content">
-            <div class="senter_title">
+            <div class="center_title">
                 <h4>기관목록 조회</h4>
             </div>
-            <div class="senter_board">
+            <div class="center_board">
                 <table class="table table-sm">
                     <thead class="thead-dark">
                       <tr>
@@ -167,7 +167,7 @@
             </div>
 
 
-            <div class="senter_search"><select id="senter_search" name="senter_search" required>
+            <div class="center_search"><select id="center_search" name="center_search" required>
                 <option selected>번호</option>
                 <option>분류</option>
                 <option>지역(시/도)</option>
@@ -176,10 +176,10 @@
             </select>
             <input type="text"> <button type="button" id="senter_btn">검색</button><br></div>
             
-            <div class="senter_page_btn">
-            <button type="button" id="senter_btn2">등록</button>
-            <button type="button" id="senter_btn3">수정</button>
-            <button type="button" id="senter_btn4">삭제</button></div>
+            <div class="center_page_btn">
+            <button type="button" id="center_btn2">등록</button>
+            <button type="button" id="center_btn3">수정</button>
+            <button type="button" id="center_btn4">삭제</button></div>
 			
         </div>
     

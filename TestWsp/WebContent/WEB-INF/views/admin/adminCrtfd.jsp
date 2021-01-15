@@ -25,29 +25,29 @@
 
     }
 
-    .adminChallSub_title{
+    .adminCrtfd_title{
     margin: 3% 0 3% 0;
     color:rgb(40, 62, 105);
 
     }
 
-    .adminChallSub_board{ 
+    .adminCrtfd_board{ 
     width: 100%;
     height: 100%;
     }
 
     .page_area{ margin-top: 2%; }
 
-    .adminChallSub_search{ text-align: center; }
+    .adminCrtfd_search{ text-align: center; }
 
     .page-item > a, .page-item > a:hover{ color: black; }
 
-    #adminChallSub_btn { 
+    #adminCrtfd_btn { 
     background-color: #343a40;
     color: snow;
     }
 
-    #adminChallSub_btn2 { 
+    #adminCrtfd_btn2 { 
     background-color: #dc3545;
     color: snow;
     }
@@ -60,10 +60,10 @@
     	<jsp:include page="../common/adminMenu.jsp"></jsp:include>
 
         <div class="admin_content">
-            <div class="adminChallSub_title">
+            <div class="adminCrtfd_title">
                 <h4>챌린지 인증게시판 관리</h4>
             </div>
-            <div class="adminChallSub_board">
+            <div class="adminCrtfd_board">
                 <table class="table table-sm">
                     <thead class="thead-dark">
                       <tr>
@@ -114,14 +114,14 @@
             </div>
 
 
-            <div class="adminChallSub_search"><select id="adminChallSub_search" name="adminChallSub_search" required>
+            <div class="adminCrtfd_search"><select id="adminCrtfd_search" name="adminCrtfd_search" required>
                 <option selected>챌린지번호</option>
                 <option>인증글번호</option>
                 <option>작성자</option>
                 <option>삭제여부</option>
             </select>
-            <input type="text"> <button type="button" id="adminChallSub_btn">검색</button>
-            <button type="button" id="adminChallSub_btn2">삭제</button></div>
+            <input type="text"> <button type="button" id="adminCrtfd_btn">검색</button>
+            <button type="button" id="adminCrtfd_btn2">삭제</button></div>
 
         </div>
     

@@ -19,15 +19,14 @@ public class AdminController extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String command = uri.substring((contextPath + "/admin").length());
 
-		// 컨트롤러 내에서 공용으로 사용할 변수 미리 선언
-		String path = null; // forward 또는 redirect 경로를 저장할 변수
-		RequestDispatcher view = null; // 요청 위임 객체
+		String path = null;
+		RequestDispatcher view = null;
 
-		String swalIcon = null; // sweet alert로 메세지 전달하는 용도
+		String swalIcon = null;
 		String swalTitle = null;
 		String swalText = null;
 
-		String errorMsg = null; // 에러 메세지 전달용 변수
+		String errorMsg = null;
 
 		try {
 //			NoticeService service = new NoticeService();
@@ -36,10 +35,8 @@ public class AdminController extends HttpServlet {
 			if (command.equals("/adminMain.do")) {
 				errorMsg = "관리자 메인 페이지 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
 				path = "/WEB-INF/views/admin/adminMain.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}			
@@ -48,10 +45,8 @@ public class AdminController extends HttpServlet {
 			else if (command.equals("/adminMemberInfo.do")) {
 				errorMsg = "회원 정보 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
 				path = "/WEB-INF/views/admin/adminMemberInfo.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -60,10 +55,8 @@ public class AdminController extends HttpServlet {
 			else if (command.equals("/adminReport.do")) {
 				errorMsg = "신고 목록 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
 				path = "/WEB-INF/views/admin/adminReport.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -72,22 +65,18 @@ public class AdminController extends HttpServlet {
 			else if (command.equals("/adminBlacklistInfo.do")) {
 				errorMsg = "블랙리스트 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
 				path = "/WEB-INF/views/admin/adminBlacklistInfo.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
 			// 기관 조회 Controller **************************************************
-			else if (command.equals("/adminSenterInfo.do")) {
+			else if (command.equals("/adminCenterInfo.do")) {
 				errorMsg = "기관 목록 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
-				path = "/WEB-INF/views/admin/adminSenterInfo.jsp";
+				path = "/WEB-INF/views/admin/adminCenterInfo.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -117,11 +106,11 @@ public class AdminController extends HttpServlet {
 			}
 			
 			// 챌린지 인증게시판 조회(관리) Controller **************************************************
-			else if (command.equals("/adminChallSub.do")) {
+			else if (command.equals("/adminCrtfd.do")) {
 				errorMsg = "관리자 전용 인증게시판 조회 중 오류 발생.";
 
 				// 요청을 위임할 경로 jsp 경로 지정
-				path = "/WEB-INF/views/admin/adminChallSub.jsp";
+				path = "/WEB-INF/views/admin/adminCrtfd.jsp";
 
 				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
