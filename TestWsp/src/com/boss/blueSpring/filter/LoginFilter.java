@@ -14,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.boss.blueSpring.member.model.vo.Member;
-
-@WebFilter(urlPatterns = {"/member/myPage.do", "/member/changePwd.do", "/member/secession.do",
-						  "/member/updateMember.do", "/member/updatePwd.do", "/member/updateStatus.do"})
+//"/member/myPage.do", "/member/changePwd.do", "/member/secession.do","/member/updateMember.do", "/member/updatePwd.do", "/member/updateStatus.do"
+@WebFilter(urlPatterns = {})
 public class LoginFilter implements Filter {
 
     public LoginFilter() {}

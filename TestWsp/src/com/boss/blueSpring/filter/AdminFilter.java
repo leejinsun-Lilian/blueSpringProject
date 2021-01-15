@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.boss.blueSpring.member.model.vo.Member;
-
-@WebFilter(urlPatterns= {"/notice/insertForm.do", "/notice/insert.do", "/notice/updateForm.do",
-						 "/notice/update.do", "/notice/delete.do"}
+// "/notice/insert.do",
+//"/notice/insertForm.do", "/notice/updateForm.do","/notice/update.do", "/notice/delete.do"
+@WebFilter(urlPatterns= {}
 )
 public class AdminFilter implements Filter {
 

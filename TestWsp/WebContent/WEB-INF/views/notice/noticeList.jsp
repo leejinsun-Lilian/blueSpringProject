@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사할 목록</title>
-<link rel="stylesheet" href="resources/css/no_list.css" type="text/css">
+<link rel="stylesheet" href="${contextPath}/resources/css/no_list.css" type="text/css">
 </head>
 <body>
 	<!-- 해더 영역 -->
@@ -48,7 +48,7 @@
 		
 		<!-- 관리자일 경우에만 글쓰기 버튼이 보이는거 -->
 		<div class="writer-bt">
-			<a href="noticeInsert.jsp" class="btn btn-update">글쓰기</a>
+			<a href="${contextPath}/notice/insert.do" class="btn btn-update">글쓰기</a>
 		</div>
 		
 		
