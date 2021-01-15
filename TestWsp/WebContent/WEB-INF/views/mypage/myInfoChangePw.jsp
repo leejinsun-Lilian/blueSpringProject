@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>푸른봄: 내 정보 수정</title>
-<link href="${contextPath}/resources/css/mypage/find.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/common/find.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -32,7 +32,7 @@
 		<div class="container">
 			<div class="content">
 			<div class="backgroundColor">
-				<form action="#" method="post" name="myInfoChangePw">
+				<form action="${contextPath}/mypage/myInfoChange.do" method="post" name="myInfoChangePw">
 					<div class="findForm">
 						<div class="text_area">
 							<h3>정보 수정을 위해 비밀번호를 입력해주세요.</h3>
@@ -44,7 +44,7 @@
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">
-										<button type="button" class="btn" id="nextBtn" onclick="location.href='${contextPath}/mypage/myinfochange.do'">다음</button>
+										<button type="submit" class="btn" id="nextBtn">다음</button>
 									</div>
 								</div>
 						</div>

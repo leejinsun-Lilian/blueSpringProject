@@ -64,9 +64,9 @@
 
 			<div id="find_area">
 				<div id="find_info">
-					<a id="idFind" href="${contextPath}/member/idfind.do">아이디 찾기</a> 
+					<a id="idFind" href="${contextPath}/member/idFind.do">아이디 찾기</a> 
 					<span class="bar">|</span> 
-					<a id="pwFind" href="${contextPath}/member/pwfind.do">비밀번호 찾기</a>
+					<a id="pwFind" href="${contextPath}/member/pwFind.do">비밀번호 찾기</a>
 					<span class="bar">|</span> 
 					<a id="signUp" href="${contextPath}/member/signup.do">회원가입</a>
 				</div>
@@ -74,7 +74,7 @@
 	
 	
 			<div id="login_banner_area">
-				<img id="login_banner" src="${contextPath}/resources/img/login_banner.jpg">
+				<a href="${contextPath}/mypage/main.do"><img id="login_banner" src="${contextPath}/resources/img/login_banner.jpg"></a>
 			</div>
 			
 		<!-- container 끝 -->

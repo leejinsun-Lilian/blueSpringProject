@@ -54,7 +54,7 @@ public class MemberController extends HttpServlet {
 			
 			
 			// 아이디 찾기 Controller
-			else if(command.equals("/idfind.do")) {
+			else if(command.equals("/idFind.do")) {
 				path="/WEB-INF/views/member/idFind.jsp";
 				
 				view = request.getRequestDispatcher(path);
@@ -63,7 +63,7 @@ public class MemberController extends HttpServlet {
 			
 			
 			// 아이디 찾기 완료 Controller
-			else if(command.equals("/idfindcomplete.do")) {
+			else if(command.equals("/idFindComplete.do")) {
 				path="/WEB-INF/views/member/idFindComplete.jsp";
 				
 				view = request.getRequestDispatcher(path);
@@ -72,7 +72,7 @@ public class MemberController extends HttpServlet {
 			
 			
 			// 비밀번호 찾기 Controller 
-			else if(command.equals("/pwfind.do")) {
+			else if(command.equals("/pwFind.do")) {
 				path="/WEB-INF/views/member/pwFind.jsp";
 				
 				view = request.getRequestDispatcher(path);
@@ -80,7 +80,7 @@ public class MemberController extends HttpServlet {
 			}
 			
 			// 새로운 비밀번호 설정 
-			else if(command.equals("/changepw.do")) {
+			else if(command.equals("/changePw.do")) {
 				path="/WEB-INF/views/common/newPwForm.jsp";
 				
 				view = request.getRequestDispatcher(path);
@@ -88,6 +88,13 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
+			// 비밀번호 변경 완료 페이지
+			else if(command.equals("/changePwComplete.do")) {
+				path="/WEB-INF/views/member/pwFindNewPwComplete.jsp";
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response); 
+			}
 
 			
 			

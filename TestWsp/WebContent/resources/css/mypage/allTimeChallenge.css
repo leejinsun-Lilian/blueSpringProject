@@ -21,7 +21,9 @@
 
 .cBack {
 	width: 1000px;
-	background-color : #e8e8e8;
+	background-color : #fbf7f7;
+    padding-right: 40px;
+	
 }
 
 .cThumbnail_area {
@@ -49,4 +51,8 @@
 
 .cPeriod_area{
 	float: left;
+}
+
+#cTable  td {
+	padding : 0 15px 0 15px;
 }
