@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>푸른봄: 회원가입</title>
-<link href="${contextPath}/resources/css/signUpComplete.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/member/signUpComplete.css" rel="stylesheet" type="text/css">
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -14,9 +14,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <style>
-.container {
-	padding : 150px 0 252px;
-}
+
 </style>
 
 </head>
@@ -25,9 +23,11 @@
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<div class="text_area">
 					<h1 class="text">푸른봄</h1>
-					<h1 class="text">회원가입이 완료되셨습니다.</h1>
+					<div class="back">
+				<div class="text_area">
+					<h1 class="text" style="margin-bottom : 2px;">회원가입이 </h1>
+					<h1 class="text" style="margin-top : 2px;">완료되셨습니다.</h1>
 				</div>
 
 				<div class="btn_area">
@@ -37,6 +37,7 @@
 						<button type="button" id="btn_login" class="btn">로그인</button>
 					</span>
 
+				</div>
 				</div>
 
 			</div>

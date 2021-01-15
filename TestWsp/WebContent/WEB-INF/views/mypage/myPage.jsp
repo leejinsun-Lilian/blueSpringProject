@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 마이페이지</title>
 
-<link href="${contextPath}/resources/css/myPage.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/mypage/myPage.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -23,7 +23,7 @@
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 
-			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
+			<jsp:include page="../common/mypageSideMenu.jsp"></jsp:include>
 			<div class="content">
 				<div class="myInfo_area area">
 					<h3>내 정보</h3>

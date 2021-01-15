@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>푸른봄: 역대 챌린지 조회</title>
 
-<link href="${contextPath}/resources/css/allTimeChallenge.css" rel="stylesheet" type="text/css">
+<link href="${contextPath}/resources/css/mypage/allTimeChallenge.css" rel="stylesheet" type="text/css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
@@ -21,7 +21,7 @@
 	<div class="wrap">
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
-			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
+			<jsp:include page="../common/mypageSideMenu.jsp"></jsp:include>
 			<div class="content">
 			<h3>역대 챌린지</h3>
 				<div class="cBack">

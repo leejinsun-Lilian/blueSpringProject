@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <title>header</title>
 </head>
@@ -39,7 +40,7 @@
 					<div class="sub">
 						<ul>
 							<li><a href="${contextPath}/challenge/list.do">챌린지</a></li>
-							<li><a href="${contextPath}/challengecrtfd/list.do">인증게시판</a></li>
+							<li><a href="${contextPath}/challengeCrtfd/list.do">인증게시판</a></li>
 						</ul>				
 					</div>
 				</li>
@@ -58,7 +59,6 @@
 			<button type="button" id="header_login" onclick="location.href = '${contextPath}/member/login.do'">로그인</button>
         	<button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
 		</div>
-	
 		
 	</div>
 

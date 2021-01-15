@@ -16,8 +16,8 @@
 <body>
 	<!-- Footer -->
 	<div class="footer">
-	  <div class="container">
-	    <p class="text">Copyright &copy; 2021 team BOSS All Right reserved.</p>
+	  <div class="f_container">
+	    <p class="f_text">Copyright &copy; 2021 team BOSS All Right reserved.</p>
 	  </div>
 	</div>
 </body>
