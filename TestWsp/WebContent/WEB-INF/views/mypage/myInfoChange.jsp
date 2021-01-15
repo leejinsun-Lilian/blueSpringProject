@@ -21,7 +21,7 @@
 		<div class="container">
 			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
 			<div class="content">
-			<form action="#" method=post" id="changeForm">
+			<form action="#" method="post" id="changeForm">
 				<div class="changeWrap">
 					<h3>내 정보 수정</h3>
 					<hr>
