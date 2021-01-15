@@ -33,7 +33,7 @@ public class AdminFilter implements Filter {
 		
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		
-		if(loginMember == null || !loginMember.getMemberGrade().equals("A")) {
+		if(loginMember == null /*|| !loginMember.getMemberGrade().equals("A")*/) { //  Member VO 수정 --> 오류 발생
 			// 로그인이 되어있지 않거나 회원 등급이 "A"가 아닌 경우
 			
 			// 메인 페이지로 강제 이동

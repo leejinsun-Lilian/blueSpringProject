@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.boss.blueSpring.member.model.vo.Member;
 import com.sun.corba.se.spi.protocol.RequestDispatcherRegistry;
 
 @WebServlet("/member/*")
@@ -26,15 +28,47 @@ public class MemberController extends HttpServlet {
 		
 		String errorMsg = null;
 		
+		String swalIcon = null;
+		String swalTitle = null;
+		String swalText = null;
+		
+		String memberId = request.getParameter("id_input");
+		String memberPwd = request.getParameter("pw_input");
+		String idSave = request.getParameter("id_chk");
+		
+		Member member = new Member();
+		member.setMemberId(memberId);
+		member.setMemberPwd(memberPwd);
 		try {
+			request.setCharacterEncoding("UTF-8");
+			
 			
 			// 로그인 Controller 
-			if(command.equals("/login.do")) {
-				path="/WEB-INF/views/member/login.jsp";
+			if(command.equals("/loginForm.do")) {
+				path="/WEB-INF/views/member/loginForm.jsp";
 				
+				//Member loginMember = new MemberService().loginMember(member);
+				
+				
+				
+
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+				
+				System.out.println("login : " +  memberId + " / " + memberPwd + " / " + idSave);
+				//session.setAttribute("member", member);
+				response.sendRedirect(request.getHeader("referer"));
+				
 			}
+			
+			// 로그인 확인 Controller
+			if(command.equals("/loginAction.do")) {
+				path="/WEB-INF/views/member/loginAction.jsp";
+				
+				
+			}
+			
+		
 			
 			// 회원가입 Controller
 			else if(command.equals("/signup.do")) {
