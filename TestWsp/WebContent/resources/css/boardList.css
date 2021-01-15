@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+
+.container{
+ 	width : 100%;
+	margin : 0;
+	padding-top : 20px;
+}
+
+.content{
+	width : 70%;
+	height : 100%;
+	box-sizing: border-box;
+	display : inline-block;
+	padding-bottom : 51px;
+}
+
+.content > h3 {
+	margin-left : 20px;
+	margin-top : 10px;
+}
+/* ---------------------------------------------------------------- */
+/* 인증 글 목록 */
+.list-wrapper{
+   min-height: 540px;
+   margin-left : 20px;
+}
+
+.table{
+   width: 100%;
+   /* 테이블 사이에 선 없애는거 */
+   border-collapse: collapse; 
+   border-spacing: 0;
+   
+   margin-top : 20px;
+   
+}
+
+.table > thead{
+   border-top: 2px solid #d4d6d4fa;
+   border-bottom: 2px solid #d4d6d4fa;
+
+}
+
+#list-table th {
+   text-align: center;
+   font-weight: normal;
+   padding-top : 10px;
+   padding-bottom: 10px;
+}
+#list-table td {
+   text-align: center;
+   padding-top : 10px;
+   padding-bottom: 10px;
+}
+
+tr:nth-child(2n){
+	background-color : #ebedf1fa;
+}
+
+/* thead th 부분 비율 정하기  */ 
+#list-table th:nth-child(1){ width: 10%; }
+#list-table th:nth-child(2){ width: 48%; }
+#list-table th:nth-child(3){ width: 20%; }
+#list-table th:nth-child(4){ width: 7%; }
+#list-table th:nth-child(5){ width: 15%; }
+
+/* tbody td 부분 비율 정하기  */ 
+#list-table td:nth-child(1){ width: 10%; }
+#list-table td:nth-child(2){ width: 48%; }
+#list-table td:nth-child(3){ width: 20%; }
+#list-table td:nth-child(4){ width: 7%; }
+#list-table td:nth-child(5){ width: 15%; }
