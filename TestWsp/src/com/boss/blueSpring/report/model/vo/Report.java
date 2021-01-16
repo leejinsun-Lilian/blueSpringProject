@@ -10,13 +10,14 @@ public class Report {
 	private int reportCategoryNo;   // 신고 유형
 	private Date reportCreateDate;  // 신고접수일
 	private String reportDeleteFl;  // 신고글 삭제 유무
+	private String memberId;		// 신고한 회원
 	
 	public Report() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Report(int reportNo, String reportType, int boardNo, int memberNo, int reportCategoryNo,
-			Date reportCreateDate, String reportDeleteFl) {
+			Date reportCreateDate, String reportDeleteFl, String memberId) {
 		super();
 		this.reportNo = reportNo;
 		this.reportType = reportType;
@@ -25,6 +26,17 @@ public class Report {
 		this.reportCategoryNo = reportCategoryNo;
 		this.reportCreateDate = reportCreateDate;
 		this.reportDeleteFl = reportDeleteFl;
+		this.setMemberId(memberId);
+	}
+	
+	// admin 신고 목록 조회 생성자
+	public Report(int reportNo, String reportType, int boardNo, int reportCategoryNo, String memberId) {
+		super();
+		this.reportNo = reportNo;
+		this.reportType = reportType;
+		this.boardNo = boardNo;
+		this.reportCategoryNo = reportCategoryNo;
+		this.setMemberId(memberId);
 	}
 
 	public int getReportNo() {
@@ -87,7 +99,15 @@ public class Report {
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", reportType=" + reportType + ", boardNo=" + boardNo + ", memberNo="
 				+ memberNo + ", reportCategoryNo=" + reportCategoryNo + ", reportCreateDate=" + reportCreateDate
-				+ ", reportDeleteFl=" + reportDeleteFl + "]";
+				+ ", reportDeleteFl=" + reportDeleteFl + ", memberId=" + memberId + "]";
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 		
 }

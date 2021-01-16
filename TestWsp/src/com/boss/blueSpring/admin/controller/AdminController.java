@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.boss.blueSpring.admin.model.service.AdminService;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.report.model.vo.Report;
 
 @WebServlet("/admin/*")
 public class AdminController extends HttpServlet {
@@ -60,8 +62,18 @@ public class AdminController extends HttpServlet {
 			// 신고 목록 조회 Controller **************************************************
 			else if (command.equals("/adminReport.do")) {
 				errorMsg = "신고 목록 조회 중 오류 발생.";
+				
+				String cp = request.getParameter("cp");
+				
+				PageInfo pInfo = service.getPageInfo(cp);
+				
+				List<Report> rList = service.selectReportList(pInfo);
+				
 
 				path = "/WEB-INF/views/admin/adminReport.jsp";
+				
+	            request.setAttribute("rList", rList);
+	            request.setAttribute("pInfo", pInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -90,7 +102,6 @@ public class AdminController extends HttpServlet {
 			// 자유게시판 관리 (목록 조회) Controller **************************************************
 			else if (command.equals("/adminBoard.do")) {
 				errorMsg = "관리자 전용 자유게시판 조회 중 오류 발생.";
-
 				
 				String cp = request.getParameter("cp");
 				
@@ -102,29 +113,35 @@ public class AdminController extends HttpServlet {
 	            // pInfo에 있는 currentPage, limit를 사용해야지만
 	            // 현재 페이지에 맞는 게시글 목록만 조회할 수 있음
 	            
-				
 				path = "/WEB-INF/views/admin/adminBoard.jsp";
 				
 	            request.setAttribute("aList", aList);
 	            request.setAttribute("pInfo", pInfo);
 
 				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-
-				
-				
-				
+				view.forward(request, response);		
 				
 			}
 			
 			// 챌린지 게시판 조회(관리) Controller **************************************************
 			else if (command.equals("/adminChall.do")) {
 				errorMsg = "관리자 전용 챌린지 게시판 조회 중 오류 발생.";
-
+				
+				String cp = request.getParameter("cp");
+				
+				PageInfo pInfo = service.getPageInfo(cp);
+				
+				List<Challenge> acList = service.selectAdminChallList(pInfo);
+				
 				path = "/WEB-INF/views/admin/adminChall.jsp";
+				
+	            request.setAttribute("acList", acList);
+	            request.setAttribute("pInfo", pInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+				
+				
 			}
 			
 			// 챌린지 인증게시판 조회(관리) Controller **************************************************

@@ -50,6 +50,7 @@
 	}
 	
 	#adminBoard_btn2 { 
+		float: right;
 	    background-color: #dc3545;
 	    color: snow;
 	}
@@ -178,7 +179,7 @@
 
 			<%-- 검색 영역 --%>
 			<div class="adminBoard_search">
-			<form action="${contextPath}/adminSearch.do" method="GET">
+			<form action="${contextPath}/adminSearch/board.do" method="GET">
 				<select id="adminBoard_search" name="sk" required>
 	                <option selected value="no">번호</option>
 	                <option value="title">제목</option>
@@ -186,9 +187,10 @@
 	                <option value="status">상태여부</option>
 	            </select>
 	            <input type="text" name="sv">
-	            <button type="button" id="adminBoard_btn">검색</button>
-	            <button type="button" id="adminBoard_btn2">삭제</button></div>
+	            <button id="adminBoard_btn">검색</button>
+	            </div>
 			</form>
+			<button id="adminBoard_btn2">삭제</button>
         </div>
     
     <div style="clear: both;"></div>

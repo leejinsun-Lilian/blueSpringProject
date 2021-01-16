@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -75,10 +76,6 @@
 						  <tbody>
 						    <tr>
 						      <th scope="row">[자유]</th>
-						      <td colspan="3"><a href="#">저희반에 인간자바가 잇어요,,,</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[정보]</th>
 						      <td colspan="3"><a href="#">동네 상담 센터에 상담 다녀온 후기</a></td>
 						    </tr>
 						    <tr>
