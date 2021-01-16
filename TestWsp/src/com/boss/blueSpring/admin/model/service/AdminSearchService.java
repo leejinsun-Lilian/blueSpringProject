@@ -9,12 +9,14 @@ import java.util.Map;
 import com.boss.blueSpring.admin.model.dao.AdminSearchDAO;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.center.model.vo.Center;
+import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminSearchService {
 	
 	private AdminSearchDAO dao = new AdminSearchDAO();
 
-	/** 검색 내용이 포함된 페이징 처리 정보 생성 Service
+	/** 검색 내용이 포함된 페이징 처리 정보 생성 Service (자유게시판)
 	 * @param map
 	 * @return pInfo
 	 * @throws Exception
@@ -42,7 +44,7 @@ public class AdminSearchService {
 	}
 
 	
-	/** 검색 조건에 따라 SQL에 사용될 조건문을 조합하는 메소드
+	/** 검색 조건에 따라 SQL에 사용될 조건문을 조합하는 메소드 (자유게시판)
 	 * @param map
 	 * @return
 	 */
@@ -77,9 +79,8 @@ public class AdminSearchService {
 		return condition;
 		
 	}
-
-
-	/** 검색 게시글 목록 리스트 조회 Service
+	
+	/** 검색 게시글 목록 리스트 조회 Service (자유게시판)
 	 * @param map
 	 * @param pInfo 
 	 * @return aList
@@ -96,6 +97,162 @@ public class AdminSearchService {
 		
 		return aList;
 		
+	}
+
+// 신고 ***************************************************************************************************
+	
+	/** 검색 내용이 포함된 페이징 처리 정보 생성 Service (신고목록)
+	 * @param map
+	 * @return pInfo
+	 * @throws Exception
+	 */
+	public PageInfo getPageInfoReport(Map<String, Object> map) throws Exception {
+		
+		Connection conn = getConnection();
+
+		map.put("currentPage", 
+				( map.get("currentPage") == null) ? 1 : Integer.parseInt((String)map.get("currentPage")) );
+		
+		String condition = createReportCondition(map);
+		
+		int listCount = dao.getListCountReport(conn, condition);
+		
+		close(conn);
+		
+		return new PageInfo( (int)map.get("currentPage"), listCount);
+	}
+	
+	/** 검색 조건에 따라 SQL에 사용될 조건문을 조합하는 메소드 (신고 목록)
+	 * @param map
+	 * @return
+	 */
+	private String createReportCondition(Map<String, Object> map) {
+		
+		String condition = null;
+		
+		String searchKey = (String)map.get("searchKey");
+		String searchValue = (String)map.get("searchValue");
+		
+		switch(searchKey) {
+		case "reportNo" : 
+			condition = "REPORT_NO = " + searchValue;
+			break;
+
+		case "reportType" : 
+			condition = "REPORT_TYPE LIKE '%' || '" + searchValue + "' || '%' ";
+			break;
+
+		case "brdNo" : 
+			condition = "BRD_NO = " + searchValue;                    
+			break;
+		}
+		
+		return condition;
+	}
+
+
+	/** 신고목록 검색 Service
+	 * @param map
+	 * @param pInfo
+	 * @return rList;
+	 * @throws Exception
+	 */
+	public List<Report> searchReportList(Map<String, Object> map, PageInfo pInfo) throws Exception {
+		Connection conn = getConnection();
+		
+		String condition = createReportCondition(map);
+		
+		List<Report> rList = dao.searchReportList(conn, pInfo, condition);
+		
+		close(conn);
+		
+		return rList;
+	}
+
+	// 센터 ***************************************************************************************************
+	
+	
+	/** 센터 : 검색 내용이 포함된 페이징 처리 정보 생성 Service
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public PageInfo getPageInfoCenter(Map<String, Object> map) throws Exception {
+		
+		Connection conn = getConnection();
+
+		map.put("currentPage", 
+				( map.get("currentPage") == null) ? 1 : Integer.parseInt((String)map.get("currentPage")) );
+		
+		String condition = createCenterCondition(map);
+		
+		int listCount = dao.getListCountCenter(conn, condition);
+		
+		close(conn);
+		
+		return new PageInfo( (int)map.get("currentPage"), listCount);
+		
+		
+		
+		
+	}
+
+	/** 검색 조건에 따라 SQL에 사용될 조건문을 조합하는 메소드 (센터)
+	 * @param map
+	 * @return
+	 */
+	private String createCenterCondition(Map<String, Object> map) throws Exception {
+		
+		String condition = null;
+		
+		String searchKey = (String)map.get("searchKey");
+		String searchValue = (String)map.get("searchValue");
+		
+		switch(searchKey) {
+		case "centerNo" : 
+			condition = " CENTER_NO = " + searchValue;
+			break;
+
+		case "centerCla" : 
+			condition = " CENTER_CLA LIKE '%' || '" + searchValue + "' || '%' ";
+			break;
+			
+		case "centerArea1" : 
+			condition = " CENTER_AREA1 LIKE '%' || '" + searchValue + "' || '%' ";
+			break;
+
+		case "centerArea2" : 
+			condition = " CENTER_AREA2 LIKE '%' || '" + searchValue + "' || '%' ";
+			break;
+
+		case "centerNm" : 
+			condition = " CENTER_NM LIKE '%' || '" + searchValue + "' || '%' ";
+			break;
+			
+		}
+		
+		return condition;
+		
+	}
+
+
+	/** 센터 목록 검색 Service
+	 * @param map
+	 * @param pInfo
+	 * @return cList;
+	 * @throws Exception
+	 */
+	public List<Center> searchCenterList(Map<String, Object> map, PageInfo pInfo) throws Exception {
+		
+		Connection conn = getConnection();
+		
+		String condition = createCenterCondition(map);
+		
+		List<Center> cList = dao.searchCenterList(conn, pInfo, condition);
+		
+		close(conn);
+		
+		return cList;
 	}
 	
 	

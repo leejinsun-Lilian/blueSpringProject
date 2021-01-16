@@ -8,6 +8,7 @@ import java.util.List;
 import com.boss.blueSpring.admin.model.dao.AdminDAO;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.report.model.vo.Report;
 
@@ -16,7 +17,7 @@ public class AdminService {
 	private AdminDAO dao = new AdminDAO();
 
 	
-   /** 자유게시판관리 : 페이징 처리를 위한 값 계산 Service
+   /***************** 자유게시판관리 : 페이징 처리를 위한 값 계산 Service
     * @param cp
     * @return PageInfo(currentPage, listCount)
     * @throws Exception
@@ -25,21 +26,14 @@ public class AdminService {
 
 		Connection conn = getConnection();
 
-		// cp가 null일 경우
-		// 주소창에 보여지는 ?cp=n 부분을 정함
 		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
 
-		// DB에서 전체 게시글 수를 조회하여 반환 받기
 		int listCount = dao.getListCount(conn);
 
 		close(conn);
 
-		// 얻어온 현재 페이지와, DB에서 조회한 전체 게시글 수를 이용하여
-		// PageInfo 객체 생성
 		return new PageInfo(currentPage, listCount);
-
 	}
-
 
 	/** 자유게시판관리 : 게시글 목록 조회 Service
 	 * @param pInfo
@@ -54,15 +48,35 @@ public class AdminService {
 		close(conn);
 
 		return aList;
-
 	}
 
-
+// ******************************************************* 챌린지 관리
+	
 	public List<Challenge> selectAdminChallList(PageInfo pInfo) throws Exception {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
+// ******************************************************* 신고 목록
+	
+	   /** 신고 목록 관리 : 페이징 처리를 위한 값 계산 Service
+	    * @param cp
+	    * @return PageInfo(currentPage, listCount)
+	    * @throws Exception
+	    */
+		public PageInfo getPageInfoReport(String cp) throws Exception {
+
+			Connection conn = getConnection();
+
+			int currentPage = cp == null ? 1 : Integer.parseInt(cp);
+
+			int listCount = dao.getReportListCount(conn);
+
+			close(conn);
+
+			return new PageInfo(currentPage, listCount);
+			
+		}
 
 	/** 신고 목록 조회 Service
 	 * @param pInfo
@@ -78,7 +92,46 @@ public class AdminService {
 		close(conn);
 
 		return rList;
+	}
+
+	
+	
+	
+//	******************************************************* 센터
+	
+	/** 센터 목록 관리 : 페이징 처리를 위한 값 계산 Service
+	 * @param cp
+	 * @return
+	 * @throws Exception
+	 */
+	public PageInfo getPageInfoCenter(String cp) throws Exception {
+
+		Connection conn = getConnection();
+
+		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
+
+		int listCount = dao.getCenterListCount(conn);
+
+		close(conn);
+
+		return new PageInfo(currentPage, listCount);
+	}
+
+	/** 센터 목록 조회 Service
+	 * @param pInfo
+	 * @return cList
+	 * @throws Exception
+	 */
+	public List<Center> selectCenterList(PageInfo pInfo) throws Exception {
+
+		Connection conn = getConnection();
 		
+		List<Center> cList = dao.selectCenterList(conn, pInfo);
+
+		close(conn);
+
+		return cList;
+
 	}
 
 

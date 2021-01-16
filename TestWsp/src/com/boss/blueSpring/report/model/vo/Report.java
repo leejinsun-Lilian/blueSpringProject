@@ -10,14 +10,15 @@ public class Report {
 	private int reportCategoryNo;   // 신고 유형
 	private Date reportCreateDate;  // 신고접수일
 	private String reportDeleteFl;  // 신고글 삭제 유무
-	private String memberId;		// 신고한 회원
+	private String memberId;		// 신고 회원 아이디
+	private String targetId;		// 신고당한 회원
+	
 	
 	public Report() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Report(int reportNo, String reportType, int boardNo, int memberNo, int reportCategoryNo,
-			Date reportCreateDate, String reportDeleteFl, String memberId) {
+			Date reportCreateDate, String reportDeleteFl, String memberId, String targetId) {
 		super();
 		this.reportNo = reportNo;
 		this.reportType = reportType;
@@ -26,17 +27,19 @@ public class Report {
 		this.reportCategoryNo = reportCategoryNo;
 		this.reportCreateDate = reportCreateDate;
 		this.reportDeleteFl = reportDeleteFl;
-		this.setMemberId(memberId);
+		this.memberId = memberId;
+		this.targetId = targetId;
 	}
 	
 	// admin 신고 목록 조회 생성자
-	public Report(int reportNo, String reportType, int boardNo, int reportCategoryNo, String memberId) {
+	public Report(int reportNo, String reportType, int boardNo, int reportCategoryNo, String memberId, String targetId) {
 		super();
 		this.reportNo = reportNo;
 		this.reportType = reportType;
 		this.boardNo = boardNo;
 		this.reportCategoryNo = reportCategoryNo;
-		this.setMemberId(memberId);
+		this.memberId = memberId;
+		this.targetId = targetId;
 	}
 
 	public int getReportNo() {
@@ -99,7 +102,15 @@ public class Report {
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", reportType=" + reportType + ", boardNo=" + boardNo + ", memberNo="
 				+ memberNo + ", reportCategoryNo=" + reportCategoryNo + ", reportCreateDate=" + reportCreateDate
-				+ ", reportDeleteFl=" + reportDeleteFl + ", memberId=" + memberId + "]";
+				+ ", reportDeleteFl=" + reportDeleteFl + ", memberId=" + memberId + ", targetId=" + targetId + "]";
+	}
+
+	public String getTargetId() {
+		return targetId;
+	}
+
+	public void setTargetId(String targetId) {
+		this.targetId = targetId;
 	}
 
 	public String getMemberId() {
