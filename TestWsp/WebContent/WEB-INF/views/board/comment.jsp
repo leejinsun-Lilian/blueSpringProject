@@ -110,7 +110,7 @@
     
 		<!-- 스크립트 영역 -->
     <script> /*"${loginMember.memberId}"*/
-				var loginMemberId = 'admin'; 
+				var loginMemberId = 'user02'; 
         var parentBoardNo = ${board.boardNo};
         
         // 페이지 로딩 완료 시 댓글 목록 호출
@@ -188,7 +188,7 @@
   				
   			} else {
   				// ${loginMember.memberNo}
-  				var commentWriter = 3;
+  				var commentWriter = 22;
   				
   				$.ajax({
   					url : "${contextPath}/comment/insertComment.do",
@@ -309,12 +309,13 @@
     
     // 댓글 신고 
     function reportComment(commentNo){
-			if(window.confirm("보고 있는 게시글을 신고하시겠습니까?")) {
+			if(window.confirm("보고 있는 댓글을 신고하시겠습니까?")) {
 				/* $(board.memberId); */
 				var memberId = 3;
+				var target = "${board.memberId}";
 				var comNo = commentNo;
 				
-				var url = "${contextPath}/commentReportForm.do?comNo=" + comNo + "&memNo=" + memberId;
+				var url = "${contextPath}/commentReportForm.do?comNo=" + comNo + "&memNo=" + memberId + "&target=" + target;
 				var title = "신고하기";
 				var option = "width = 700, height = 400, top = 300, left = 600, location = no";
 				

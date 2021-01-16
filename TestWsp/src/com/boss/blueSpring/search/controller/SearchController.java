@@ -24,9 +24,9 @@ public class SearchController extends HttpServlet {
 		String searchKey = request.getParameter("sk");
 		String searchValue = request.getParameter("sv");
 		String cp = request.getParameter("cp");
-		String categotyName = request.getParameter("cn");
+		String categoryName = request.getParameter("cn");
 		
-		System.out.println(categotyName);
+		// System.out.println(categoryName);
 		
 		try {
 			SearchService service = new SearchService();
@@ -35,7 +35,7 @@ public class SearchController extends HttpServlet {
 			map.put("searchKey", searchKey);
 			map.put("searchValue", searchValue);
 			map.put("currentPage", cp);
-			map.put("categoryName", categotyName);
+			map.put("categoryName", categoryName);
 			
 			PageInfo pInfo = service.getPageInfo(map);
 			

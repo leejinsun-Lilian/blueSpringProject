@@ -24,7 +24,7 @@ public class ReportDAO {
 	public int insertBoardReport(Connection conn, Map<String, Object> map) throws Exception {
 		int result = 0;
 		
-		String query = "INSERT INTO REPORT VALUES(SEQ_REPORTNO.NEXTVAL, 1, ?, ?, ?, DEFAULT, DEFAULT, ?)";
+		String query = "INSERT INTO REPORT VALUES(SEQ_REPORTNO.NEXTVAL, 1, ?, ?, ?, DEFAULT, DEFAULT, ?, ?)";
 
 		
 		try {
@@ -34,6 +34,7 @@ public class ReportDAO {
 			pstmt.setInt(2, (int)map.get("memberNo"));
 			pstmt.setInt(3, (int)map.get("reportCategory"));
 			pstmt.setString(4, (String)map.get("reportContent"));
+			pstmt.setString(5, (String)map.get("target"));
 			
 			result = pstmt.executeUpdate();
 			
@@ -81,7 +82,7 @@ public class ReportDAO {
 	public int insertCommentReport(Connection conn, Map<String, Object> map) throws Exception {
 		int result = 0;
 		
-		String query = "INSERT INTO REPORT VALUES(SEQ_REPORTNO.NEXTVAL, 2, ?, ?, ?, DEFAULT, DEFAULT, ?)";
+		String query = "INSERT INTO REPORT VALUES(SEQ_REPORTNO.NEXTVAL, 2, ?, ?, ?, DEFAULT, DEFAULT, ?, ?)";
 
 		
 		try {
@@ -91,6 +92,7 @@ public class ReportDAO {
 			pstmt.setInt(2, (int)map.get("memberNo"));
 			pstmt.setInt(3, (int)map.get("reportCategory"));
 			pstmt.setString(4, (String)map.get("reportContent"));
+			pstmt.setString(5, (String)map.get("target"));
 			
 			result = pstmt.executeUpdate();
 			

@@ -29,12 +29,15 @@ public class BoardReportController extends HttpServlet {
 		
 		int reportCategory = Integer.parseInt(request.getParameter("reportCategory"));
 		String reportContent = request.getParameter("reportContent");
+		String target = request.getParameter("target");
 		int boardNo = Integer.parseInt(request.getParameter("brdNo"));
 		int memberNo = Integer.parseInt(request.getParameter("memNo"));
 		
-		System.out.println("=================[신고]");
+
 		
-//		
+//		System.out.println("=================[신고]");
+		
+//		System.out.println(target);
 //		System.out.println(reportContent);
 //		System.out.println(boardNo);
 //		System.out.println(memberNo);
@@ -47,6 +50,7 @@ public class BoardReportController extends HttpServlet {
 			map.put("reportContent", reportContent);
 			map.put("boardNo", boardNo);
 			map.put("memberNo", memberNo);
+			map.put("target", target);
 			
 			System.out.println(map);
 			

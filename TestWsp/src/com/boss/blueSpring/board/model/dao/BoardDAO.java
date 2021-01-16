@@ -89,7 +89,7 @@ public class BoardDAO {
 			while(rset.next()) {
 				Board board = new Board(rset.getInt("BRD_NO"), 
 						rset.getString("BRD_TITLE"),
-						rset.getString("MEMBER_ID"), 
+						rset.getString("MEM_ID"), 
 						rset.getInt("BRD_VIEWS"),
 						rset.getString("CATEGORY_NM"), 
 						rset.getTimestamp("BRD_CRT_DT"),
@@ -129,7 +129,7 @@ public class BoardDAO {
 				board.setBoardNo(rset.getInt("BRD_NO"));
 				board.setBoardTitle(rset.getString("BRD_TITLE"));
 				board.setBoardContent(rset.getString("BRD_CONTENT"));
-				board.setMemberId(rset.getString("MEMBER_ID"));
+				board.setMemberId(rset.getString("MEM_ID"));
 				board.setReadCount(rset.getInt("BRD_VIEWS"));
 				board.setBoardCreateDate(rset.getTimestamp("BRD_CRT_DT"));
 				board.setBoardModifyDate(rset.getTimestamp("BRD_UPDATE_DT"));
