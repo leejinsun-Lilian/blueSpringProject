@@ -71,7 +71,7 @@
 	 	<c:choose>
 			
 			<c:when test="${!empty param.sk && !empty param.sv }">     
-				<c:url var="pageUrl" value="/search.do"/>
+				<c:url var="pageUrl" value="/noticeSearch.do"/>
 				
 				
 				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}"/>
@@ -132,12 +132,12 @@
         
         <!-- 검색 -->
         <div class="search">
-        	<form class="search-form">
+        	<form action="${contextPath}/noticeSearch.do" method="GET" class="search-form">
         		<select name="sk" class="s-form-control1">
-        			<option>제목</option>
-        			<option>작성자</option>
-        			<option>내용</option>
-        			<option>내용+제목</option>
+        			<option value="title">제목</option>
+        			<option value="content">내용</option>
+        			<option value="titcont">내용+제목</option>
+        			<option value="writer">작성자</option>
         		</select>
         		<input type="text" name="sv" class="s-form-control2">
         		<button class="s-form-control3">검색</button> 
@@ -154,8 +154,32 @@
 	<!-- 푸터 영역 -->
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     
+    <script>
     
     
-
+    
+ 	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해주는 기능
+	(function(){
+		var searchKey = "${param.sk}";
+		var searchValue = "${param.sv}";
+		
+		//select 부분에 선택되어있도록
+		$("select[name=sk] > option").each(function(index, item){
+			// index : 현재 접근중인 요소의 인덱스
+			// item : 현재 접근중인 요소
+			
+						// title        title
+			if(  $(item).val() == searchKey  ){
+				$(item).prop("selected", true);
+			}
+		});
+			
+		// 검색어 입력창에 searchValue 값 출력
+		$("input[name=sv]").val(searchValue);
+			
+		
+	})();
+	
+    </script>
 </body>
 </html>
