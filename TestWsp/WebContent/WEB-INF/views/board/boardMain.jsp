@@ -14,6 +14,9 @@
 <body>
     <jsp:include page="../common/header.jsp"></jsp:include>
     
+    <!-- 추후 session의 member로 변경 필요 -->
+    <c:set var="member" value="22"/>
+    
     <h1>자유게시판</h1>       
     <div id="board-main">
         <ul id="board-category">
@@ -36,6 +39,7 @@
                     <th>작성자</th>
                     <th>작성일</th>
                     <th>조회수</th>
+                    <th>좋아요 수</th>
                 </tr>
 
                 <c:choose>
@@ -66,6 +70,7 @@
                                     </c:choose>
                                 </td>
                                 <td>${board.readCount}</td>
+                                <td>${board.likeCount}</td>
                             </tr>
                         </c:forEach>
                     </c:otherwise>
@@ -162,8 +167,8 @@
 					var boardNo = $(this).parent().children().eq(0).text();
 					// console.log(boardNo);								
 					
-					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
-					
+					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&memberNo=${member}&no=" + boardNo + "${searchStr}";
+					// var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 					location.href = url;
 				});
 				

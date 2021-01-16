@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.Like;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 
 public class BoardDAO {
@@ -91,7 +92,8 @@ public class BoardDAO {
 						rset.getString("MEMBER_ID"), 
 						rset.getInt("BRD_VIEWS"),
 						rset.getString("CATEGORY_NM"), 
-						rset.getTimestamp("BRD_CRT_DT"));
+						rset.getTimestamp("BRD_CRT_DT"),
+						rset.getInt("LIKES"));
 				bList.add(board);
 			}
 			
@@ -132,6 +134,7 @@ public class BoardDAO {
 				board.setBoardCreateDate(rset.getTimestamp("BRD_CRT_DT"));
 				board.setBoardModifyDate(rset.getTimestamp("BRD_UPDATE_DT"));
 				board.setCategoryName(rset.getString("CATEGORY_NM"));
+				board.setLikeCount(rset.getInt("LIKES"));
 			}
 			
 		} finally {
@@ -277,6 +280,97 @@ public class BoardDAO {
 		}
 		
 		return result;
+	}
+	
+
+	/** 좋아요 증가
+	 * @param conn
+	 * @param boardNo
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertLikes(Connection conn, int boardNo, int memberNo) throws Exception {
+		int result = 0;
+		
+		String query = prop.getProperty("insertLikes");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, boardNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	/** 좋아요 감소
+	 * @param conn
+	 * @param boardNo
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteLikes(Connection conn, int boardNo, int memberNo) throws Exception {
+		int result = 0;
+		
+		String query = prop.getProperty("deleteLikes");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, boardNo);
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+
+	}
+
+	/** 좋아요 목록을 얻기 위한 DAO
+	 * @param conn
+	 * @param boardNo 
+	 * @param memberNo 
+	 * @return likeInfo
+	 * @throws Exception
+	 */
+	public Like selectLike(Connection conn, int boardNo, int memberNo) throws Exception {
+		Like likeInfo = null;
+		
+		String query = "SELECT * FROM BOARD_LIKES BRD WHERE BRD_NO = ? AND MEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, boardNo);
+			pstmt.setInt(2, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			likeInfo = new Like();
+			
+			if(rset.next()) {
+				Like like = new Like();
+				like.setBoardNo(rset.getInt("BRD_NO"));
+				like.setMemberNo(rset.getInt("MEM_NO"));
+				
+				likeInfo = like;
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return likeInfo;
 	}
 
 	

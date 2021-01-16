@@ -65,11 +65,13 @@ public class CategorySearchDAO {
 	public List<Board> searchBoardList(Connection conn, PageInfo pInfo, Map<String, Object> map) throws Exception {
 		List<Board> bList = null;
 		
-		String query = 
+		String query = 		
 				"SELECT * FROM" + 
 				"    (SELECT ROWNUM RNUM , V.*" + 
 				"    FROM" + 
-				"        (SELECT * FROM V_BOARD " + 
+				"        (SELECT BRD_NO, BRD_TITLE, BRD_CONTENT, " + 
+				"       MEMBER_ID, BRD_VIEWS, BRD_CRT_DT, BRD_UPDATE_DT, " + 
+				"       CATEGORY_NM, BRD_DEL_FL, (SELECT COUNT(*) FROM BOARD_LIKES LIKEBRD WHERE LIKEBRD.BRD_NO = VBRD.BRD_NO) LIKES FROM V_BOARD VBRD " + 
 				"        WHERE CATEGORY_NM = ? " + 
 				"        AND BRD_DEL_FL = 'N' ORDER BY BRD_NO DESC) V )" + 
 				"WHERE RNUM BETWEEN ? AND ?";
@@ -78,10 +80,6 @@ public class CategorySearchDAO {
 			// SQL 구문 조건절에 대입할 변수 생성
 			int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;
 			int endRow = startRow + pInfo.getLimit() - 1;
-			
-			System.out.println((String)map.get("categoryName"));
-			System.out.println(startRow);
-			System.out.println(endRow);
 			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, (String)map.get("categoryName"));
@@ -98,10 +96,9 @@ public class CategorySearchDAO {
 										rset.getString("MEMBER_ID"), 
 										rset.getInt("BRD_VIEWS"),
 										rset.getString("CATEGORY_NM"), 
-										rset.getTimestamp("BRD_CRT_DT"));
+										rset.getTimestamp("BRD_CRT_DT"),
+										rset.getInt("LIKES"));
 				bList.add(board);
-				
-				System.out.println(board);
 			}
 			
 		} finally {

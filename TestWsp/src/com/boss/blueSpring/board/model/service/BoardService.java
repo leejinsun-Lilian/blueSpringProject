@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.boss.blueSpring.board.model.dao.BoardDAO;
 import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.Like;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 
 public class BoardService {
@@ -362,6 +363,53 @@ public class BoardService {
 		else			rollback(conn);
 		
 		return result;
+	}
+
+
+	/** 좋아요 Service
+	 * @param boardNo
+	 * @param memberNo
+	 * @param likeCount 
+	 * @throws Exception
+	 */
+	public int boardLike(int boardNo, int memberNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int like = 0;
+		int result = 0;
+		
+		try{
+			result = dao.insertLikes(conn, boardNo, memberNo);
+			like = 1;
+		}catch(Exception e){
+			result = dao.deleteLikes(conn, boardNo, memberNo);
+			like = 0;
+		}
+		
+		if(result > 0)	commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		return like;
+	}
+
+
+	/** 좋아요 목록 얻어오기
+	 * @param memberNo 
+	 * @param boardNo 
+	 * @param memberNo 
+	 * @return likeList
+	 * @throws Exception
+	 */
+	public Like selectLike(int boardNo, int memberNo) throws Exception {
+		Connection conn = getConnection();
+		
+		Like likeInfo = dao.selectLike(conn, boardNo, memberNo);
+		
+		close(conn);
+		
+		return likeInfo;
 	}
 
 
