@@ -22,11 +22,13 @@ public class CategorySearch extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		String categoryName = request.getParameter("cn");
-//		String searchKey = request.getParameter("sk");
-//		String searchValue = request.getParameter("sv");
+		String searchKey = request.getParameter("sk");
+		String searchValue = request.getParameter("sv");
 		String cp = request.getParameter("cp");	
 		
-		
+//		System.out.println(searchKey);
+//		System.out.println(searchValue);
+//		System.out.println(categoryName);
 		
 		String path = null;
 		RequestDispatcher view = null;
@@ -36,6 +38,8 @@ public class CategorySearch extends HttpServlet {
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("categoryName", categoryName);
+			map.put("searchValue", searchValue);
+			map.put("searchKey", searchKey);
 			map.put("currentPage", cp);			
 			
 			PageInfo pInfo = service.getPageInfo(map);

@@ -92,12 +92,12 @@
 					<%-- 검색 후 생성된 페이지일 경우 --%>
 					<c:when test="${!empty param.sk && !empty param.sv}">
 						<c:url var="pageUrl" value="/search.do"/>
-						<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}&categoryName=${param.cn}" />
+						<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}" />
 					</c:when>
 					<%-- 카테고리 선택 후 생성된 페이지일 경우 --%>
-					<c:when test="${!empty param.categoryName}">
+					<c:when test="${!empty param.cn}">
 						<c:url var="pageUrl" value="/categorySearch.do"/>
-						<c:set var="searchStr" value="&categoryName=${param.categoryName}" />
+						<c:set var="searchStr" value="&cn=${param.cn}" />
 					</c:when>
 					<%-- 검색을 하지 않았을 경우 --%>
 					<c:otherwise>
@@ -152,7 +152,7 @@
                 <option value="titcont">제목 + 내용</option>
             </select>
             <input type="text" name="sv">
-            <input id="cn" type="text" name="cn" value="${param.categoryName}">
+            <input id="cn" type="text" name="cn" value="${param.cn}">
             <button><i class="fas fa-search"></i></button> 
            </form>     
        	</div>

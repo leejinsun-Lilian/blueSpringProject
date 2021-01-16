@@ -51,26 +51,9 @@ public class SearchService {
 		String searchValue = (String)map.get("searchValue");
 		String categoryName = (String)map.get("categoryName");
 		
-		if(categoryName.length() == 0) { // 카테고리 선택 안했을시
-			switch(searchKey) {
-			case "title" : 
-				condition = " BRD_TITLE LIKE '%' || '" + searchValue + "' || '%' ";
-				break;
-				
-			case "content" : 
-				condition = " BRD_CONTENT LIKE '%' || '" + searchValue + "' || '%' ";
-				break;
-				
-			case "titcont" : 
-				condition = " (BRD_TITLE LIKE '%' || '" + searchValue + "' || '%' "
-						  + "OR BRD_CONTENT LIKE '%' || '" + searchValue + "' || '%') "  ;                    
-				break;
-				
-			case "writer" : 
-				condition = " MEMBER_ID LIKE '%' || '" + searchValue + "' || '%' ";
-				break;
-			}			
-		} else { // 카테고리 선택 시
+		int flag;
+		
+		if(categoryName.length() > 0) {
 			switch(searchKey) {
 			case "title" : 
 				condition = " BRD_TITLE LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
@@ -88,8 +71,48 @@ public class SearchService {
 			case "writer" : 
 				condition = " MEMBER_ID LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
 				break;
+			}
+		} else {
+			switch(searchKey) {
+			case "title" : 
+				condition = " BRD_TITLE LIKE '%' || '" + searchValue + "' || '%'";
+				break;
+				
+			case "content" : 
+				condition = " BRD_CONTENT LIKE '%' || '" + searchValue + "' || '%'";
+				break;
+				
+			case "titcont" : 
+				condition = " (BRD_TITLE LIKE '%' || '" + searchValue + "' || '%' "
+						  + "OR BRD_CONTENT LIKE '%' || '" + searchValue + "' || '%')";                  
+				break;
+				
+			case "writer" : 
+				condition = " MEMBER_ID LIKE '%' || '" + searchValue + "' || '%'";
+				break;
 			}	
 		}
+
+		
+//		switch(searchKey) {
+//		case "title" : 
+//			condition = " BRD_TITLE LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
+//			break;
+//			
+//		case "content" : 
+//			condition = " BRD_CONTENT LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
+//			break;
+//			
+//		case "titcont" : 
+//			condition = " (BRD_TITLE LIKE '%' || '" + searchValue + "' || '%' "
+//					  + "OR BRD_CONTENT LIKE '%' || '" + searchValue + "' || '%') AND CATEGORY_NM = " + "'" + categoryName + "'";                  
+//			break;
+//			
+//		case "writer" : 
+//			condition = " MEMBER_ID LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
+//			break;
+//		}
+
 		
 		
 		

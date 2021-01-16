@@ -29,6 +29,7 @@ public class CommentReportController extends HttpServlet {
 		
 		int reportCategory = Integer.parseInt(request.getParameter("reportCategory"));
 		String reportContent = request.getParameter("reportContent");
+		String target = request.getParameter("target");
 		int commentNo = Integer.parseInt(request.getParameter("comNo"));
 		int memberNo = Integer.parseInt(request.getParameter("memNo"));
 		
@@ -45,6 +46,7 @@ public class CommentReportController extends HttpServlet {
 			Map<String,Object> map = new HashMap<String,Object>();
 			map.put("reportCategory", reportCategory);
 			map.put("reportContent", reportContent);
+			map.put("target", target);
 			map.put("commentNo", commentNo);
 			map.put("memberNo", memberNo);
 			

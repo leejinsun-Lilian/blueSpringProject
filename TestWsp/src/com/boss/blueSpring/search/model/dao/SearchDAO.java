@@ -61,7 +61,7 @@ public class SearchDAO {
 				"    (SELECT ROWNUM RNUM , V.*" + 
 				"    FROM" + 
 				"        (SELECT BRD_NO, BRD_TITLE, BRD_CONTENT, " + 
-				"       MEMBER_ID, BRD_VIEWS, BRD_CRT_DT, BRD_UPDATE_DT, " + 
+				"       MEM_ID, BRD_VIEWS, BRD_CRT_DT, BRD_UPDATE_DT, " + 
 				"       CATEGORY_NM, BRD_DEL_FL, (SELECT COUNT(*) FROM BOARD_LIKES LIKEBRD WHERE LIKEBRD.BRD_NO = VBRD.BRD_NO) LIKES FROM V_BOARD VBRD " + 
 				"        WHERE " + condition + 
 				"        AND BRD_DEL_FL = 'N' ORDER BY BRD_NO DESC) V )" + 
@@ -83,7 +83,7 @@ public class SearchDAO {
 			while(rset.next()) {
 				Board board = new Board(rset.getInt("BRD_NO"), 
 										rset.getString("BRD_TITLE"),
-										rset.getString("MEMBER_ID"), 
+										rset.getString("MEM_ID"), 
 										rset.getInt("BRD_VIEWS"),
 										rset.getString("CATEGORY_NM"), 
 										rset.getTimestamp("BRD_CRT_DT"),
