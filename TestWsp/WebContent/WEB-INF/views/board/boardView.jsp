@@ -13,6 +13,10 @@
 </head>
 <body>
     <c:set var="contextPath" scope="application" value="${pageContext.servletContext.contextPath}"></c:set>
+    
+    <!-- 추후 session의 member로 변경 필요 -->
+    <c:set var="member" value="22"/>
+    
     <jsp:include page="../common/header.jsp"></jsp:include>
 
     <h1>자유게시판</h1>  
@@ -46,7 +50,24 @@
             <h3>${board.categoryName}</h3>
             ${board.boardContent}               
         </div>
-
+        <br>
+        <br>
+        
+        
+        <!-- 로그인 한 상태고 자신의 글이 아닐 시에만  -->
+        <div id="like-area">					
+						<c:if test="${likeInfo.boardNo == board.boardNo && likeInfo.memberNo == member}">
+								<i id="like-btn" class="fas fa-heart">&nbsp;${board.likeCount}</i>
+						</c:if>
+						
+						<c:if test="${likeInfo.boardNo != board.boardNo || likeInfo.memberNo != member}">
+								<i id="like-btn" class="far fa-heart">&nbsp;${board.likeCount}</i>
+						</c:if>
+						
+        </div>
+        
+        
+        
 				<jsp:include page="comment.jsp"></jsp:include>
     
     <button type="button" id="back-board-main" onclick="location.href='list.do?cp=${param.cp}'">목록으로</button>	
@@ -90,6 +111,47 @@
 					window.open(url, title, option);
 				}
 			});  
+  		
+  		
+  		
+			var boardNo = ${board.boardNo};
+			var memberNo = ${member}; // memberNo로 변경 필요
+			var likeCount = ${board.likeCount};
+			
+			var i;
+  		
+			$(document).on("click","#like-btn",function(){
+  		//$("#like-btn").on("click", function() {			
+    		$.ajax({   			
+    			url : "${contextPath}/board/boardLike.do",
+    			data : {"boardNo" : boardNo,
+    							"memberNo" : memberNo,
+    							"likeCount" : likeCount}, 
+					success : function(likeFlag) {
+						
+						$("#like-area").html("");
+						
+						if(likeFlag == 1) {		
+								i = $("<i>").addClass("fas fa-heart").attr("id", "like-btn");
+								likeCount = likeCount + 1;
+								$("#like-area").append(i).append("&nbsp;").append(likeCount);
+								
+						} else if(likeFlag == 0) {
+								i = $("<i>").addClass("far fa-heart").attr("id", "like-btn");
+								if(likeCount > 0) {
+									likeCount = likeCount - 1;
+								}							
+								$("#like-area").append(i).append("&nbsp;").append(likeCount);
+						}
+						
+						
+					}, 
+      		error : function(request, status, error) {
+       	      alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+       		}    										
+    		});   		
+  		});
+  				
 	 </script>
 
 

@@ -42,12 +42,6 @@ public class CategorySearch extends HttpServlet {
 			
 			List<Board> bList = service.searchBoardList(map, pInfo);
 			
-			if(bList != null) {
-				System.out.println(bList);
-			} else {
-				System.out.println("333");
-			}
-			
 			path = "/WEB-INF/views/board/boardMain.jsp";
 			
 			request.setAttribute("bList", bList);

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.boss.blueSpring.board.model.service.BoardService;
 import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.Like;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.common.MyFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
@@ -70,8 +71,12 @@ public class BoardController extends HttpServlet {
 				errorMsg = "게시글 상세 조회 과정에서 오류 발생.";
 				
 				int boardNo = Integer.parseInt(request.getParameter("no"));
+				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 				
 				Board board = service.selectBoard(boardNo);
+				
+				// 좋아요 목록을 담기 위한 리스트 (jsp에서 비교 후 아이콘 출력 위해)
+				Like likeInfo = service.selectLike(boardNo, memberNo);
 				
 				if(board != null) {
 					// 첨부파일 조회 추가 작업 필요
@@ -80,6 +85,7 @@ public class BoardController extends HttpServlet {
 					
 					path = "/WEB-INF/views/board/boardView.jsp";
 					request.setAttribute("board", board);
+					request.setAttribute("likeInfo", likeInfo);
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
 					
@@ -254,6 +260,18 @@ public class BoardController extends HttpServlet {
 				request.getSession().setAttribute("swalTitle", swalTitle);
 				response.sendRedirect(path);
 				
+			}
+			
+			// ===== 게시글  좋아요 Controller =====
+			else if(command.equals("/boardLike.do")) {
+				errorMsg = "좋아요 등록 과정에서 오류 발생.";
+				
+				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+				
+				int likeFlag = service.boardLike(boardNo, memberNo);
+				
+				response.getWriter().print(likeFlag);
 			}
 			
 		} catch (Exception e) {
