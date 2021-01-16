@@ -33,6 +33,16 @@ public class Board {
 		this.likeCount = likeCount;
 	}
 
+	// admin 자유게시판 관리 (게시글 조회)
+	public Board(int boardNo, String boardTitle, String memberId, String boardStatus) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.memberId = memberId;
+		this.boardStatus = boardStatus;
+
+	}
+
 
 	public Board(int boardNo, String boardTitle, Timestamp boardCreateDate, String boardContent, int readCount,
 			String boardStatus, Timestamp boardModifyDate, String memberId, String categoryName, int likeCount) {

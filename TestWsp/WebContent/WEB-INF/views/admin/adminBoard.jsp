@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -39,7 +42,7 @@
 	
 	.adminBoard_search{ text-align: center; }
 	
-	.page-item > a, .page-item > a:hover{ color: black; }
+	.pagination > li > a, .pagination > li > a:hover{ color: black; }
 	
 	#adminBoard_btn { 
 	    background-color: #343a40;
@@ -70,62 +73,156 @@
                         <th scope="col">번호</th>
                         <th scope="col">제목</th>
                         <th scope="col">작성자</th>
-                        <th scope="col">삭제여부</th>
+                        <th scope="col">상태여부</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">111</th>
-                        <td>자유게시판 제목 작성</td>
-                        <td>user01</td>
-                        <td>N</td>
-                      </tr>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">222</th>
-                        <td>아비어 탱고 노래 좋음</td>
-                        <td>user02</td>
-                        <td>N</td>
-                      </tr>
+                    
+                    <c:choose>
+                    <c:when test="${empty aList}">
+                        <tr>
+                            <td colspan="5">존재하는 게시글이 없습니다.</td>
+                        </tr>
+                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="board" items="${aList}">
+                            <tr>
+                            	<td><input type="checkbox"></td>
+                                <th scope="row">${board.boardNo}</th>
+                                <td>${board.boardTitle}</td>
+                                <td>${board.memberId}</td>
+                                <td>${board.boardStatus}</td>
+							</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                
                     </tbody>
                   </table>
             </div>
+            
+            <%---------------------- Pagination ----------------------%>
+			<%-- 페이징 처리 주소를 쉽게 사용할 수 있도록 미리 변수에 저장 --%>
+			<c:choose>
+				<%-- 검색 내용이 파라미터에 존재할 때 == 검색을 통해 만들어진 페이지인가? --%>
+				<c:when test="${!empty param.sk && !empty param.sv }">
+					<c:url var="pageUrl" value="/search.do"/>
+					
+					<%-- 쿼리스트링으로 사용할 내용을 변수에 저장 --%>
+					<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />
+				</c:when>
+				
+				<%-- 검색을 하지 않았을 경우 --%>
+				<c:otherwise>
+					<c:url var="pageUrl" value="/admin/adminBoard.do"/>		
+				</c:otherwise>
+			</c:choose>
 
-            <div class="page_area">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+			<!-- 화살표에 들어갈 주소를 변수로 생성 -->
+			 
+			<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
+			<c:set var="lastPage" value="${pageUrl}?cp=${pInfo.maxPage}${searchStr}"/>
+			 
+			 <fmt:parseNumber var="c1" value="${(pInfo.currentPage - 1) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="prev" value="${ c1 * 10 }" integerOnly="true" />
+			 <c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
+			 
+			 <fmt:parseNumber var="c2" value="${(pInfo.currentPage + 9) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />
+			 <c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
 
 
-            <div class="adminBoard_search"><select id="adminBoard_search" name="adminBoard_search" required>
-                <option selected>번호</option>
-                <option>제목</option>
-                <option>작성자</option>
-                <option>삭제여부</option>
-            </select>
-            <input type="text"> <button type="button" id="adminBoard_btn">검색</button>
-            <button type="button" id="adminBoard_btn2">삭제</button></div>
 
+			<div class="page_area">
+				<ul class="pagination justify-content-center">
+
+					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
+					<c:if test="${pInfo.currentPage > 10}">
+						<li>
+							<!-- 첫 페이지로 이동(<<) --> <a class="page-link" href="${firstPage}">&lt;&lt;</a>
+						</li>
+
+						<li>
+							<!-- 이전 페이지로 이동 (<) --> <a class="page-link" href="${prevPage}">&lt;</a>
+						</li>
+					</c:if>
+
+					<!-- 페이지 목록 -->
+					<c:forEach var="page" begin="${pInfo.startPage}"
+						end="${pInfo.endPage}">
+						<c:choose>
+							<c:when test="${pInfo.currentPage == page }">
+								<li><a class="page-link">${page}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a class="page-link"
+									href="${pageUrl}?cp=${page}${searchStr}">${page}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
+					<c:if test="${next <= pInfo.maxPage}">
+						<li>
+							<!-- 다음 페이지로 이동 (>) --> <a class="page-link" href="${nextPage}">&gt;</a>
+						</li>
+						<li>
+							<!-- 마지막 페이지로 이동(>>) --> <a class="page-link" href="${lastPage}">&gt;&gt;</a>
+						</li>
+
+					</c:if>
+
+				</ul>
+			</div>
+
+			<%-- 검색 영역 --%>
+			<div class="adminBoard_search">
+			<form action="${contextPath}/adminSearch.do" method="GET">
+				<select id="adminBoard_search" name="sk" required>
+	                <option selected value="no">번호</option>
+	                <option value="title">제목</option>
+	                <option value="writer">작성자</option>
+	                <option value="status">상태여부</option>
+	            </select>
+	            <input type="text" name="sv">
+	            <button type="button" id="adminBoard_btn">검색</button>
+	            <button type="button" id="adminBoard_btn2">삭제</button></div>
+			</form>
         </div>
     
     <div style="clear: both;"></div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     </div>
+    
+    
+    <script>
+	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해두는 기능
+	(function(){
+		var searchKey = "${param.sk}";
+		// 파라미터 중 sk가 있을 경우 ex)	"49"
+		// 파라미터 중 sk가 없을 경우 ex)	""
+		
+		var searchValue = "${param.sv}";
+		
+		// 검색창 select의 option을 반복 접근
+		$("select[name=sk] > option").each(function(index, item){
+			// index : 현재 접근중인 요소의 인덱스
+			// item : 현재 접근중인 요소
+			
+				// title(content) 	title(content)
+			if( $(item).val() == searchKey ){
+				$(item).prop("selected", true);
+			}
+		});
+		
+		// 검색어 입력창에 searchValue 값 출력
+		$("input[name=sv]").val(searchValue);
+		
+	})();
+	
+	</script>
+    
+    
 </body>
 </html>
