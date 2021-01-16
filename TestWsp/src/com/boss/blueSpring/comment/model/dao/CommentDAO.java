@@ -56,7 +56,7 @@ public class CommentDAO {
 				comment.setComNo(rset.getInt("COM_NO"));
 				comment.setComContent(rset.getString("COM_CONTENT"));
 				comment.setComCreateDate(rset.getTimestamp("COM_CRT_DT"));
-				comment.setMemberId(rset.getString("MEMBER_ID"));
+				comment.setMemberId(rset.getString("MEM_ID"));
 				
 				cList.add(comment);
 			}

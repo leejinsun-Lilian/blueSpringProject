@@ -17,17 +17,19 @@ public class CommentReportFormController extends HttpServlet {
 		
 		String commentNo = request.getParameter("comNo");
 		String memberId = request.getParameter("memNo");
+		String target = request.getParameter("target");
 		
 //		System.out.println("=================[변환창]");
 //		System.out.println(boradNo);
-//		System.out.println(memberId);
-		
-		System.out.println(commentNo);
+//		System.out.println(memberId);				
+//		System.out.println(commentNo);
+//		System.out.println(target);
 		
 		try {
 			
 			request.setAttribute("commentNo", commentNo);
 			request.setAttribute("memberId", memberId);
+			request.setAttribute("target", target);
 			
 			String path = "/WEB-INF/views/board/commentReport.jsp";
 			RequestDispatcher view = request.getRequestDispatcher(path);

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../../resources/css/notice/noticeMain.css">
+<link rel="stylesheet" href="../../resources/css/center/centerSearch.css">
 <style>
     
     #centerWrapper {

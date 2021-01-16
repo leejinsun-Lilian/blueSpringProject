@@ -55,7 +55,10 @@
 #list-table td:nth-child(4){ width: 7%; }
 #list-table td:nth-child(5){ width: 15%; }
 
-
+/* 짝수 줄에 색깔 지정 */
+tr:nth-child(2n){
+   background-color : #ebedf1fa;
+}
 
 /* 글쓰기 버튼 */
 .writer-bt{
@@ -132,6 +135,14 @@
 	color : #283e69;
 	background-color : #dee2e6; 
 }
+/* .a:not([href]) {
+    color: inherit;
+}
+ */
+/* 페이징 해당 숫자에 밑줄 */
+/* text-decoration: underline; */
+
+
 
 /* ----------------------------------------------------------------- */
 /* 검색 부분 */
@@ -149,19 +160,22 @@
 	text-align: center;
 }
 .s-form-control1{
+	border: 1px solid #dee2e6;
 	width: 100px;
 	height: 100%;
 }
 .s-form-control2{
+	border: 1px solid #dee2e6;
 	width: 200px;
 	height: 90%;
 	padding : 0 0 0 0;
 }
 .s-form-control3{
+	border: 1px solid #dee2e6;
 	width: 80px;
 	height: 100%;
 	padding : 0 0 0 0;
-	background-color: #3498db;
+	background-color: #87cefa;
 }
 
 

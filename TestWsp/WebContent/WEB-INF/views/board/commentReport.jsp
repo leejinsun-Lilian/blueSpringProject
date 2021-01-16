@@ -59,6 +59,7 @@
 	
 						<input type="text" class="hidden-form" name="comNo" value="${commentNo}"/>
 						<input type="text" class="hidden-form" name="memNo" value="${memberId}"/>
+						<input type="text" class="hidden-form" name="target" value="${target}"/>
 
             <textarea name="reportContent" id="report-content"></textarea>
         

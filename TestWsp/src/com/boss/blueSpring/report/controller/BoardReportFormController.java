@@ -17,8 +17,12 @@ public class BoardReportFormController extends HttpServlet {
 
 		String boradNo = request.getParameter("brdNo");
 		String memberId = request.getParameter("memNo");
+		String target = request.getParameter("target");
+		
+
 		
 //		System.out.println("=================[변환창]");
+//		System.out.println(target);
 //		System.out.println(boradNo);
 //		System.out.println(memberId);
 		
@@ -26,6 +30,7 @@ public class BoardReportFormController extends HttpServlet {
 			
 			request.setAttribute("boradNo", boradNo);
 			request.setAttribute("memberId", memberId);
+			request.setAttribute("target", target);
 			
 			String path = "/WEB-INF/views/board/boardReport.jsp";
 			RequestDispatcher view = request.getRequestDispatcher(path);
