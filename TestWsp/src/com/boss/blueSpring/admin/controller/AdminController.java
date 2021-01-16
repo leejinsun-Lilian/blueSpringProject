@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.boss.blueSpring.admin.model.service.AdminService;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.report.model.vo.Report;
 
@@ -39,7 +40,7 @@ public class AdminController extends HttpServlet {
 			AdminService service = new AdminService();
 			
 			
-			// 관리자 메인 페이지 Controller **************************************************
+			// 관리자 메인 페이지 Controller ***********************************************
 			if (command.equals("/adminMain.do")) {
 				errorMsg = "관리자 메인 페이지 조회 중 오류 발생.";
 
@@ -92,8 +93,17 @@ public class AdminController extends HttpServlet {
 			// 기관 조회 Controller **************************************************
 			else if (command.equals("/adminCenterInfo.do")) {
 				errorMsg = "기관 목록 조회 중 오류 발생.";
-
+				
+				String cp = request.getParameter("cp");
+				
+				PageInfo pInfo = service.getPageInfo(cp);
+				
+				List<Center> cList = service.selectCenterList(pInfo);
+				
 				path = "/WEB-INF/views/admin/adminCenterInfo.jsp";
+				
+	            request.setAttribute("cList", cList);
+	            request.setAttribute("pInfo", pInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);

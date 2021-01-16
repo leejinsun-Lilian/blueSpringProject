@@ -45,7 +45,7 @@
 	
 	.report_search{ text-align: center; }
 	
-	.page-item > a, .page-item > a:hover{ color: black; }
+	.pagination > li > a, .pagination > li > a:hover{ color: black; }
 	
 	#report_btn { 
 	    background-color: #343a40;
@@ -83,6 +83,7 @@
                         <th scope="col">글번호</th>
                         <th scope="col">신고카테고리번호</th>
                         <th scope="col">신고한회원</th>
+                        <th scope="col">신고당한회원</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -101,7 +102,8 @@
                                 <td>${report.reportType}</td>
                                 <td>${report.boardNo}</td>
                                 <td>${report.reportCategoryNo}</td>
-	               				<td>${report.memberId}</td>
+                                <td>${report.memberId}</td>
+	               				<td>${report.targetId}</td>
 	          				</tr>
                         </c:forEach>
                     </c:otherwise>
@@ -123,7 +125,7 @@
 				
 				<%-- 검색을 하지 않았을 경우 --%>
 				<c:otherwise>
-					<c:url var="pageUrl" value="/admin/adminBoard.do"/>		
+					<c:url var="pageUrl" value="/admin/adminReport.do"/>		
 				</c:otherwise>
 			</c:choose>
 
@@ -187,12 +189,13 @@
 
             <div class="report_search">
             <form action="${contextPath}/adminSearch/report.do" method="GET">
-	            <select id="report_search" name="report_search" required>
-	                <option selected>신고접수번호</option>
-	                <option>신고유형</option>
-	                <option>글번호 </option>
+	            <select id="report_search" name="sk" required>
+	                <option selected value="reportNo">신고접수번호</option>
+	                <option value="reportType">신고유형</option>
+	                <option value="brdNo">글번호 </option>
 	            </select>
-	            <input type="text"> <button type="button" id="report_btn">검색</button>
+	            <input type="text" name="sv">
+	            <button type="button" id="report_btn">검색</button>
 	            </div>
             </form>
             <button type="button" id="report_btn2">등록</button>
