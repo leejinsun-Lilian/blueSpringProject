@@ -1,6 +1,7 @@
 package com.boss.blueSpring.admin.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,13 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.boss.blueSpring.admin.model.service.AdminService;
+import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.PageInfo;
+
 @WebServlet("/admin/*")
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String uri = request.getRequestURI(); // 요청 들어오는 주소 /travel/
+		String uri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = uri.substring((contextPath + "/admin").length());
 
@@ -29,7 +34,8 @@ public class AdminController extends HttpServlet {
 		String errorMsg = null;
 
 		try {
-//			NoticeService service = new NoticeService();
+			AdminService service = new AdminService();
+			
 			
 			// 관리자 메인 페이지 Controller **************************************************
 			if (command.equals("/adminMain.do")) {
@@ -81,26 +87,42 @@ public class AdminController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 자유게시판 조회(관리) Controller **************************************************
+			// 자유게시판 관리 (목록 조회) Controller **************************************************
 			else if (command.equals("/adminBoard.do")) {
 				errorMsg = "관리자 전용 자유게시판 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
+				
+				String cp = request.getParameter("cp");
+				
+	            // 1. 페이징 처리를 위한 값 계산 Service 호출
+	            PageInfo pInfo = service.getPageInfo(cp);
+	            
+	            // 2. 게시글 목록 조회 비즈니스 로직 수행
+	            List<Board> aList = service.selectAdminList(pInfo);
+	            // pInfo에 있는 currentPage, limit를 사용해야지만
+	            // 현재 페이지에 맞는 게시글 목록만 조회할 수 있음
+	            
+				
 				path = "/WEB-INF/views/admin/adminBoard.jsp";
+				
+	            request.setAttribute("aList", aList);
+	            request.setAttribute("pInfo", pInfo);
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+
+				
+				
+				
+				
 			}
 			
 			// 챌린지 게시판 조회(관리) Controller **************************************************
 			else if (command.equals("/adminChall.do")) {
 				errorMsg = "관리자 전용 챌린지 게시판 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
 				path = "/WEB-INF/views/admin/adminChall.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -109,10 +131,8 @@ public class AdminController extends HttpServlet {
 			else if (command.equals("/adminCrtfd.do")) {
 				errorMsg = "관리자 전용 인증게시판 조회 중 오류 발생.";
 
-				// 요청을 위임할 경로 jsp 경로 지정
 				path = "/WEB-INF/views/admin/adminCrtfd.jsp";
 
-				// 요청 위임 객체 생성 후 위임 진행
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
