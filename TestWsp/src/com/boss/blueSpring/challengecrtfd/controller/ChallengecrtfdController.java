@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/challengecrtfd/*")
+@WebServlet("/challengeCrtfd/*")
 public class ChallengecrtfdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri = request.getRequestURI(); // 요청이 들어오는 주소 
 		String contextPath = request.getContextPath();
-		String command = uri.substring((contextPath + "/challengecrtfd").length());
+		String command = uri.substring((contextPath + "/challengeCrtfd").length());
 		
 		String path = null;
 		RequestDispatcher view = null;
