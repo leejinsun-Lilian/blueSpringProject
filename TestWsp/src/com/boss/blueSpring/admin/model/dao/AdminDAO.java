@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.boss.blueSpring.board.model.dao.BoardDAO;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminDAO {
 	
@@ -63,8 +64,7 @@ public class AdminDAO {
    }
 
 
-	
-	/** 자유게시판관리 : 게시글 목록 조회 Service
+	/** 자유게시판관리 : 게시글 목록 조회 DAO
 	 * @param conn
 	 * @param pInfo
 	 * @return aList
@@ -94,7 +94,7 @@ public class AdminDAO {
 	                   Board board = new Board(
 	                		   			rset.getInt("BRD_NO"), 
 	                		   			rset.getString("BRD_TITLE"),
-	                		   			rset.getString("MEMBER_ID"),
+	                		   			rset.getString("MEM_ID"),
 	                		   			rset.getString("BRD_DEL_FL"));
 	                   aList.add(board);
 	                }
@@ -106,6 +106,55 @@ public class AdminDAO {
 		return aList;
 		
 		
+	}
+
+	
+	
+	
+	
+	/** 신고 목록 조회 DAO
+	 * @param conn
+	 * @param pInfo
+	 * @return rList
+	 * @throws Exception
+	 */
+	public List<Report> selectReportList(Connection conn, PageInfo pInfo) throws Exception {
+		
+		List<Report> rList = null;
+		
+		String query = prop.getProperty("selectReportList");
+		
+		try {
+	          int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;
+	          int endRow = startRow + pInfo.getLimit() -  1;
+	          
+	          pstmt = conn.prepareStatement(query);
+	          
+	          pstmt.setInt(1, startRow);
+	          pstmt.setInt(2,  endRow);
+	          
+	          rset = pstmt.executeQuery();
+	          
+	          rList = new ArrayList<Report>();
+	          
+	             while(rset.next()) {
+	                   Report report = new Report(
+	                		   				rset.getInt("REPORT_NO"),
+	                		   				rset.getString("REPORT_TYPE"),
+	                		   				rset.getInt("BRD_NO"),
+	                		   				rset.getInt("REPORT_CATE_NO"),
+	                		   				rset.getString("MEM_ID"));
+	                   rList.add(report);
+	                }
+			
+			
+		} finally {
+	        close(rset);
+	        close(pstmt);
+		}
+		
+		
+		return rList;
 	}
 	
 	

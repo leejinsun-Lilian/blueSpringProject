@@ -8,12 +8,13 @@ import java.util.List;
 import com.boss.blueSpring.admin.model.dao.AdminDAO;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminService {
 	
 	private AdminDAO dao = new AdminDAO();
 
-	
 	
    /** 자유게시판관리 : 페이징 처리를 위한 값 계산 Service
     * @param cp
@@ -40,7 +41,6 @@ public class AdminService {
 	}
 
 
-
 	/** 자유게시판관리 : 게시글 목록 조회 Service
 	 * @param pInfo
 	 * @return aList
@@ -56,6 +56,32 @@ public class AdminService {
 		return aList;
 
 	}
+
+
+	public List<Challenge> selectAdminChallList(PageInfo pInfo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/** 신고 목록 조회 Service
+	 * @param pInfo
+	 * @return rList
+	 * @throws Exception
+	 */
+	public List<Report> selectReportList(PageInfo pInfo) throws Exception {
+		
+		Connection conn = getConnection();
+
+		List<Report> rList = dao.selectReportList(conn, pInfo);
+
+		close(conn);
+
+		return rList;
+		
+	}
+
+
 
 	
 	
