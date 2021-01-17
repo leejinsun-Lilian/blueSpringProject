@@ -51,7 +51,7 @@ public class NoSearchDAO {
 	}
 
 
-	/** 검색 게시글 목록 조회 DAO
+	/** 검색 공지글 목록 조회 DAO
 	 * @param conn
 	 * @param pInfo
 	 * @param condition

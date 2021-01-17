@@ -8,14 +8,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="${contextPath}/resources/css/header.css" type="text/css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <title>header</title>
+<style>
+*{
+}
+</style>
 </head>
 <body>
 	<c:set var="contextPath" scope="application" value="${pageContext.servletContext.contextPath}"></c:set>
 
-	<div class="header_wrap">
+		<c:if test="${!empty sessionScope.swalTitle }">
+		<script>
+			swal({
+				icon : "${swalIcon}",
+				title : "${swalTitle}",
+				text : "${swalText}"
+			});
+		</script>
 
+		<%-- 2) 한번 출력한 메세지를 Session에서 삭제 --%>
+		<c:remove var="swalIcon" />
+		<c:remove var="swalTitle" />
+		<c:remove var="swalText" />
+	</c:if>
+
+
+	<div class="header_wrap">
 		<div class="header_menu">
 			<a id="logo_link" href="${contextPath}"><img id="logo" src="${contextPath}/resources/img/bluespringlogo.png"></a>
 			<ul id="nav">
@@ -55,10 +76,26 @@
 			</ul>
 		</div>
 	
-		<div class="login">
-			<button type="button" id="header_login" onclick="location.href = '${contextPath}/member/login.do'">로그인</button>
-        	<button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
-		</div>
+	
+	<c:choose>
+		<c:when test="${empty sessionScope.loginMember}">
+			<div class="login">
+				<button type="button" id="header_login" onclick="location.href = '${contextPath}/member/login.do'">로그인</button>
+		       	<button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
+			</div>
+		</c:when>
+		
+		<c:otherwise>
+			<div class="login logging">
+				<ul>
+				<li><a href="${contextPath}/mypage/main.do">${loginMember.memberNm}</a></li>
+				<li><button type="button" id="header_logout" 
+					onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button></li>
+			</ul>
+			</div>
+		</c:otherwise>
+	</c:choose>
+		
 		
 	</div>
 

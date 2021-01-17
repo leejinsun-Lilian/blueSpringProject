@@ -13,9 +13,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>푸른봄: 로그인</title>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 </head>
 <body>
@@ -33,7 +33,7 @@
 					<div id="login_middle">
 						<div id="id_wrap">
 							<div id="id_input_area">
-								<input id="id_input" name="id_input" type="text" placeholder="아이디" required>
+								<input id="id_input" name="id_input" type="text" placeholder="아이디" value="${cookie.saveId.value}" required>
 							</div>
 						</div>
 						<div id="pw_wrap">
@@ -42,14 +42,10 @@
 							</div>
 						</div>
 
-						<div id="login_error">
-							<p id="error">유효성 검사</p>
-						</div>
-
-
-
 						<div id="id_save_area">
-							<input type="checkbox" id="id_chk" name="id_chk"> <label for="id_chk">
+							<input type="checkbox" id="id_chk" name="id_chk"
+							 <c:if test="${!empty cookie.saveId.value}">checked</c:if>
+							> <label for="id_chk">
 								<span>아이디 저장</span>
 							</label>
 						</div>
@@ -74,7 +70,7 @@
 	
 	
 			<div id="login_banner_area">
-				<a href="${contextPath}/mypage/main.do"><img id="login_banner" src="${contextPath}/resources/img/login_banner.jpg"></a>
+				<a href="${contextPath}/mypage/main.do"><img id="login_banner"></a>
 			</div>
 			
 		<!-- container 끝 -->

@@ -15,6 +15,8 @@ public class Notice {
 	
 	public Notice() {}
 
+	
+	
 	public Notice(int noticeNo, String noticeTitle, Date noticeCrtDt, String noticeContent, String noticeDelFl,
 			Date noticeUpdateDt, String memberId, int noticeViews) {
 		super();

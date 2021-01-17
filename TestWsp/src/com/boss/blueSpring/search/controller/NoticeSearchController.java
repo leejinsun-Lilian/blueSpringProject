@@ -40,22 +40,6 @@ public class NoticeSearchController extends HttpServlet {
 			// 검색 게시글 목록 조회
 			List<Notice> list = service.searchBoardList(map, pInfo);
 			
-			// 결과 확인
-			/*System.out.println(pInfo);
-			for(Board b : bList) {
-				System.out.println(b);
-			}*/
-			
-			/*
-			 * // 검색 게시글 목록 조회 성공 시 썸네일 목록 조회 수행 if(List != null) { List<Attachment> fList =
-			 * service.searchThumbnailList(map, pInfo);
-			 * 
-			 * if(!fList.isEmpty()) { // 조회됨 썸네일 목록이 있다면 request.setAttribute("fList",
-			 * fList); }
-			 * 
-			 * }
-			 */
-			
 			// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 			String path = "/WEB-INF/views/notice/noticeList.jsp";
 			

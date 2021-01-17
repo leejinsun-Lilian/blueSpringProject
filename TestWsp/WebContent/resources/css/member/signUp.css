@@ -98,36 +98,31 @@ input:focus{
 	padding: 5px 0px 5px 5px;
 }
 
-#emailForm{
+#emailForm_area{
 	margin-bottom: 7px;
+	width : 100%;
 }
 
-#emailForm, #cNumForm{
+#emailForm_area, #cNumForm{
 	display : table;
 }
 
-.emailForm, .cNumRow{
+.emailForm {
+	width : 100%;
+}
+
+.cNumRow{
 	display : table-cell;
 	width: 160px;
 	height: 100%;
 }
 
-#fEmail, #tEmail{
-	width: 175px;
-	height: 100%;
-}
-
-#sEmail{
-	margin : auto;
-	width : 60px;
-	text-align: center;	
-
-}
-
-#email_sel{
+#fEmail{
 	width: 100%;
 	height: 100%;
-}
+} 
+
+
 
 
 #cNum {
@@ -176,3 +171,11 @@ input:focus{
 .swal-modal{
 	width : 350px;
 }
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
+		
+		
