@@ -23,6 +23,11 @@
                 <label>글 제목</label> 
                 <input id="b-title" name="b-title" type="text"> <br>
             </div>
+            
+            <div class="form-inline mb-2">
+							<label class="input-group-addon mr-3 insert-label">작성자</label>
+							<h5 class="my-0" id="writer">${loginMember.memberNo}</h5>
+						</div>
   
             <div id="category-wrapper">
                 <label>카테고리</label>

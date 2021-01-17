@@ -46,7 +46,7 @@ SELECT SEQ_BNO.NEXTVAL FROM DUAL
 <!-- 게시글 삽입 -->
 <entry key="insertBoard">
 INSERT INTO BOARD(BRD_NO, BRD_TITLE, BRD_CONTENT, MEM_NO, BRD_CATE_NO) 
-VALUES(?, ?, ?, 3, ?)
+VALUES(?, ?, ?, ?, ?)
 </entry>
 
 <!-- 파일 정보 삽입 -->

@@ -36,7 +36,7 @@
     }
     
     .hidden-form {
-    		
+    		display: none;
     }
 
 

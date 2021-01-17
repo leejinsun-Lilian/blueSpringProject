@@ -17,6 +17,7 @@ import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.Like;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.common.MyFileRenamePolicy;
+import com.boss.blueSpring.member.model.vo.Member;
 import com.oreilly.servlet.MultipartRequest;
 
 @WebServlet("/board/*")
@@ -126,22 +127,24 @@ public class BoardController extends HttpServlet {
 				int categoryCode = Integer.parseInt(multiRequest.getParameter("b-category"));
 				
 				// 세션에서 로그인한 회원의 번호 얻어오기
-//				Member loginMember = (Member)request.getSession().getAttribute("loginMember");
-//				int boardWriter = loginMember.getMemberNo();
+				Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+				int boardWriter = loginMember.getMemberNo();
+				
+				System.out.println(boardWriter);
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 //				map.put("fList", fList);
 				map.put("boardTitle", boardTitle);
 				map.put("boardContent", boardContent);
 				map.put("categoryCode", categoryCode);
-//				map.put("boardWriter", boardWriter);
+				map.put("boardWriter", boardWriter);
 				
 				int result = service.insertBoard(map);
 				
 				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
 					swalIcon = "success";
 					swalTitle = "게시글 등록 성공";
-					path = "view.do?cp=1&no=" + result;
+					path = "view.do?cp=1&no=" + result + "&memberNo=" + boardWriter;
 //					System.out.println(result);
 				} else {
 					swalIcon = "error";
@@ -202,9 +205,9 @@ public class BoardController extends HttpServlet {
 				
 //				System.out.println(Integer.parseInt(mRequest.getParameter("no")));
 				
-				// 세션에서 로그인한 회원의 번호 얻어오기
-//				Member loginMember = (Member)request.getSession().getAttribute("loginMember");
-//				int boardWriter = loginMember.getMemberNo();
+//				세션에서 로그인한 회원의 번호 얻어오기
+				Member loginMember = (Member)request.getSession().getAttribute("loginMember");
+				int boardWriter = loginMember.getMemberNo();
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 //				map.put("fList", fList);
@@ -212,11 +215,11 @@ public class BoardController extends HttpServlet {
 				map.put("boardContent", boardContent);
 				map.put("categoryCode", categoryCode);
 				map.put("boardNo", boardNo);
-//				map.put("boardWriter", boardWriter);
+				map.put("boardWriter", boardWriter);
 				
 				int result = service.updateBoard(map);
 				
-				path = "view.do?cp=" + cp + "&no=" + boardNo;
+				path = "view.do?cp=" + cp + "&no=" + boardNo + "&memberNo=" + boardWriter;
 				
 			 	String sk = mRequest.getParameter("sk");
 			 	String sv = mRequest.getParameter("sv");
@@ -227,10 +230,10 @@ public class BoardController extends HttpServlet {
 				
 				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
 					swalIcon = "success";
-					swalTitle = "게시글 등록 성공";
+					swalTitle = "게시글 수정 성공";
 				} else {
 					swalIcon = "error";
-					swalTitle = "게시글 등록 실패";
+					swalTitle = "게시글 수정 실패";
 				}
 				
 				request.getSession().setAttribute("swalIcon", swalIcon);

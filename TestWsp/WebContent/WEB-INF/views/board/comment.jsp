@@ -110,7 +110,8 @@
     
 		<!-- 스크립트 영역 -->
     <script> /*"${loginMember.memberId}"*/
-				var loginMemberId = 'user02'; 
+				var loginMemberId = '${loginMember.memberId}'; 
+				var loginMemberNo = ${loginMember.memberNo};
         var parentBoardNo = ${board.boardNo};
         
         // 페이지 로딩 완료 시 댓글 목록 호출
@@ -139,13 +140,19 @@
                         var cDate = $("<p>").addClass("cDate").text("작성일 : " + item.comCreateDate);
                         
                         var div = $("<div>");
-                        div.append(cWriter).append(cDate).append(reportBtn);
+                        div.append(cWriter).append(cDate);
+                        
+                        if(item.memberId != loginMemberId) {
+                        	div.append(cWriter).append(reportBtn);
+                        }
                         
                         var cContent = $("<p>").addClass("cContent").html(item.comContent);
                         
                         li.append(div).append(cContent);                     
                         
                         // 현재 댓글의 작성자와 로그인한 멤버의 아이디가 같을 때 버튼 추가
+                        console.log(item.memberId);
+                        console.log(loginMemberId);
                         if(item.memberId == loginMemberId){
                             // console.log(item.memberId);
                             // 댓글, 수정, 삭제 버튼 영역
@@ -188,7 +195,7 @@
   				
   			} else {
   				// ${loginMember.memberNo}
-  				var commentWriter = 22;
+  				var commentWriter = loginMemberNo;
   				
   				$.ajax({
   					url : "${contextPath}/comment/insertComment.do",
