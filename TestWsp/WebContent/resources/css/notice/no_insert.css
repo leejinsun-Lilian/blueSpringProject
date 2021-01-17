@@ -52,6 +52,9 @@
 .ch-board-Img{
 	margin-right: 16px;
 }
+.noticeImg{
+	cursor: pointer;
+}
 
 
 /* 공지 내용 작성 */

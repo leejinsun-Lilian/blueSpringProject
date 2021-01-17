@@ -2,8 +2,7 @@
 
 .wrapper{
     width: 70%;
-    height: 800px;
-
+	max-height: 1500px;
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto;
 }
@@ -16,9 +15,13 @@
 	padding-right: 20px;
 	margin : 0 0 0 0;
 }
+.oone{
+	width : 100%;
+	margin-top: 25px;
+}
 
 .one{
-	margin-top: 25px;
+	margin-top: 15px;
 }
 
 .input-a{
@@ -29,8 +32,9 @@
 	border-right: 1px solid black;
 }
 .writer-dt{
-	margin-left: 40px;
+	margin-left: 180px;
 	display: inline-block;
+	
 }
 .lokup{
 	float: right;
@@ -38,6 +42,10 @@
 	padding-left: 50px; 
 	border-left: 1px solid black;
 }
+.input-padding{
+	padding-left: 10px;
+}
+
 
 /* 공지사항 내용 */
 .introduce{
@@ -85,8 +93,11 @@
 }
 
 
-
-
+/* 파일 출력 부분  */
+.d-block{
+	max-width: 400px;
+	max-height: 800px;
+}
 
 
 
