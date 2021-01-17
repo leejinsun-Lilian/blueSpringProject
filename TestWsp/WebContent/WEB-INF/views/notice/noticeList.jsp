@@ -155,7 +155,19 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     
     <script>
-    
+ 	// 게시글 상세보기 기능 (jquery를 통해 작업)
+	$("#list-table td").on("click", function(){
+		
+		
+		// 게시글 번호 얻어오기
+		var noticeNo = $(this).parent().children().eq(0).text();
+		
+		var url = "${contextPath}/notice/view.do?cp=${pInfo.currentPage}&no=" + noticeNo +"${searchStr}";
+																																										
+		location.href = url;
+		
+	});
+	
     
     
  	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해주는 기능

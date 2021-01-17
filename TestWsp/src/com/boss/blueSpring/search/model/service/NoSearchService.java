@@ -88,7 +88,7 @@ public class NoSearchService {
 
 
 
-	/** 검색 게시글 목록 리스트 조회 Service
+	/** 검색 공지글 목록 리스트 조회 Service
 	 * @param map
 	 * @param pInfo 
 	 * @return list
