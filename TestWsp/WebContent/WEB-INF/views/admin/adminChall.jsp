@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -39,7 +42,7 @@
 
     .adminChall_search{ text-align: center; }
 
-    .page-item > a, .page-item > a:hover{ color: black; }
+    .pagination > li > a, .pagination > li > a:hover{ color: black; }
 
     #adminChall_btn { 
     background-color: #343a40;
@@ -74,20 +77,26 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">123</th>
-                        <td>매일 하루에 물 2L 이상 마시기</td>
-                        <td>user03</td>
-                        <td>N</td>
-                      </tr>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">240</th>
-                        <td>매일 하루에 공부 2시간 하기</td>
-                        <td>user04</td>
-                        <td>N</td>
-                      </tr>
+                    <c:choose>
+                    <c:when test="${empty chList}">
+                        <tr>
+                            <td colspan="5">존재하는 게시글이 없습니다.</td>
+                        </tr>
+                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="challenge" items="${chList}">
+                            <tr>
+                            	<td><input type="checkbox"></td>
+                                <th scope="row">${challenge.chlngNo}</th>
+                                <td>${challenge.chlngTitle}</td>
+                                <td>${challenge.memberId}</td>
+                                <td>${challenge.chlngFl}</td>
+							</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                
                     </tbody>
                   </table>
             </div>

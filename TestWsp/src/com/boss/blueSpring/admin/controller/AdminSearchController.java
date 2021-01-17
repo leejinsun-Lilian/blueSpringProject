@@ -13,9 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boss.blueSpring.admin.model.service.AdminSearchService;
+import com.boss.blueSpring.admin.model.vo.BlacklistPageInfo;
+import com.boss.blueSpring.admin.model.vo.CenterPageInfo;
+import com.boss.blueSpring.admin.model.vo.MemberPageInfo;
+import com.boss.blueSpring.admin.model.vo.ReportPageInfo;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.center.model.vo.Center;
+import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.report.model.vo.Report;
 
 @WebServlet("/adminSearch/*")
@@ -54,13 +59,10 @@ public class AdminSearchController extends HttpServlet {
 				map.put("searchValue", searchValue);
 				map.put("currentPage", cp);
 				
-				// 페이징 처리를 위한 데이터를 계산하고 저장하는 객체 PageInfo 얻어오기
 				PageInfo pInfo = service.getPageInfo(map);
 				
-				// 검색 게시글 목록 조회
 				List<Board> aList = service.searchBoardList(map, pInfo);
 	
-				// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 				path = "/WEB-INF/views/admin/adminBoard.jsp";
 				
 				request.setAttribute("aList", aList);
@@ -84,17 +86,14 @@ public class AdminSearchController extends HttpServlet {
 				map.put("searchValue", searchValue);
 				map.put("currentPage", cp);
 				
-				// 페이징 처리를 위한 데이터를 계산하고 저장하는 객체 PageInfo 얻어오기
-				PageInfo pInfo = service.getPageInfoReport(map);
+				ReportPageInfo rpInfo = service.getPageInfoReport(map);
+			
+				List<Report> rList = service.searchReportList(map, rpInfo);
 				
-				// 검색 게시글 목록 조회
-				List<Report> rList = service.searchReportList(map, pInfo);
-
-				// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 				path = "/WEB-INF/views/admin/adminReport.jsp";
 				
 				request.setAttribute("rList", rList);
-				request.setAttribute("pInfo", pInfo);
+				request.setAttribute("rpInfo", rpInfo);
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -114,27 +113,73 @@ public class AdminSearchController extends HttpServlet {
 				map.put("searchValue", searchValue);
 				map.put("currentPage", cp);
 				
-				// 페이징 처리를 위한 데이터를 계산하고 저장하는 객체 PageInfo 얻어오기
-				PageInfo pInfo = service.getPageInfoCenter(map);
-				
-				// 검색 게시글 목록 조회
-				List<Center> cList = service.searchCenterList(map, pInfo);
+				CenterPageInfo cpInfo = service.getPageInfoCenter(map);
+								
+				List<Center> cList = service.searchCenterList(map, cpInfo);
 
-				// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 				path = "/WEB-INF/views/admin/adminCenterInfo.jsp";
 				
 				request.setAttribute("cList", cList);
-				request.setAttribute("pInfo", pInfo);
+				request.setAttribute("cpInfo", cpInfo);
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 				
 			}
 			
+			// 회원 정보 조회 관리자 검색 Controller *************************************************
+			else if(command.equals("/member.do")) {
+				errorMsg = "회원 정보 조회 관리자 검색 페이지 조회 중 오류 발생.";
+				
+				String searchKey = request.getParameter("sk");
+				String searchValue = request.getParameter("sv");
+				String cp = request.getParameter("cp");
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("searchKey", searchKey);
+				map.put("searchValue", searchValue);
+				map.put("currentPage", cp);
+				
+				MemberPageInfo mpInfo = service.getPageInfoMember(map);
+				
+				List<Member> mList = service.searchMemberList(map, mpInfo);
+
+				path = "/WEB-INF/views/admin/adminMemberInfo.jsp";
+				
+				request.setAttribute("mList", mList);
+				request.setAttribute("mpInfo", mpInfo);
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+			}			
 			
-			
-			
-			
+			// 블랙리스트 조회 관리자 검색 Controller *************************************************
+			else if(command.equals("/blacklist.do")) {
+				errorMsg = "회원 정보 조회 관리자 검색 페이지 조회 중 오류 발생.";
+				
+				String searchKey = request.getParameter("sk");
+				String searchValue = request.getParameter("sv");
+				String cp = request.getParameter("cp");
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("searchKey", searchKey);
+				map.put("searchValue", searchValue);
+				map.put("currentPage", cp);
+				
+				BlacklistPageInfo bpInfo = service.getPageInfoBlack(map);
+				
+				List<Member> bkList = service.searchBlackrList(map, bpInfo);
+
+				path = "/WEB-INF/views/admin/adminMemberInfo.jsp";
+				
+				request.setAttribute("bkList", bkList);
+				request.setAttribute("bpInfo", bpInfo);
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+			}			
 			
 			
 			

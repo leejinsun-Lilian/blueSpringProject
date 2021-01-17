@@ -9,12 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.boss.blueSpring.admin.model.service.AdminService;
+import com.boss.blueSpring.admin.model.vo.BlacklistPageInfo;
+import com.boss.blueSpring.admin.model.vo.CenterPageInfo;
+import com.boss.blueSpring.admin.model.vo.ChallCrtfdPageInfo;
+import com.boss.blueSpring.admin.model.vo.ChallPageInfo;
+import com.boss.blueSpring.admin.model.vo.MemberPageInfo;
+import com.boss.blueSpring.admin.model.vo.ReportPageInfo;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
+import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.report.model.vo.Report;
 
 @WebServlet("/admin/*")
@@ -26,6 +35,7 @@ public class AdminController extends HttpServlet {
 		String uri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = uri.substring((contextPath + "/admin").length());
+		
 
 		String path = null;
 		RequestDispatcher view = null;
@@ -53,8 +63,17 @@ public class AdminController extends HttpServlet {
 			// 회원 정보 조회 Controller **************************************************
 			else if (command.equals("/adminMemberInfo.do")) {
 				errorMsg = "회원 정보 조회 중 오류 발생.";
+				
+				String cp = request.getParameter("cp");
+				
+				MemberPageInfo mpInfo = service.MemberPageInfo(cp);
+				
+				List<Member> mList = service.selectMemberList(mpInfo);
 
 				path = "/WEB-INF/views/admin/adminMemberInfo.jsp";
+				
+	            request.setAttribute("mList", mList);
+	            request.setAttribute("mpInfo", mpInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -66,15 +85,15 @@ public class AdminController extends HttpServlet {
 				
 				String cp = request.getParameter("cp");
 				
-				PageInfo pInfo = service.getPageInfo(cp);
+				ReportPageInfo rpInfo = service.ReportPageInfo(cp);
 				
-				List<Report> rList = service.selectReportList(pInfo);
+				List<Report> rList = service.selectReportList(rpInfo);
 				
 
 				path = "/WEB-INF/views/admin/adminReport.jsp";
 				
 	            request.setAttribute("rList", rList);
-	            request.setAttribute("pInfo", pInfo);
+	            request.setAttribute("rpInfo", rpInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -83,8 +102,17 @@ public class AdminController extends HttpServlet {
 			// 블랙리스트 조회 Controller **************************************************
 			else if (command.equals("/adminBlacklistInfo.do")) {
 				errorMsg = "블랙리스트 조회 중 오류 발생.";
-
+				
+				String cp = request.getParameter("cp");
+				
+				BlacklistPageInfo bpInfo = service.BlacklistPageInfo(cp);
+				
+				List<Member> bkList = service.selectBlackList(bpInfo);
+				
 				path = "/WEB-INF/views/admin/adminBlacklistInfo.jsp";
+				
+	            request.setAttribute("bkList", bkList);
+	            request.setAttribute("bpInfo", bpInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -96,18 +124,19 @@ public class AdminController extends HttpServlet {
 				
 				String cp = request.getParameter("cp");
 				
-				PageInfo pInfo = service.getPageInfo(cp);
+				CenterPageInfo cpInfo = service.CenterPageInfo(cp);
 				
-				List<Center> cList = service.selectCenterList(pInfo);
+				List<Center> cList = service.selectCenterList(cpInfo);
 				
 				path = "/WEB-INF/views/admin/adminCenterInfo.jsp";
 				
 	            request.setAttribute("cList", cList);
-	            request.setAttribute("pInfo", pInfo);
+	            request.setAttribute("cpInfo", cpInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
+			
 			
 			// 자유게시판 관리 (목록 조회) Controller **************************************************
 			else if (command.equals("/adminBoard.do")) {
@@ -115,13 +144,9 @@ public class AdminController extends HttpServlet {
 				
 				String cp = request.getParameter("cp");
 				
-	            // 1. 페이징 처리를 위한 값 계산 Service 호출
 	            PageInfo pInfo = service.getPageInfo(cp);
 	            
-	            // 2. 게시글 목록 조회 비즈니스 로직 수행
 	            List<Board> aList = service.selectAdminList(pInfo);
-	            // pInfo에 있는 currentPage, limit를 사용해야지만
-	            // 현재 페이지에 맞는 게시글 목록만 조회할 수 있음
 	            
 				path = "/WEB-INF/views/admin/adminBoard.jsp";
 				
@@ -139,14 +164,15 @@ public class AdminController extends HttpServlet {
 				
 				String cp = request.getParameter("cp");
 				
-				PageInfo pInfo = service.getPageInfo(cp);
+				ChallPageInfo chpInfo = service.ChallPageInfo(cp);
 				
-				List<Challenge> acList = service.selectAdminChallList(pInfo);
+				List<Challenge> chList = service.selectChallList(chpInfo);
 				
 				path = "/WEB-INF/views/admin/adminChall.jsp";
 				
-	            request.setAttribute("acList", acList);
-	            request.setAttribute("pInfo", pInfo);
+	            request.setAttribute("chList", chList);
+	            request.setAttribute("chpInfo", chpInfo);
+				
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -157,12 +183,25 @@ public class AdminController extends HttpServlet {
 			// 챌린지 인증게시판 조회(관리) Controller **************************************************
 			else if (command.equals("/adminCrtfd.do")) {
 				errorMsg = "관리자 전용 인증게시판 조회 중 오류 발생.";
+				
+				String cp = request.getParameter("cp");
+				
+				ChallCrtfdPageInfo crtpInfo = service.ChallCrtfdPageInfo(cp);
+				
+				List<ChallengeCrtfd> crtList = service.selectChallCrtfdList(crtpInfo);
 
 				path = "/WEB-INF/views/admin/adminCrtfd.jsp";
+				
+	            request.setAttribute("crtList", crtList);
+	            request.setAttribute("crtpInfo", crtpInfo);
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+				
 			}
+			
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

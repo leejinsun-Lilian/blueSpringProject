@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -39,7 +41,7 @@
 	
 	.black_search{ text-align: center; }
 	
-	.page-item > a, .page-item > a:hover{ color: black; }
+	.pagination > li > a, .pagination > li > a:hover{ color: black; }
 	
 	#black_btn { 
 	    background-color: #343a40;
@@ -67,96 +69,136 @@
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col"><input type="checkbox"></th>
+                        <th scope="col">블랙리스트여부</th>
                         <th scope="col">회원번호</th>
                         <th scope="col">아이디</th>
+                        <th scope="col">닉네임</th>
                         <th scope="col">이름</th>
                         <th scope="col">생년월일</th>
                         <th scope="col">성별</th>
                         <th scope="col">전화번호</th>
-                        <th scope="col">주소</th>
                         <th scope="col">가입일</th>
                         <th scope="col">탈퇴여부</th>
-                        <th scope="col">블랙리스트여부</th>
                         <th scope="col">회원등급</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">1</th>
-                        <td>user02</td>
-                        <td>유저이</td>
-                        <td>2021.01.01</td>
-                        <td>남</td>
-                        <td>010-1234-5678</td>
-                        <td>서울특별시 중구 남대문로 120 대일빌딩 2F, 3F</td>
-                        <td>2021.01.10</td>
-                        <td>N</td>
-                        <td>Y</td>
-                        <td>2</td>
-                      </tr>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">2</th>
-                        <td>user03</td>
-                        <td>유저삼</td>
-                        <td>2021.01.01</td>
-                        <td>남</td>
-                        <td>010-1234-5678</td>
-                        <td>서울특별시 중구 남대문로 120 대일빌딩 2F, 3F</td>
-                        <td>2021.01.10</td>
-                        <td>N</td>
-                        <td>Y</td>
-                        <td>2</td>
-                      </tr>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">3</th>
-                        <td>user04</td>
-                        <td>유저사</td>
-                        <td>2021.01.01</td>
-                        <td>남</td>
-                        <td>010-1234-5678</td>
-                        <td>서울특별시 중구 남대문로 120 대일빌딩 2F, 3F</td>
-                        <td>2021.01.10</td>
-                        <td>N</td>
-                        <td>Y</td>
-                        <td>2</td>
-                      </tr>
+                   	<c:choose>
+	                    <c:when test="${empty bkList}">
+	                        <tr>
+	                            <td colspan="13">존재하는 게시글이 없습니다.</td>
+	                        </tr>
+	                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="member" items="${bkList}">
+                            <tr>
+                            	<td><input type="checkbox"><td>
+                            	<td>${member.memberBlackList}</td>
+		                        <td>${member.memberNo}</td>
+		                        <td>${member.memberId}</td>
+		                        <td>${member.memberNickname}</td>
+		                        <td>${member.memberNm}</td>
+		                        <td>${member.memberBirth}</td>
+		                        <td>${member.memberGender}</td>
+		                        <td>${member.memberPhone}</td>
+		                        <td>${member.memberJoined}</td>
+		                        <td>${member.memberScsnFl}</td>
+		                        <td>${member.memberLevel}</td>
+	          				</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                     </tbody>
                   </table>
             </div>
 
-            <div class="page_area">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+            <%---------------------- Pagination ----------------------%>
+			<%-- 페이징 처리 주소를 쉽게 사용할 수 있도록 미리 변수에 저장 --%>
+			<c:choose>
+				<%-- 검색 내용이 파라미터에 존재할 때 == 검색을 통해 만들어진 페이지인가? --%>
+				<c:when test="${!empty param.sk && !empty param.sv }">
+					<c:url var="pageUrl" value="/search.do"/>
+					
+					<%-- 쿼리스트링으로 사용할 내용을 변수에 저장 --%>
+					<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />
+				</c:when>
+				
+				<%-- 검색을 하지 않았을 경우 --%>
+				<c:otherwise>
+					<c:url var="pageUrl" value="/admin/adminBlacklistInfo.do"/>		
+				</c:otherwise>
+			</c:choose>
+
+			<!-- 화살표에 들어갈 주소를 변수로 생성 -->
+			 
+			<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
+			<c:set var="lastPage" value="${pageUrl}?cp=${bpInfo.maxPage}${searchStr}"/>
+			 
+			 <fmt:parseNumber var="c1" value="${(bpInfo.currentPage - 1) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="prev" value="${ c1 * 10 }" integerOnly="true" />
+			 <c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
+			 
+			 <fmt:parseNumber var="c2" value="${(bpInfo.currentPage + 9) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />
+			 <c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
 
 
-            <div class="black_search"><select id="black_search" name="black_search" required>
-                <option selected>회원번호</option>
-                <option>아이디</option>
-                <option>이름</option>
-                <option>탈퇴여부</option>
+
+			<div class="page_area">
+				<ul class="pagination justify-content-center">
+
+					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
+					<c:if test="${bpInfo.currentPage > 10}">
+						<li>
+							<!-- 첫 페이지로 이동(<<) --> <a class="page-link" href="${firstPage}">&lt;&lt;</a>
+						</li>
+
+						<li>
+							<!-- 이전 페이지로 이동 (<) --> <a class="page-link" href="${prevPage}">&lt;</a>
+						</li>
+					</c:if>
+
+					<!-- 페이지 목록 -->
+					<c:forEach var="page" begin="${bpInfo.startPage}"
+						end="${bpInfo.endPage}">
+						<c:choose>
+							<c:when test="${bpInfo.currentPage == page }">
+								<li><a class="page-link">${page}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a class="page-link"
+									href="${pageUrl}?cp=${page}${searchStr}">${page}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
+					<c:if test="${next <= bpInfo.maxPage}">
+						<li>
+							<!-- 다음 페이지로 이동 (>) --> <a class="page-link" href="${nextPage}">&gt;</a>
+						</li>
+						<li>
+							<!-- 마지막 페이지로 이동(>>) --> <a class="page-link" href="${lastPage}">&gt;&gt;</a>
+						</li>
+
+					</c:if>
+
+				</ul>
+			</div>
+
+
+            <div class="black_search">
+            <form action="${contextPath}/adminSearch/blacklist.do" method="GET">
+            <select id="black_search" name="sk" required>
+                <option selected value="bkNo">회원번호</option>
+                <option value="bkId">아이디</option>
+                <option value="bkNick">닉네임</option>
             </select>
-            <input type="text"> <button type="button" id="black_btn">검색</button>
-            <button type="button" id="black_btn2">삭제</button></div>
-
+            <input type="text" name="sv">
+            <button type="button" id="black_btn">검색</button></div>
+			</form>
+			<button id="black_btn2">삭제</button>
         </div>
     
     <div style="clear: both;"></div>

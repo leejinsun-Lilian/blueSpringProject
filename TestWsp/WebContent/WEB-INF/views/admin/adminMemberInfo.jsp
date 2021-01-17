@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -36,7 +38,7 @@
 	
 	.userInfo_search { text-align: center; }
 	
-	.page-item>a, .page-item>a:hover { color: black; }
+	.pagination > li > a, .pagination > li > a:hover{ color: black; }
 	
 	#userInfo_btn {
 		background-color: #343a40;
@@ -60,6 +62,7 @@
                       <tr>
                         <th scope="col">회원번호</th>
                         <th scope="col">아이디</th>
+                        <th scope="col">닉네임</th>
                         <th scope="col">이름</th>
                         <th scope="col">생년월일</th>
                         <th scope="col">성별</th>
@@ -72,78 +75,121 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>user01</td>
-                        <td>유저일</td>
-                        <td>2021.01.01</td>
-                        <td>남</td>
-                        <td>010-1234-5678</td>
-                        <td>서울특별시 중구 남대문로 120 대일빌딩 2F, 3F</td>
-                        <td>2021.01.10</td>
-                        <td>N</td>
-                        <td>N</td>
-                        <td>2</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>user01</td>
-                        <td>유저일</td>
-                        <td>2021.01.01</td>
-                        <td>남</td>
-                        <td>010-1234-5678</td>
-                        <td>서울특별시 중구 남대문로 120 대일빌딩 2F, 3F</td>
-                        <td>2021.01.10</td>
-                        <td>N</td>
-                        <td>N</td>
-                        <td>2</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>user01</td>
-                        <td>유저일</td>
-                        <td>2021.01.01</td>
-                        <td>남</td>
-                        <td>010-1234-5678</td>
-                        <td>서울특별시 중구 남대문로 120 대일빌딩 2F, 3F</td>
-                        <td>2021.01.10</td>
-                        <td>N</td>
-                        <td>N</td>
-                        <td>2</td>
-                      </tr>
+                   	<c:choose>
+	                    <c:when test="${empty mList}">
+	                        <tr>
+	                            <td colspan="12">존재하는 게시글이 없습니다.</td>
+	                        </tr>
+	                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="member" items="${mList}">
+                            <tr>
+		                        <td>${member.memberNo}</td>
+		                        <td>${member.memberId}</td>
+		                        <td>${member.memberNickname}</td>
+		                        <td>${member.memberNm}</td>
+		                        <td>${member.memberBirth}</td>
+		                        <td>${member.memberGender}</td>
+		                        <td>${member.memberPhone}</td>
+		                        <td>${member.memberAddr}</td>
+		                        <td>${member.memberJoined}</td>
+		                        <td>${member.memberScsnFl}</td>
+		                        <td>${member.memberBlackList}</td>
+		                        <td>${member.memberLevel}</td>
+	          				</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                     </tbody>
                   </table>
             </div>
 
-            <div class="page_area">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+            <%---------------------- Pagination ----------------------%>
+			<%-- 페이징 처리 주소를 쉽게 사용할 수 있도록 미리 변수에 저장 --%>
+			<c:choose>
+				<%-- 검색 내용이 파라미터에 존재할 때 == 검색을 통해 만들어진 페이지인가? --%>
+				<c:when test="${!empty param.sk && !empty param.sv }">
+					<c:url var="pageUrl" value="/search.do"/>
+					
+					<%-- 쿼리스트링으로 사용할 내용을 변수에 저장 --%>
+					<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />
+				</c:when>
+				
+				<%-- 검색을 하지 않았을 경우 --%>
+				<c:otherwise>
+					<c:url var="pageUrl" value="/admin/adminMemberInfo.do"/>		
+				</c:otherwise>
+			</c:choose>
+
+			<!-- 화살표에 들어갈 주소를 변수로 생성 -->
+			 
+			<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
+			<c:set var="lastPage" value="${pageUrl}?cp=${mpInfo.maxPage}${searchStr}"/>
+			 
+			 <fmt:parseNumber var="c1" value="${(mpInfo.currentPage - 1) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="prev" value="${ c1 * 10 }" integerOnly="true" />
+			 <c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
+			 
+			 <fmt:parseNumber var="c2" value="${(mpInfo.currentPage + 9) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />
+			 <c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
 
 
-            <div class="userInfo_search"><select id="userInfo_search" name="userInfo_search" required>
-                <option selected>회원번호</option>
-                <option>아이디</option>
-                <option>이름</option>
-                <option>탈퇴여부</option>
+
+			<div class="page_area">
+				<ul class="pagination justify-content-center">
+
+					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
+					<c:if test="${mpInfo.currentPage > 10}">
+						<li>
+							<!-- 첫 페이지로 이동(<<) --> <a class="page-link" href="${firstPage}">&lt;&lt;</a>
+						</li>
+
+						<li>
+							<!-- 이전 페이지로 이동 (<) --> <a class="page-link" href="${prevPage}">&lt;</a>
+						</li>
+					</c:if>
+
+					<!-- 페이지 목록 -->
+					<c:forEach var="page" begin="${mpInfo.startPage}"
+						end="${mpInfo.endPage}">
+						<c:choose>
+							<c:when test="${mpInfo.currentPage == page }">
+								<li><a class="page-link">${page}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a class="page-link"
+									href="${pageUrl}?cp=${page}${searchStr}">${page}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
+					<c:if test="${next <= mpInfo.maxPage}">
+						<li>
+							<!-- 다음 페이지로 이동 (>) --> <a class="page-link" href="${nextPage}">&gt;</a>
+						</li>
+						<li>
+							<!-- 마지막 페이지로 이동(>>) --> <a class="page-link" href="${lastPage}">&gt;&gt;</a>
+						</li>
+
+					</c:if>
+
+				</ul>
+			</div>
+
+
+            <div class="userInfo_search">
+            <form action="${contextPath}/adminSearch/member.do" method="GET">
+            <select id="userInfo_search" name="sk" required>
+                <option selected value="memNo">회원번호</option>
+                <option value="memId">아이디</option>
+                <option value="memNick">닉네임</option>
             </select>
-            <input type="text"> <button type="button" id="userInfo_btn">검색</button></div>
-
+            <input type="text" name="sv">
+            <button type="button" id="userInfo_btn">검색</button></div>
+			</form>
         </div>
     
     <div style="clear: both;"></div>

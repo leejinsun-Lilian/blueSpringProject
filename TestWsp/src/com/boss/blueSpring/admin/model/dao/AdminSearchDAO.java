@@ -9,9 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.boss.blueSpring.admin.model.vo.BlacklistPageInfo;
+import com.boss.blueSpring.admin.model.vo.CenterPageInfo;
+import com.boss.blueSpring.admin.model.vo.MemberPageInfo;
+import com.boss.blueSpring.admin.model.vo.ReportPageInfo;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.center.model.vo.Center;
+import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminSearchDAO {
@@ -21,7 +26,9 @@ public class AdminSearchDAO {
 	private ResultSet rset = null;
 	
 	
-	/** (자유게시판 관리) 조건을 만족하는 게시글 수 조회 DAO
+	// ************************************************************************* 자유게시판
+	
+	/** [자유게시판] 관리: 조건을 만족하는 게시글 수 조회 DAO
 	 * @param conn
 	 * @param condition
 	 * @return listCount
@@ -29,28 +36,22 @@ public class AdminSearchDAO {
 	 */
 	public int getListCount(Connection conn, String condition) throws Exception {
 		int listCount = 0;
-		
 		String query = "SELECT COUNT(*) FROM V_BOARD WHERE " + condition;
-		
 		try {
 			stmt = conn.createStatement();
-			
 			rset = stmt.executeQuery(query);
-			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			
 		} finally {
 			close(rset);
 			close(stmt);
 		}
-		
 		return listCount;
 	}
 
 
-	/** (자유게시판 관리) 검색 게시글 목록 조회 DAO
+	/** [자유게시판] 관리 : 검색 게시글 목록 조회 DAO
 	 * @param conn
 	 * @param pInfo
 	 * @param condition
@@ -58,9 +59,7 @@ public class AdminSearchDAO {
 	 * @throws Exception
 	 */
 	public List<Board> searchBoardList(Connection conn, PageInfo pInfo, String condition) throws Exception {
-		
 		List<Board> aList = null;
-		
 		String query = 
 				"SELECT * FROM" + 
 				"    (SELECT ROWNUM RNUM , V.*" + 
@@ -69,85 +68,63 @@ public class AdminSearchDAO {
 				"        WHERE " + condition + 
 				"        ORDER BY BRD_NO DESC) V )" + 
 				"WHERE RNUM BETWEEN ? AND ?";
-		
 		try {
-			// SQL 구문 조건절에 대입할 변수 생성
-			int startRow = (pInfo.getCurrentPage() -1) * pInfo.getLimit() + 1; // ex) 1
-			int endRow = startRow + pInfo.getLimit() -1; // ex) 10
-			
+			int startRow = (pInfo.getCurrentPage() -1) * pInfo.getLimit() + 1;
+			int endRow = startRow + pInfo.getLimit() -1;
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
 			rset = pstmt.executeQuery();
-			
 			aList = new ArrayList<Board>();
-			
 			while(rset.next()) {
 				Board board = new Board(
 	                		   			rset.getInt("BRD_NO"), 
 	                		   			rset.getString("BRD_TITLE"),
 	                		   			rset.getString("MEM_ID"),
 	                		   			rset.getString("BRD_DEL_FL"));
-				
 				aList.add(board);
 			}
-			
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return aList;
 	}
 
 
-	// 신고 **********************************************************************************************
+	// ************************************************************************* 신고
 	
-	
-	
-	/** (신고목록 관리) 조건을 만족하는 게시글 수 조회 DAO
+	/** [신고] 관리 : 조건을 만족하는 게시글 수 조회 DAO
 	 * @param conn
 	 * @param condition
 	 * @return listCount
 	 * @throws Exception
 	 */
 	public int getListCountReport(Connection conn, String condition) throws Exception {
-		
 		int listCount = 0;
-		
 		String query = "SELECT COUNT(*) FROM V_REPORT WHERE " + condition;
-		
 		try {
 			stmt = conn.createStatement();
-			
 			rset = stmt.executeQuery(query);
-			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			
 		} finally {
 			close(rset);
 			close(stmt);
 		}
-		
 		return listCount;
 	}
 	
-	
-	/** 신고목록 검색 DAO
+	/** [신고] 관리 : 목록 검색 DAO
 	 * @param conn
-	 * @param pInfo
+	 * @param rpInfo
 	 * @param condition
 	 * @return rList
 	 * @throws Exception
 	 */
-	public List<Report> searchReportList(Connection conn, PageInfo pInfo, String condition) throws Exception {
-		
+	public List<Report> searchReportList(Connection conn, ReportPageInfo rpInfo, String condition) throws Exception {
 		List<Report> rList = null;
-		
 		String query = 
 				"SELECT * FROM " + 
 				"    (SELECT ROWNUM RNUM , V.* " + 
@@ -156,20 +133,14 @@ public class AdminSearchDAO {
 				"        WHERE " + condition + 
 				"        ORDER BY REPORT_NO DESC) V ) " + 
 				" WHERE RNUM BETWEEN ? AND ?";
-		
 		try {
-			int startRow = (pInfo.getCurrentPage() -1) * pInfo.getLimit() + 1;
-			int endRow = startRow + pInfo.getLimit() -1;
-			
+			int startRow = (rpInfo.getCurrentPage() -1) * rpInfo.getLimit() + 1;
+			int endRow = startRow + rpInfo.getLimit() -1;
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
 			rset = pstmt.executeQuery();
-			
 			rList = new ArrayList<Report>();
-			
 			while(rset.next()) {
 				Report report = new Report(
 						   				rset.getInt("REPORT_NO"),
@@ -180,62 +151,46 @@ public class AdminSearchDAO {
 						   				rset.getString("TARGET_ID"));
 				rList.add(report);
 			}
-			
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return rList;
 	}
 	
-	
+	// ************************************************************************* 센터
 
-	// 센터 **********************************************************************************************
-
-	
-	
-	/** (센터 관리) 조건을 만족하는 게시글 수 조회 DAO
+	/** [센터] 관리 : 조건을 만족하는 게시글 수 조회 DAO
 	 * @param conn
 	 * @param condition
 	 * @return listCount
 	 * @throws Exception
 	 */
 	public int getListCountCenter(Connection conn, String condition) throws Exception {
-		
 		int listCount = 0;
-		
 		String query = "SELECT COUNT(*) FROM V_CENTER WHERE " + condition;
-		
 		try {
 			stmt = conn.createStatement();
-			
 			rset = stmt.executeQuery(query);
-			
 			if(rset.next()) {
 				listCount = rset.getInt(1);
 			}
-			
 		} finally {
 			close(rset);
 			close(stmt);
 		}
-		
 		return listCount;
 	}
 
-
-	/** 센터목록 검색 DAO
+	/** [센터] 관리 : 목록 검색 DAO
 	 * @param conn
-	 * @param pInfo
+	 * @param cpInfo
 	 * @param condition
 	 * @return cList
 	 * @throws Exception
 	 */
-	public List<Center> searchCenterList(Connection conn, PageInfo pInfo, String condition) throws Exception {
-		
+	public List<Center> searchCenterList(Connection conn, CenterPageInfo cpInfo, String condition) throws Exception {
 		List<Center> cList = null;
-		
 		String query = 
 				"SELECT * FROM " + 
 				"    (SELECT ROWNUM RNUM , V.* " + 
@@ -244,20 +199,14 @@ public class AdminSearchDAO {
 				"        WHERE " + condition + 
 				"        ORDER BY CENTER_NO DESC) V ) " + 
 				" WHERE RNUM BETWEEN ? AND ?";
-		
 		try {
-			int startRow = (pInfo.getCurrentPage() -1) * pInfo.getLimit() + 1;
-			int endRow = startRow + pInfo.getLimit() -1;
-			
+			int startRow = (cpInfo.getCurrentPage() -1) * cpInfo.getLimit() + 1;
+			int endRow = startRow + cpInfo.getLimit() -1;
 			pstmt = conn.prepareStatement(query);
-			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
 			rset = pstmt.executeQuery();
-			
 			cList = new ArrayList<Center>();
-			
 			while(rset.next()) {
 				Center center = new Center(
 						rset.getInt("CENTER_NO"), 
@@ -270,16 +219,160 @@ public class AdminSearchDAO {
 						rset.getString("CENTER_ADDR"));
 				cList.add(center);
 			}
-			
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return cList;
 	}
 
+	// ************************************************************************* 회원정보
+
+	/** [회원정보] 관리 : 조건을 만족하는 게시글 수 조회 DAO
+	 * @param conn
+	 * @param condition
+	 * @return listCount
+	 * @throws Exception
+	 */
+	public int getListCountMember(Connection conn, String condition) throws Exception {
+		int listCount = 0;
+		String query = "SELECT COUNT(*) FROM V_MEMBER WHERE " + condition;
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	/** [회원정보] 관리 : 목록 검색 DAO
+	 * @param conn
+	 * @param mpInfo
+	 * @param condition
+	 * @return mList
+	 * @throws Exception
+	 */
+	public List<Member> searchMemberList(Connection conn, MemberPageInfo mpInfo, String condition) throws Exception {
+		List<Member> mList = null;
+		String query = 
+				"SELECT * FROM " + 
+				"    (SELECT ROWNUM RNUM , V.* " + 
+				"    FROM " + 
+				"        (SELECT MEM_NO, MEM_ID, MEM_NICKNAME, MEM_NM, MEM_BIRTH, MEM_GENDER, MEM_PHONE, MEM_ADDR, MEM_JOINED, MEM_SCSN_FL, MEM_BLACKLIST, MEM_LEVEL FROM V_MEMBER " + 
+				"        WHERE " + condition + 
+				"        ORDER BY MEM_NO DESC) V ) " + 
+				" WHERE RNUM BETWEEN ? AND ?";
+		try {
+			int startRow = (mpInfo.getCurrentPage() -1) * mpInfo.getLimit() + 1;
+			int endRow = startRow + mpInfo.getLimit() -1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			mList = new ArrayList<Member>();
+			while (rset.next()) {
+				Member member = new Member(
+						rset.getInt("MEM_NO"),
+						rset.getString("MEM_ID"),
+						rset.getString("MEM_NICKNAME"), 
+						rset.getString("MEM_NM"),
+						rset.getDate("MEM_BIRTH"),
+						rset.getString("MEM_GENDER").charAt(0), 
+						rset.getString("MEM_PHONE"), 
+						rset.getString("MEM_ADDR"),
+						rset.getDate("MEM_JOINED"),
+						rset.getString("MEM_SCSN_FL").charAt(0),
+						rset.getString("MEM_BLACKLIST").charAt(0),
+						rset.getString("MEM_LEVEL").charAt(0));
+						mList.add(member);
+				};
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return mList;
+	}
+
 	
+	// ************************************************************************* 블랙리스트
+	
+	/** [블랙리스트] 관리 : 조건을 만족하는 게시글 수 조회 DAO
+	 * @param conn
+	 * @param condition
+	 * @return listCount
+	 * @throws Exception
+	 */
+	public int getBlackListCount(Connection conn, String condition) throws Exception {
+		int listCount = 0;
+		String query = "SELECT COUNT(*) FROM V_MEMBER WHERE MEM_BLACKLIST = 'Y' AND " + condition;
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	/** [블랙리스트] 관리 : 목록 검색 DAO
+	 * @param conn
+	 * @param bpInfo
+	 * @param condition
+	 * @return bkList
+	 * @throws Exception
+	 */
+	public List<Member> searchBlackList(Connection conn, BlacklistPageInfo bpInfo, String condition) throws Exception {
+		List<Member> bkList = null;
+		String query = 
+				"SELECT * FROM " + 
+				"    (SELECT ROWNUM RNUM , V.* " + 
+				"    FROM " + 
+				"        (SELECT MEM_NO, MEM_ID, MEM_NICKNAME, MEM_NM, MEM_BIRTH, MEM_GENDER, MEM_PHONE, MEM_JOINED, MEM_SCSN_FL, MEM_BLACKLIST, MEM_LEVEL FROM V_MEMBER " + 
+				"        WHERE MEM_BLACKLIST = 'Y' AND " + condition + 
+				"        ORDER BY MEM_NO DESC) V ) " + 
+				" WHERE RNUM BETWEEN ? AND ?";
+		try {
+			int startRow = (bpInfo.getCurrentPage() -1) * bpInfo.getLimit() + 1;
+			int endRow = startRow + bpInfo.getLimit() -1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			bkList = new ArrayList<Member>();
+			while (rset.next()) {
+				Member member = new Member(
+						rset.getInt("MEM_NO"),
+						rset.getString("MEM_ID"),
+						rset.getString("MEM_NICKNAME"), 
+						rset.getString("MEM_NM"),
+						rset.getDate("MEM_BIRTH"),
+						rset.getString("MEM_GENDER").charAt(0), 
+						rset.getString("MEM_PHONE"), 
+						rset.getDate("MEM_JOINED"),
+						rset.getString("MEM_SCSN_FL").charAt(0),
+						rset.getString("MEM_BLACKLIST").charAt(0),
+						rset.getString("MEM_LEVEL").charAt(0));
+						bkList.add(member);
+				};
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return bkList;
+	}
+
+
 
 
 

@@ -1,3 +1,4 @@
+<%@page import="com.boss.blueSpring.center.model.vo.Center"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -133,6 +134,7 @@
                   </table>
             </div>
 
+
             <%---------------------- Pagination ----------------------%>
 			<%-- 페이징 처리 주소를 쉽게 사용할 수 있도록 미리 변수에 저장 --%>
 			<c:choose>
@@ -153,13 +155,13 @@
 			<!-- 화살표에 들어갈 주소를 변수로 생성 -->
 			 
 			<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
-			<c:set var="lastPage" value="${pageUrl}?cp=${pInfo.maxPage}${searchStr}"/>
+			<c:set var="lastPage" value="${pageUrl}?cp=${cpInfo.maxPage}${searchStr}"/>
 			 
-			 <fmt:parseNumber var="c1" value="${(pInfo.currentPage - 1) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="c1" value="${(cpInfo.currentPage - 1) / 10 }" integerOnly="true" />
 			 <fmt:parseNumber var="prev" value="${ c1 * 10 }" integerOnly="true" />
 			 <c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
 			 
-			 <fmt:parseNumber var="c2" value="${(pInfo.currentPage + 9) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="c2" value="${(cpInfo.currentPage + 9) / 10 }" integerOnly="true" />
 			 <fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />
 			 <c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
 
@@ -169,7 +171,7 @@
 				<ul class="pagination justify-content-center">
 
 					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
-					<c:if test="${pInfo.currentPage > 10}">
+					<c:if test="${cpInfo.currentPage > 10}">
 						<li>
 							<!-- 첫 페이지로 이동(<<) --> <a class="page-link" href="${firstPage}">&lt;&lt;</a>
 						</li>
@@ -180,10 +182,10 @@
 					</c:if>
 
 					<!-- 페이지 목록 -->
-					<c:forEach var="page" begin="${pInfo.startPage}"
-						end="${pInfo.endPage}">
+					<c:forEach var="page" begin="${cpInfo.startPage}"
+						end="${cpInfo.endPage}">
 						<c:choose>
-							<c:when test="${pInfo.currentPage == page }">
+							<c:when test="${cpInfo.currentPage == page }">
 								<li><a class="page-link">${page}</a></li>
 							</c:when>
 							<c:otherwise>
@@ -194,7 +196,7 @@
 					</c:forEach>
 
 					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
-					<c:if test="${next <= pInfo.maxPage}">
+					<c:if test="${next <= cpInfo.maxPage}">
 						<li>
 							<!-- 다음 페이지로 이동 (>) --> <a class="page-link" href="${nextPage}">&gt;</a>
 						</li>
