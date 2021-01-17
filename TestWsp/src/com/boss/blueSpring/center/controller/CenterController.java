@@ -1,6 +1,8 @@
 package com.boss.blueSpring.center.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.boss.blueSpring.center.model.service.CenterService;
+import com.boss.blueSpring.center.model.vo.Center;
 
 @WebServlet("/center/*")
 public class CenterController extends HttpServlet {
@@ -28,12 +33,37 @@ public class CenterController extends HttpServlet {
 		String errorMsg = null;
 		
 		try {
+			CenterService service = new CenterService();
 			
 			if(command.equals("/centerForm.do")) {
 				
 				path = "/WEB-INF/views/center/centerMain.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);				
+			}
+			
+			else if(command.equals("/selectCenterList.do")) {
+				String sido = request.getParameter("sido");
+				String guguns = "";
+				String[] gugun = request.getParameterValues("gugun");
+				
+				// Array로 받아온 배열 정리하기.
+				if(guguns != null) {
+					for(String g : gugun) {
+						guguns += "CENTER_AREA2 LIKE '%' || '" + g + "' || '%' OR ";
+					}
+					
+					guguns = guguns.substring(0, guguns.lastIndexOf(" OR "));
+				}
+
+				System.out.println(guguns);
+				
+//				System.out.println(guguns);
+//				System.out.println(sido);
+//				
+				List<Center> cList = service.selectCenterList(guguns, sido);
+				
+				response.getWriter().print(cList);				
 			}
 
 		} catch (Exception e) {

@@ -69,7 +69,7 @@ public class SearchService {
 				break;
 				
 			case "writer" : 
-				condition = " MEMBER_ID LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
+				condition = " MEM_ID LIKE '%' || '" + searchValue + "' || '%' AND CATEGORY_NM = " + "'" + categoryName + "'";
 				break;
 			}
 		} else {
@@ -88,7 +88,7 @@ public class SearchService {
 				break;
 				
 			case "writer" : 
-				condition = " MEMBER_ID LIKE '%' || '" + searchValue + "' || '%'";
+				condition = " MEM_ID LIKE '%' || '" + searchValue + "' || '%'";
 				break;
 			}	
 		}
