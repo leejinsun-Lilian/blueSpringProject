@@ -132,13 +132,13 @@
 			<!-- 화살표에 들어갈 주소를 변수로 생성 -->
 			 
 			<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
-			<c:set var="lastPage" value="${pageUrl}?cp=${pInfo.maxPage}${searchStr}"/>
+			<c:set var="lastPage" value="${pageUrl}?cp=${rpInfo.maxPage}${searchStr}"/>
 			 
-			 <fmt:parseNumber var="c1" value="${(pInfo.currentPage - 1) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="c1" value="${(rpInfo.currentPage - 1) / 10 }" integerOnly="true" />
 			 <fmt:parseNumber var="prev" value="${ c1 * 10 }" integerOnly="true" />
 			 <c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
 			 
-			 <fmt:parseNumber var="c2" value="${(pInfo.currentPage + 9) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="c2" value="${(rpInfo.currentPage + 9) / 10 }" integerOnly="true" />
 			 <fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />
 			 <c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
 
@@ -148,7 +148,7 @@
 				<ul class="pagination justify-content-center">
 
 					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
-					<c:if test="${pInfo.currentPage > 10}">
+					<c:if test="${rpInfo.currentPage > 10}">
 						<li>
 							<!-- 첫 페이지로 이동(<<) --> <a class="page-link" href="${firstPage}">&lt;&lt;</a>
 						</li>
@@ -159,10 +159,10 @@
 					</c:if>
 
 					<!-- 페이지 목록 -->
-					<c:forEach var="page" begin="${pInfo.startPage}"
-						end="${pInfo.endPage}">
+					<c:forEach var="page" begin="${rpInfo.startPage}"
+						end="${rpInfo.endPage}">
 						<c:choose>
-							<c:when test="${pInfo.currentPage == page }">
+							<c:when test="${rpInfo.currentPage == page }">
 								<li><a class="page-link">${page}</a></li>
 							</c:when>
 							<c:otherwise>
@@ -173,7 +173,7 @@
 					</c:forEach>
 
 					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
-					<c:if test="${next <= pInfo.maxPage}">
+					<c:if test="${next <= rpInfo.maxPage}">
 						<li>
 							<!-- 다음 페이지로 이동 (>) --> <a class="page-link" href="${nextPage}">&gt;</a>
 						</li>

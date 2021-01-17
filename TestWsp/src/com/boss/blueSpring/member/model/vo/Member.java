@@ -64,10 +64,51 @@ public class Member {
 		this.memberNickname = memberNickname;
 	}
 
+	
+	// admin 회원정보 조회 용
+	public Member(int memberNo, String memberId, String memberNickname, String memberNm, Date memberBirth, char memberGender,
+			String memberPhone, String memberAddr, Date memberJoined, char memberScsnFl, char memberBlackList,
+			char memberLevel) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberNickname = memberNickname;
+		this.memberNm = memberNm;
+		this.memberBirth = memberBirth;
+		this.memberGender = memberGender;
+		this.memberPhone = memberPhone;
+		this.memberAddr = memberAddr;
+		this.memberJoined = memberJoined;
+		this.memberScsnFl = memberScsnFl;
+		this.memberBlackList = memberBlackList;
+		this.memberLevel = memberLevel;
+	}
+	
+	// admin 블랙리스트 조회용
+	public Member(int memberNo, String memberId, String memberNickname, String memberNm, Date memberBirth, char memberGender,
+			String memberPhone, Date memberJoined, char memberScsnFl, char memberBlackList,
+			char memberLevel) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberNickname = memberNickname;
+		this.memberNm = memberNm;
+		this.memberBirth = memberBirth;
+		this.memberGender = memberGender;
+		this.memberPhone = memberPhone;
+		this.memberJoined = memberJoined;
+		this.memberScsnFl = memberScsnFl;
+		this.memberBlackList = memberBlackList;
+		this.memberLevel = memberLevel;
+	}
+
+
 
 	public int getMemberNo() {
 		return memberNo;
 	}
+
+
 
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;

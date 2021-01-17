@@ -22,7 +22,7 @@
 		<jsp:include page="WEB-INF/views/common/header.jsp"></jsp:include>
 
 		<div class="title">
-			<a href="${contextPath}/admin/adminMain.do"><img id="mainImg" src="resources/img/mainImg.png"></a>
+			<img id="mainImg" src="resources/img/mainImg.png">
 			<form action="${contextPath}/main/mainSearchPage.do" method="get" name="search_input">
 				<input type="text" id="search_input" class="input" placeholder="관심있는 내용을 검색해 보세요!">
 			</form>

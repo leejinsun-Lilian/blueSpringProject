@@ -44,6 +44,62 @@ FROM
 WHERE RNUM BETWEEN ? AND ?
 </entry>
 
+<!-- 회원정보 관리 전체 게시글 수 조회 -->
+<entry key="getMemberListCount">
+SELECT COUNT(*) FROM V_MEMBER
+</entry>
+
+<!-- 지정된 페이지 회원정보 목록 조회 -->
+<entry key="selectMemberList">
+SELECT * FROM
+(SELECT ROWNUM RNUM, V.*
+FROM
+(SELECT MEM_NO, MEM_ID, MEM_NICKNAME, MEM_NM, MEM_BIRTH, MEM_GENDER, MEM_PHONE, MEM_ADDR, MEM_JOINED, MEM_SCSN_FL, MEM_BLACKLIST, MEM_LEVEL FROM V_MEMBER ORDER BY MEM_NO DESC)V) 
+WHERE RNUM BETWEEN ? AND ?
+</entry>
+
+<!-- 블랙리스트 관리 게시글 수 조회 -->
+<entry key="getBlackListCount">
+SELECT COUNT(*) FROM V_MEMBER
+WHERE MEM_BLACKLIST = 'Y'
+</entry>
+
+<!-- 지정된 페이지 블랙리스트 목록 조회 -->
+<entry key="selectBlackList">
+SELECT * FROM
+(SELECT ROWNUM RNUM, V.*
+FROM
+(SELECT MEM_NO, MEM_ID, MEM_NICKNAME, MEM_NM, MEM_BIRTH, MEM_GENDER, MEM_PHONE, MEM_JOINED, MEM_SCSN_FL, MEM_BLACKLIST, MEM_LEVEL FROM V_MEMBER WHERE MEM_BLACKLIST = 'Y' ORDER BY MEM_NO DESC)V) 
+WHERE RNUM BETWEEN ? AND ?
+</entry>
+
+<!-- 챌린지 관리 게시글 수 조회 -->
+<entry key="getChallListCount">
+SELECT COUNT(*) FROM V_CHALLENGE_MISSION
+</entry>
+
+<!-- 지정된 페이지 챌린지 목록 조회 -->
+<entry key="selectChallList">
+SELECT * FROM
+(SELECT ROWNUM RNUM, V.*
+FROM
+(SELECT CHLNG_NO, CHLNG_TITLE, MEM_ID, CHLNG_FL FROM V_CHALLENGE_MISSION ORDER BY CHLNG_NO DESC)V)
+WHERE RNUM BETWEEN ? AND ?
+</entry>
+
+<!-- 챌린지 인증게시판 관리 게시글 수 조회 -->
+<entry key="getChallCrtfdListCount">
+SELECT COUNT(*) FROM V_CHALLENGERS
+</entry>
+
+<!-- 지정된 페이지 챌린지 인증게시글 목록 조회 -->
+<entry key="selectChallCrtfdList">
+SELECT * FROM
+(SELECT ROWNUM RNUM, V.*
+FROM
+(SELECT CHLNG_NO, CHLNG_BRD_NO, MEM_ID, CHLNG_BRD_DEL_FL FROM V_CHALLENGERS ORDER BY CHLNG_BRD_NO DESC)V)
+WHERE RNUM BETWEEN ? AND ?
+</entry>
 
 
 </properties>

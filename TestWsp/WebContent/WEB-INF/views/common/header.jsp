@@ -84,18 +84,37 @@
 		       	<button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
 			</div>
 		</c:when>
-		
 		<c:otherwise>
-			<div class="login logging">
-				<ul>
-				<li><a href="${contextPath}/mypage/main.do">${loginMember.memberNm}</a></li>
-				<li><button type="button" id="header_logout" 
-					onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button></li>
-			</ul>
-			</div>
-		</c:otherwise>
-	</c:choose>
+         <div class="login logging">
+         <script>
+         	console.log('${loginMember.memberId}');
+         </script>
+            <ul>
+			
 		
+            <c:if test="${!empty loginMember && loginMember.memberLevel == 'A'.charAt(0)}">
+            	<li>
+      				<span><a href="${contextPath}/admin/adminMain.do">${loginMember.memberNickname}</a></span>
+      			</li>
+            </c:if>
+            
+            
+            <c:if test="${!empty loginMember && loginMember.memberLevel == 'M'.charAt(0)}">
+            	<li>
+      				<span><a href="${contextPath}/mypage/main.do">${loginMember.memberNickname}</a></span>
+      			</li>
+            </c:if>
+       
+           		
+      			 <li><button type="button" id="header_logout" 
+               onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button></li>
+         	</ul>
+         </div></c:otherwise>
+         	
+
+
+     
+	</c:choose>
 		
 	</div>
 

@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,7 +42,7 @@
 
     .adminCrtfd_search{ text-align: center; }
 
-    .page-item > a, .page-item > a:hover{ color: black; }
+    .pagination > li > a, .pagination > li > a:hover{ color: black; }
 
     #adminCrtfd_btn { 
     background-color: #343a40;
@@ -75,20 +77,24 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">123</th>
-                        <td>3</td>
-                        <td>user03</td>
-                        <td>N</td>
-                      </tr>
-                      <tr>
-                        <th><input type="checkbox"></th>
-                        <th scope="row">240</th>
-                        <td>5</td>
-                        <td>user04</td>
-                        <td>N</td>
-                      </tr>
+                    <c:choose>
+                    <c:when test="${empty crtList}">
+                        <tr>
+                            <td colspan="5">존재하는 게시글이 없습니다.</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>                      
+                        <c:forEach var="challenge" items="${crtList}">
+                            <tr>
+                            	<td><input type="checkbox"></td>
+                                <th scope="row">${challengeCrtfd.chlngNo}</th>
+                                <td>${challengeCrtfd.chlngBoardNo}</td>
+                                <td>${challengeCrtfd.memberId}</td>
+                                <td>${challengeCrtfd.chlngBoardDelFl}</td>
+							</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                     </tbody>
                   </table>
             </div>
