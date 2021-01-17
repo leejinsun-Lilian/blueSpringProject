@@ -13,12 +13,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>푸른봄: 로그인</title>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 </head>
 <body>
+
+	<c:if test="${!empty sessionScope.swalTitle }">
+		<script>
+			swal({
+				icon : "${swalIcon}",
+				title : "${swalTitle}",
+				text : "${swalText}"
+			});
+		</script>
+
+		<%-- 2) 한번 출력한 메세지를 Session에서 삭제 --%>
+		<c:remove var="swalIcon" />
+		<c:remove var="swalTitle" />
+		<c:remove var="swalText" />
+	</c:if>
 
 	<div id="wrap">
 	

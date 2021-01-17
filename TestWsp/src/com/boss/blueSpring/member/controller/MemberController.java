@@ -5,11 +5,15 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.tribes.MembershipService;
+
+import com.boss.blueSpring.member.model.service.MemberService;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.sun.corba.se.spi.protocol.RequestDispatcherRegistry;
 
@@ -32,43 +36,104 @@ public class MemberController extends HttpServlet {
 		String swalTitle = null;
 		String swalText = null;
 		
-		String memberId = request.getParameter("id_input");
-		String memberPwd = request.getParameter("pw_input");
-		String idSave = request.getParameter("id_chk");
+		MemberService mService = new MemberService();
 		
-		Member member = new Member();
-		member.setMemberId(memberId);
-		member.setMemberPwd(memberPwd);
+		
 		try {
 			request.setCharacterEncoding("UTF-8");
 			
 			
-			// 로그인 Controller 
-			if(command.equals("/loginForm.do")) {
-				path="/WEB-INF/views/member/loginForm.jsp";
-				
-				//Member loginMember = new MemberService().loginMember(member);
-				
-				
-				
-
+			// ****************************************************************** 로그인 페이지를 보여주는 Controller ******************************************************************
+			if(command.equals("/login.do")) {
+				path="/WEB-INF/views/member/loginForm.jsp";				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+			}
+			
+			
+			// ****************************************************************** 로그인  Controller ******************************************************************
+			else if(command.equals("/loginAction.do")) {
 				
-				System.out.println("login : " +  memberId + " / " + memberPwd + " / " + idSave);
-				//session.setAttribute("member", member);
+				
+				String memberId = request.getParameter("id_input");
+				String memberPwd = request.getParameter("pw_input");
+				String idSave = request.getParameter("id_chk");
+				
+				Member member = new Member();
+				member.setMemberId(memberId);
+				member.setMemberPwd(memberPwd);
+				
+				try {
+					Member loginMember = mService.loginMember(member);
+					
+					response.setContentType("text/html; charset=UTF-8");
+					
+					HttpSession session = request.getSession();
+					
+					
+					if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
+						
+						session.setMaxInactiveInterval(60*30);
+						
+						session.setAttribute("loginMember", loginMember);
+						
+						Cookie cookie = new Cookie("saveId", memberId);
+						
+						
+						if(idSave != null) {
+							cookie.setMaxAge(60 * 60 * 24 * 7);
+						} else {
+							cookie.setMaxAge(0);
+						}
+						
+						cookie.setPath(request.getContextPath());
+						
+						response.addCookie(cookie);
+						
+						
+						
+						
+						response.sendRedirect(request.getContextPath());
+						
+					} else if(loginMember.getMemberBlackList() == 'Y') {
+						swalIcon = "error";
+						swalTitle = "로그인 실패";
+						swalText = "접근이 불가능한 계정입니다.";
+						
+						response.sendRedirect(request.getHeader("referer"));
+					}
+					
+					else {
+						swalIcon = "error";
+						swalTitle = "로그인 실패";
+						swalText = "아이디와 비밀번호를 확인해주세요.";
+						
+						response.sendRedirect(request.getHeader("referer"));
+						 
+					}
+					session.setAttribute("swalIcon", swalIcon);
+					session.setAttribute("swalTitle", swalTitle);
+					session.setAttribute("swalText", swalText);
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					
+					request.setAttribute("errorMsg", "로그인 과정에서 오류가 발생했습니다.");
+					
+					view = request.getRequestDispatcher("/WEB-INF/views/common/errorPage.jsp");
+					view.forward(request, response);
+				}
+				
+			}
+			
+			
+			else if(command.equals("/logout.do")) {
+				request.getSession().invalidate();
 				response.sendRedirect(request.getHeader("referer"));
-				
 			}
 			
-			// 로그인 확인 Controller
-			if(command.equals("/loginAction.do")) {
-				path="/WEB-INF/views/member/loginAction.jsp";
-				
-				
-			}
 			
-		
 			
 			// 회원가입 Controller
 			else if(command.equals("/signup.do")) {

@@ -1,7 +1,9 @@
 @charset "UTF-8";
 
 
-/* * { border: 1px solid tomato; } */
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
 
 html, body {
    margin : 0;
@@ -109,3 +111,54 @@ li:hover .sub { display: block; }
 }
 
 
+.logging {
+	margin : auto;
+}
+
+.loggin ul {
+	display : flex;
+	
+}
+
+
+.logging li{
+	text-decoration: none;
+	display : inline-block;
+	float : left;
+	height : 30%;
+	margin-top : 15px;
+	font-size : 130%;
+	font-weight : bold;
+
+	margin-right : 30px;
+}
+
+#header_logout{
+	width : 100px;
+	background-color: rgb(249 155 67);
+	border : none;
+	color : white;
+	height: 100%;
+}
+
+.logging a {
+	color : #343a40;
+}
+
+.logging a:hover{
+	color : #343a40;
+}
+
+.logging a:after {
+   display:block;/*a요소를 블록 요소라고 선언*/
+   content: '';
+   border-bottom: solid 2px rgb(249 155 67);
+   transform: scaleX(0);/*크기를 0으로 줌으로써 평상시엔 밑줄 없음*/
+   transition: transform 250ms ease-in-out; /*변형 방식*/
+   color : #343a40;
+}
+
+.logging a:hover:after {
+	color : #f97c32;
+	transform: scaleX(1);
+}
