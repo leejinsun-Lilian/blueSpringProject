@@ -36,9 +36,7 @@
 	</c:if>
 
 
-
 	<div class="header_wrap">
-
 		<div class="header_menu">
 			<a id="logo_link" href="${contextPath}"><img id="logo" src="${contextPath}/resources/img/bluespringlogo.png"></a>
 			<ul id="nav">
