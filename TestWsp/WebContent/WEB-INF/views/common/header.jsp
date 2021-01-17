@@ -36,7 +36,6 @@
 	</c:if>
 
 
-
 	<div class="header_wrap">
 
 		<div class="header_menu">
