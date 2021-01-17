@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.notice.model.service.NoticeService;
 import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.notice.model.vo.PageInfo;
@@ -35,7 +34,7 @@ public class NoticeController extends HttpServlet {
 			// 현재 페이지를 얻어옴
 			String cp = request.getParameter("cp"); // 처음은 null
 			
-			// 공지사항 목록 조회
+			// 공지사항 목록 조회 **********************************************
 			if(command.equals("/list.do")) {
 				PageInfo pInfo = service.getPageInfo(cp); 
 				
@@ -54,6 +53,24 @@ public class NoticeController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
+			// 공지사항 상세보기 **********************************************
+			else if(command.equals("/view.do")) {
+				int noticeNo = Integer.parseInt(request.getParameter("no"));    // 파라미터 다 String형임
+				
+				// 상세조회 비지니스 로직 수행 후 결과 반환 받기
+				Notice notice = service.selectNotice(noticeNo);
+				
+				
+				path="/WEB-INF/views/notice/noticeView.jsp";
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			
+			
+			
+			
+			
 			
 			
 			// 공지사항 등록 이동
@@ -64,12 +81,6 @@ public class NoticeController extends HttpServlet {
 			}
 			
 			
-			// 공지사항 상세보기
-			else if(command.equals("/view.do")) {
-				path="/WEB-INF/views/notice/noticeView.jsp";
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-			}
 			
 			// 공지사항  수정    화면, 수정내용 넘기는거 따로
 			
