@@ -22,7 +22,7 @@
 		
 		
 		<div id="container">
-			<form id="signUp" method="post" action="${contextPath}/member/signupComplete.do">
+			<form id="signUp" method="post" action="signupComplete.do" name="signUp" onsubmit="return validate();">
 				<div id="content">
 					<div id="signUp_form">
 						<!-- 아이디 -->
@@ -31,9 +31,9 @@
 								<label for="id" style="margin-bottom: 5px;">아이디</label>
 							</span>
 							<span class="sign_input input_id">
-								<input type="text" id="id" name="id" class="signUp_int" maxlength="20" required>
+								<input type="text" id="id" name="id" class="signUp_int" maxlength="20" autocomplete="off" required>
 							</span>
-							<span class="error_area" id="idMsg">test</span>
+							<span class="error_area" id="idMsg"></span>
 						</div>
 						
 						<!-- 닉네임  -->
@@ -42,7 +42,7 @@
 								<label for="nickName" style="margin-bottom: 5px;">닉네임</label>
 							</span> 
 							<span class="sign_input input_nickName"> 
-							<input type="text" id="nickName" name="nickName" class="signUp_int" maxlength="20" required>
+							<input type="text" id="nickName" name="nickName" class="signUp_int" maxlength="20" autocomplete="off" required>
 							</span> 
 							<span class="error_area" id="nickNameMsg">test</span>
 						</div>
@@ -54,7 +54,7 @@
 								<label for="pswd1" style="margin-bottom: 5px;">비밀번호</label>
 							</span> 
 							<span class="sign_input input_pswd1"> 
-							<input type="text" id="pswd1" name="pswd1" class="signUp_int" maxlength="20" required>
+							<input type="password" id="pswd1" name="pswd1" class="signUp_int" maxlength="20" required>
 							</span> 
 							<span class="error_area" id="pswd1Msg">test</span>
 						</div>
@@ -65,7 +65,7 @@
 								<label for="pswd2" style="margin-bottom: 5px;">비밀번호 확인</label>
 							</span> 
 							<span class="sign_input input_pswd2"> 
-								<input type="text" id="pswd2" name="pswd2" class="signUp_int" maxlength="20" required>
+								<input type="password" id="pswd2" name="pswd2" class="signUp_int" maxlength="20" required>
 							</span> 
 							<span class="error_area" id="pswd2Msg">test</span>
 						</div>
@@ -134,7 +134,7 @@
 						<div class="birthday_area">
 							<div class="birthday_yy">
 								<span class="sign_input">
-									<input type="text" id="birth_yy" class="signUp_int" maxlength="4" required>
+									<input type="number" id="birth_yy" class="signUp_int" maxlength="4" required>
 								</span>
 							</div>
 							
@@ -160,7 +160,7 @@
 							
 							<div class="birthday_dd">
 								<span class="sign_input">
-									<input type="text" id="birth_mm" class="signUp_int" maxlength="2" required>
+									<input type="number" id="birth_mm" class="signUp_int" maxlength="2" required>
 								</span>
 							</div>
 							
@@ -182,7 +182,6 @@
 							<option value="U">선택안함</option>
 						</select>
 						</span> 
-						<span class="error_area" id="genderMsg">test</span>
 					</div>
 				
 					<!-- 휴대전화  -->
@@ -191,7 +190,8 @@
 							<label for="phone" style="margin-bottom: 5px;">휴대전화</label>
 						</span> 
 						<span class="sign_input input_phone"> 
-						<input type="tel" id="phone" name="phone" class="signUp_int" maxlength="40" required placeholder='"-"를 포함해서 입력해주세요.'>
+						<input type="tel" id="phone" name="phone" class="signUp_int" maxlength="40" 
+							autocomplete="off"  placeholder='"-"를 포함해서 입력해주세요.' required>
 						</span> 
 						<span class="error_area" id="phoneeMsg">test</span>
 					</div>
@@ -201,28 +201,11 @@
 						<span class="signUp_text">
 							<label for="email" style="margin-bottom : 5px;">이메일</label>
 						</span>
-						<div id="emailForm">
+						<div id="emailForm_area">
 							<div class="emailForm" id="fEmail">
 								<span class="sign_input input_email">
-									<input type="text" id="email_id" name="email_id" class="signUp_int" required>
+									<input type="email" id="email_id" name="email_id" class="signUp_int" autocomplete="off" required>
 								</span> 
-							</div>
-							
-							<div class="emailForm" id="sEmail">
-								<span id="email_at">@</span>
-							</div>
-							
-							<div class="emailForm" id="tEmail">
-								<span class="sign_input input_email" id="email_addr" class="signUp_int">
-									<select id="email_sel" class="sel" required>
-									<option hidden="true">선택</option>
-									<option value="naver.com">naver.com</option>
-									<option value="gmail.com">gmail.com</option>
-									<option value="daum.net">daum.net</option>
-									<option value="nate.com">nate.com</option>
-									<option value="self">직접 입력</option>
-									</select>
-								</span>
 							</div>
 						</div>
 						<div id="cNumForm">
@@ -246,14 +229,11 @@
 					<div class="btn_area">
 						<button type="submit" id="signBtn" class="btn">가입하기</button>
 					</div>
-					
-					
-					
 					</div>
-				
 				</div>
-			
 			</form>
+			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+			<script src="${contextPath}/resources/js/member_signUp.js"></script>
 		</div>
 	
 	<jsp:include page="../common/footer.jsp"></jsp:include>

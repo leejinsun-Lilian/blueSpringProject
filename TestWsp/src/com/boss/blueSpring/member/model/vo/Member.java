@@ -16,7 +16,7 @@ public class Member {
 	private char memberScsnFl; // 탈퇴여부
 	private char memberBlackList; // 블랙리스트 여부
 	private char memberLevel; // 등급
-
+	private String memberNickname; //닉네임
 	public Member() {
 	}
 
@@ -24,7 +24,7 @@ public class Member {
 	// 로그인 생성자
 	public Member(int memberNo, String memberId, String memberPwd, String memberNm, Date memberBirth, char memberGender,
 			String memberPhone, String memberAddr, String memberEmail, Date memberJoined, char memberScsnFl,
-			char memberBlackList, char memberLevel) {
+			char memberBlackList, char memberLevel, String memberNickname) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -39,6 +39,7 @@ public class Member {
 		this.memberScsnFl = memberScsnFl;
 		this.memberBlackList = memberBlackList;
 		this.memberLevel = memberLevel;
+		this.memberNickname = memberNickname;
 	}
 
 	
@@ -46,7 +47,7 @@ public class Member {
 	
 	public Member(int memberNo, String memberId, String memberNm, Date memberBirth, char memberGender,
 			String memberPhone, String memberAddr, String memberEmail, Date memberJoined, char memberScsnFl,
-			char memberBlackList, char memberLevel) {
+			char memberBlackList, char memberLevel, String memberNickname) {
 		super();
 		this.memberNo = memberNo;
 		this.memberId = memberId;
@@ -60,6 +61,7 @@ public class Member {
 		this.memberScsnFl = memberScsnFl;
 		this.memberBlackList = memberBlackList;
 		this.memberLevel = memberLevel;
+		this.memberNickname = memberNickname;
 	}
 
 
@@ -167,16 +169,22 @@ public class Member {
 		this.memberLevel = memberLevel;
 	}
 
+	public String getMemberNickname() {
+		return memberNickname;
+	}
+
+
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberNm="
 				+ memberNm + ", memberBirth=" + memberBirth + ", memberGender=" + memberGender + ", memberPhone="
 				+ memberPhone + ", memberAddr=" + memberAddr + ", memberEmail=" + memberEmail + ", memberJoined="
 				+ memberJoined + ", memberScsnFl=" + memberScsnFl + ", memberBlackList=" + memberBlackList
-				+ ", memberLevel=" + memberLevel + "]";
+				+ ", memberLevel=" + memberLevel + ", memberNickname=" + memberNickname + "]";
 	}
-	
-	
-	
-	
 }
