@@ -53,7 +53,7 @@ public class MemberController extends HttpServlet {
 			
 			// ****************************************************************** 로그인  Controller ******************************************************************
 			else if(command.equals("/loginAction.do")) {
-				
+				errorMsg = "로그인 중 오류가 발생했습니다.";
 				
 				String memberId = request.getParameter("id_input");
 				String memberPwd = request.getParameter("pw_input");
@@ -71,7 +71,9 @@ public class MemberController extends HttpServlet {
 					HttpSession session = request.getSession();
 					
 					
+					
 					if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
+						System.out.println(loginMember);
 						
 						session.setMaxInactiveInterval(60*30);
 						
@@ -95,12 +97,12 @@ public class MemberController extends HttpServlet {
 						
 						response.sendRedirect(request.getContextPath());
 						
-					} else if(loginMember.getMemberBlackList() == 'Y') {
+					} else if(loginMember != null && loginMember.getMemberBlackList() == 'Y') {
 						swalIcon = "error";
 						swalTitle = "로그인 실패";
 						swalText = "접근이 불가능한 계정입니다.";
 						
-						response.sendRedirect(request.getHeader("referer"));
+						response.sendRedirect(request.getContextPath());
 					}
 					
 					else {
@@ -119,15 +121,15 @@ public class MemberController extends HttpServlet {
 				} catch (Exception e) {
 					e.printStackTrace();
 					
-					request.setAttribute("errorMsg", "로그인 과정에서 오류가 발생했습니다.");
+					request.setAttribute("errorMsg", errorMsg);
 					
 					view = request.getRequestDispatcher("/WEB-INF/views/common/errorPage.jsp");
 					view.forward(request, response);
 				}
-				
 			}
 			
 			
+			// ****************************************************************** 로그아웃 Controller ******************************************************************
 			else if(command.equals("/logout.do")) {
 				request.getSession().invalidate();
 				response.sendRedirect(request.getHeader("referer"));
@@ -142,6 +144,26 @@ public class MemberController extends HttpServlet {
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
+			
+			
+			// 아이디 중복체크 Controller
+			else if(command.equals("/idDupCheck.do")) {
+				String id = request.getParameter("id");
+				
+				try {
+					int result = mService.idDupCheck(id);
+					 
+					response.getWriter().print(result);
+				}catch (Exception e) {
+			         e.printStackTrace();
+			         path = "/WEB-INF/views/common/errorPage.jsp";
+			         request.setAttribute("errorMsg", "아이디 중복 검사 과정에서 오류 발생!");
+			         view = request.getRequestDispatcher(path);
+			         view.forward(request, response);
+				}
+			}
+			
+			
 			
 			// 회원가입 완료 Controller
 			else if(command.equals("/signupComplete.do")) {

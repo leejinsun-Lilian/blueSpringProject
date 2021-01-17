@@ -20,7 +20,20 @@
 <body>
 	<c:set var="contextPath" scope="application" value="${pageContext.servletContext.contextPath}"></c:set>
 
-	
+		<c:if test="${!empty sessionScope.swalTitle }">
+		<script>
+			swal({
+				icon : "${swalIcon}",
+				title : "${swalTitle}",
+				text : "${swalText}"
+			});
+		</script>
+
+		<%-- 2) 한번 출력한 메세지를 Session에서 삭제 --%>
+		<c:remove var="swalIcon" />
+		<c:remove var="swalTitle" />
+		<c:remove var="swalText" />
+	</c:if>
 
 
 
