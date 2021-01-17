@@ -1,24 +1,23 @@
 package com.boss.blueSpring.notice.model.vo;
 
-import java.sql.Date;
+
+import java.sql.Timestamp;
 
 public class Notice {
 
 	private int noticeNo; // 공지글 번호
 	private String noticeTitle; // 공지글 제목
-	private Date noticeCrtDt; // 작성일
+	private Timestamp noticeCrtDt; // 작성일
 	private String noticeContent; //공지글 내용
 	private String noticeDelFl; // 삭제여부(N,Y)
-	private Date noticeUpdateDt; // 수정날짜
+	private Timestamp noticeUpdateDt; // 수정날짜
 	private String memberId; // 작성자 아이디
 	private int noticeViews; //조회수
 	
 	public Notice() {}
 
-	
-	
-	public Notice(int noticeNo, String noticeTitle, Date noticeCrtDt, String noticeContent, String noticeDelFl,
-			Date noticeUpdateDt, String memberId, int noticeViews) {
+	public Notice(int noticeNo, String noticeTitle, Timestamp noticeCrtDt, String noticeContent, String noticeDelFl,
+			Timestamp noticeUpdateDt, String memberId, int noticeViews) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
@@ -46,11 +45,11 @@ public class Notice {
 		this.noticeTitle = noticeTitle;
 	}
 
-	public Date getNoticeCrtDt() {
+	public Timestamp getNoticeCrtDt() {
 		return noticeCrtDt;
 	}
 
-	public void setNoticeCrtDt(Date noticeCrtDt) {
+	public void setNoticeCrtDt(Timestamp noticeCrtDt) {
 		this.noticeCrtDt = noticeCrtDt;
 	}
 
@@ -70,11 +69,11 @@ public class Notice {
 		this.noticeDelFl = noticeDelFl;
 	}
 
-	public Date getNoticeUpdateDt() {
+	public Timestamp getNoticeUpdateDt() {
 		return noticeUpdateDt;
 	}
 
-	public void setNoticeUpdateDt(Date noticeUpdateDt) {
+	public void setNoticeUpdateDt(Timestamp noticeUpdateDt) {
 		this.noticeUpdateDt = noticeUpdateDt;
 	}
 
@@ -101,6 +100,8 @@ public class Notice {
 				+ noticeUpdateDt + ", memberId=" + memberId + ", noticeViews=" + noticeViews + "]";
 	}
 
+	
+	
 	
 	
 }

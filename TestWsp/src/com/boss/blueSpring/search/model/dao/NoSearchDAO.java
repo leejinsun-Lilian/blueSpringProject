@@ -90,7 +90,7 @@ public class NoSearchDAO {
 				notice.setNoticeTitle(  rset.getString("NOTICE_TITLE")  );
 				notice.setMemberId(  	rset.getString("MEM_ID")  );
 				notice.setNoticeViews(  	rset.getInt("NOTICE_VIEWS")  );
-				notice.setNoticeCrtDt(  rset.getDate("NOTICE_CRT_DT")  );
+				notice.setNoticeCrtDt(  rset.getTimestamp("NOTICE_CRT_DT")  );
 				
 				list.add(notice);
 			}

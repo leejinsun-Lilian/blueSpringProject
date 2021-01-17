@@ -15,7 +15,7 @@
     <c:set var="contextPath" scope="application" value="${pageContext.servletContext.contextPath}"></c:set>
     
     <!-- 추후 session의 member로 변경 필요 -->
-    <c:set var="member" value="22"/>
+    <c:set var="loginMember" value="${loginMember}"/>
     
     <jsp:include page="../common/header.jsp"></jsp:include>
 
@@ -25,8 +25,10 @@
 
         <div id="titleReport">
             <h2 id="board-title">${board.boardTitle}</h2>
-             <!-- 로그인이 되어있고 글 작성자가 아닌 경우 -->       
-            <button type="button" id="boardReportBtn">신고하기</button>
+            <!-- 로그인이 되어있고 글 작성자가 아닌 경우 --> 
+            <c:if test="${!empty loginMember && (board.memberId != loginMember.memberId)}">
+            	<button type="button" id="boardReportBtn">신고하기</button>
+            </c:if>         
         </div>
 
         
@@ -56,11 +58,11 @@
         
         <!-- 로그인 한 상태고 자신의 글이 아닐 시에만  -->
         <div id="like-area">					
-						<c:if test="${likeInfo.boardNo == board.boardNo && likeInfo.memberNo == member}">
+						<c:if test="${likeInfo.boardNo == board.boardNo && likeInfo.memberNo == loginMember.memberNo}">
 								<i id="like-btn" class="fas fa-heart">&nbsp;${board.likeCount}</i>
 						</c:if>
 						
-						<c:if test="${likeInfo.boardNo != board.boardNo || likeInfo.memberNo != member}">
+						<c:if test="${likeInfo.boardNo != board.boardNo || likeInfo.memberNo != loginMember.memberNo}">
 								<i id="like-btn" class="far fa-heart">&nbsp;${board.likeCount}</i>
 						</c:if>
 						
@@ -72,16 +74,16 @@
     
     <button type="button" id="back-board-main" onclick="location.href='list.do?cp=${param.cp}'">목록으로</button>	
 		<%-- 로그인된 회원과 해당 글 작성자가 같은 경우--%>
-<%-- 		<c:if test="${!empty loginMember && (board.memberId == loginMember.memberId)}"> --%>
+ 		<c:if test="${!empty loginMember && (board.memberId == loginMember.memberId)}">
 			<button id="deleteBtn">삭제</button> 
 			
 			<%-- 게시글 수정 후 상세조회 페이지로 돌아오기 위한 url 조합 --%>
 			<%-- 검색된 내용 들어온 상세 조회 페이지인 경우 --%>
-<%-- 			<c:if test="${!empty param.sk && !empty param.sv}">		 --%>		
+ 			<c:if test="${!empty param.sk && !empty param.sv}">	
 				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />
-<%-- 			</c:if>	 --%>
+ 			</c:if>	 
 			<button type="button" id="updateBtn" onclick="location.href = 'updateBoardForm.do?cp=${param.cp}&no=${param.no}${searchStr}'">수정</button>
-<%-- 		</c:if>  --%>     
+ 		</c:if>      
       			
     </div>
     	
@@ -101,7 +103,7 @@
   		$("#boardReportBtn").on("click", function() {
 				if(window.confirm("보고 있는 게시글을 신고하시겠습니까?")) {
 					/* $(board.memberId); */
-					var memberId = ${member};
+					var memberId = ${loginMember.memberNo};
 					var target = "${board.memberId}";
 					var boardNo = ${board.boardNo};
 					
@@ -114,43 +116,47 @@
 			});  
   		
   		
-  		
+  		var boardWriter = '${board.memberId}';
+  		var memberId = '${loginMember.memberId}';
 			var boardNo = ${board.boardNo};
-			var memberNo = ${member}; // memberNo로 변경 필요
+			var memberNo = ${loginMember.memberNo}; // memberNo로 변경 필요
 			var likeCount = ${board.likeCount};
 			
 			var i;
   		
 			$(document).on("click","#like-btn",function(){
-  		//$("#like-btn").on("click", function() {			
-    		$.ajax({   			
-    			url : "${contextPath}/board/boardLike.do",
-    			data : {"boardNo" : boardNo,
-    							"memberNo" : memberNo,
-    							"likeCount" : likeCount}, 
-					success : function(likeFlag) {
-						
-						$("#like-area").html("");
-						
-						if(likeFlag == 1) {		
-								i = $("<i>").addClass("fas fa-heart").attr("id", "like-btn");
-								likeCount = likeCount + 1;
-								$("#like-area").append(i).append("&nbsp;").append(likeCount);
+				console.log(boardWriter);
+				console.log(memberId);
+				if(boardWriter != memberId) {
+					$.ajax({   			
+		    			url : "${contextPath}/board/boardLike.do",
+		    			data : {"boardNo" : boardNo,
+		    							"memberNo" : memberNo,
+		    							"likeCount" : likeCount}, 
+							success : function(likeFlag) {
 								
-						} else if(likeFlag == 0) {
-								i = $("<i>").addClass("far fa-heart").attr("id", "like-btn");
-								if(likeCount > 0) {
-									likeCount = likeCount - 1;
-								}							
-								$("#like-area").append(i).append("&nbsp;").append(likeCount);
-						}
-						
-						
-					}, 
-      		error : function(request, status, error) {
-       	      alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-       		}    										
-    		});   		
+								$("#like-area").html("");
+								
+								if(likeFlag == 1) {		
+										i = $("<i>").addClass("fas fa-heart").attr("id", "like-btn");
+										likeCount = likeCount + 1;
+										$("#like-area").append(i).append("&nbsp;").append(likeCount);
+										
+								} else if(likeFlag == 0) {
+										i = $("<i>").addClass("far fa-heart").attr("id", "like-btn");
+										if(likeCount > 0) {
+											likeCount = likeCount - 1;
+										}							
+										$("#like-area").append(i).append("&nbsp;").append(likeCount);
+								}
+								
+								
+							}, 
+		      		error : function(request, status, error) {
+		       	      alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		       		}    										
+		    		});   		
+				}   		
   		});
   				
 	 </script>

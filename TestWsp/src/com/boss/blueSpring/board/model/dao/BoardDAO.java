@@ -214,8 +214,8 @@ public class BoardDAO {
 			pstmt.setInt(1, (int)map.get("boardNo"));
 			pstmt.setString(2, (String)map.get("boardTitle"));
 			pstmt.setString(3, (String)map.get("boardContent"));
-//			pstmt.setInt(4, (int)map.get("boardWriter"));
-			pstmt.setInt(4, (int)map.get("categoryCode"));
+			pstmt.setInt(4, (int)map.get("boardWriter"));
+			pstmt.setInt(5, (int)map.get("categoryCode"));
 			
 			result = pstmt.executeUpdate();
 			

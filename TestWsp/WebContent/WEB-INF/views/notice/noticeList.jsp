@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사할 목록</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/no_list.css" type="text/css">
+<title>공지사항 목록</title>
+<link rel="stylesheet" href="${contextPath}/resources/css/notice/no_list.css" type="text/css">
 </head>
 <body>
 	<!-- 해더 영역 -->
@@ -45,9 +45,12 @@
 								<tr>   
 									<td>${notice.noticeNo}</td>
 									<td>${notice.noticeTitle}</td>
-									<td>${notice.memberId}</td>
+									<td>${notice.memberId}</td>     <%-- dao에서 member --%>
 									<td>${notice.noticeViews}</td>
-									<td>${notice.noticeCrtDt}</td>
+									<td>
+										<fmt:formatDate var="createDate" value="${notice.noticeCrtDt}" pattern="yyyy-MM-dd"/>
+										${createDate}
+									</td>
 								</tr>
 							</c:forEach>
 						
@@ -60,11 +63,11 @@
 		
 		
 		<!-- 관리자일 경우에만 글쓰기 버튼이 보이는거 -->
-		<%-- <c:if test="${!empty loginMember && loginMember.memberGrade == '1' }"> --%>
+		<c:if test="${!empty loginMember && loginMember.memberLevel == 'A'.charAt(0) }"> 
 			<div class="writer-bt">
 				<a href="${contextPath}/notice/insertForm.do" class="btn btn-update">글쓰기</a>
 			</div>
-		<%-- </c:if> --%>
+		</c:if>
 		
 		
 		<%---------------------- Pagination ----------------------%>

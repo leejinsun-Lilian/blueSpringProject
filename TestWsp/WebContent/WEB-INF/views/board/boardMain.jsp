@@ -14,12 +14,24 @@
 <body>
     <jsp:include page="../common/header.jsp"></jsp:include>
     
-    <!-- 추후 session의 member로 변경 필요 -->
-    <c:set var="member" value="22"/>
+    <c:set var = "loginMember" value="${loginMember}"/> 
+    
+    <!-- 로그인 체크(좋아요 때문에....) -->
+    <c:choose>
+    	<c:when  test="${null eq loginMember }">
+    		<c:set var ="memberNo" value = "0"/>
+    	</c:when>
+    	<c:otherwise>
+    		<c:set var ="memberNo" value = "${loginMember.memberNo}"/>
+    	</c:otherwise>
+    </c:choose>
+    
+    ${memberNo}
     
     <h1>자유게시판</h1>       
     <div id="board-main">
         <ul id="board-category">
+        		<li><a href="${contextPath}/board/list.do">전체</a></li>
             <li><a href="${contextPath}/categorySearch.do?cn=정보">정보</a></li>
             <li><a href="${contextPath}/categorySearch.do?cn=일상">일상</a></li>
             <li><a href="${contextPath}/categorySearch.do?cn=취미">취미</a></li>
@@ -83,8 +95,10 @@
     <div id="board-bottom">
     		<%-- 글쓰기 btn 영역 --%>
         <div id="board-write-area">
-            <%-- 로그인 되어 있을 시 --%>
+          <%-- 로그인 되어 있을 시 --%>
+          <c:if test="${!empty loginMember}">
             <button type="button" id="board-write" onclick="location.href = '${contextPath}/board/boardWriteForm.do'">글쓰기</button>
+        	</c:if>
         </div>
 
 				<%-- 페이지 nav 영역 --%>
@@ -152,7 +166,7 @@
                 <option value="titcont">제목 + 내용</option>
             </select>
             <input type="text" name="sv">
-            <input id="cn" type="text" name="cn" value="${param.cn}">
+            <input id="hidden-cn" type="text" name="cn" value="${param.cn}">
             <button><i class="fas fa-search"></i></button> 
            </form>     
        	</div>
@@ -165,9 +179,11 @@
 				$("#board td").on("click", function() {
 					// 게시글 번호 얻어오기
 					var boardNo = $(this).parent().children().eq(0).text();
-					// console.log(boardNo);								
+ 					var memberNo = ${memberNo};
 					
-					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&memberNo=${member}&no=" + boardNo + "${searchStr}";
+					console.log(memberNo);
+		
+					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&memberNo=" + memberNo + "&no=" + boardNo + "${searchStr}";
 					// var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 					location.href = url;
 				});
