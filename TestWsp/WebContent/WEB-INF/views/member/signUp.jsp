@@ -14,6 +14,18 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<style>
+#postcode, #address1, #address2, #address3  {
+	border : 1px solid #b8b9b9c2;
+	border-radius : 0;
+}
+
+#postcode:focus, #address1:focus, #address2:focus, #address3:focus {
+	outline: none;
+	border : solid 1px #283e69;
+}
+</style>
 </head>
 <body>
 	<div id="wrap">
@@ -44,7 +56,7 @@
 							<span class="sign_input input_nickName"> 
 							<input type="text" id="nickName" name="nickName" class="signUp_int" maxlength="20" autocomplete="off" required>
 							</span> 
-							<span class="error_area" id="nickNameMsg">test</span>
+							<span class="error_area" id="nickNameMsg"></span>
 						</div>
 						
 						
@@ -56,7 +68,7 @@
 							<span class="sign_input input_pswd1"> 
 							<input type="password" id="pswd1" name="pswd1" class="signUp_int" maxlength="20" required>
 							</span> 
-							<span class="error_area" id="pswd1Msg">test</span>
+							<span class="error_area" id="pswd1Msg"></span>
 						</div>
 
 						<!-- 비밀번호  확인-->
@@ -67,7 +79,7 @@
 							<span class="sign_input input_pswd2"> 
 								<input type="password" id="pswd2" name="pswd2" class="signUp_int" maxlength="20" required>
 							</span> 
-							<span class="error_area" id="pswd2Msg">test</span>
+							<span class="error_area" id="pswd2Msg"></span>
 						</div>
 						
 						<!-- 이름  -->
@@ -78,16 +90,13 @@
 							<span class="sign_input input_name"> 
 							<input type="text" id="name" name="name" class="signUp_int" maxlength="40" required>
 							</span> 
-							<span class="error_area" id="nameMsg">test</span>
+							<span class="error_area" id="nameMsg"></span>
 						</div>
 						
-
-						
-						<!-- 주소  -->
-						<!-- 오픈소스 도로명 주소 API -->
-						<!-- https://www.poesis.org/postcodify/ -->
+	
+						<!-- 주소 -->
 						<div class="row_group">
-							<span class="signUp_text"> 
+ 							<span class="signUp_text"> 
 									<label for="address" style="margin-bottom: 5px;">주소</label>
 							</span> 
 												<div class="row mb-3 form-row">
@@ -95,12 +104,12 @@
 								<label for="postcodify_search_button">우편번호</label>
 							</div>
 							<div class="col-md-3" id="addr1_2">
-								<input type="text" name="post" class="form-control postcodify_postcode5" required>
+								<input type="text" name="post" class="form-control" id="postcode"  autocomplete="off" required>
 							</div>
 							<div class="col-md-3" id="addr1_3">
-																				<!-- postcodify_search_button 복사 후 js 파일에 붙여넣기 -->
-								<button type="button" class="btn btn-primary" id="postcodify_search_button"
-									>검색</button>
+																				
+								<button type="button" class="btn btn-primary" id="postcodify_search_button" onclick="sample6_execDaumPostcode()"
+									>검색</button> 
 							</div>
 						</div>
 	
@@ -109,7 +118,7 @@
 								<label for="address1">도로명 주소</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_address" name="address1" id="address1" required>
+								<input type="text" class="form-control postcodify_address" name="address1" id="address1"  autocomplete="off" required>
 							</div>
 						</div>
 	
@@ -118,11 +127,22 @@
 								<label for="address2">상세주소</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_details" name="address2" id="address2" required>
+								<input type="text" class="form-control postcodify_details" name="address2" id="address2"  autocomplete="off" required>
 							</div>
-						</div>
-						<span class="error_area" id="addressMsg">test</span>
+						</div> 
+						<div class="row mb-3 form-row">
+							<div class="col-md-3">
+								<label for="address3"></label>
+							</div>
+							<div class="col-md-9">
+								<input type="text" class="form-control postcodify_details" name="address3" id="address3" placeholder="참고항목" autocomplete="off" required>
+							</div>
+						</div> 
+						
+						<span class="error_area" id="addressMsg"></span> 
 					</div>	
+					
+					
 					
 					
 					
@@ -134,14 +154,14 @@
 						<div class="birthday_area">
 							<div class="birthday_yy">
 								<span class="sign_input">
-									<input type="number" id="birth_yy" class="signUp_int" maxlength="4" required>
+									<input type="number" id="birth_yy" name="birth_yy" class="signUp_int" maxLength="4" oninput="maxLengthCheck(this)" required>
 								</span>
 							</div>
 							
 							<div class="birthday_mm">
 								<span class="sign_input">
-									<select id="birth_mm" class="sel" required>
-										<option hidden="true">월</option>
+									<select id="birth_mm" name="birth_mm" class="sel" required>
+										<option hidden="true" value="월">월</option>
 										<option value="01">1</option>
 										<option value="02">2</option>
 										<option value="03">3</option>
@@ -160,12 +180,12 @@
 							
 							<div class="birthday_dd">
 								<span class="sign_input">
-									<input type="number" id="birth_mm" class="signUp_int" maxlength="2" required>
+									<input type="number" id="birth_dd" name="birth_dd" class="signUp_int" maxlength="2" oninput="maxLengthCheck(this)" required>
 								</span>
 							</div>
 							
 						</div>
-							<span class="error_area" id="birthdayMsg">test</span>	
+							<span class="error_area" id="birthdayMsg"></span>	
 					</div>
 					
 					
@@ -175,8 +195,8 @@
 							<label for="gender" style="margin-bottom: 5px;">성별</label>
 						</span> 
 						<span class="sign_input input_gender"> 
-							<select id="gender" class="sel" required>
-							<option hidden="true">성별</option>
+							<select id="gender" name="gender" class="sel" required>
+							<option hidden="true" value="성별">성별</option>
 							<option value="M">남자</option>
 							<option value="F">여자</option>
 							<option value="U">선택안함</option>
@@ -193,7 +213,7 @@
 						<input type="tel" id="phone" name="phone" class="signUp_int" maxlength="40" 
 							autocomplete="off"  placeholder='"-"를 포함해서 입력해주세요.' required>
 						</span> 
-						<span class="error_area" id="phoneeMsg">test</span>
+						<span class="error_area" id="phoneMsg"></span>
 					</div>
 					
 					<!-- 이메일  -->
@@ -204,14 +224,14 @@
 						<div id="emailForm_area">
 							<div class="emailForm" id="fEmail">
 								<span class="sign_input input_email">
-									<input type="email" id="email_id" name="email_id" class="signUp_int" autocomplete="off" required>
+									<input type="email" id="email" name="email" class="signUp_int" required>
 								</span> 
 							</div>
 						</div>
 						<div id="cNumForm">
 							<div class="cNumRow">
 								<span id="cNum_area" class="sign_input input_email">
-									<input type="text" id="cNum" name="cNum" class="sign_input input_email"
+									<input type="text" id="cNum" name="cNum" class="sign_input input_email" autocomplete="off"
 										maxlength="6" required>
 								</span>
 							</div>
@@ -221,7 +241,7 @@
 								</span>
 							</div>
 						</div>
-						<span class="error_area" id="phoneeMsg">test</span>
+						<span class="error_area" id="emailMsg"></span>
 					</div>
 					
 					
@@ -232,7 +252,8 @@
 					</div>
 				</div>
 			</form>
-			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+
+			<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 			<script src="${contextPath}/resources/js/member_signUp.js"></script>
 		</div>
 	
@@ -240,6 +261,9 @@
 	</div>
 	
 	
+<script>
+
+</script>
 	
 </body>
 </html>
