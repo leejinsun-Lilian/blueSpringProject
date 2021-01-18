@@ -17,7 +17,6 @@
 .container{
 	padding : 93px 0 310px;
 }
-
 </style>
 
 
@@ -31,8 +30,10 @@
 					<div class="findForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
-							<h3>본인확인 이메일로 인증</h3>
 						</div>
+							<div class="back">
+								<h3 style="margin-bottom: 0px;">비밀번호 찾기</h3>
+								<h3 style="margin-top: 5px;">본인확인 이메일 작성</h3>
 							<div class="input_area">
 								<div class="row_group">
 									<div class="text">아이디</div> 
@@ -41,14 +42,15 @@
 								<div class="row_group">
 									<div class="text">이메일 주소</div> 
 									<input type="email" name="email" class="find_input" required>
-									<button type="button" class="btn" id="emailNumBtn">인증번호 받기</button>
+<!-- 									<button type="button" class="btn" id="emailNumBtn">인증번호 받기</button>
 									<input type="text" name="emailNum" class="find_input" id="emailNum"
-										placeholder="인증번호를 입력해주세요." required>
+										placeholder="인증번호를 입력해주세요." required> -->
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">
 										<button type="submit" class="btn" id="nextBtn">다음</button>
 									</div>
+								</div>
 								</div>
 						</div>
 					</div>

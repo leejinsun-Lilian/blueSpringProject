@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.boss.blueSpring.wrapper.EncryptWrapper;
 
-@WebFilter(urlPatterns = {""})
+@WebFilter(urlPatterns = {"/member/loginAction.do", "/member/signupComplete.do", "/member/changePw.do"})
 public class EncryptFilter implements Filter {
 
     public EncryptFilter() {

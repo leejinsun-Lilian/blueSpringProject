@@ -16,15 +16,6 @@
 	padding : 105px 0 298px;
 }
 
-.back {
-background-color: #fbf9f9;
-padding : 30px;
-margin : auto;
-}
-
-.back > h3 {
-	margin-bottom: 30px;
-}
 </style>
 </head>
 <body>
@@ -38,7 +29,9 @@ margin : auto;
 							<h1>푸른봄</h1>
 						</div>
 						<div class="back">
-							<h3 style="text-align : center;">본인확인 이메일 작성</h3>
+						
+							<h3 style="margin-bottom: 0px;">아이디 찾기</h3>
+							<h3 style="margin-top: 5px;">본인확인 이메일 작성</h3>
 							<div class="input_area">
 								<div class="row_group">
 									<div class="text">이름</div> 

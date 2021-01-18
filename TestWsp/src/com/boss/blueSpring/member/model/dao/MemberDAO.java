@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 import java.util.Properties;
 
 import com.boss.blueSpring.member.model.vo.Member;
@@ -180,6 +181,64 @@ public class MemberDAO {
 			result = pstmt.executeUpdate();
 		}finally {
 			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+	/** 아이디 찾기 DAO
+	 * @param conn
+	 * @param map
+	 * @return memberIdFind
+	 * @throws Exception
+	 */
+	public String idFind(Connection conn, Map<String, Object> map) throws Exception {
+		String memberIdFind = null;
+		
+		String query = prop.getProperty("idFind");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, (String)map.get("name"));
+			pstmt.setString(2, (String)map.get("email"));
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				memberIdFind = rset.getString(1);
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return memberIdFind;
+	}
+
+
+
+	/** 비밀번호 찾기 DAO
+	 * @param conn
+	 * @param map
+	 * @return result
+	 * @throws Exception
+	 */
+	public int pwFind(Connection conn, Map<String, Object> map) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("pwFind");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, (String)map.get("id"));
+			pstmt.setString(2, (String)map.get("email"));
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			System.out.println("DAO 테스트 : " + result);
+		} finally {
+			close(rset);
+			close(conn);
 		}
 		return result;
 	}
