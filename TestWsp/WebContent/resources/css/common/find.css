@@ -18,7 +18,7 @@
 .row_group {
 	width : 80%;
 	margin : auto;
-	margin-bottom: 2px;
+	margin-bottom: 15px;
 }
 .text_area{
 	margin : auto;
@@ -47,6 +47,8 @@
 
 .find_input{
 	border : solid 1px #bbb4b4;
+	height: 38px;
+	width: 235px;
 }
 
 .find_input:focus{
@@ -55,7 +57,8 @@
 }
 
 .nextBtn_area{
-	width : 50%;
+	height: 38px;
+	width: 235px
 	margin : auto;
 }
 
@@ -85,3 +88,4 @@ padding : 30px 15px 30px;
 width : 500px;
 margin:auto;
 }
+

@@ -78,7 +78,7 @@ public class MemberController extends HttpServlet {
 					if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
 						System.out.println(loginMember);
 						
-						session.setMaxInactiveInterval(60*30);
+						session.setMaxInactiveInterval(60*60);
 						
 						session.setAttribute("loginMember", loginMember);
 						
@@ -209,12 +209,12 @@ public class MemberController extends HttpServlet {
 			
 			
 			
-			// 회원가입 Controller
+			// ****************************************************************** 회원가입 Controller ******************************************************************
 			else if(command.equals("/signupComplete.do")) {
 				path = "";
 				String memberId = request.getParameter("id");
 				String memberNickname = request.getParameter("nickName");
-				String memberPwd = request.getParameter("pwd1");
+				String memberPwd = request.getParameter("pswd1");
 				String memberNm = request.getParameter("name");
 				
 				String postcode = request.getParameter("postcode");
@@ -281,13 +281,8 @@ public class MemberController extends HttpServlet {
 			
 			
 			
-			
-			
-			
-			
-			
-			// 아이디 찾기 Controller
-			else if(command.equals("/idFind.do")) {
+			// ****************************************************************** 아이디 찾기 페이지 Controller ******************************************************************
+			else if(command.equals("/idFind.do")) {				
 				path="/WEB-INF/views/member/idFind.jsp";
 				
 				view = request.getRequestDispatcher(path);
@@ -295,8 +290,23 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
-			// 아이디 찾기 완료 Controller
+			// ****************************************************************** 아이디 찾기 Controller ******************************************************************
 			else if(command.equals("/idFindComplete.do")) {
+				String name = request.getParameter("name");
+				String email = request.getParameter("email");
+				
+				try {
+					
+				} catch (Exception e) {
+					
+				}
+						
+				
+				
+				
+				
+				
+				
 				path="/WEB-INF/views/member/idFindComplete.jsp";
 				
 				view = request.getRequestDispatcher(path);
