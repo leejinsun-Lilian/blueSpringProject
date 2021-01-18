@@ -36,7 +36,7 @@ AND MEM_SCSN_FL = 'N'
 
 <entry key="signUp">
 INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, ?, ?, ?, 
-?, ?, ? , ?,  DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?)
+?, ?, ? , ?,  DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?)
 </entry>
 
 

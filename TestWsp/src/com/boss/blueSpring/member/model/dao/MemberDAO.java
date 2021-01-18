@@ -165,14 +165,17 @@ public class MemberDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			System.out.println(member.getMemberPwd());
+			
 			pstmt.setString(1, member.getMemberId());
 			pstmt.setString(2, member.getMemberPwd());
-			pstmt.setString(3, member.getMemberNickname());
+			pstmt.setString(3, member.getMemberNm());
 			pstmt.setDate(4, member.getMemberBirth());
 			pstmt.setString(5, member.getMemberGender()+"");
 			pstmt.setString(6, member.getMemberPhone());
 			pstmt.setString(7, member.getMemberAddr());
 			pstmt.setString(8, member.getMemberEmail());
+			pstmt.setString(9, member.getMemberNickname());
 			
 			result = pstmt.executeUpdate();
 		}finally {
