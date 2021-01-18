@@ -41,7 +41,7 @@ public class BoardController extends HttpServlet {
 		try {
 			BoardService service = new BoardService();
 			
-			String cp = request.getParameter("cp");
+			String cp = request.getParameter("cp" );
 			
 			// ===== 게시글 목록 조회 Controller =====
 			if(command.equals("/list.do")) {

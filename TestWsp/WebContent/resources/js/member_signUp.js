@@ -1,5 +1,3 @@
-// 입력 값들이 유효성 검사가 진행되었는지 확인하기 위한 객체 생성
-
 var validateCheck = {
     "id" : false,
 	"nickname" : false,
@@ -7,22 +5,30 @@ var validateCheck = {
     "pwd2" : false,
     "name" : false,
     "email" : false,
-	"birthyy" : false,
+	"birthyy" :  false,
+	"birthmm" :  false,
 	"birthdd" : false,
+	"gender" : false,
 	"phone" : false,
-	"email" : false,
-	"emadilNum" : false
+	"address" : false
+	//"email" : false
+	//"emadilNum" : false
 }
 
-// 아이디 유효성 검사
-// 첫 글자는 영어 소문자, 나머지 글자는 영어 대, 소문자 + 숫자, 총 5~20글자
+
+// 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)
 $("#id").on("input", function(){
-    var regExp = /^[a-z][a-zA-Z\d]{4,19}$/;
+    var regExp = /^[a-zA-z\d-_]{5,20}$/;
 
     var value = $("#id").val();
     if(!regExp.test(value)){
-        $("#idMsg").text("아이디 형식이 유효하지 않습니다.").css("color", "red");
-        validateCheck.id = false;
+		if(value.trim().length == 0){
+				$("#idMsg").text("필수 정보입니다.").css("color", "red");
+			} else{
+      		  	$("#idMsg").text("5~20자의 영문 소문자, 숫자와 _, -만 사용 가능합니다.").css("color", "red");
+			}
+		$("#id").css("border", "1px solid red");
+		validateCheck.id = false;
     } else{
         $.ajax({
             url : "idDupCheck.do",
@@ -30,12 +36,12 @@ $("#id").on("input", function(){
             type : "post",
             success : function(result){
                     if(result == 0){ // 중복되지 않은 경우
-                    $("#idMsg").text("사용 가능한 아이디입니다.")
-                    .css("color", "green");
+                    $("#idMsg").text("");
+					$("#id").css("border", "1px solid #8cb0f7");
                     validateCheck.id = true;
                 }else{
-                    $("#idMsg").text("이미 사용 중인 아이디입니다.")
-                    .css("color", "red");
+                    $("#idMsg").text("이미 사용 중인 아이디입니다.").css("color", "red");
+					$("#id").css("border", "1px solid red");
                     validateCheck.id = false;
                 }
             },
@@ -44,68 +50,64 @@ $("#id").on("input", function(){
             }
         });
     }
-
-});
-
-/*
-이름
-/^[가-힣]{2,}$/; // 한글 두 글자 이상
-*/ 
-$("#name").on("input", function(){
-    var regExp = /^[가-힣]{2,}$/;
-
-    var value = $("#name").val();
-    if(!regExp.test(value)){
-        $("#checkName").text("이름 형식이 유효하지 않습니다.")
-            .css("color", "red");
-            validateCheck.name = false;
-    }else {
-        $("#checkName").text("유효한 이름 형식입니다.")
-            .css("color", "green");
-            validateCheck.name = true;
-    }
 });
 
 
-/*
-이메일
-/^[\w]{4,}@[\w]+(\.[\w]+){1,3}$/; // 4글자 아무단어 @ 아무단어 . * 3
-*/
-$("#email").on("input", function(){
-    var regExp = /^[\w]{4,}@[\w]+(\.[\w]+){1,3}$/;
-
-    var value = $("#email").val();
-    if(!regExp.test(value)){
-        $("#checkEmail").text("이메일 형식이 유효하지 않습니다.")
-            .css("color", "red");
-            validateCheck.email = false;
-    }else {
-        $("#checkEmail").text("유효한 이메일 형식입니다.")
-            .css("color", "green");
-            validateCheck.email = true;
-    }
+// 닉네임 유효성 검사
+$("#nickName").on("input", function(){
+	 var regExp = /^[a-zA-z\d-_가-힣]{2,20}$/;
+	 var value = $("#nickName").val();
+	
+	if(!regExp.test(value)){
+		if(value.trim().length == 0){
+			$("#nickNameMsg").text("필수 정보입니다.").css("color", "red");
+		} else{
+        	$("#nickNameMsg").text("2~20자의 소문자, 한글, 숫자와 _, -만 사용 가능합니다.").css("color", "red");
+		}
+		$("#nickName").css("border", "1px solid red");
+		validateCheck.nickname = false;
+	} else {
+		$.ajax({
+			url : "nicknameDubCheck.do",
+			data : {"nickname" : value},
+			type : "post",
+			success : function(result){
+				if(result == 0){
+					$("#nickNameMsg").text("");
+					$("#nickName").css("border", "1px solid #8cb0f7");
+					validateCheck.nickname = true;
+				}else{
+					$("#nickNameMsg").text("이미 사용 중인 닉네임입니다.").css("color", "red");
+					$("#nickName").css("border", "1px solid red");
+				}
+			}
+			
+		});
+	}
 });
+
+
 
 // 비밀번호 유효성 검사
 // 영어 대, 소문자 + 숫자, 총 6~12글자
-// + 비밀번호, 비밀번호 확인의 일치 여부
-// + 비밀번호를 입력하지 않거나 유효하지 않은 상태로
-//   비밀번호 확인을 작성하는 경우
-
-$("#pwd1, #pwd2").on("input", function(){
+$("#pswd1, #pswd2").on("input", function(){
     // 비밀번호 유효성 검사
     var regExp = /^[a-zA-Z\d]{6,12}$/;
 
-    var v1 = $("#pwd1").val();
-    var v2 = $("#pwd2").val();
+    var v1 = $("#pswd1").val();
+    var v2 = $("#pswd2").val();
 
     if(!regExp.test(v1)){
-        $("#checkPwd1").text("비밀번호 형식이 유효하지 않습니다.")
-        .css("color", "red");
+		if(v1.trim().length == 0) {
+			 $("#pswd1Msg").text("필수 정보입니다.").css("color", "red");
+		} else {
+			 $("#pswd1Msg").text("영어 대, 소문자 + 숫자, 총 6~12글자만 사용 가능합니다.").css("color", "red");
+		}
+		$("#pswd1").css("border", "1px solid red");
         validateCheck.pwd1 = false;
     } else{
-        $("#checkPwd1").text("유효한 비밀번호 형식입니다.")
-        .css("color", "green");
+        $("#pswd1Msg").text("");
+		$("#pswd1").css("border", "1px solid #8cb0f7");
         validateCheck.pwd1 = true;
     }
 
@@ -113,169 +115,251 @@ $("#pwd1, #pwd2").on("input", function(){
     // 비밀번호가 유효하지 않은 상태에서 비밀번호 확인 작성 시
     if(!validateCheck.pwd1 && v2.length > 0){
         swal("유효한 비밀번호를 먼저 작성해주세요.");
-        $("#pwd2").val(""); // 비밀번호 확인에 입력한 값 삭제
-        $("#pwd1").focus();
+        $("#pswd2").val(""); // 비밀번호 확인에 입력한 값 삭제
+		$("#pswd1").val("").focus();
+
     }else {
         // 비밀번호, 비밀번호 확인의 일치 여부
        if(v1.length == 0 || v2.length == 0){
-			$("#checkPwd2").text("");
-		}else if(v1 == v2){
-            $("#checkPwd2").text("비밀번호 일치")
-            .css("color", "green");
+			$("#pswd2Msg").text("");
+		}else if(v1 == v2 && v2.length != 0){
+            $("#pswd2Msg").text("");
+			$("#pswd2").css("border", "1px solid #8cb0f7");
             validateCheck.pwd2 = true;
         }else{
-            $("#checkPwd2").text("비밀번호 불일치")
-            .css("color", "red");
+            $("#pswd2Msg").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+			$("#pswd2").css("border", "1px solid red");
             validateCheck.pwd2 = false;
         }
     }
 });
 
-// 전화번호 유효성 검사
-$(".phone").on("input", function(){
-    // 전화번호 input 태그에 4글자 초과 입력하지 못하게 하는 이벤트
-	if ($(this).val().length > 4) {
-        $(this).val( $(this).val().slice(0, 4));
-        
-        // this : 이벤트가 발생한 요소
-        // $(this) 
-	}
 
-    var regExp1 = /^\d{3,4}$/;
-    var regExp2 = /^\d{4}$/;
 
-    var v1 = $("#phone2").val();
-    var v2 = $("#phone3").val();
 
-    if(!regExp1.test(v1) || !regExp2.test(v2)){
-        $("#checkPhone").text("전화번호가 유효하지 않습니다.")
-        .css("color", "red");
-        validateCheck.phone2 = false;
-    }else{
-        $("#checkPhone").text("유효한 형식의 전화번호 입니다.")
-        .css("color", "green");
-        validateCheck.phone2 = true;
+
+
+/*이름*/ 
+$("#name").on("input", function(){
+    var regExp = /^[가-힣]{2,}$/;
+
+    var value = $("#name").val();
+    if(!regExp.test(value)){
+		if(value.trim().length == 0) {
+			$("#nameMsg").text("필수 정보입니다.").css("color", "red");
+		} else{ 
+			$("#nameMsg").text("이름 형식이 유효하지 않습니다.").css("color", "red"); }
+		$("#name").css("border", "1px solid red");
+            validateCheck.name = false;
+    }else {
+        $("#nameMsg").text("");
+		$("#name").css("border", "1px solid #8cb0f7");
+            validateCheck.name = true;
     }
 });
 
-function validate(){
-	// 아이디 중복 검사 여부 확인
-	// if($("#idDup").val() != "true") {
-	// 	swal("아이디 중복 검사를 진행해주세요.");
-	// 	$("#idDupCheck").focus();
-	// 	return false; // 기본 이벤트 제거
-		
-	// }
-	
-    // 유효성 검사 여부 확인
-    for(var key in validateCheck){
-        if(!validateCheck[key]){
-            var msg;
-            switch(key){
-                case "id" : msg="아이디가"; break;
-                case "pwd1" :
-                case "pwd2" : msg = "비밀번호가"; break;
-                case "name" : msg="이름이"; break;
-                case "phone2" : msg="전화번호가"; break;
-                case "email" : msg="이메일이"; break;
+
+function sample6_execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
             }
 
-            swal(msg + " 유효하지 않습니다.");
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("address3").value = extraAddr;
+            
+            } else {
+                document.getElementById("address3").value = '';
+            }
 
-            $("#" + key).focus();
-            return false;
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById("address1").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("address2").focus();
         }
-    }
-
-}
-
-$(function(){
-    $("#postcodify_search_button").postcodifyPopUp();
-
-});
-
-// 아이디 중복 체크창 오픈
-$("#idDupCheck").on("click",function () {
-	window.open("idDupForm.do", "idDupForm","width=450, height=250");
-	 //				   팝업 주소			팝업창 name				설정
-});
-
-
-
-// 회원 정보 수정--------------------------------------
-// 회원 정보 수정 유효성 검사
-function memberUpdateValidate(){
-  
-    // 유효성 검사를 저장할 객체 생성
-    var updateCheck = {"phone2":false,
-                        "email":false}
-
-    var regExp1 = /^\d{3,4}$/; // 숫자 3~4 글자
-   var regExp2 = /^\d{4,4}$/; // 숫자 4 글자
-   var regExp3 = /^[\w]{4,}@[\w]+(\.[\w]+){1,3}$/;
-
-
-    // 전화번호 유효성 검사
-    var p2 = $("#phone2").val();
-    var p3 = $("#phone3").val();
-    if(!regExp1.test(p2) || !regExp2.test(p3)){
-        updateCheck.phone2 = false;
-    }else{
-        updateCheck.phone2 = true;
-    }
-
-    // 이메일 유효성 검사
-    if(!regExp3.test( $("#email").val() )){
-        updateCheck.email = false;
-    }else{
-        updateCheck.email = true;
-    }
-
-
-    // updateCheck 내부에 저장된 값 검사
-    for(var key in updateCheck){
-
-        // 업데이트에서 가져온 값이 false 라면
-        if(!updateCheck[key]){
-            swal("일부 값이 유효하지 않습니다.");
-            return false;
-        }
-    }
-}
-
-// 비밀번호 수정 ------------------------------------------------------------------------------------
-function pwdValidate(){
-
-    var regExp = /^[a-zA-Z\d]{6,12}$/; // 영어 대,소문자 + 숫자, 총 6~12글자
-
-    if(!regExp.test( $("#newPwd1").val() ) ){
-        swal("비밀번호 형식이 유효하지 않습니다.");
-        $("#newPwd1").focus();
-
-        return false; 
-    }
-
-    // 새로운 비밀번호와 확인이 일치하지 않을 때
-    if( $("#newPwd1").val() != $("#newPwd2").val() ){
-        swal("새로운 비밀번호가 일치하지 않습니다.");
-        
-        $("#newPwd1").focus(); // 포커스 이동
-        $("#newPwd1").val(""); // newPwd1에 값 지우기 
-        $("#newPwd2").val(""); // newPwd2에 값 지우기 
-
-        return false;
-    }
+    }).open();
+	
+	validateCheck.address = true;
 }
 
 
-// 회원 탈퇴 약관 동의 체크 확인 --------------------------------
-
-function secessionValidate(){
-	if(!$("#agree").prop("checked")){
-		// #agree 체크박스가 체크되어 있지 않다면
-		swal("약관에 동의해주세요.");
-		return false;
-	} else{
-		return confirm("정말로 탈퇴하시겠습니까?");
+function maxLengthCheck(object) {
+	if(object.value.length > object.maxLength){
+		object.value = object.value.slice(0, object.maxLength);
 	}
 }
+
+
+$("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
+	var regExp = /^[\d]{4}$/;
+	var regExp2 = /^[\d]{2}$/;
+	
+	var value = $("#birth_yy").val();
+	var value2 = $("#birth_mm").val();
+	var value3 = $("#birth_dd").val();
+
+	if(!regExp.test(value)){
+		if(value.trim().length == 0){
+			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
+		} else{
+			$("#birthdayMsg").text("태어난 년도 4자리를 정확하게 입력하세요.").css("color", "red");	
+		}
+		
+		$("#birth_yy").css("border", "1px solid red").text("");
+	 	validateCheck.birthyy = false;
+	} else {
+		$("#birthdayMsg").text("");
+		$("#birth_yy").css("border", "1px solid #8cb0f7");
+            validateCheck.birthyy = true;
+	}
+	
+	if(value2 == '월'){
+		$("#birthdayMsg").text("태어난 월을 선택하세요.").css("color", "red");
+		$("#birth_mm").css("border", "1px solid red");
+		validateCheck.birthmm = false;
+	} else {
+		$("#birthdayMsg").text("");
+		$("#birth_mm").css("border", "1px solid #8cb0f7");
+		validateCheck.birthmm = true;
+	}
+	
+	if(!regExp2.test(value3)) {
+		if(value3.trim().length == 0){
+			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
+		}
+		$("#birth_dd").css("border", "1px solid red").text("");
+		validateCheck.birthdd = false;
+	} else if(Number(value3) < 0 || Number(value3) > 31) {
+		if(Number(value3) >= 9){
+			$("#birthdayMsg").text("10일 미만인 경우 앞에 0을 붙여주세요.").css("color", "red");	
+		}
+			$("#birthdayMsg").text("태어난 일 2자리를 정확하게 입력하세요.").css("color", "red");	
+			validateCheck.birthdd = false;
+	} else{
+		$("#birthdayMsg").text("");
+		$("#birth_dd").css("border", "1px solid #8cb0f7");
+		validateCheck.birthdd = true;
+	}
+	
+});
+
+
+$("#gender").on("change", function(){
+	var value = $("#gender").val();
+	if(value != '성별') {
+		$("#gender").css("border", "1px solid #8cb0f7");
+		validateCheck.gender = true;
+	} else{
+		$("#gender").css("border", "1px solid red");
+		validateCheck.gender = false;
+	}
+});
+
+
+$("#phone").on("input", function(){
+	var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+	var value = $("#phone").val();
+	
+	if(!regExp.test(value)){
+		if(value.trim().length == 0){
+			$("#phoneMsg").text("필수 정보입니다.").css("color", "red");
+		} else{
+			$("#phoneMsg").text("올바른 전화번호를 입력해주세요('-'포함)").css("color", "red");
+		}
+		$("#phone").css("border", "1px solid red");
+		validateCheck.phone = false;
+	} else{
+		$("#phoneMsg").text("");
+		$("#phone").css("border", "1px solid #8cb0f7");
+		validateCheck.phone = true;
+	}
+});
+
+$("#email").on("input", function(){
+	var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i; 
+	var value = $("#email").val();
+	
+	if(!regExp.test(value)){
+		if(value.trim().length == 0) {
+			$("#emailMsg").text("필수 정보입니다.").css("color", "red");
+		} else{
+			$("#emailMsg").text("올바른 이메일를 입력해주세요").css("color", "red");
+		}
+		validateCheck.email = false;
+	}  else{
+        $.ajax({
+            url : "emailDupCheck.do",
+            data : {"email" : value},
+            type : "post",
+            success : function(result){
+                    if(result == 0){ // 중복되지 않은 경우
+                    $("#emailMsg").text("");
+					$("#email").css("border", "1px solid #8cb0f7");
+                    validateCheck.email = true;
+                }else{
+                    $("#emailMsg").text("이미 사용 중인 이메일입니다.").css("color", "red");
+					$("#email").css("border", "1px solid red");
+                    validateCheck.email = false;
+                }
+            },
+            error : function(){
+                console.log("이메일 중복 검사 실패");
+            }
+        });
+    }
+});
+
+
+function validate(){
+	for(var key in validateCheck){
+		if(!validateCheck[key]){
+			var msg;
+			switch(key) {
+				case  "id" : msg="아이디가"; break;
+				case	"nickname" :  msg="닉네임이"; break;
+				case    "pwd1" :  
+				case    "pwd2" :  msg="비밀번호가"; break;
+				case    "name" :  msg="이름이"; break;
+				case    "email" :  msg="이메일이"; break;
+				case	"birthyy" :  
+				case	"birthmm" :  
+				case	"birthdd" :  msg="생년월일이"; break;
+				case	"gender" :  msg="성별이"; break;
+				case	"phone" :  msg="전화번호가"; break;
+				case	"address" :  msg="주소가"; break;
+			}
+			swal(msg+" 유효하지 않습니다.");
+			
+			$("#" + key).focus();
+			return false;
+		}
+	}
+}
+
