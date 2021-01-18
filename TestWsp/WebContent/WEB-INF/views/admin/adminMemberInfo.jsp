@@ -78,7 +78,7 @@
                    	<c:choose>
 	                    <c:when test="${empty mList}">
 	                        <tr>
-	                            <td colspan="12">존재하는 게시글이 없습니다.</td>
+	                            <td colspan="12">존재하는 회원정보가 없습니다.</td>
 	                        </tr>
 	                    </c:when>
     
@@ -86,7 +86,7 @@
                         <c:forEach var="member" items="${mList}">
                             <tr>
 		                        <td>${member.memberNo}</td>
-		                        <td>${member.memberId}</td>
+		                        <th>${member.memberId}</th>
 		                        <td>${member.memberNickname}</td>
 		                        <td>${member.memberNm}</td>
 		                        <td>${member.memberBirth}</td>
@@ -182,18 +182,33 @@
 
             <div class="userInfo_search">
             <form action="${contextPath}/adminSearch/member.do" method="GET">
-            <select id="userInfo_search" name="sk" required>
-                <option selected value="memNo">회원번호</option>
+            <select id="userInfo_search" name="sk">
+                <option value="memNo">회원번호</option>
                 <option value="memId">아이디</option>
                 <option value="memNick">닉네임</option>
             </select>
             <input type="text" name="sv">
-            <button type="button" id="userInfo_btn">검색</button></div>
+            <button type="button" id="userInfo_btn">검색</button>
 			</form>
         </div>
-    
+    </div>
     <div style="clear: both;"></div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     </div>
+    
+    <script>
+	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해두는 기능
+	(function(){
+		var searchKey = "${param.sk}";
+		var searchValue = "${param.sv}";
+		$("select[name=sk] > option").each(function(index, item){
+			if( $(item).val() == searchKey ){
+				$(item).prop("selected", true);
+			}
+		});
+		$("input[name=sv]").val(searchValue);
+	})();
+	
+	</script>
 </body>
 </html>

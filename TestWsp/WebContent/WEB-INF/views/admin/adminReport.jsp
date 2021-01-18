@@ -61,6 +61,9 @@
 	    background-color: #dc3545;
 	    color: snow;
 	}
+	
+	.report_page_btn { float: right; }
+	
 	</style>
 </head>
 <body>
@@ -77,33 +80,35 @@
                 <table class="table table-sm">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col"><input type="checkbox"></th>
+                        <th scope="col"><input type="checkbox" id="ck_all"></th>
                         <th scope="col">신고접수번호</th>
                         <th scope="col">신고유형</th>
                         <th scope="col">글번호</th>
                         <th scope="col">신고카테고리번호</th>
                         <th scope="col">신고한회원</th>
                         <th scope="col">신고당한회원</th>
+                        <th scope="col">삭제여부</th>
                       </tr>
                     </thead>
                     <tbody>
                     <c:choose>
                     <c:when test="${empty rList}">
                         <tr>
-                            <td colspan="6">존재하는 게시글이 없습니다.</td>
+                            <td colspan="6">존재하는 정보가 없습니다.</td>
                         </tr>
                     </c:when>
     
                     <c:otherwise>                      
                         <c:forEach var="report" items="${rList}">
                             <tr>
-                            	<td><input type="checkbox"></td>
-                                <th scope="row">${report.reportNo}</th>
+                            	<td><input type="checkbox" name="selectClick" value="${report.reportNo}"></td>
+                                <th>${report.reportNo}</th>
                                 <td>${report.reportType}</td>
                                 <td>${report.boardNo}</td>
                                 <td>${report.reportCategoryNo}</td>
                                 <td>${report.memberId}</td>
 	               				<td>${report.targetId}</td>
+	               				<td>${report.reportDeleteFl}</td>
 	          				</tr>
                         </c:forEach>
                     </c:otherwise>
@@ -189,21 +194,79 @@
 
             <div class="report_search">
             <form action="${contextPath}/adminSearch/report.do" method="GET">
-	            <select id="report_search" name="sk" required>
-	                <option selected value="reportNo">신고접수번호</option>
+	            <select id="report_search" name="sk">
+	                <option value="reportNo">신고접수번호</option>
 	                <option value="reportType">신고유형</option>
 	                <option value="brdNo">글번호 </option>
 	            </select>
 	            <input type="text" name="sv">
 	            <button type="button" id="report_btn">검색</button>
-	            </div>
             </form>
-            <button type="button" id="report_btn2">등록</button>
-            <button type="button" id="report_btn3">삭제</button>
+            
+            <div class="report_page_btn">
+            <button type="button" id="report_btn2">블랙리스트 등록</button>
+            <!-- <button type="button" id="report_btn3">삭제</button></div> -->
         </div>
-    
+    </div>
     <div style="clear: both;"></div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     </div>
+    
+    <script>
+	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해두는 기능
+	(function(){
+		var searchKey = "${param.sk}";
+		var searchValue = "${param.sv}";
+		$("select[name=sk] > option").each(function(index, item){
+			if( $(item).val() == searchKey ){
+				$(item).prop("selected", true);
+			}
+		});
+		$("input[name=sv]").val(searchValue);
+	})();
+	
+	
+    // 체크박스 전체 선택&해제
+    $('#ck_all').click(function(){
+         if($("#ck_all").prop("checked")){
+            $("input[type=checkbox]").prop("checked",true); 
+        }else{
+            $("input[type=checkbox]").prop("checked",false); 
+        }
+    });
+	
+/*     // 삭제
+    var clicks = new Array();
+    
+	$("#report_btn3").on("click", function() {			
+		
+        $("input:checkbox[name='selectClick']:checked").each(function(){
+        	clicks.push($(this).val());       	
+        });
+        
+	    if(confirm("정말 삭제하시겠습니까?")){
+	    	$.ajaxSettings.traditional = true;
+			$.ajax({
+				url : "${contextPath}/adminDelete/report.do",
+				data : {"report" : clicks},
+				type : "get",
+	            success : function(result) {
+
+	            	if(result > 0) {
+	            		swal({"icon" : "success" , "title" : "신고글 삭제 성공"});
+	            	}
+                                           
+	            }, error : function(request, status, error) {
+	                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+	              }
+			});
+		}
+	}); */
+	
+	
+	
+	
+	
+	</script>
 </body>
 </html>
