@@ -75,7 +75,7 @@
 							<%-- 검색을 통해 들어온 상세 조회 페이지인 경우 --%>
 							<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />
 				</c:if>
-				<a href="updateForm.do?cp${param.cp}&no=${param.no}${searchStr}" class="btn btn-update">수정</a>
+				<a href="updateForm.do?cp=${param.cp}&no=${param.no}${searchStr}" class="btn btn-update">수정</a>
 			
 			</c:if>
 			

@@ -38,7 +38,7 @@ public class NoticeSearchController extends HttpServlet {
 			PageInfo pInfo = service.getPageInfo(map);
 			
 			// 검색 게시글 목록 조회
-			List<Notice> list = service.searchBoardList(map, pInfo);
+			List<Notice> list = service.searchNoticeList(map, pInfo);
 			
 			// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 			String path = "/WEB-INF/views/notice/noticeList.jsp";

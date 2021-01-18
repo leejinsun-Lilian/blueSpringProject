@@ -58,7 +58,7 @@ public class NoSearchDAO {
 	 * @return List
 	 * @throws Exception
 	 */
-	public List<Notice> searchBoardList(Connection conn, PageInfo pInfo, String condition) throws Exception{
+	public List<Notice> searchNoticeList(Connection conn, PageInfo pInfo, String condition) throws Exception{
 		List<Notice> list = null;
 		
 		String query = 
