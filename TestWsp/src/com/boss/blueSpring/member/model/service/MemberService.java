@@ -40,6 +40,53 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
+
+
+
+	/** 닉네임 중복 체크 Service
+	 * @param nickname
+	 * @return result
+	 * @throws Exception
+	 */
+	public int nicknameDubCheck(String nickname) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.nicknameDubCheck(conn, nickname);
+		close(conn);
+		return result;
+	}
+
+
+
+
+	/** 이메일 중복 체크 Service
+	 * @param email
+	 * @return result 
+	 * @throws Exception
+	 */
+	public int emailDupCheck(String email) throws Exception{
+		Connection conn = getConnection();
+		int result = dao.emailDupCheck(conn, email);
+		close(conn);
+		return result;
+	}
+
+
+
+
+	/** 회원가입 Service
+	 * @param member
+	 * @return result
+	 * @throws Exception
+	 */
+	public int signUp(Member member) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.signUp(conn, member);
+		if(result > 0) commit(conn);
+		else commit(conn);
+		close(conn);
+		return result;
+	}
 	
 	
 }

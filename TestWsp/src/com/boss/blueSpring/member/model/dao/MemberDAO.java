@@ -98,4 +98,86 @@ public class MemberDAO {
 		return result;
 	}
 
+
+	
+	/** 닉네임 중복 체크 DAO
+	 * @param conn
+	 * @param nickname
+	 * @return result
+	 * @throws Exception
+	 */
+	public int nicknameDubCheck(Connection conn, String nickname) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("nicknameDupCheck");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, nickname);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+	/** 이메일 중복 체크 DAO
+	 * @param conn
+	 * @param email
+	 * @return result
+	 * @throws Exception
+	 */
+	public int emailDupCheck(Connection conn, String email) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("emailDupCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+	/** 회원가입 DAO
+	 * @param conn
+	 * @param member
+	 * @return result
+	 * @throws Exception
+	 */
+	public int signUp(Connection conn, Member member) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("signUp");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getMemberPwd());
+			pstmt.setString(3, member.getMemberNickname());
+			pstmt.setDate(4, member.getMemberBirth());
+			pstmt.setString(5, member.getMemberGender()+"");
+			pstmt.setString(6, member.getMemberPhone());
+			pstmt.setString(7, member.getMemberAddr());
+			pstmt.setString(8, member.getMemberEmail());
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
