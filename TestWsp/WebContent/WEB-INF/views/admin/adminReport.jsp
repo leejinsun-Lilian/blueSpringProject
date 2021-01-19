@@ -87,7 +87,8 @@
                         <th scope="col">신고카테고리번호</th>
                         <th scope="col">신고한회원</th>
                         <th scope="col">신고당한회원</th>
-                        <th scope="col">삭제여부</th>
+                        <th scope="col">타겟회원번호</th>
+                        <th scope="col">블랙리스트여부</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -101,14 +102,15 @@
                     <c:otherwise>                      
                         <c:forEach var="report" items="${rList}">
                             <tr>
-                            	<td><input type="checkbox" name="selectClick" value="${report.reportNo}"></td>
+                            	<td><input type="checkbox" name="selectClick" value="${report.targetId}"></td>
                                 <th>${report.reportNo}</th>
                                 <td>${report.reportType}</td>
                                 <td>${report.boardNo}</td>
                                 <td>${report.reportCategoryNo}</td>
                                 <td>${report.memberId}</td>
 	               				<td>${report.targetId}</td>
-	               				<td>${report.reportDeleteFl}</td>
+	               				<td>${report.memberNo}</td>
+	               				<td>${report.memberBlacklist}</td>
 	          				</tr>
                         </c:forEach>
                     </c:otherwise>
@@ -235,16 +237,16 @@
         }
     });
 	
-/*     // 삭제
+    // 블랙리스드 등록
     var clicks = new Array();
     
-	$("#report_btn3").on("click", function() {			
+	$("#report_btn2").on("click", function() {			
 		
         $("input:checkbox[name='selectClick']:checked").each(function(){
         	clicks.push($(this).val());       	
         });
         
-	    if(confirm("정말 삭제하시겠습니까?")){
+	    if(confirm("블랙리스트로 등록하시겠습니까?")){
 	    	$.ajaxSettings.traditional = true;
 			$.ajax({
 				url : "${contextPath}/adminDelete/report.do",
@@ -253,7 +255,8 @@
 	            success : function(result) {
 
 	            	if(result > 0) {
-	            		swal({"icon" : "success" , "title" : "신고글 삭제 성공"});
+	            		swal({"icon" : "success" , "title" : "블랙리스트 등록 성공"})
+	            		.then(function(){location.reload()});
 	            	}
                                            
 	            }, error : function(request, status, error) {
@@ -261,7 +264,7 @@
 	              }
 			});
 		}
-	}); */
+	});
 	
 	
 	
