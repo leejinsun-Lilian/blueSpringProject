@@ -87,7 +87,6 @@
                         <th scope="col">신고카테고리번호</th>
                         <th scope="col">신고한회원</th>
                         <th scope="col">신고당한회원</th>
-                        <th scope="col">타겟회원번호</th>
                         <th scope="col">블랙리스트여부</th>
                       </tr>
                     </thead>
@@ -103,13 +102,12 @@
                         <c:forEach var="report" items="${rList}">
                             <tr>
                             	<td><input type="checkbox" name="selectClick" value="${report.targetId}"></td>
-                                <th>${report.reportNo}</th>
+                                <th><a href="#" onclick="window.open('${contextPath}/admin/reportPage.do','name','resizable=no width=600 height=300');return false">${report.reportNo}</a></th>
                                 <td>${report.reportType}</td>
                                 <td>${report.boardNo}</td>
-                                <td>${report.reportCategoryNo}</td>
+                                <td>${report.reportCategoryNo}</td>                               
                                 <td>${report.memberId}</td>
-	               				<td>${report.targetId}</td>
-	               				<td>${report.memberNo}</td>
+                                <td>${report.targetId}</td>
 	               				<td>${report.memberBlacklist}</td>
 	          				</tr>
                         </c:forEach>
@@ -206,8 +204,8 @@
             </form>
             
             <div class="report_page_btn">
-            <button type="button" id="report_btn2">블랙리스트 등록</button>
-            <!-- <button type="button" id="report_btn3">삭제</button></div> -->
+            <button type="button" id="report_btn2">블랙리스트 등록</button></div>
+            <!-- <button type="button" id="report_btn3">삭제</button>-->
         </div>
     </div>
     <div style="clear: both;"></div>
@@ -266,6 +264,22 @@
 		}
 	});
 	
+	// 클릭 시 새창으로 신고 접수 페이지 보기
+	
+/*   		$("#boardReportBtn").on("click", function() {
+			if(window.confirm("보고 있는 게시글을 신고하시겠습니까?")) {
+				/* $(board.memberId); 
+				var memberId = ${loginMember.memberNo};
+				var target = "${board.memberId}";
+				var boardNo = ${board.boardNo};
+				
+				var url = "${contextPath}/boardReportForm.do?brdNo=" + boardNo + "&memNo=" + memberId + "&target=" + target;
+				var title = "신고하기";
+				var option = "width = 700, height = 400, top = 300, left = 600, location = no";
+				
+				window.open(url, title, option);
+			}
+		}); */
 	
 	
 	

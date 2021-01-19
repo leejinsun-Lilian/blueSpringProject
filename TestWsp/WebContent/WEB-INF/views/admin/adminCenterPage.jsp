@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="wrapper">
-    	<jsp:include page="../common/header.jsp"></jsp:include>
+    	<%-- <jsp:include page="../common/header.jsp"></jsp:include> --%>
 
         <div class="admin_content">
             <div class="centerPage_view">
@@ -52,7 +52,7 @@
         </div>
     
     <div style="clear: both;"></div>
-    <jsp:include page="../common/footer.jsp"></jsp:include>
+    <%-- <jsp:include page="../common/footer.jsp"></jsp:include> --%>
     </div>
 </body>
 </html>

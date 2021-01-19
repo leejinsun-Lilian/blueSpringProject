@@ -95,6 +95,23 @@ public class AdminController extends HttpServlet {
 	            request.setAttribute("rList", rList);
 	            request.setAttribute("rpInfo", rpInfo);
 
+	            System.out.println(rList);
+	            
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			// 신고 목록 상세 페이지 조회 Controller ******************************************
+			else if (command.equals("/reportPage.do")) {
+				errorMsg = "신고 상세페이지 조회 중 오류 발생.";
+				
+				//List<Report> rList = service.selectReportList(rpInfo);
+				
+				path = "/WEB-INF/views/admin/adminReportPage.jsp";
+				
+	            //request.setAttribute("rList", rList);
+	            //request.setAttribute("rpInfo", rpInfo);
+	            
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -137,6 +154,17 @@ public class AdminController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
+			// 기관 상세페이지 Controller **************************************************
+			else if (command.equals("/centerPage.do")) {
+				errorMsg = "기관 상세페이지 조회 중 오류 발생.";
+				
+				path = "/WEB-INF/views/admin/adminCenterPage.jsp";
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+			
+			}
 			
 			// 자유게시판 관리 (목록 조회) Controller **************************************************
 			else if (command.equals("/adminBoard.do")) {

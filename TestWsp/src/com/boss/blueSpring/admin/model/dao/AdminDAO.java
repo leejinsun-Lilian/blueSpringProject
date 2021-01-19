@@ -151,11 +151,13 @@ public class AdminDAO {
 	                		   				rset.getInt("REPORT_NO"),
 	                		   				rset.getString("REPORT_TYPE"),
 	                		   				rset.getInt("BRD_NO"),
-	                		   				rset.getInt("REPORT_CATE_NO"),
+	                		   				rset.getInt("REPORT_CATE_NO"),	                		   				
 	                		   				rset.getString("MEM_ID"),
 	                		   				rset.getString("TARGET_ID"),
 	                		   				rset.getString("MEM_BLACKLIST"));
 	                   rList.add(report);
+	                   System.out.println(rset.getString("TARGET_ID"));
+	                   System.out.println(rset.getString("MEM_ID"));
 	                }
 		} finally {
 	        close(rset);
