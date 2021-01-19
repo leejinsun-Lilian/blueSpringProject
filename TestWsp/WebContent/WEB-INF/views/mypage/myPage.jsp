@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,30 @@
 
 
 <style>
+.myInfoTable td > span {
+	margin-left : 30px;
+}
 
 </style>
 </head>
 
 <body>
+	
+		<c:choose>
+			<c:when test="${loginMember.memberGender == 'M'.charAt(0)}">
+				<c:set var="gender" value="남자"/>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${loginMember.memberGender == 'F'.charAt(0)}">
+					<c:set var="gender" value="여자"/>
+				</c:if>
+				<c:if test="${loginMember.memberGender == 'U'.charAt(0)}">
+					<c:set var="gender" value="선택 안함"/>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+
+
 	<div class="wrap">
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
@@ -30,20 +50,20 @@
 					<div class="myInfo_back back">
 						<table class="myInfoTable t_left">
 							<tr>
-								<th class="title">아이디 :</th>
-								<td><span>testvcxcvx</span></td>
+								<th class="title">아이디</th>
+								<td><span>${loginMember.memberId}</span></td>
 							</tr>
 							<tr>
-								<th class="title">닉네임 :</th>
-								<td><span>test</span></td>
+								<th class="title">닉네임</th>
+								<td><span>${loginMember.memberNickname}</span></td>
 							</tr>
 							<tr>
-								<th class="title">이름 :</th>
-								<td><span>test</span></td>
+								<th class="title">이름</th>
+								<td><span>${loginMember.memberNm}</span></td>
 							</tr>
 							<tr>
-								<th class="title last">성별 :</th>
-								<td><span>여</span></td>
+								<th class="title last">성별</th>
+								<td><span>${gender}</span></td>
 							</tr>
 						</table>
 
@@ -51,25 +71,25 @@
 
 						<table class="myInfoTable t_right">
 							<tr>
-								<th class="title">주소 :</th>
-								<td><span>서울 남대문로 120 1층</span></td>
+								<th class="title">주소</th>
+								<td><span>${loginMember.memberAddr}</span></td>
 							</tr>
 							<tr>
-								<th class="title">이메일 :</th>
-								<td><span>test@naver.com</span></td>
+								<th class="title">이메일</th>
+								<td><span>${loginMember.memberEmail}</span></td>
 							</tr>
 							<tr>
-								<th class="title">생년월일 :</th>
-								<td><span>1994.07.26</span></td>
+								<th class="title">생년월일</th>
+								<td><span>${loginMember.memberBirth}</span></td>
 							</tr>
 							<tr>
-								<th class="title last">휴대전화 :</th>
-								<td><span>010-9113-9117</span></td>
-								<td><a href="#">
+								<th class="title last">휴대전화</th>
+								<td><span>${loginMember.memberPhone}</span></td>
+								<td>
 										<button type="button" class="btn"
-											onclick="location.href = '${contextPath}/mypage/myinfochangepw.do'">정보
+											onclick="location.href = '${contextPath}/mypage/myInfoChangePw.do'">정보
 											수정</button>
-								</a></td>
+								</td>
 							</tr>
 						</table>
 					</div>

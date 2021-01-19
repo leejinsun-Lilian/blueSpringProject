@@ -364,3 +364,33 @@ function validate(){
 	}
 }
 
+
+
+
+
+
+// 비밀번호 변경 js
+function pwdValidate(){
+
+    var regExp = /^[a-zA-Z\d]{6,12}$/; // 영어 대,소문자 + 숫자, 총 6~12글자
+
+    if(!regExp.test( $("#newPw1").val() ) ){
+        swal("비밀번호 형식이 유효하지 않습니다.");
+        $("#newPw1").focus();
+
+        return false; 
+    }
+
+    // 새로운 비밀번호와 확인이 일치하지 않을 때
+    if( $("#newPw1").val() != $("#newPw2").val() ){
+        swal("새로운 비밀번호가 일치하지 않습니다.");
+        
+        $("#newPw1").focus(); // 포커스 이동
+        $("#newPw1").val(""); // newPwd1에 값 지우기 
+        $("#newPw2").val(""); // newPwd2에 값 지우기 
+
+        return false;
+    }
+}
+
+

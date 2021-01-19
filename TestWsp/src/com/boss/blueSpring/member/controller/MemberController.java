@@ -364,8 +364,8 @@ public class MemberController extends HttpServlet {
 					int result = mService.pwFind(map);
 					HttpSession session = request.getSession();
 					
-					System.out.println(result);
 					if(result > 0) {
+						session.setAttribute("memNo", result);
 						path="/WEB-INF/views/common/newPwForm.jsp";
 						
 						view = request.getRequestDispatcher(path);
@@ -397,37 +397,32 @@ public class MemberController extends HttpServlet {
 			else if(command.equals("/changePwComplete.do")) {
 				String newPw = request.getParameter("newPw1");
 				
-				String memNo = request.getParameter("num");
-				System.out.println("쿼리스트링 테스트 : " + memNo);
-				//HttpSession session = request.getSession();
-			
-				//System.out.println(result);
+				int memNo = Integer.parseInt(request.getParameter("num"));		
 				
-
+				int result = mService.changePw(newPw, memNo); 
 				
-				//int result = mService.changePw(newPw);
-				
-				
-//				
-//				if(result > 0) {
-//					
-//				}
-				
-				
-				
-				path="/WEB-INF/views/member/pwFindNewPwComplete.jsp";
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
+				if(result > 0) {
+					
+					path="/WEB-INF/views/member/pwFindNewPwComplete.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				} else {
+					swalIcon = "error";
+					swalTitle = "비밀번호 변경 실패";
+					swalText = "비밀번호 형식에 맞게 작성해주세요.";
+					path="/WEB-INF/views/member/pwFind.jsp";
+					response.sendRedirect(path);
+				}
 				
 			}
 
 			
-			
-
-			
-			
 		}catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("errorMsg", errorMsg);
+			path = "/WEB-INF/views/common/errorPage.jsp";
+			view = request.getRequestDispatcher(path);
+			view.forward(request, response);
 		}
 	}
 

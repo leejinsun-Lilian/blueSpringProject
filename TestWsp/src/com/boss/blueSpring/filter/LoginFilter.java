@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.boss.blueSpring.member.model.vo.Member;
 //"/member/myPage.do", "/member/changePwd.do", "/member/secession.do","/member/updateMember.do", "/member/updatePwd.do", "/member/updateStatus.do"
-@WebFilter(urlPatterns = {})
+@WebFilter(urlPatterns = {"/mypage/myPage.do"})
 public class LoginFilter implements Filter {
 
     public LoginFilter() {}

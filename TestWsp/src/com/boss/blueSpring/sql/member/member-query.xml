@@ -57,4 +57,11 @@ AND MEM_SCSN_FL='N'
 AND MEM_BLACKLIST = 'N'
 </entry>
 
+<entry key="changePw">
+UPDATE MEMBER SET 
+MEM_PWD = ?
+WHERE 
+MEM_NO = ?
+</entry>
+
 </properties>

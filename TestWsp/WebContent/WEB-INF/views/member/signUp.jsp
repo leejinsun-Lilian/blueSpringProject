@@ -135,7 +135,7 @@
 								<label for="address3"></label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_details" name="address3" id="address3" placeholder="참고항목" autocomplete="off" required>
+								<input type="text" class="form-control postcodify_details" name="address3" id="address3" placeholder="참고항목" autocomplete="off">
 							</div>
 						</div> 
 						

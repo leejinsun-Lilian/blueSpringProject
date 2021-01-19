@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-@charset "UTF-8";
 
 * {
 	font-family: 'Noto Sans KR', sans-serif;
@@ -57,3 +56,10 @@
 #btn_login{
 	margin-left: 20px;
 }
+
+.back {
+background-color: #fbf9f9;
+padding : 40px 50px 50px 50px;
+margin : auto;
+}
+
