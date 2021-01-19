@@ -61,24 +61,24 @@ public class BoardReportController extends HttpServlet {
 				if(blindCheck > 0) {
 					swalIcon = "success";
 					swalTitle = "신고 접수가 완료되었습니다.";
-					path = "WEB-INF/views/board/boardReport.jsp";
+//					path = "WEB-INF/views/board/boardReport.jsp";
 				} else {
 					swalIcon = "error";
 					swalTitle = "신고 접수에 성공했으나 게시글 블라인드 처리 과정에서 오류 발생.";
-					path = "WEB-INF/views/board/boardReport.jsp";
+//					path = "WEB-INF/views/board/boardReport.jsp";
 				}
 
 			} else {
 				swalIcon = "error";
 				swalTitle = "신고 접수 중 오류 발생.";
-				path = "WEB-INF/views/board/boardReport.jsp";
+//				path = "WEB-INF/views/board/boardReport.jsp";
 			}		
 			
 			session.setAttribute("swalIcon", swalIcon);
 			session.setAttribute("swalTitle", swalTitle);
 			
-			RequestDispatcher view = request.getRequestDispatcher(path);
-			view.forward(request, response);
+//			RequestDispatcher view = request.getRequestDispatcher(path);
+//			view.forward(request, response);
 			
 //			response.sendRedirect(url);
 			

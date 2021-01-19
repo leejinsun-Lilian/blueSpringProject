@@ -25,9 +25,6 @@ public class CenterService {
 		String condition1 = " CENTER_AREA1 LIKE '%' || '" + sido + "' || '%'";
 		String condition2 = " AND (" + guguns + ")";
 		
-//		System.out.println(condition1);
-//		System.out.println(condition2);
-		
 		List<Center> cList = dao.selectCenterList(conn, condition1, condition2);
 		
 		close(conn);

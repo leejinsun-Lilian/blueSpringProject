@@ -45,10 +45,14 @@
 
             <div id="content-wrapper">
                 <label>내용</label> <br>    
-                <textarea name="b-content" id="b-content" cols="3000" rows="1000"></textarea> <br>
+<!--            <textarea name="b-content" id="b-content" cols="3000" rows="1000">
+     editordata
+                </textarea> <br> -->
+                <textarea id="b-content" name="b-content" class="summernote"></textarea>
+                
             </div>
 
-            <button type="submit" id="add-btn">등 록</button>
+            <button type="submit" id="add-btn" onClick="uploadSummernoteImageFile();">등 록</button>
             <button type="button" id="back-board-main" onclick="location.href='${header.referer}'">목록으로</button>
         </form>
     </div>
@@ -82,6 +86,39 @@
 					return false;
 				}
 			}
+			
+/* 			$(document).ready(function() {
+				//여기 아래 부분
+				$('#b-content').summernote({
+					  height: 300,                 // 에디터 높이
+					  minHeight: null,             // 최소 높이
+					  maxHeight: null,             // 최대 높이
+					  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+					  lang: "ko-KR",					// 한글 설정
+					  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+			          
+				});
+			}); */
+			
+			/**
+			   * 이미지 파일 업로드
+			   */
+/*  			   function uploadSummernoteImageFile(file, editor) {
+			      data = new FormData();
+			      data.append("file", file);
+			      $.ajax({
+			         data : data,
+			         type : "POST",
+			         url : "${contextPath}/board/write.do",
+			         contentType : false,
+			         processData : false,
+			         success : function(data) {
+			               //항상 업로드된 파일의 url이 있어야 한다.
+			            $(editor).summernote('insertImage', data.url);
+			         }
+			      });
+			   }  */
+			   
     </script>
 
 </body>

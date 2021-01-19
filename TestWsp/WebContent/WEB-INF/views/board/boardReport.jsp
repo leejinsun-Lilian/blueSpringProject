@@ -36,12 +36,12 @@
     }
     
     .hidden-form {
-    		display: none;
+    		
     }
 
 
 </style>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 
@@ -68,14 +68,14 @@
 
             <div id="btn-area">
                 <button>취소</button>
-                <input type="submit" value="신고하기"> 
+                <input type="submit" id="report-btn" value="신고하기"> 
             </div>
             
         </form>
     </div>
 
 <script>
-	
+
 </script>
 
 </body>
