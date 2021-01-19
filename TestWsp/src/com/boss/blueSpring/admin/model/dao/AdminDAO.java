@@ -154,7 +154,7 @@ public class AdminDAO {
 	                		   				rset.getInt("REPORT_CATE_NO"),
 	                		   				rset.getString("MEM_ID"),
 	                		   				rset.getString("TARGET_ID"),
-	                		   				rset.getString("REPORT_DEL_FL"));
+	                		   				rset.getString("MEM_BLACKLIST"));
 	                   rList.add(report);
 	                }
 		} finally {

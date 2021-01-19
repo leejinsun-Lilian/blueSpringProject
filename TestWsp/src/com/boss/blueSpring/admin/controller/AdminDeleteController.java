@@ -131,23 +131,23 @@ public class AdminDeleteController extends HttpServlet {
 	            response.getWriter().print(result);
 			}
 			
-//			// 신고 접수 삭제(Y) Controller *************************************************
-//			if(command.equals("/report.do")) {
-//				errorMsg = "신고 삭제 과정에서 오류 발생.";
-//				String newReport = "";
-//	        	String[] report = request.getParameterValues("report");
-//	        	
-//	            if(report != null) {
-//	                for(String r : report) {
-//	                	newReport += "REPORT_NO = " + r + " OR ";               	
-//	                }
-//	                newReport = newReport.substring(0, newReport.lastIndexOf(" OR "));
-//	             }
-//	            
-//	        	int result = service.updateReportStatus(newReport);
-//			
-//	            response.getWriter().print(result);
-//			}
+			// 블랙리스트 등록(Y) Controller *************************************************
+			if(command.equals("/report.do")) {
+				errorMsg = "블랙리스트 등록 과정에서 오류 발생.";
+				String newReport = "";
+	        	String[] report = request.getParameterValues("report");
+	        	
+	            if(report != null) {
+	                for(String r : report) {
+	                	newReport += "MEM_ID = '" + r.toLowerCase() + "' OR ";               	
+	                }
+	                newReport = newReport.substring(0, newReport.lastIndexOf(" OR "));
+	             }
+	            
+	        	int result = service.updateReportStatus(newReport);
+			
+	            response.getWriter().print(result);
+			}
 			
 			
 			

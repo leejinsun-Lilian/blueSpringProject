@@ -133,7 +133,7 @@ public class AdminSearchDAO {
 				"SELECT * FROM " + 
 				"    (SELECT ROWNUM RNUM , V.* " + 
 				"    FROM " + 
-				"        (SELECT REPORT_NO, REPORT_TYPE, BRD_NO, REPORT_CATE_NO, MEM_ID, TARGET_ID, REPORT_DEL_FL FROM V_REPORT " + 
+				"        (SELECT REPORT_NO, REPORT_TYPE, BRD_NO, REPORT_CATE_NO, MEM_ID, TARGET_ID, MEM_BLACKLIST FROM V_REPORT " + 
 				"        WHERE " + condition + 
 				"        ORDER BY REPORT_NO DESC) V ) " + 
 				" WHERE RNUM BETWEEN ? AND ?";
@@ -153,7 +153,7 @@ public class AdminSearchDAO {
 						   				rset.getInt("REPORT_CATE_NO"),
 						   				rset.getString("MEM_ID"),
 						   				rset.getString("TARGET_ID"),
-						   				rset.getString("REPORT_DEL_FL"));
+						   				rset.getString("MEM_BLACKLIST"));
 				rList.add(report);
 			}
 		} finally {

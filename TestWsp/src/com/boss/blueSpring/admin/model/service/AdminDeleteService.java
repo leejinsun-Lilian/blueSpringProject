@@ -81,17 +81,18 @@ public class AdminDeleteService {
 		return result;
 	}
 
-//	/** [신고] 삭제 Service
-//	 * @param newReport
-//	 * @return result
-//	 * @throws Exception
-//	 */
-//	public int updateReportStatus(String newReport) throws Exception {
-//		Connection conn = getConnection();
-//		int result = dao.updateReportStatus(conn, newReport);
-//		if(result > 0)	commit(conn);
-//		else			rollback(conn);
-//		close(conn);
-//		return result;
-//	}
+	/** [신고] 블랙리스트 등록 Service
+	 * @param newReport
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReportStatus(String newReport) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.updateReportStatus(conn, newReport);
+		if(result > 0)	commit(conn);
+		else			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
 }

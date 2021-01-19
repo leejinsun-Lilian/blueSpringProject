@@ -120,23 +120,25 @@ public class AdminDeleteDAO {
 	}
 
 	
-//	/** [신고] 삭제 DAO
-//	 * @param conn
-//	 * @param newReport
-//	 * @return result
-//	 * @throws Exception
-//	 */
-//	public int updateReportStatus(Connection conn, String newReport) throws Exception {
-//		int result = 0;
-//		String query = "UPDATE REPORT SET REPORT_DEL_FL = 'Y' WHERE " + newReport;
-//		try {
-//			stmt = conn.createStatement();
-//			result = stmt.executeUpdate(query);
-//		} finally {
-//			close(stmt);
-//		}
-//		return result;
-//	}
+	/** [신고] 블랙리스트 등록 DAO
+	 * @param conn
+	 * @param newReport
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReportStatus(Connection conn, String newReport) throws Exception {
+		int result = 0;
+		String query = "UPDATE MEMBER SET MEM_BLACKLIST = 'Y' WHERE " + newReport;
+		
+		System.out.println(query);
+		try {
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
+		} finally {
+			close(stmt);
+		}
+		return result;
+	}
 	
 	
 	
