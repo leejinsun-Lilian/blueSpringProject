@@ -1,6 +1,8 @@
 package com.boss.blueSpring.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boss.blueSpring.board.model.service.BoardService;
+import com.boss.blueSpring.board.model.vo.Attachment;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.Like;
 import com.boss.blueSpring.board.model.vo.PageInfo;
@@ -115,10 +118,15 @@ public class BoardController extends HttpServlet {
 				
 				String root = request.getSession().getServletContext().getRealPath("/");
 				String filePath = root + "resources/img/";
+
+				System.out.println("filePath : " + filePath);
 				
 				// 파일관련 작성할 곳
 				MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-				//
+				
+				List<Attachment> fList = new ArrayList<Attachment>();				
+				Enumeration<String> files = multiRequest.getFileNames();
+				
 				
 				// 파일 외 
 				// 폼 태그에서 enctype="multipart/form-data"을 작성해서 일반적인 request로는 값을 받아올 수 없다.
@@ -130,7 +138,7 @@ public class BoardController extends HttpServlet {
 				Member loginMember = (Member)request.getSession().getAttribute("loginMember");
 				int boardWriter = loginMember.getMemberNo();
 				
-				System.out.println(boardWriter);
+//				System.out.println(boardWriter);
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 //				map.put("fList", fList);

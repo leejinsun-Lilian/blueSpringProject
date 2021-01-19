@@ -129,9 +129,9 @@
                 type : "post", 
                 dataType : "JSON", 
                 success : function(cList) {
-                    // console.log(cList);
+                    console.log(cList);
                     
-                    $("#commentListArea").html("");
+                    $("#commentListArea").html("");                   
                     
                     $.each(cList, function(index, item){
                         var li = $("<li>").addClass("comment-row");

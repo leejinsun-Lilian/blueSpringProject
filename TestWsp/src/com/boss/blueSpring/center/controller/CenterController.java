@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.boss.blueSpring.center.model.service.CenterService;
 import com.boss.blueSpring.center.model.vo.Center;
+import com.google.gson.Gson;
 
 @WebServlet("/center/*")
 public class CenterController extends HttpServlet {
@@ -47,6 +48,8 @@ public class CenterController extends HttpServlet {
 				String guguns = "";
 				String[] gugun = request.getParameterValues("gugun");
 				
+				List<Center> centerList = new ArrayList<Center>();
+				
 				// Array로 받아온 배열 정리하기.
 				if(guguns != null) {
 					for(String g : gugun) {
@@ -55,15 +58,15 @@ public class CenterController extends HttpServlet {
 					
 					guguns = guguns.substring(0, guguns.lastIndexOf(" OR "));
 				}
-
-				System.out.println(guguns);
 				
-//				System.out.println(guguns);
-//				System.out.println(sido);
-//				
 				List<Center> cList = service.selectCenterList(guguns, sido);
 				
-				response.getWriter().print(cList);				
+				Gson gson = new Gson();
+				gson.toJson(cList, response.getWriter());
+				
+//				System.out.println(cList);
+//				
+//				response.getWriter().print(cList);				
 			}
 
 		} catch (Exception e) {
