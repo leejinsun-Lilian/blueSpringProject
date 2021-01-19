@@ -62,8 +62,6 @@
     
 </style>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78d99faa53b972374c1a1fb343c1f1a3&libraries=services"></script>
-
 </head>
 <body>
     <jsp:include page="../common/header.jsp"></jsp:include>
@@ -111,7 +109,7 @@
    <jsp:include page="../common/footer.jsp"></jsp:include>
 
 	<script>	
-		var address = "${loginMember.memAddr}";
+		var userAddress = "${loginMember.memAddr}";
 		var sidoArea = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
 			
 		var gugun1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
@@ -132,10 +130,10 @@
 		var gugun16 = ["서귀포시","제주시","남제주군","북제주군"];
 		
 		var address = ""; // 주소 담기
+		var flagNum = 0; //
+		var flagNum2 = 0; //
 		var positionX = new Array(); // x좌표 담기
 		var positionY = new Array(); // y좌표 담기
-		var points = new Array(); // 마커를 위한 배열
-		var sample = new Array();
 		
 		// 찾기 버튼 클릭 시
 		$("#search-btn").on("click", function() {
@@ -161,7 +159,7 @@
 					
 					$.each(cList, function(index, item){
 						var li = $("<li>").addClass("center-row");
-						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn");
+						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn").attr("onclick", "placeSearch("+item.centerAddr+", this)");
 						
 						
 						var div = $("<div>");						
@@ -170,7 +168,7 @@
 						var centerCla = $("<p>").addClass("centerCla").text(item.centerCla);
 						var centerName = $("<p>").addClass("centerName").text(item.centerName);
 						var centerPhone = $("<p>").addClass("centerPhone").text(item.centerTel);
-						var centerUrl = $("<a>").addClass("centerUrl").text(item.centerUrl);
+						var centerUrl = $("<a>").addClass("centerUrl").attr("href", item.centerUrl).text(item.centerUrl);
 						var centerAddr = $("<p>").addClass("centerAddr").text(item.centerAddr);
 						var centerAddr2 = $("<p>").addClass("centerAddr2").text(item.centerAddrDtl);
 						
@@ -181,56 +179,70 @@
 						
 						address = item.centerAddr;
 						
-						searchAddress();
-						
+						searchAddress();		
+
+						flagNum = flagNum + 1;
+					
 					});
-						
+ 						
 				}, error : function(request, status, error) {
 			  	   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 			 	}	
 			}); 		
 		});
-
+		
+		
 		
 		function searchAddress() {
+			positionX = new Array(); // x좌표 담기
+			positionY = new Array(); // y좌표 담기
 			// =================================== 위도 경도 =====================================
 			$.ajax({
-		          url:'https://dapi.kakao.com/v2/local/search/address.json?query='+encodeURIComponent(address),
-		          type:'GET',
-		          headers: {'Authorization' : 'KakaoAK 95bd3f68d02962b41f5efde3edf2ad26'},
+         url:'https://dapi.kakao.com/v2/local/search/address.json?query='+encodeURIComponent(address),
+         type:'GET',
+         headers: {'Authorization' : 'KakaoAK 95bd3f68d02962b41f5efde3edf2ad26'},
 			   success:function(data){
-/* 			     positionX.push(data['documents'][0]['x']);
-			       positionY.push(data['documents'][0]['y']); */
-			       pickMarkers(data);			   
-			       sample.push(data['documents'][0]['x']);
+				   	 flagNum2 = flagNum2 + 1;
+		  			 positionX.push(data['documents'][0]['x']);
+			       positionY.push(data['documents'][0]['y']); 
+			       
+			       if(flagNum2 == flagNum) {
+			    	   pickMarkers();
+			       }
 			   },			   
 			   error : function(e){
 			       console.log(e);
-			   }
-			});		
+			   },						   				
+			});									
 		}
 
-		
+	
 		
 		// =================================== 지도 =====================================	
-		function pickMarkers(data) {
+		function pickMarkers() {
 			var container = document.getElementById('mapArea'); //지도를 담을 영역의 DOM 레퍼런스
-			var options = { //지도를 생성할 때 필요한 기본 옵션
-				center: new kakao.maps.LatLng(data['documents'][0]['y'], data['documents'][0]['x']), //지도의 중심좌표.
-				level: 1 //지도의 레벨(확대, 축소 정도)
+			var options = { //지도를 생성할 때 필요한 기본 옵션  
+				center: new kakao.maps.LatLng(positionY[0], positionX[0]), //지도의 중심좌표.
+				level: 2 //지도의 레벨(확대, 축소 정도)
 			};
 			
 			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴		
-		
-	 		var points = [
-				    new kakao.maps.LatLng(data['documents'][0]['y'], data['documents'][0]['x'])
-/* 	 				  new kakao.maps.LatLng(33.452671, 126.574792),
+			
+	 		var points = [];
+			
+			for(var i = 0; i < positionY.length; ++i) {
+				points[i] = new kakao.maps.LatLng(positionY[i], positionX[i]);
+			}
+				    
+				    
+/* 			var points = [   */  
+/* 	 				new kakao.maps.LatLng(33.452671, 126.574792),
 				    new kakao.maps.LatLng(33.451744, 126.572441) */
-			];   
+/* 			]; */   
 			
 			// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 			var bounds = new kakao.maps.LatLngBounds();    
-			
+
 			var i, marker;
 			for (i = 0; i < points.length; i++) {
 			    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
@@ -239,8 +251,7 @@
 			    
 			    // LatLngBounds 객체에 좌표를 추가합니다
 			    bounds.extend(points[i]);
-			    
-				console.log(points);
+
 			}
 
 			function setBounds() {
@@ -484,5 +495,7 @@
     
     // 시 도 체크시 
 	</script>
+	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=78d99faa53b972374c1a1fb343c1f1a3&libraries=services"></script>
 </body>
 </html>
