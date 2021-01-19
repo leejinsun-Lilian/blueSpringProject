@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,11 +32,12 @@
 
 </head>
 <body>
+		<c:set var="memNo" scope="request" value="${memNo}"></c:set>
 	<div class="wrap">
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form action="${contextPath}/member/changePwComplete.do" method="post" name="newPwForm">
+				<form action="${contextPath}/member/changePwComplete.do?num=${memNo}" method="post" name="newPwForm">
 					<div class="idFindForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
@@ -61,7 +63,6 @@
 						</div>
 						</div>
 					</div>
-					<span class="hidden" name="memNo" style="display : hidden;">${memNo} </span>
 				</form>
 			</div>
 		</div>
