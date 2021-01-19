@@ -4,6 +4,7 @@ import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
 
 import java.sql.Connection;
+import java.util.Map;
 
 import static com.boss.blueSpring.common.JDBCTemplate.*;
 
@@ -86,6 +87,49 @@ public class MemberService {
 		else commit(conn);
 		close(conn);
 		return result;
+	}
+
+
+
+
+	/** 아이디 찾기 Service
+	 * @param map
+	 * @return memberIdFind
+	 * @throws Exception
+	 */
+	public String idFind(Map<String, Object> map) throws Exception {
+		Connection conn = getConnection();
+		String memberIdFind = dao.idFind(conn, map);
+		close(conn);
+		return memberIdFind;
+	}
+
+
+
+
+	/** 비밀번호 찾기 Service
+	 * @param map
+	 * @return result 
+	 * @throws Exception
+	 */
+	public int pwFind(Map<String, Object> map) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.pwFind(conn, map);
+		close(conn);		
+		return result;
+	}
+
+
+
+
+	/** 비밀변호 변경 Service
+	 * @param newPw
+	 * @return result
+	 * @throws Exception
+	 */
+	public int changePw(String newPw) throws Exception {
+		
+		return 0;
 	}
 	
 	

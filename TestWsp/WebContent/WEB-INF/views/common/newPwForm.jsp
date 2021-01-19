@@ -61,6 +61,7 @@
 						</div>
 						</div>
 					</div>
+					<span class="hidden" name="memNo" style="display : hidden;">${memNo} </span>
 				</form>
 			</div>
 		</div>

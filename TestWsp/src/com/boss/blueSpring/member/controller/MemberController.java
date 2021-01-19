@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import org.apache.catalina.tribes.MembershipService;
 import com.boss.blueSpring.member.model.service.MemberService;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.sun.corba.se.spi.protocol.RequestDispatcherRegistry;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
@@ -151,6 +154,8 @@ public class MemberController extends HttpServlet {
 			
 			// ****************************************************************** 아이디 중복체크 Controller ******************************************************************
 			else if(command.equals("/idDupCheck.do")) {
+				errorMsg = "아이디 중복 검사 과정에서 오류가 발생했습니다.";
+				
 				String id = request.getParameter("id");
 				
 				try {
@@ -160,7 +165,7 @@ public class MemberController extends HttpServlet {
 				}catch (Exception e) {
 			         e.printStackTrace();
 			         path = "/WEB-INF/views/common/errorPage.jsp";
-			         request.setAttribute("errorMsg", "아이디 중복 검사 과정에서 오류 발생!");
+			         request.setAttribute("errorMsg", errorMsg);
 			         view = request.getRequestDispatcher(path);
 			         view.forward(request, response);
 				}
@@ -168,6 +173,8 @@ public class MemberController extends HttpServlet {
 			
 			// ****************************************************************** 닉네임 중복체크 Controller ******************************************************************
 			else if(command.equals("/nicknameDubCheck.do")) {
+				errorMsg = "닉네임 중복 검사 과정에서 오류가 발생했습니다.";
+				
 				String nickname = request.getParameter("nickname");
 				
 				try {
@@ -177,7 +184,7 @@ public class MemberController extends HttpServlet {
 				}catch (Exception e) {
 					e.printStackTrace();
 					path = "/WEB-INF/views/common/errorPage.jsp";
-			        request.setAttribute("errorMsg", "닉네임 중복 검사 과정에서 오류 발생!");
+			        request.setAttribute("errorMsg", errorMsg);
 			        view = request.getRequestDispatcher(path);
 			        view.forward(request, response);
 					
@@ -187,6 +194,7 @@ public class MemberController extends HttpServlet {
 			
 			// ****************************************************************** 이메일 중복체크  Controller ******************************************************************
 			else if(command.equals("/emailDupCheck.do")) {
+				errorMsg = "이메일 중복 검사 과정에서 오류가 발생했습니다.";
 				String email = request.getParameter("email");
 				
 				try {
@@ -195,7 +203,7 @@ public class MemberController extends HttpServlet {
 				}catch (Exception e) {
 					e.printStackTrace();
 					path = "/WEB-INF/views/common/errorPage.jsp";
-			        request.setAttribute("errorMsg", "이메일 중복 검사 과정에서 오류 발생!");
+			        request.setAttribute("errorMsg", errorMsg);
 			        view = request.getRequestDispatcher(path);
 			        view.forward(request, response);
 				}
@@ -211,6 +219,8 @@ public class MemberController extends HttpServlet {
 			
 			// ****************************************************************** 회원가입 Controller ******************************************************************
 			else if(command.equals("/signupComplete.do")) {
+				errorMsg = "회원가입 과정에서 오류가 발생했습니다.";
+				
 				path = "";
 				String memberId = request.getParameter("id");
 				String memberNickname = request.getParameter("nickName");
@@ -262,20 +272,12 @@ public class MemberController extends HttpServlet {
 					}
 				}catch (Exception e) {
 					e.printStackTrace();
-					request.setAttribute("errorMsg", "회원가입 과정에서 오류가 발생했습니다.");
-				
+					request.setAttribute("errorMsg", errorMsg);
 					path = "/WEB-INF/views/common/errorPage.jsp";
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
 				}
-				
-				
-				
-				
 			}
-			
-			
-			
 			
 			
 			
@@ -292,29 +294,47 @@ public class MemberController extends HttpServlet {
 			
 			// ****************************************************************** 아이디 찾기 Controller ******************************************************************
 			else if(command.equals("/idFindComplete.do")) {
+				errorMsg = "아이디 찾기 과정에서 오류가 발생했습니다.";
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
 				
 				try {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("name", name);
+					map.put("email", email);
 					
-				} catch (Exception e) {
-					
-				}
+					String memberIdFind = mService.idFind(map);
+					HttpSession session = request.getSession();
+					if(memberIdFind != null) {
 						
-				
-				
-				
-				
-				
-				
-				path="/WEB-INF/views/member/idFindComplete.jsp";
-				
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
+						session.setAttribute("memberIdFind", memberIdFind);
+						
+						path="/WEB-INF/views/member/idFindComplete.jsp";
+						
+						view = request.getRequestDispatcher(path);
+						view.forward(request, response);
+					 } else {
+						 swalIcon = "error";
+						 swalTitle = "아이디 찾기 실패";
+						 swalText = "이름과 이메일을 다시 확인해주세요.";
+						
+						session.setAttribute("swalIcon", swalIcon);
+						session.setAttribute("swalTitle", swalTitle);
+						session.setAttribute("swalText", swalText);
+						
+						response.sendRedirect(request.getHeader("referer"));
+					 }
+				} catch (Exception e) {
+					e.printStackTrace();
+					request.setAttribute("errorMsg", errorMsg);
+					path = "/WEB-INF/views/common/errorPage.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				}
 			}
 			
 			
-			// 비밀번호 찾기 Controller 
+			// ****************************************************************** 비밀번호 찾기 폼 Controller ****************************************************************** 
 			else if(command.equals("/pwFind.do")) {
 				path="/WEB-INF/views/member/pwFind.jsp";
 				
@@ -322,21 +342,79 @@ public class MemberController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 새로운 비밀번호 설정 
-			else if(command.equals("/changePw.do")) {
-				path="/WEB-INF/views/common/newPwForm.jsp";
-				
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response); 
-			}
 			
+			
+			
+			//  ****************************************************************** 새로운 비밀번호 설정  ******************************************************************
+			else if(command.equals("/changePw.do")) {
+				errorMsg = "비밀번호 찾기 과정에서 오류가 발생했습니다.";
+				
+				String id = request.getParameter("id");
+				String email = request.getParameter("email");
+				
+				try {
+					Map<String, Object> map = new HashMap<String, Object>(); 
+					map.put("id", id);
+					map.put("email", email); 
+					
+					
+					int result = mService.pwFind(map);
+					HttpSession session = request.getSession();
+					if(result > 0) {
+						session.setAttribute("memNo", result);
+						path="/WEB-INF/views/common/newPwForm.jsp";
+						
+						view = request.getRequestDispatcher(path);
+						view.forward(request, response); 
+					} else {
+						swalIcon = "error";
+						 swalTitle = "비밀번호 찾기 실패";
+						 swalText = "아이디와 이메일을 다시 확인해주세요.";
+						
+						session.setAttribute("swalIcon", swalIcon);
+						session.setAttribute("swalTitle", swalTitle);
+						session.setAttribute("swalText", swalText);
+						
+						response.sendRedirect(request.getHeader("referer"));
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+					request.setAttribute("errorMsg", errorMsg);
+					path = "/WEB-INF/views/common/errorPage.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				}
+			}
 			
 			// 비밀번호 변경 완료 페이지
 			else if(command.equals("/changePwComplete.do")) {
-				path="/WEB-INF/views/member/pwFindNewPwComplete.jsp";
+//				String newPw = request.getParameter("newPw1");
+//				int memNo = Integer.parseInt(request.getParameter("memNo"));
+//				System.out.println("controller 테스트 : " + newPw);
+//				System.out.println("controller 테스트 : " + memNo);
+//				
+//				HttpSession session = request.getSession();
+//				
+//				int testNo = (Integer) session.getAttribute("memNo");
+//				
+//				System.out.println("controller 테스트 : " + testNo);
 				
+				
+				
+				//int result = mService.changePw(newPw);
+				
+				
+//				
+//				if(result > 0) {
+//					
+//				}
+				
+				
+				
+				path="/WEB-INF/views/member/pwFindNewPwComplete.jsp";
 				view = request.getRequestDispatcher(path);
-				view.forward(request, response); 
+				view.forward(request, response);
+				
 			}
 
 			

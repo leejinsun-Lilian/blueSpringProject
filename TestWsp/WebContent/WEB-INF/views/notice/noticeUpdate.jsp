@@ -32,7 +32,9 @@
 					
 					<!-- 제목 -->		
 					<label class="input-area">제목</label>
+
 					<input type="text" name="noticeTitle"  class="title-input" value="${notice.noticeTitle}">
+
 													<!-- value=""   에   el로 저장되어있던 값을 가져온다 --> 
 														
 					<!-- 이미지 파일 업로드 -->
@@ -61,7 +63,9 @@
 					</div>
 				
 					<div>내용</div>
+
 					<textarea class="form-control" id="noticeContent" name="noticeContent" rows="15" style="resize: none;">
+
 					${notice.noticeContent }
 					</textarea>
 		
