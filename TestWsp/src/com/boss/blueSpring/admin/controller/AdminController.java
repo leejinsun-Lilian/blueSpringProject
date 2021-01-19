@@ -24,6 +24,7 @@ import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
+import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
 @WebServlet("/admin/*")
@@ -58,7 +59,7 @@ public class AdminController extends HttpServlet {
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-			}			
+			}		
 			
 			// 회원 정보 조회 Controller **************************************************
 			else if (command.equals("/adminMemberInfo.do")) {
@@ -101,20 +102,20 @@ public class AdminController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 신고 목록 상세 페이지 조회 Controller ******************************************
-			else if (command.equals("/reportPage.do")) {
-				errorMsg = "신고 상세페이지 조회 중 오류 발생.";
-				
-				//List<Report> rList = service.selectReportList(rpInfo);
-				
-				path = "/WEB-INF/views/admin/adminReportPage.jsp";
-				
-	            //request.setAttribute("rList", rList);
-	            //request.setAttribute("rpInfo", rpInfo);
-	            
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-			}
+//			// 신고 목록 상세 페이지 조회 Controller ******************************************
+//			else if (command.equals("/reportPage.do")) {
+//				errorMsg = "신고 상세페이지 조회 중 오류 발생.";
+//				
+//				int reportNo = Integer.parseInt(request.getParameter("no"));
+//				System.out.println("reportNo : " + reportNo);
+//				Report report = service.selectReport(reportNo);
+//				
+//				path = "/WEB-INF/views/admin/adminReportPage.jsp";
+//				
+//				request.setAttribute("report", report);
+//				view = request.getRequestDispatcher(path);
+//				view.forward(request, response);
+//			}
 			
 			// 블랙리스트 조회 Controller **************************************************
 			else if (command.equals("/adminBlacklistInfo.do")) {
@@ -228,6 +229,15 @@ public class AdminController extends HttpServlet {
 				
 			}
 			
+			// 메인 공지사항 조회 Controller
+			else if (command.equals("/notice.do")) {
+				errorMsg = "메인 공지사항 페이지 조회 중 오류 발생.";
+				
+				path = "/WEB-INF/views/main/mainNotice.jsp";
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
 			
 			
 

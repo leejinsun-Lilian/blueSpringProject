@@ -23,6 +23,13 @@ WHERE RNUM BETWEEN ? AND ?
 SELECT COUNT(*) FROM V_REPORT
 </entry>
 
+<!-- 신고 페이지 상세 조회 -->
+<entry key="selectReporPagetList">
+SELECT REPORT_NO, BRD_NO, MEM_ID, REPORT_CATE_NO, REPORT_CONTENT
+FROM V_REPORT
+WHERE REPORT_NO = ?
+</entry>
+
 <!-- 지정된 페이지 신고 목록 조회 -->
 <entry key="selectReportList">
 SELECT * FROM

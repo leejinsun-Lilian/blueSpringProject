@@ -18,6 +18,7 @@ import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
+import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminService {
@@ -221,6 +222,23 @@ public class AdminService {
 		close(conn);
 		return crtList;
 	}
+
+	
+	/** [메인] 공지사항 조회 Service
+	 * @return
+	 * @throws Exception
+	 */
+
+   /** [신고] 페이지 상세조회 Service
+    * @param reportNo
+    * @return report
+    * @throws Exception
+    */
+//	public Report selectReport(int reportNo) throws Exception {
+//		Connection conn = getConnection();
+//		Report report = dao.selectReport(conn, reportNo);
+//		return report;
+//	}
 
 
 

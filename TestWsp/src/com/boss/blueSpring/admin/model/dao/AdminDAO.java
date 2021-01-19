@@ -24,6 +24,7 @@ import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
+import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminDAO {
@@ -464,6 +465,39 @@ public class AdminDAO {
 		}
 		return crtList;
 	}
+
+	/** [메인] 공지사항 조회 DAO
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+
+   /** [신고] 페이지 상세조회 DAO
+    * @param reportNo
+    * @return report
+    * @throws Exception
+    */
+//	public Report selectReport(Connection conn, int reportNo) throws Exception {
+//		Report report = null;
+//		String query = prop.getProperty("selectReporPagetList");
+//		try {
+//			pstmt = conn.prepareStatement(query);
+//			pstmt.setInt(1, reportNo);
+//			rset = pstmt.executeQuery();
+//			if (rset.next()) {
+//				report = new Report();
+//				report.setReportNo(rset.getInt("REPORT_NO"));
+//				report.setBoardNo(rset.getInt("BRD_NO"));			
+//				report.setMemberId(rset.getString("MEM_ID"));
+//				report.setReportCategoryNo(rset.getInt("REPORT_CATE_NO"));
+//				report.setReportContent(rset.getString("REPORT_CONTENT"));
+//			}
+//		} finally {
+//			close(rset);
+//			close(pstmt);
+//		}
+//		return report;
+//	}
 
 
 	
