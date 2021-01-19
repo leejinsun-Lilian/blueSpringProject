@@ -17,6 +17,8 @@
 .wrap > .container {
 	padding : 100px 0 255px;
 }
+
+h3 > span {color :rgb(241, 135, 35); }
 </style>
 </head>
 <body>
@@ -28,7 +30,7 @@
 					<h1>푸른봄</h1>
 					<div class="findBackground">
 						<h2>가입하신 아이디 조회 결과</h2>
-						<h3>회원님의 아이디는 입니다.</h3>
+						<h3>회원님의 아이디는 <span> ${memberIdFind} </span>입니다.</h3>
 						<div class="btn_area">
 							<span>
 								<button type="button" id="btn_main" class="btn"
