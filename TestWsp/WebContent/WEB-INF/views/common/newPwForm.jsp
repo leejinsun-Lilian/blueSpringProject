@@ -37,23 +37,23 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form action="${contextPath}/member/changePwComplete.do?num=${memNo}" method="post" name="newPwForm">
+				<form action="${contextPath}/member/changePwComplete.do?num=${memNo}" method="post" name="newPwForm" onsubmit="return pwdValidate();">
 					<div class="idFindForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
-							<h3>새로운 비밀번호 설정</h3>
 						</div>
-						<div class="backgroundColor">
+						<div class="back">
+							<h3>새로운 비밀번호 설정</h3>
 							<div class="input_area">
 								<div class="row_group">
 									<div class="text">비밀번호</div> 
-									<input type="password" name="newPw1" class="id_input" required>
-									<span class="errorMsg">text</span>
+									<input type="password" id="newPw1" name="newPw1" class="find_input" required>
+									<span class="errorMsg" id="pw1_error"></span>
 								</div>
 								<div class="row_group">
 									<div class="text">비밀번호 확인</div> 
-									<input type="password" name="newPw2" class="id_input" required>
-									<span class="errorMsg">text</span>
+									<input type="password" id="newPw2" name="newPw2" class="find_input" required>
+									<span class="errorMsg" id="pw2_error"></span>
 								</div> 
 								<div class="row_group">
 									<div class="nextBtn_area">
@@ -66,6 +66,7 @@
 				</form>
 			</div>
 		</div>
+		<script src="${contextPath}/resources/js/member_signUp.js"></script>
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 	</div>
 </body>

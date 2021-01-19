@@ -242,4 +242,44 @@ public class MemberDAO {
 		}
 		return result;
 	}
+
+
+
+	/** 비밀번호 변경 DAO
+	 * @param conn
+	 * @param newPw
+	 * @param memNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int changePw(Connection conn, String newPw, int memNo) throws Exception{
+		int result = 0;
+		
+		String query = prop.getProperty("changePw");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, newPw);
+			pstmt.setInt(2, memNo);
+			
+			
+			result = pstmt.executeUpdate();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

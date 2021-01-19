@@ -127,9 +127,12 @@ public class MemberService {
 	 * @return result
 	 * @throws Exception
 	 */
-	public int changePw(String newPw) throws Exception {
-		
-		return 0;
+	public int changePw(String newPw, int memNo) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.changePw(conn, newPw, memNo);
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		return result;
 	}
 	
 	

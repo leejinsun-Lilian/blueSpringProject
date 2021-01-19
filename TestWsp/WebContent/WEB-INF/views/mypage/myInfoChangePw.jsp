@@ -24,6 +24,12 @@
 .text > span {
 	padding-right: 10px;
 }
+.content{width : 70%;}
+
+.input_area {
+    margin-left: 43px;
+    margin-right: 43px;
+}
 </style>
 </head>
 <body>
@@ -31,8 +37,10 @@
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-			<div class="backgroundColor">
-				<form action="${contextPath}/mypage/myInfoChange.do" method="post" name="myInfoChangePw">
+
+					<div class="back">
+				<form action="${contextPath}/mypage/myInfoChange.do" method="post" name="myInfoChangePw" id="changeInfoPwForm">
+					
 					<div class="findForm">
 						<div class="text_area">
 							<h3>정보 수정을 위해 비밀번호를 입력해주세요.</h3>
@@ -50,7 +58,8 @@
 						</div>
 					</div>
 				</form>
-				</div>
+					</div>
+
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp"></jsp:include>
