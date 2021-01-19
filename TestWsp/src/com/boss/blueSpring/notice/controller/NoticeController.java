@@ -206,7 +206,9 @@ public class NoticeController extends HttpServlet {
 			}
 
 			
+
 			// 공지글 수정Controller ***********************************************
+
 			else if(command.equals("/update.do")) {
 				errorMsg = "공지글 수정 과정에서 오류 발생";
 				
@@ -241,6 +243,7 @@ public class NoticeController extends HttpServlet {
 						temp.setParentNoticeNo(noticeNo);
 						
 						// name 속성에 따라 fileLevel 지정
+
 						//int fileLevel = 0;
 						switch(name) {
 						case "img0" : temp.setFileLevel(0); break;
@@ -249,13 +252,16 @@ public class NoticeController extends HttpServlet {
 						}
 						
 						//temp.setFileLevel(fileLevel);
+
 						
 						// fList에 추가
 						fList.add(temp);
 					}
 				} 
 				
+
 				int noticeWriter = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo(); 
+
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("fList", fList);

@@ -49,6 +49,7 @@
 	}
 	
 	#black_btn2 { 
+		float: right;
 	    background-color: #dc3545;
 	    color: snow;
 	}
@@ -68,7 +69,7 @@
                 <table class="table table-sm">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col"><input type="checkbox"></th>
+                        <th scope="col"><input type="checkbox" id="ck_all"></th>
                         <th scope="col">블랙리스트여부</th>
                         <th scope="col">회원번호</th>
                         <th scope="col">아이디</th>
@@ -86,17 +87,17 @@
                    	<c:choose>
 	                    <c:when test="${empty bkList}">
 	                        <tr>
-	                            <td colspan="13">존재하는 게시글이 없습니다.</td>
+	                            <td colspan="13">존재하는 블랙리스트 회원이 없습니다.</td>
 	                        </tr>
 	                    </c:when>
     
                     <c:otherwise>                      
                         <c:forEach var="member" items="${bkList}">
                             <tr>
-                            	<td><input type="checkbox"><td>
+                            	<td><input type="checkbox" name="selectClick" value="${member.memberNo}"></td>
                             	<td>${member.memberBlackList}</td>
 		                        <td>${member.memberNo}</td>
-		                        <td>${member.memberId}</td>
+		                        <th>${member.memberId}</th>
 		                        <td>${member.memberNickname}</td>
 		                        <td>${member.memberNm}</td>
 		                        <td>${member.memberBirth}</td>
@@ -190,19 +191,75 @@
 
             <div class="black_search">
             <form action="${contextPath}/adminSearch/blacklist.do" method="GET">
-            <select id="black_search" name="sk" required>
-                <option selected value="bkNo">회원번호</option>
+            <select id="black_search" name="sk">
+                <option value="bkNo">회원번호</option>
                 <option value="bkId">아이디</option>
                 <option value="bkNick">닉네임</option>
             </select>
             <input type="text" name="sv">
-            <button type="button" id="black_btn">검색</button></div>
+            <button type="button" id="black_btn">검색</button>
 			</form>
-			<button id="black_btn2">삭제</button>
+			<button id="black_btn2">블랙리스트 삭제</button>
         </div>
-    
+    </div>
     <div style="clear: both;"></div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     </div>
+    
+    <script>
+ 	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해두는 기능
+	(function(){
+		var searchKey = "${param.sk}";
+		var searchValue = "${param.sv}";
+		$("select[name=sk] > option").each(function(index, item){
+			if( $(item).val() == searchKey ){
+				$(item).prop("selected", true);
+			}
+		});
+		$("input[name=sv]").val(searchValue);
+	})();
+ 	
+    // 체크박스 전체 선택&해제
+    $('#ck_all').click(function(){
+         if($("#ck_all").prop("checked")){
+            $("input[type=checkbox]").prop("checked",true); 
+        }else{
+            $("input[type=checkbox]").prop("checked",false); 
+        }
+    });
+    
+    // 삭제
+    var clicks = new Array();
+	$("#black_btn2").on("click", function() {			
+		
+        $("input:checkbox[name='selectClick']:checked").each(function(){
+        	clicks.push($(this).val());       	
+        });
+        
+	    if(confirm("정말 삭제하시겠습니까?")){
+	    	$.ajaxSettings.traditional = true;
+			$.ajax({
+				url : "${contextPath}/adminDelete/blacklist.do",
+				data : {"black" : clicks},
+				type : "get",
+	            success : function(result) {
+
+	            	if(result > 0) {
+	            		swal({"icon" : "success" , "title" : "블랙리스트 삭제 성공"});
+	            	}
+                                           
+	             }, error : function(request, status, error) {
+	                  alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+	              }
+			});
+		}
+	});
+	
+	
+	
+	
+	
+	</script>
+	
 </body>
 </html>

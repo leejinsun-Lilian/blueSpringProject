@@ -15,11 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import com.boss.blueSpring.admin.model.service.AdminSearchService;
 import com.boss.blueSpring.admin.model.vo.BlacklistPageInfo;
 import com.boss.blueSpring.admin.model.vo.CenterPageInfo;
+import com.boss.blueSpring.admin.model.vo.ChallCrtfdPageInfo;
+import com.boss.blueSpring.admin.model.vo.ChallPageInfo;
 import com.boss.blueSpring.admin.model.vo.MemberPageInfo;
 import com.boss.blueSpring.admin.model.vo.ReportPageInfo;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.center.model.vo.Center;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.report.model.vo.Report;
 
@@ -169,9 +173,9 @@ public class AdminSearchController extends HttpServlet {
 				
 				BlacklistPageInfo bpInfo = service.getPageInfoBlack(map);
 				
-				List<Member> bkList = service.searchBlackrList(map, bpInfo);
+				List<Member> bkList = service.searchBlackList(map, bpInfo);
 
-				path = "/WEB-INF/views/admin/adminMemberInfo.jsp";
+				path = "/WEB-INF/views/admin/adminBlacklistInfo.jsp";
 				
 				request.setAttribute("bkList", bkList);
 				request.setAttribute("bpInfo", bpInfo);
@@ -180,22 +184,59 @@ public class AdminSearchController extends HttpServlet {
 				view.forward(request, response);
 				
 			}			
-			
-			
-			
-			
-			
-			
-			
+
 			// 챌린지 관리자 검색 Controller *************************************************
 			else if(command.equals("/chall.do")) {
 				errorMsg = "챌린지 관리자 검색 페이지 조회 중 오류 발생.";
 				
+				String searchKey = request.getParameter("sk");
+				String searchValue = request.getParameter("sv");
+				String cp = request.getParameter("cp");
 				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("searchKey", searchKey);
+				map.put("searchValue", searchValue);
+				map.put("currentPage", cp);
+				
+				ChallPageInfo chpInfo = service.getPageInfoChall(map);
+				
+				List<Challenge> chList = service.searchChallList(map, chpInfo);
+
+				path = "/WEB-INF/views/admin/adminChall.jsp";
+				
+				request.setAttribute("chList", chList);
+				request.setAttribute("chpInfo", chpInfo);
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
 				
 			}
-			
-			
+			// 챌린지 인증게시판 관리자 검색 Controller *************************************************
+			else if(command.equals("/challCrtfd.do")) {
+				errorMsg = "챌린지 관리자 검색 페이지 조회 중 오류 발생.";
+				
+				String searchKey = request.getParameter("sk");
+				String searchValue = request.getParameter("sv");
+				String cp = request.getParameter("cp");
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("searchKey", searchKey);
+				map.put("searchValue", searchValue);
+				map.put("currentPage", cp);
+				
+				ChallCrtfdPageInfo crtpInfo = service.getPageInfoChallCrtfd(map);
+				
+				List<ChallengeCrtfd> crtList = service.searchChallCrtfdList(map, crtpInfo);
+
+				path = "/WEB-INF/views/admin/adminCrtfd.jsp";
+				
+				request.setAttribute("crtList", crtList);
+				request.setAttribute("crtpInfo", crtpInfo);
+				
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+				
+			}			
 			
 			
 			

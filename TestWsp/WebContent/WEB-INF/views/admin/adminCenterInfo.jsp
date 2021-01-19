@@ -70,12 +70,7 @@
 	    color: snow;
 	}
 	
-	.center_page_btn {
-	    width: 22%;
-	    height: 100%;
-	    margin-top: 1%;
-	    margin-left: 41%;
-	}
+	.center_page_btn { float: right; }
 	</style>
 </head>
 <body>
@@ -86,13 +81,13 @@
 
         <div class="admin_content">
             <div class="center_title">
-                <h4>기관목록 조회</h4>
+                <h4>기관정보 조회</h4>
             </div>
             <div class="center_board">
                 <table class="table table-sm">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col"><input type="checkbox"></th>
+                        <th scope="col"><input type="checkbox" id="ck_all"></th>
                         <th scope="col">번호</th>
                         <th scope="col">분류</th>
                         <th scope="col">지역(시/도)</th>
@@ -100,32 +95,29 @@
                         <th scope="col">기관명</th>
                         <th scope="col">전화번호</th>
                         <th scope="col">홈페이지</th>
-                        <th scope="col">상세주소</th>
+                        <th scope="col">삭제여부</th>
                       </tr>
                     </thead>
                     <tbody>
                     <c:choose>
                     <c:when test="${empty cList}">
                         <tr>
-                            <td colspan="9">존재하는 게시글이 없습니다.</td>
+                            <td colspan="9">존재하는 센터 정보가 없습니다.</td>
                         </tr>
                     </c:when>
     
                     <c:otherwise>                      
                         <c:forEach var="center" items="${cList}">
                             <tr>
-                            	<td><input type="checkbox"></td>
-                                <th scope="row">${center.centerNo}</th>
+                            	<td><input type="checkbox" name="selectClick" value="${center.centerNo}"></td>
+                                <th>${center.centerNo}</th>
                                 <td>${center.centerCla}</td>
                                 <td>${center.centerArea1}</td>
                                 <td>${center.centerArea2}</td>
 								<td>${center.centerName}</td>
 								<td>${center.centerTel}</td>
-		                        <td><a href="${center.centerUrl}" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-		                            <path fill-rule="evenodd" d="M8 3.293l6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-		                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-		                          </svg></a></td>
-		                        <td>${center.centerAddr}</td>
+		                        <td>${center.centerUrl}</td>
+		                        <td>${center.centerDeleteFl}</td>
                      	 	</tr>
                      	 </c:forEach>
                     </c:otherwise>
@@ -212,26 +204,81 @@
 
             <div class="center_search">
             <form action="${contextPath}/adminSearch/center.do" method="GET">
-	            <select id="center_search" name="sk" required>
-	                <option selected value="centerNo">번호</option>
+	            <select id="center_search" name="sk">
+	                <option value="centerNo">번호</option>
 	                <option value="centerCla">분류</option>
 	                <option value="centerArea1">지역(시/도)</option>
 	                <option value="centerArea2">지역(구/군)</option>
 	                <option value="centerNm">기관명</option>
 	            </select>
             <input type="text" name="sv">
-            <button type="button" id="senter_btn">검색</button><br></div>
+            <button id="senter_btn">검색</button><br>
             </form>
             
             <div class="center_page_btn">
-            <button type="button" id="center_btn2">등록</button>
-            <button type="button" id="center_btn3">수정</button>
-            <button type="button" id="center_btn4">삭제</button></div>
+            <button id="center_btn2">센터등록</button>
+            <button id="center_btn3">센터수정</button>
+            <button id="center_btn4">센터삭제</button></div>
 			
         </div>
-    
+    </div>
     <div style="clear: both;"></div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     </div>
+    
+    <script>
+	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해두는 기능
+	(function(){
+		var searchKey = "${param.sk}";
+		var searchValue = "${param.sv}";
+		$("select[name=sk] > option").each(function(index, item){
+			if( $(item).val() == searchKey ){
+				$(item).prop("selected", true);
+			}
+		});
+		$("input[name=sv]").val(searchValue);
+	})();
+	
+    // 체크박스 전체 선택&해제
+    $('#ck_all').click(function(){
+         if($("#ck_all").prop("checked")){
+            $("input[type=checkbox]").prop("checked",true); 
+        }else{
+            $("input[type=checkbox]").prop("checked",false); 
+        }
+    });
+	
+    // 삭제
+    var clicks = new Array();
+    
+	$("#center_btn4").on("click", function() {			
+		
+        $("input:checkbox[name='selectClick']:checked").each(function(){
+        	clicks.push($(this).val());
+        });
+        
+	    if(confirm("정말 삭제하시겠습니까?")){
+	    	$.ajaxSettings.traditional = true;
+			$.ajax({
+				url : "${contextPath}/adminDelete/center.do",
+				data : {"center" : clicks},
+				type : "get",
+	            success : function(result) {
+
+	            	if(result > 0) {
+	            		swal({"icon" : "success" , "title" : "센터 삭제 성공"});
+	            	}
+                                           
+	            }, error : function(request, status, error) {
+	                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+	              }
+			});
+		}
+	});
+	
+	
+	
+	</script>
+	
 </body>
 </html>

@@ -32,7 +32,7 @@ public class Report {
 	}
 	
 	// admin 신고 목록 조회 생성자
-	public Report(int reportNo, String reportType, int boardNo, int reportCategoryNo, String memberId, String targetId) {
+	public Report(int reportNo, String reportType, int boardNo, int reportCategoryNo, String memberId, String targetId, String reportDeleteFl) {
 		super();
 		this.reportNo = reportNo;
 		this.reportType = reportType;
@@ -40,6 +40,7 @@ public class Report {
 		this.reportCategoryNo = reportCategoryNo;
 		this.memberId = memberId;
 		this.targetId = targetId;
+		this.reportDeleteFl = reportDeleteFl;
 	}
 
 	public int getReportNo() {

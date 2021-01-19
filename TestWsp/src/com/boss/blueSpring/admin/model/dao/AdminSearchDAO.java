@@ -11,11 +11,15 @@ import java.util.List;
 
 import com.boss.blueSpring.admin.model.vo.BlacklistPageInfo;
 import com.boss.blueSpring.admin.model.vo.CenterPageInfo;
+import com.boss.blueSpring.admin.model.vo.ChallCrtfdPageInfo;
+import com.boss.blueSpring.admin.model.vo.ChallPageInfo;
 import com.boss.blueSpring.admin.model.vo.MemberPageInfo;
 import com.boss.blueSpring.admin.model.vo.ReportPageInfo;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.center.model.vo.Center;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.report.model.vo.Report;
 
@@ -129,7 +133,7 @@ public class AdminSearchDAO {
 				"SELECT * FROM " + 
 				"    (SELECT ROWNUM RNUM , V.* " + 
 				"    FROM " + 
-				"        (SELECT REPORT_NO, REPORT_TYPE, BRD_NO, REPORT_CATE_NO, MEM_ID, TARGET_ID FROM V_REPORT " + 
+				"        (SELECT REPORT_NO, REPORT_TYPE, BRD_NO, REPORT_CATE_NO, MEM_ID, TARGET_ID, REPORT_DEL_FL FROM V_REPORT " + 
 				"        WHERE " + condition + 
 				"        ORDER BY REPORT_NO DESC) V ) " + 
 				" WHERE RNUM BETWEEN ? AND ?";
@@ -148,7 +152,8 @@ public class AdminSearchDAO {
 						   				rset.getInt("BRD_NO"),
 						   				rset.getInt("REPORT_CATE_NO"),
 						   				rset.getString("MEM_ID"),
-						   				rset.getString("TARGET_ID"));
+						   				rset.getString("TARGET_ID"),
+						   				rset.getString("REPORT_DEL_FL"));
 				rList.add(report);
 			}
 		} finally {
@@ -195,7 +200,7 @@ public class AdminSearchDAO {
 				"SELECT * FROM " + 
 				"    (SELECT ROWNUM RNUM , V.* " + 
 				"    FROM " + 
-				"        (SELECT CENTER_NO, CENTER_CLA, CENTER_AREA1, CENTER_AREA2, CENTER_NM, CENTER_TEL, CENTER_URL, CENTER_ADDR FROM V_CENTER " + 
+				"        (SELECT CENTER_NO, CENTER_CLA, CENTER_AREA1, CENTER_AREA2, CENTER_NM, CENTER_TEL, CENTER_URL, CENTER_DEL_FL FROM V_CENTER " + 
 				"        WHERE " + condition + 
 				"        ORDER BY CENTER_NO DESC) V ) " + 
 				" WHERE RNUM BETWEEN ? AND ?";
@@ -216,7 +221,7 @@ public class AdminSearchDAO {
 						rset.getString("CENTER_NM"),
 						rset.getString("CENTER_TEL"), 
 						rset.getString("CENTER_URL"), 
-						rset.getString("CENTER_ADDR"));
+						rset.getString("CENTER_DEL_FL").charAt(0));
 				cList.add(center);
 			}
 		} finally {
@@ -371,6 +376,139 @@ public class AdminSearchDAO {
 		}
 		return bkList;
 	}
+
+
+	// ************************************************************************* 챌린지
+
+	/** [챌린지] 관리 : 조건을 만족하는 게시글 수 조회 DAO
+	 * @param conn
+	 * @param condition
+	 * @return listCount
+	 * @throws Exception
+	 */
+	public int getChallListCount(Connection conn, String condition) throws Exception {
+		int listCount = 0; 
+		String query = "SELECT COUNT(*) FROM V_CHALLENGE_MISSION WHERE " + condition;
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	/** [챌린지] 관리 : 목록 검색 DAO
+	 * @param conn
+	 * @param chpInfo
+	 * @param condition
+	 * @return chList
+	 * @throws Exception
+	 */
+	public List<Challenge> searchChallList(Connection conn, ChallPageInfo chpInfo, String condition) throws Exception {
+		List<Challenge> chList = null;
+		String query = 
+				"SELECT * FROM " + 
+				"    (SELECT ROWNUM RNUM , V.* " + 
+				"    FROM " + 
+				"        (SELECT CHLNG_NO, CHLNG_TITLE, MEM_ID, CHLNG_FL FROM V_CHALLENGE_MISSION " + 
+				"        WHERE " + condition + 
+				"        ORDER BY CHLNG_NO DESC) V ) " + 
+				" WHERE RNUM BETWEEN ? AND ?";
+		try {
+			int startRow = (chpInfo.getCurrentPage() -1) * chpInfo.getLimit() + 1;
+			int endRow = startRow + chpInfo.getLimit() -1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			chList = new ArrayList<Challenge>();
+			while (rset.next()) {
+				Challenge challenge = new Challenge(
+						rset.getInt("CHLNG_NO"),
+						rset.getString("CHLNG_TITLE"),
+						rset.getString("MEM_ID"), 
+						rset.getString("CHLNG_FL").charAt(0));
+						chList.add(challenge);
+				};
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return chList;
+	}
+
+	// ************************************************************************* 챌린지 인증게시판
+
+	/** [챌린지 인증게시판] 관리 : 조건을 만족하는 게시글 수 조회 DAO
+	 * @param conn
+	 * @param condition
+	 * @return listCount
+	 * @throws Exception
+	 */
+	public int getChallCrtfdListCount(Connection conn, String condition) throws Exception {
+		int listCount = 0; 
+		String query = "SELECT COUNT(*) FROM V_CHALLENGERS WHERE " + condition;
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
+	}
+
+	/** [챌린지 인증게시판] 관리 : 목록 검색 DAO
+	 * @param conn
+	 * @param crtpInfo
+	 * @param condition
+	 * @return crtList
+	 * @throws Exception
+	 */
+	public List<ChallengeCrtfd> searchChallCrtfdList(Connection conn, ChallCrtfdPageInfo crtpInfo, String condition) throws Exception {
+		List<ChallengeCrtfd> crtList = null;
+		String query = 
+				"SELECT * FROM " + 
+				"    (SELECT ROWNUM RNUM , V.* " + 
+				"    FROM " + 
+				"        (SELECT CHLNG_NO, CHLNG_BRD_NO, MEM_ID, CHLNG_BRD_DEL_FL FROM V_CHALLENGERS " + 
+				"        WHERE " + condition + 
+				"        ORDER BY CHLNG_BRD_NO DESC) V ) " + 
+				" WHERE RNUM BETWEEN ? AND ?";
+		try {
+			int startRow = (crtpInfo.getCurrentPage() -1) * crtpInfo.getLimit() + 1;
+			int endRow = startRow + crtpInfo.getLimit() -1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rset = pstmt.executeQuery();
+			crtList = new ArrayList<ChallengeCrtfd>();
+			while (rset.next()) {
+				ChallengeCrtfd challengeCrtfd = new ChallengeCrtfd(
+						rset.getInt("CHLNG_NO"),
+						rset.getInt("CHLNG_BRD_NO"),
+						rset.getString("MEM_ID"), 
+						rset.getString("CHLNG_BRD_DEL_FL").charAt(0));
+						crtList.add(challengeCrtfd);
+				};
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return crtList;
+	}
+	
+	
 
 
 

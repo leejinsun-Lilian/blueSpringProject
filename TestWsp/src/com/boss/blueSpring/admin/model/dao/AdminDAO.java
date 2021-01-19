@@ -153,7 +153,8 @@ public class AdminDAO {
 	                		   				rset.getInt("BRD_NO"),
 	                		   				rset.getInt("REPORT_CATE_NO"),
 	                		   				rset.getString("MEM_ID"),
-	                		   				rset.getString("TARGET_ID"));
+	                		   				rset.getString("TARGET_ID"),
+	                		   				rset.getString("REPORT_DEL_FL"));
 	                   rList.add(report);
 	                }
 		} finally {
@@ -214,7 +215,7 @@ public class AdminDAO {
 						rset.getString("CENTER_NM"),
 						rset.getString("CENTER_TEL"), 
 						rset.getString("CENTER_URL"), 
-						rset.getString("CENTER_ADDR"));
+						rset.getString("CENTER_DEL_FL").charAt(0));
 				cList.add(center);
 			}
 		} finally {

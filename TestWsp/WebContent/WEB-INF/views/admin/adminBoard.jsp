@@ -49,7 +49,7 @@
 	    color: snow;
 	}
 	
-	#adminBoard_btn2 { 
+	#adminBoard_btn2 {
 		float: right;
 	    background-color: #dc3545;
 	    color: snow;
@@ -70,7 +70,8 @@
                 <table class="table table-sm">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col"><input type="checkbox"></th>
+                        <th scope="col" class="checkbox">
+                        <input type="checkbox" id="ck_all"></th>
                         <th scope="col">번호</th>
                         <th scope="col">제목</th>
                         <th scope="col">작성자</th>
@@ -89,8 +90,8 @@
                     <c:otherwise>                      
                         <c:forEach var="board" items="${aList}">
                             <tr>
-                            	<td><input type="checkbox"></td>
-                                <th scope="row">${board.boardNo}</th>
+                            	<td><input type="checkbox" name="selectClick" value="${board.boardNo}"></td>
+                                <th>${board.boardNo}</th>
                                 <td>${board.boardTitle}</td>
                                 <td>${board.memberId}</td>
                                 <td>${board.boardStatus}</td>
@@ -180,19 +181,18 @@
 			<%-- 검색 영역 --%>
 			<div class="adminBoard_search">
 			<form action="${contextPath}/adminSearch/board.do" method="GET">
-				<select id="adminBoard_search" name="sk" required>
-	                <option selected value="no">번호</option>
+				<select id="adminBoard_search" name="sk">
+	                <option value="no">번호</option>
 	                <option value="title">제목</option>
 	                <option value="writer">작성자</option>
 	                <option value="status">상태여부</option>
 	            </select>
 	            <input type="text" name="sv">
 	            <button id="adminBoard_btn">검색</button>
-	            </div>
 			</form>
-			<button id="adminBoard_btn2">삭제</button>
+			<button id="adminBoard_btn2">게시글 삭제</button>
         </div>
-    
+    </div>
     <div style="clear: both;"></div>
     <jsp:include page="../common/footer.jsp"></jsp:include>
     </div>
@@ -202,27 +202,52 @@
 	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해두는 기능
 	(function(){
 		var searchKey = "${param.sk}";
-		// 파라미터 중 sk가 있을 경우 ex)	"49"
-		// 파라미터 중 sk가 없을 경우 ex)	""
-		
 		var searchValue = "${param.sv}";
-		
-		// 검색창 select의 option을 반복 접근
 		$("select[name=sk] > option").each(function(index, item){
-			// index : 현재 접근중인 요소의 인덱스
-			// item : 현재 접근중인 요소
-			
-				// title(content) 	title(content)
 			if( $(item).val() == searchKey ){
 				$(item).prop("selected", true);
 			}
 		});
-		
-		// 검색어 입력창에 searchValue 값 출력
 		$("input[name=sv]").val(searchValue);
-		
 	})();
 	
+	    // 체크박스 전체 선택&해제
+	    $('#ck_all').click(function(){
+	         if($("#ck_all").prop("checked")){
+	            $("input[type=checkbox]").prop("checked",true); 
+	        }else{
+	            $("input[type=checkbox]").prop("checked",false); 
+	        }
+	    });
+		
+	    // 삭제
+	    var clicks = new Array();
+	    
+		$("#adminBoard_btn2").on("click", function() {			
+			
+	        $("input:checkbox[name='selectClick']:checked").each(function(){
+	        	clicks.push($(this).val());       	
+	        });
+	        
+		    if(confirm("정말 삭제하시겠습니까?")){
+		    	$.ajaxSettings.traditional = true;
+				$.ajax({
+					url : "${contextPath}/adminDelete/board.do",
+					data : {"numbers" : clicks},
+					type : "get",
+		            success : function(result) {
+
+		            	if(result > 0) {
+		            		swal({"icon" : "success" , "title" : "게시글 삭제 성공"});
+		            	}
+	                                           
+		            }, error : function(request, status, error) {
+		                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		              }
+				});
+			}
+		});
+
 	</script>
     
     
