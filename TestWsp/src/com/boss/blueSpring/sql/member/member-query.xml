@@ -20,4 +20,24 @@ WHERE MEM_ID = ?
 AND MEM_SCSN_FL = 'N'
 </entry>
 
+
+<entry key="nicknameDupCheck">
+SELECT COUNT(*) FROM MEMBER
+WHERE MEM_NICKNAME = ?
+AND MEM_SCSN_FL = 'N'
+</entry>
+
+
+<entry key="emailDupCheck">
+SELECT COUNT(*) FROM MEMBER
+WHERE MEM_EMAIL = ?
+AND MEM_SCSN_FL = 'N'
+</entry>
+
+<entry key="signUp">
+INSERT INTO MEMBER VALUES(SEQ_MNO.NEXTVAL, ?, ?, ?, 
+?, ?, ? , ?,  DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?)
+</entry>
+
+
 </properties>

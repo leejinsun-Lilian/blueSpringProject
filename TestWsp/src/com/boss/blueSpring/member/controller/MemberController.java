@@ -1,6 +1,9 @@
 package com.boss.blueSpring.member.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -75,7 +78,7 @@ public class MemberController extends HttpServlet {
 					if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
 						System.out.println(loginMember);
 						
-						session.setMaxInactiveInterval(60*30);
+						session.setMaxInactiveInterval(60*60);
 						
 						session.setAttribute("loginMember", loginMember);
 						
@@ -137,7 +140,7 @@ public class MemberController extends HttpServlet {
 			
 			
 			
-			// 회원가입 Controller
+			// ****************************************************************** 회원가입 Controller ******************************************************************
 			else if(command.equals("/signup.do")) {
 				path="/WEB-INF/views/member/signUp.jsp";
 				
@@ -146,7 +149,7 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
-			// 아이디 중복체크 Controller
+			// ****************************************************************** 아이디 중복체크 Controller ******************************************************************
 			else if(command.equals("/idDupCheck.do")) {
 				String id = request.getParameter("id");
 				
@@ -163,19 +166,123 @@ public class MemberController extends HttpServlet {
 				}
 			}
 			
-			
-			
-			// 회원가입 완료 Controller
-			else if(command.equals("/signupComplete.do")) {
-				path="/WEB-INF/views/member/signUpComplete.jsp";
+			// ****************************************************************** 닉네임 중복체크 Controller ******************************************************************
+			else if(command.equals("/nicknameDubCheck.do")) {
+				String nickname = request.getParameter("nickname");
 				
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
+				try {
+					int result = mService.nicknameDubCheck(nickname);
+					
+					response.getWriter().print(result);
+				}catch (Exception e) {
+					e.printStackTrace();
+					path = "/WEB-INF/views/common/errorPage.jsp";
+			        request.setAttribute("errorMsg", "닉네임 중복 검사 과정에서 오류 발생!");
+			        view = request.getRequestDispatcher(path);
+			        view.forward(request, response);
+					
+				}
 			}
 			
 			
-			// 아이디 찾기 Controller
-			else if(command.equals("/idFind.do")) {
+			// ****************************************************************** 이메일 중복체크  Controller ******************************************************************
+			else if(command.equals("/emailDupCheck.do")) {
+				String email = request.getParameter("email");
+				
+				try {
+					int result = mService.emailDupCheck(email);
+					response.getWriter().print(result);
+				}catch (Exception e) {
+					e.printStackTrace();
+					path = "/WEB-INF/views/common/errorPage.jsp";
+			        request.setAttribute("errorMsg", "이메일 중복 검사 과정에서 오류 발생!");
+			        view = request.getRequestDispatcher(path);
+			        view.forward(request, response);
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			// ****************************************************************** 회원가입 Controller ******************************************************************
+			else if(command.equals("/signupComplete.do")) {
+				path = "";
+				String memberId = request.getParameter("id");
+				String memberNickname = request.getParameter("nickName");
+				String memberPwd = request.getParameter("pswd1");
+				String memberNm = request.getParameter("name");
+				
+				String postcode = request.getParameter("postcode");
+				String address1 = request.getParameter("address1");
+				String address2 = request.getParameter("address2");
+				
+				String memberAddr = postcode + "," + address1 + "," + address2;
+				
+				String birthYY = request.getParameter("birth_yy");
+				String birthMM = request.getParameter("birth_mm");
+				String birthDD = request.getParameter("birth_dd");
+				
+				String memberBirthday = birthYY + "-" + birthMM + "-" + birthDD;
+				java.sql.Date memberBirth = java.sql.Date.valueOf(memberBirthday);
+				
+				
+				char memberGender = request.getParameter("gender").charAt(0);
+				String memberPhone = request.getParameter("phone");
+				String memberEmail = request.getParameter("email");
+				
+				
+				Member member = new Member(memberId, memberPwd, memberNm, 
+											memberBirth, memberGender, memberPhone, 
+										   memberAddr, memberEmail, memberNickname);
+				
+				try {
+					int result = mService.signUp(member);
+					
+					if(result > 0) {
+						path="/WEB-INF/views/member/signUpComplete.jsp";
+						view = request.getRequestDispatcher(path);
+						view.forward(request, response);
+					} else {
+						
+						HttpSession session = request.getSession();
+						
+						swalIcon = "error";
+						swalTitle = "회원가입 실패";
+						swalText = "";
+						
+						session.setAttribute("swalIcon", swalIcon);
+						session.setAttribute("swalTitle", swalTitle);
+						session.setAttribute("swalText", swalText);
+						response.sendRedirect(request.getContextPath());
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+					request.setAttribute("errorMsg", "회원가입 과정에서 오류가 발생했습니다.");
+				
+					path = "/WEB-INF/views/common/errorPage.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				}
+				
+				
+				
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			// ****************************************************************** 아이디 찾기 페이지 Controller ******************************************************************
+			else if(command.equals("/idFind.do")) {				
 				path="/WEB-INF/views/member/idFind.jsp";
 				
 				view = request.getRequestDispatcher(path);
@@ -183,8 +290,23 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
-			// 아이디 찾기 완료 Controller
+			// ****************************************************************** 아이디 찾기 Controller ******************************************************************
 			else if(command.equals("/idFindComplete.do")) {
+				String name = request.getParameter("name");
+				String email = request.getParameter("email");
+				
+				try {
+					
+				} catch (Exception e) {
+					
+				}
+						
+				
+				
+				
+				
+				
+				
 				path="/WEB-INF/views/member/idFindComplete.jsp";
 				
 				view = request.getRequestDispatcher(path);

@@ -16,6 +16,15 @@
 	padding : 105px 0 298px;
 }
 
+.back {
+background-color: #fbf9f9;
+padding : 30px;
+margin : auto;
+}
+
+.back > h3 {
+	margin-bottom: 30px;
+}
 </style>
 </head>
 <body>
@@ -27,19 +36,21 @@
 					<div class="findForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
-							<h3>본인확인 이메일로 인증</h3>
 						</div>
+						<div class="back">
+							<h3 style="text-align : center;">본인확인 이메일 작성</h3>
 							<div class="input_area">
 								<div class="row_group">
 									<div class="text">이름</div> 
-									<input type="text" name="name" class="find_input" required>
+									<input type="text" id="name" name="name" class="find_input" required>
 								</div>
 								<div class="row_group">
 									<div class="text">이메일 주소</div> 
-									<input type="email" name="email" class="find_input" required>
-									<button type="button" class="btn" id="emailNumBtn">인증번호 받기</button>
+									<input type="email" id="email" name="email" class="find_input" required>
+							<!-- 		<button type="button" class="btn" id="emailNumBtn">인증번호 받기</button>
 									<input type="text" name="emailNum" class="find_input" id="emailNum"
-										placeholder="인증번호를 입력해주세요." required>
+										placeholder="인증번호를 입력해주세요." required> -->
+								</div>
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">

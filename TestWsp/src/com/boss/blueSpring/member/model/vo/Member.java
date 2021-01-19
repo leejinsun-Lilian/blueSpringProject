@@ -17,6 +17,9 @@ public class Member {
 	private char memberBlackList; // 블랙리스트 여부
 	private char memberLevel; // 등급
 	private String memberNickname; //닉네임
+	
+	
+	
 	public Member() {
 	}
 
@@ -41,7 +44,7 @@ public class Member {
 		this.memberLevel = memberLevel;
 		this.memberNickname = memberNickname;
 	}
-
+	
 	
 	
 	
@@ -64,7 +67,23 @@ public class Member {
 		this.memberNickname = memberNickname;
 	}
 
+	// 회원가입 생성자
 	
+	public Member(String memberId, String memberPwd, String memberNm, Date memberBirth, char memberGender,
+			String memberPhone, String memberAddr, String memberEmail, String memberNickname) {
+		super();
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberNm = memberNm;
+		this.memberBirth = memberBirth;
+		this.memberGender = memberGender;
+		this.memberPhone = memberPhone;
+		this.memberAddr = memberAddr;
+		this.memberEmail = memberEmail;
+		this.memberNickname = memberNickname;
+	}
+
+
 	// admin 회원정보 조회 용
 	public Member(int memberNo, String memberId, String memberNickname, String memberNm, Date memberBirth, char memberGender,
 			String memberPhone, String memberAddr, Date memberJoined, char memberScsnFl, char memberBlackList,

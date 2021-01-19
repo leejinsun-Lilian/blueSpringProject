@@ -94,12 +94,12 @@ public class NoSearchService {
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Notice> searchBoardList(Map<String, Object> map, PageInfo pInfo) throws Exception{
+	public List<Notice> searchNoticeList(Map<String, Object> map, PageInfo pInfo) throws Exception{
 		Connection conn = getConnection();
 		
 		String condition = createCondition(map);   //
-		
-		List<Notice> list = dao.searchBoardList(conn, pInfo, condition);
+		 
+		List<Notice> list = dao.searchNoticeList(conn, pInfo, condition);
 
 		close(conn);
 		
