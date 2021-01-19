@@ -245,7 +245,8 @@
 	            success : function(result) {
 
 	            	if(result > 0) {
-	            		swal({"icon" : "success" , "title" : "블랙리스트 삭제 성공"});
+	            		swal({"icon" : "success" , "title" : "블랙리스트 삭제 성공"})
+	            		.then(function(){location.reload()});
 	            	}
                                            
 	             }, error : function(request, status, error) {

@@ -114,7 +114,7 @@
                                 <td>${center.centerCla}</td>
                                 <td>${center.centerArea1}</td>
                                 <td>${center.centerArea2}</td>
-								<td>${center.centerName}</td>
+								<td><a href="#" onclick="window.open('${contextPath}/admin/centerPage.do','name','resizable=no width=700 height=500');return false">${center.centerName}</a></td>
 								<td>${center.centerTel}</td>
 		                        <td>${center.centerUrl}</td>
 		                        <td>${center.centerDeleteFl}</td>
@@ -266,7 +266,8 @@
 	            success : function(result) {
 
 	            	if(result > 0) {
-	            		swal({"icon" : "success" , "title" : "센터 삭제 성공"});
+	            		swal({"icon" : "success" , "title" : "센터 삭제 성공"})
+	            		.then(function(){location.reload()});
 	            	}
                                            
 	            }, error : function(request, status, error) {
