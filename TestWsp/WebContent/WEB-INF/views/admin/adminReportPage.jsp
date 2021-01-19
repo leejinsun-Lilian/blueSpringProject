@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -38,42 +40,48 @@
 </head>
 <body>
     <div class="wrapper">
-    	<%-- <jsp:include page="../common/header.jsp"></jsp:include> --%>
 
         <div class="admin_content">
             <div class="reportPage_view">
-                <div class="reportPage_category">
-                    <h4>[신고접수]</h4>
-                </div>
-                <div class="reportPage_title">
-                    <p>신고접수 번호 : ㅁㄴㅇㄻㄴㄻㅇㄹㄴㄹ</p>
-                    <p>원글번호 : ㅁㅇㅁㅇㄴㅁㄴㄹㅇㅁㄹㄴㅁㄹ</p>
-                    <p>신고한 회원 : ㅁㅇㅁㄴㄹㄻㄴㅇㄹㄹㄴㅁㄹㅇ</p>
-                    <p>신고카테고리 번호 : ㅁㄹㅇㄴㅁㄹㅇㄻㄴㄻㄴㄹ</p>
-                </div>
-                <div class="reportPage_content">
-                        <p>접수 이유:
-			                        글번호 - 001 번을 보시면
-			                        제 챌린지 글과 자유게시판에 꾸준히 댓글로 욕을 했습니다.
-			                        욕설로 신고하오니 빠른 처리 바랍니다.
-			                        감사합니다.
-			                        접수 이유:
-			                        글번호 - 001 번을 보시면
-			                        제 챌린지 글과 자유게시판에 꾸준히 댓글로 욕을 했습니다.
-			                        욕설로 신고하오니 빠른 처리 바랍니다.
-			                        감사합니다.
-			                        접수 이유:
-			                        글번호 - 001 번을 보시면
-			                        제 챌린지 글과 자유게시판에 꾸준히 댓글로 욕을 했습니다.
-			                        욕설로 신고하오니 빠른 처리 바랍니다.
-			                        감사합니다.
-			                        </p>
+                <div class="reportPage_board">
+                <table class="table table-sm">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">신고접수번호</th>
+                        <th scope="col">글번호</th>
+                        <th scope="col">신고한회원</th>
+                        <th scope="col">신고카테고리번호</th>
+                        <th scope="col">접수내용</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <c:choose>
+                    <c:when test="${empty report}">
+                        <tr>
+                            <td colspan="5">존재하는 정보가 없습니다.</td>
+                        </tr>
+                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="report" items="${report}">
+                            <tr>
+                                <th>${report.reportNo}</th>
+                                <td>${report.boardNo}</td>
+                                <td>${report.memberId}</td>
+                                <td>${report.reportCategoryNo}</td>                               
+	               				<td>${report.reportContext}</td>
+	          				</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                    </tbody>
+                  </table>
+            </div>
+
                 </div>
             </div>
-        </div>
     
     <div style="clear: both;"></div>
-<%--     <jsp:include page="../common/footer.jsp"></jsp:include> --%>
     </div>
 </body>
 </html>

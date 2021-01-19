@@ -13,13 +13,14 @@ public class Report {
 	private String memberId;		// 신고 회원 아이디
 	private String targetId;		// 신고당한 회원
 	private String memberBlacklist;	// 블랙리스트 회원
+	private String reportContent;	// 신고 접수 내용
 	
 	
 	public Report() {
 	}
 	
 	public Report(int reportNo, String reportType, int boardNo, int memberNo, int reportCategoryNo,
-			Date reportCreateDate, String reportDeleteFl, String memberId, String targetId, String memberBlacklist) {
+			Date reportCreateDate, String reportDeleteFl, String memberId, String targetId, String memberBlacklist, String reportContent) {
 		super();
 		this.reportNo = reportNo;
 		this.reportType = reportType;
@@ -31,6 +32,7 @@ public class Report {
 		this.memberId = memberId;
 		this.targetId = targetId;
 		this.memberBlacklist = memberBlacklist;
+		this.reportContent = reportContent;
 	}
 	
 	// admin 신고 목록 조회 생성자
@@ -44,10 +46,21 @@ public class Report {
 		this.targetId = targetId;
 		this.memberBlacklist = memberBlacklist;
 	}
+	
+	// admin 신고 상세 페이지 조회 생성자
+	public Report(int reportNo, int boardNo, String memberId, int reportCategoryNo, String reportContent) {
+		super();
+		this.reportNo = reportNo;
+		this.boardNo = boardNo;
+		this.memberId = memberId;
+		this.reportCategoryNo = reportCategoryNo;
+		this.reportContent = reportContent;
+	}
 
 	public int getReportNo() {
 		return reportNo;
 	}
+
 
 	public void setReportNo(int reportNo) {
 		this.reportNo = reportNo;
@@ -125,12 +138,20 @@ public class Report {
 		this.memberBlacklist = memberBlacklist;
 	}
 
+	public String getReportContent() {
+		return reportContent;
+	}
+
+	public void setReportContent(String reportContent) {
+		this.reportContent = reportContent;
+	}
+
 	@Override
 	public String toString() {
 		return "Report [reportNo=" + reportNo + ", reportType=" + reportType + ", boardNo=" + boardNo + ", memberNo="
 				+ memberNo + ", reportCategoryNo=" + reportCategoryNo + ", reportCreateDate=" + reportCreateDate
 				+ ", reportDeleteFl=" + reportDeleteFl + ", memberId=" + memberId + ", targetId=" + targetId
-				+ ", memberBlacklist=" + memberBlacklist + "]";
+				+ ", memberBlacklist=" + memberBlacklist + ", reportContent=" + reportContent + "]";
 	}
 	
 	

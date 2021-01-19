@@ -34,34 +34,23 @@
 					<div class="board_content">
 						<table class="table table-sm table-borderless">
 						  <tbody>
+					<c:choose>
+                    <c:when test="${empty aList}">
+                        <tr>
+                            <td colspan="3">존재하는 게시글이 없습니다.</td>
+                        </tr>
+                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="board" items="${aList}">
+						  
 						    <tr>
-						      <th scope="row">1</th>
-						      <td colspan="3"><a href="#">코로나블루 토닥토닥...광명시 ‘마음카페’ 개소</a></td>
+						      <th scope="row">${board.boardNo}</th>
+						      <td colspan="3"><a href="#"></a>${board.boardTitle}</td>
 						    </tr>
-						    <tr>
-						      <th scope="row">2</th>
-						      <td colspan="3"><a href="#">정부, 3971억 규모 근로장려금 지급</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">3</th>
-						      <td colspan="3"><a href="#">서울시 상담 센터 블루터치 사이트 안내</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">4</th>
-						      <td colspan="3"><a href="#">서울시, '코로나 블루' 검진·상담비용 8만원 지원</a><td>
-						    </tr>		
-						    <tr>
-						      <th scope="row">5</th>
-						      <td colspan="3"><a href="#">코로나19 확진자 대상 비대면 정신 상담 서비스 운영</a><td>
-						    </tr>	
-						    <tr>
-						      <th scope="row">6</th>
-						      <td colspan="3"><a href="#">"코로나 우울 극복해요" 앱·전화상담으로 '마음건강' 회복 지원</a><td>
-						    </tr>	
-						    <tr>
-						      <th scope="row">7</th>
-						      <td colspan="3"><a href="#">세종시 울적한 마음 카카오톡 상담 위로</a><td>
-						    </tr>			    
+						 </c:forEach>
+                    </c:otherwise>
+                </c:choose>		    
 						  </tbody>
 						</table>
 					</div>
