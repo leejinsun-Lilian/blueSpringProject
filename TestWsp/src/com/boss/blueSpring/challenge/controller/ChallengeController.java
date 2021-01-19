@@ -32,7 +32,8 @@ public class ChallengeController extends HttpServlet {
 			ChallengeService service = new ChallengeService();
 			
 			String cp = request.getParameter("cp");
-			
+			String skk = request.getParameter("temp");
+			System.out.println(skk);
 			//챌린지 목록 페이지 이동
 			if(command.equals("/list.do")) {
 				PageInfo pInfo = service.getPageInfo(cp);

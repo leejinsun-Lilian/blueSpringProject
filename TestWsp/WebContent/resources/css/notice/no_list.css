@@ -40,9 +40,9 @@
 	padding-top : 10px;
 	padding-bottom: 10px;
 }
-#list-table td:hover{
-}	cursor: pointer;
-	
+#list-table td{
+	cursor: pointer;
+}	
 
 /* thead th 부분 비율 정하기  */ 
 #list-table th:nth-child(1){ width: 10%; }

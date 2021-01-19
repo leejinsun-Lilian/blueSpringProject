@@ -67,6 +67,8 @@
 	height: 100%;
 	margin-left: 15px;
 	float : right;
+	font: 400 13.3333px Arial;
+	cursor: pointer;
 }
 
 .btn-update{
