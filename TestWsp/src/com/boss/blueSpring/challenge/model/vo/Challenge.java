@@ -1,29 +1,31 @@
 package com.boss.blueSpring.challenge.model.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Challenge {
 	
 	private int chlngNo;			// 챌린지 번호
 	private String chlngTitle;		// 챌린지 제목
 	private String chlngContent;	// 챌린지 내용
-	private Date chlngStartDt;		// 챌린지 시작일
-	private Date chlngEndDt;		// 챌린지 종료일
+	private Timestamp chlngStartDt;		// 챌린지 시작일
+	private Timestamp chlngEndDt;		// 챌린지 종료일
 	private int currNumMem;			// 챌린지 현재 참가 인원
 	private int accNumMem;			// 챌린지 누적 참가 인원
 	private char chlngFl;			// 챌린지 삭제 여부
-	private Date chlngCreateDt;		// 챌린지 미션 작성일
-	private Date chlngUpdateDt;		// 챌린지 미션 수정일
+	private Timestamp chlngCreateDt;		// 챌린지 미션 작성일
+	private Timestamp chlngUpdateDt;		// 챌린지 미션 수정일
 	private int memberNo;			// 회원번호
 	private int chlngCategoryNo;	// 챌린지 카테고리 번호
 	private String memberId;		// 회원 아이디
+	private int likeCount;
 
 	public Challenge() {
 	}
 
-	public Challenge(int chlngNo, String chlngTitle, String chlngContent, Date chlngStartDt, Date chlngEndDt,
-			int currNumMem, int accNumMem, char chlngFl, Date chlngCreateDt, Date chlngUpdateDt, int memberNo,
-			int chlngCategoryNo, String memberId) {
+	public Challenge(int chlngNo, String chlngTitle, String chlngContent, Timestamp chlngStartDt, Timestamp chlngEndDt,
+			int currNumMem, int accNumMem, char chlngFl, Timestamp chlngCreateDt, Timestamp chlngUpdateDt, int memberNo,
+			int chlngCategoryNo, String memberId, int likeCount) {
 		super();
 		this.chlngNo = chlngNo;
 		this.chlngTitle = chlngTitle;
@@ -38,6 +40,7 @@ public class Challenge {
 		this.memberNo = memberNo;
 		this.chlngCategoryNo = chlngCategoryNo;
 		this.memberId = memberId;
+		this.likeCount = likeCount;
 	}
 
 	
@@ -76,19 +79,19 @@ public class Challenge {
 		this.chlngContent = chlngContent;
 	}
 
-	public Date getChlngStartDt() {
+	public Timestamp getChlngStartDt() {
 		return chlngStartDt;
 	}
 
-	public void setChlngStartDt(Date chlngStartDt) {
+	public void setChlngStartDt(Timestamp chlngStartDt) {
 		this.chlngStartDt = chlngStartDt;
 	}
 
-	public Date getChlngEndDt() {
+	public Timestamp getChlngEndDt() {
 		return chlngEndDt;
 	}
 
-	public void setChlngEndDt(Date chlngEndDt) {
+	public void setChlngEndDt(Timestamp chlngEndDt) {
 		this.chlngEndDt = chlngEndDt;
 	}
 
@@ -116,19 +119,19 @@ public class Challenge {
 		this.chlngFl = chlngFl;
 	}
 
-	public Date getChlngCreateDt() {
+	public Timestamp getChlngCreateDt() {
 		return chlngCreateDt;
 	}
 
-	public void setChlngCreateDt(Date chlngCreateDt) {
+	public void setChlngCreateDt(Timestamp chlngCreateDt) {
 		this.chlngCreateDt = chlngCreateDt;
 	}
 
-	public Date getChlngUpdateDt() {
+	public Timestamp getChlngUpdateDt() {
 		return chlngUpdateDt;
 	}
 
-	public void setChlngUpdateDt(Date chlngUpdateDt) {
+	public void setChlngUpdateDt(Timestamp chlngUpdateDt) {
 		this.chlngUpdateDt = chlngUpdateDt;
 	}
 
@@ -156,14 +159,24 @@ public class Challenge {
 		this.memberId = memberId;
 	}
 
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Challenge [chlngNo=" + chlngNo + ", chlngTitle=" + chlngTitle + ", chlngContent=" + chlngContent
 				+ ", chlngStartDt=" + chlngStartDt + ", chlngEndDt=" + chlngEndDt + ", currNumMem=" + currNumMem
 				+ ", accNumMem=" + accNumMem + ", chlngFl=" + chlngFl + ", chlngCreateDt=" + chlngCreateDt
 				+ ", chlngUpdateDt=" + chlngUpdateDt + ", memberNo=" + memberNo + ", chlngCategoryNo=" + chlngCategoryNo
-				+ ", memberId=" + memberId + "]";
+				+ ", memberId=" + memberId + ", likeCount=" + likeCount + "]";
 	}
+
 	
 	
 	

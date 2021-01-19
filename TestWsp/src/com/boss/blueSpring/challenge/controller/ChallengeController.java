@@ -1,6 +1,7 @@
 package com.boss.blueSpring.challenge.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.boss.blueSpring.challenge.model.service.ChallengeService;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.PageInfo;
 
 @WebServlet("/challenge/*")
 public class ChallengeController extends HttpServlet {
@@ -24,11 +29,24 @@ public class ChallengeController extends HttpServlet {
 		String errorMsg = null;
 		
 		try {
+			ChallengeService service = new ChallengeService();
+			
+			String cp = request.getParameter("cp");
+			
 			//챌린지 목록 페이지 이동
 			if(command.equals("/list.do")) {
+				PageInfo pInfo = service.getPageInfo(cp);
+				
+				List<Challenge> list = service.selectList(pInfo);
+				
 				path="/WEB-INF/views/challenge/challengeList.jsp";
+				request.setAttribute("list", list);
+				request.setAttribute("pInfo", pInfo);
+
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+				
+				
 			}
 			
 			

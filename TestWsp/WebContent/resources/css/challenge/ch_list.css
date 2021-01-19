@@ -91,7 +91,8 @@ div{
 
 /* 챌린지 부분 */
 .ch-sb-aarea{
-    border: 1px solid red; 
+	margin-top : 10px;
+    /* border: 1px solid red;  */
     width: 105%;
     height: 1270px;
 }
@@ -101,7 +102,7 @@ div{
     border: 1px solid black;
     width: 30%;  /* 225.210 */
     height: 385px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 	margin-right : 2%;    
     display: inline-block;
 }
@@ -136,6 +137,7 @@ div{
 .ch-s-float{
     height: 100%;
     float: left;
+    padding-left: 10px;
 }
 #like-img, #like{
     border: 1px solid black;
@@ -145,6 +147,7 @@ div{
 	height : 24px;
 	width : 24px;
 	float : right;
+	padding-right: 10px;
 }
 
 /* #like-img > img{
