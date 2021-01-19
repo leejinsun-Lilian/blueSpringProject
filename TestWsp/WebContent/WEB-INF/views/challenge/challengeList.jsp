@@ -35,17 +35,17 @@
         <div class="cat-area">
             <div class="cat">
                 <a id="cat-mg" class="cat-float" href="${contextPath}/challenge/list.do">전체</a>
-                <a id="cat-mg" class="cat-float" href="#">건강</a>
-                <a id="cat-mg" class="cat-float" href="#">관계</a> 
-                <a id="cat-mg" class="cat-float" href="#">생활</a> 
-                <a id="cat-mg" class="cat-float" href="#">역량</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=건강">건강</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=관계">관계</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=생황">생활</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=역량">역량</a> 
             </div> 
             <div class="cat-2">
-                <a id="cat-mg" class="cat-float" href="#">자산</a> 
-                <a id="cat-mg" class="cat-float" href="#">취미</a>
-                <a id="cat-mg" class="cat-float" href="#">공부</a>
-                <a id="cat-mg" class="cat-float" href="#">돈 관리</a>
-                <a id="cat-mg" class="cat-float" href="#">그 외</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=자산">자산</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=취미">취미</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=공부">공부</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=돈 관리">돈 관리</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=그 외">그 외</a>
             </div>
         </div>
             <hr>
@@ -54,9 +54,9 @@
 		<!-- 정렬 -->
 		<div class="sort">
 			<form action="#" >
-				<select name="sk" class="form-control">
-					<option value="new">최신순</option>
-					<option value="like">좋아요순</option>
+				<select name="skk" class="form-control">
+					<option name="new" value="new">최신순</option>
+					<option name="like" value="like">좋아요순</option>
 				</select>
 			</form>
 		</div>
@@ -207,6 +207,9 @@
     	
     });
     
+
+    
+    
  	// 검색 내용이 있을 경우 검색창에 해당 내용을 작성해주는 기능
 	(function(){
 		var searchKey = "${param.sk}";
@@ -226,6 +229,7 @@
 		// 검색어 입력창에 searchValue 값 출력
 		$("input[name=sv]").val(searchValue);
 			
+		// 검색어 입력창에 카테고리네임
 		
 	})();
     
