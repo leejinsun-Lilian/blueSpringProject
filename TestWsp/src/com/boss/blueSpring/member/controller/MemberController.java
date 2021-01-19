@@ -45,6 +45,7 @@ public class MemberController extends HttpServlet {
 		MemberService mService = new MemberService();
 		
 		
+		
 		try {
 			request.setCharacterEncoding("UTF-8");
 			
@@ -346,11 +347,13 @@ public class MemberController extends HttpServlet {
 			
 			
 			//  ****************************************************************** 새로운 비밀번호 설정  ******************************************************************
+			
 			else if(command.equals("/changePw.do")) {
 				errorMsg = "비밀번호 찾기 과정에서 오류가 발생했습니다.";
 				
 				String id = request.getParameter("id");
 				String email = request.getParameter("email");
+				
 				
 				try {
 					Map<String, Object> map = new HashMap<String, Object>(); 
@@ -360,8 +363,9 @@ public class MemberController extends HttpServlet {
 					
 					int result = mService.pwFind(map);
 					HttpSession session = request.getSession();
+					
+					System.out.println(result);
 					if(result > 0) {
-						session.setAttribute("memNo", result);
 						path="/WEB-INF/views/common/newPwForm.jsp";
 						
 						view = request.getRequestDispatcher(path);
@@ -386,20 +390,20 @@ public class MemberController extends HttpServlet {
 				}
 			}
 			
+			
+			
+			
 			// 비밀번호 변경 완료 페이지
 			else if(command.equals("/changePwComplete.do")) {
-//				String newPw = request.getParameter("newPw1");
-//				int memNo = Integer.parseInt(request.getParameter("memNo"));
-//				System.out.println("controller 테스트 : " + newPw);
-//				System.out.println("controller 테스트 : " + memNo);
-//				
-//				HttpSession session = request.getSession();
-//				
-//				int testNo = (Integer) session.getAttribute("memNo");
-//				
-//				System.out.println("controller 테스트 : " + testNo);
+				String newPw = request.getParameter("newPw1");
 				
+				String memNo = request.getParameter("num");
+				System.out.println("쿼리스트링 테스트 : " + memNo);
+				//HttpSession session = request.getSession();
+			
+				//System.out.println(result);
 				
+
 				
 				//int result = mService.changePw(newPw);
 				
