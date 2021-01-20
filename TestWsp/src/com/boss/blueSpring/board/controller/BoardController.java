@@ -93,7 +93,7 @@ public class BoardController extends HttpServlet {
 				
 				if(board != null) {
 				// 첨부파일 조회 추가 작업 필요
-				
+					
 				//
 				
 				path = "/WEB-INF/views/board/boardView.jsp";

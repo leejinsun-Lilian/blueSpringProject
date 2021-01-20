@@ -12,6 +12,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="${contextPath}/resources/summernote/summernote-lite.js"></script>
+<script src="${contextPath}/resources/summernote/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="${contextPath}/resources/summernote/summernote-lite.css">
 <title>header</title>
 <style>
 *{

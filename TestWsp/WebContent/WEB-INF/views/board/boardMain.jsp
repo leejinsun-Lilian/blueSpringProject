@@ -179,9 +179,7 @@
 				$("#board td").on("click", function() {
 					// 게시글 번호 얻어오기
 					var boardNo = $(this).parent().children().eq(0).text();
- 					var memberNo = ${memberNo};
 
-					// &memberNo=" + memberNo + "
 					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 					// var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 					location.href = url;
@@ -219,7 +217,7 @@
 					
 					// 검색어 입력창에 categoryName 값 출력
 					$("input[name=cn]").val(categoryName);
-					console.log(categoryName);
+//					console.log(categoryName);
 					
 				})();
     </script>
