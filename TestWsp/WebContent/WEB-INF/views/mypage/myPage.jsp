@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,7 @@
 </head>
 
 <body>
+	<c:set var="address" value="${fn:split(loginMember.memberAddr, ',')}" />
 	
 		<c:choose>
 			<c:when test="${loginMember.memberGender == 'M'.charAt(0)}">
@@ -72,7 +74,9 @@
 						<table class="myInfoTable t_right">
 							<tr>
 								<th class="title">주소</th>
-								<td><span>${loginMember.memberAddr}</span></td>
+								<td><span>${address[1]}</span><br>
+								<span>${address[2]}</span>	</td>
+								
 							</tr>
 							<tr>
 								<th class="title">이메일</th>

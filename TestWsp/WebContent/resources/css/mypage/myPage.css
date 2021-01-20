@@ -27,18 +27,19 @@
 
 .myInfoTable {
 	display : inline-block;
-	margin-left : 20px;
+	margin-left : 30px;
 	margin-top : 5px;
 }
 
 .t_left {
 	border-right : 1px solid rgb(166 167 169 / 89%);
-	width : 30%;
+	width : 25%;
 	padding : 0;
+	margin-bottom: 12px;
 }
 
 .t_right{
-	width : 60%;
+	width : 65%;
 }
 
 .title{

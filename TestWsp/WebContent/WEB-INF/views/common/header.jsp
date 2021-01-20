@@ -23,104 +23,104 @@
 </style>
 </head>
 <body>
-	
-		<c:if test="${!empty sessionScope.swalTitle }">
-		<script>
-			swal({
-				icon : "${swalIcon}",
-				title : "${swalTitle}",
-				text : "${swalText}"
-			});
-		</script>
+   
+      <c:if test="${!empty sessionScope.swalTitle }">
+      <script>
+         swal({
+            icon : "${swalIcon}",
+            title : "${swalTitle}",
+            text : "${swalText}"
+         });
+      </script>
 
-		<%-- 2) 한번 출력한 메세지를 Session에서 삭제 --%>
-		<c:remove var="swalIcon" />
-		<c:remove var="swalTitle" />
-		<c:remove var="swalText" />
-	</c:if>
+      <%-- 2) 한번 출력한 메세지를 Session에서 삭제 --%>
+      <c:remove var="swalIcon" />
+      <c:remove var="swalTitle" />
+      <c:remove var="swalText" />
+   </c:if>
 
 
-	<div class="header_wrap">
-		<div class="header_menu">
-			<a id="logo_link" href="${contextPath}"><img id="logo" src="${contextPath}/resources/img/bluespringlogo.png"></a>
-			<ul id="nav">
-				<li>
-					<div class="notice nav_title">공지사항</div>
-					<div class="sub">
-						<ul>
-							<li><a href="${contextPath}/notice/list.do">정부정책</a></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="community nav_title">커뮤니티</div>
-					<div class="sub">
-						<ul>
-							<li><a href="${contextPath}/board/list.do">자유게시판</a></li>
-						</ul>
-					</div>
-				</li>
-				<li>
-					<div class="challengers nav_title">챌린지</div>
-					<div class="sub">
-						<ul>
-							<li><a href="${contextPath}/challenge/list.do">챌린지</a></li>
-							<li><a href="${contextPath}/challengeCrtfd/list.do">인증게시판</a></li>
-						</ul>				
-					</div>
-				</li>
-				<li>
-					<div class="center nav_title">기관찾기</div>
-					<div class="sub">
-						<ul>
-							<li><a href="${contextPath}/center/centerForm.do">센터/병원찾기</a></li>
-						</ul>
-					</div>
-				</li>
-			</ul>
-		</div>
-	
-	
-	<c:choose>
-		<c:when test="${empty sessionScope.loginMember}">
-			<div class="login">
-				<button type="button" id="header_login" onclick="location.href = '${contextPath}/member/login.do'">로그인</button>
-		       	<button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
-			</div>
-		</c:when>
-		<c:otherwise>
+   <div class="header_wrap">
+      <div class="header_menu">
+         <a id="logo_link" href="${contextPath}"><img id="logo" src="${contextPath}/resources/img/bluespringlogo.png"></a>
+         <ul id="nav">
+            <li>
+               <div class="notice nav_title">공지사항</div>
+               <div class="sub">
+                  <ul>
+                     <li><a href="${contextPath}/notice/list.do">정부정책</a></li>
+                  </ul>
+               </div>
+            </li>
+            <li>
+               <div class="community nav_title">커뮤니티</div>
+               <div class="sub">
+                  <ul>
+                     <li><a href="${contextPath}/board/list.do">자유게시판</a></li>
+                  </ul>
+               </div>
+            </li>
+            <li>
+               <div class="challengers nav_title">챌린지</div>
+               <div class="sub">
+                  <ul>
+                     <li><a href="${contextPath}/challenge/list.do">챌린지</a></li>
+                     <li><a href="${contextPath}/challengeCrtfd/list.do">인증게시판</a></li>
+                  </ul>            
+               </div>
+            </li>
+            <li>
+               <div class="center nav_title">기관찾기</div>
+               <div class="sub">
+                  <ul>
+                     <li><a href="${contextPath}/center/centerForm.do">센터/병원찾기</a></li>
+                  </ul>
+               </div>
+            </li>
+         </ul>
+      </div>
+   
+   
+   <c:choose>
+      <c:when test="${empty sessionScope.loginMember}">
+         <div class="login">
+            <button type="button" id="header_login" onclick="location.href = '${contextPath}/member/login.do'">로그인</button>
+                <button type="button" id="header_join" onclick="location.href = '${contextPath}/member/signup.do'">회원가입</button>
+         </div>
+      </c:when>
+      <c:otherwise>
          <div class="login logging">
          <script>
-         	console.log('${loginMember.memberId}');
+            console.log('${loginMember.memberId}');
          </script>
             <ul>
-			
-		
+         
+      
             <c:if test="${!empty loginMember && loginMember.memberLevel == 'A'.charAt(0)}">
-            	<li>
-      				<span><a href="${contextPath}/admin/adminMain.do">${loginMember.memberNickname}</a></span>
-      			</li>
+               <li>
+                  <span><a href="${contextPath}/admin/adminMain.do">${loginMember.memberNickname}</a></span>
+               </li>
             </c:if>
             
             
             <c:if test="${!empty loginMember && loginMember.memberLevel == 'M'.charAt(0)}">
-            	<li>
-      				<span><a href="${contextPath}/mypage/main.do">${loginMember.memberNickname}</a></span>
-      			</li>
+               <li>
+                  <span><a href="${contextPath}/mypage/main.do">${loginMember.memberNickname}</a></span>
+               </li>
             </c:if>
        
-           		
-      			 <li><button type="button" id="header_logout" 
+                 
+                <li><button type="button" id="header_logout" 
                onclick="location.href='${contextPath}/member/logout.do'">로그아웃</button></li>
-         	</ul>
+            </ul>
          </div></c:otherwise>
-         	
+            
 
 
      
-	</c:choose>
-		
-	</div>
+   </c:choose>
+      
+   </div>
 
 </body>
 

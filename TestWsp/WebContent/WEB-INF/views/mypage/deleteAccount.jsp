@@ -30,9 +30,12 @@
 	text-align: center;
 }
 
-.backgroundColor {
-	border : 1px solid #f1833c;
+
+.back{
+	width : 600px;
 }
+
+.findForm{width:410px;}
 </style>
 </head>
 <body>
@@ -41,16 +44,16 @@
 		<div class="container">
 			<div class="content">
 			<h1>푸른봄</h1>
-			<div class="backgroundColor">
+			<div class="back">
 				<form action="${contextPath}/mypage/deleteAccountComplete.do" method="post" name="myInfoChangePw">
 					<div class="findForm">
 						<div class="text_area">
 							<h3>회원 탈퇴를 위해 비밀번호를 입력해주세요.</h3>
 						</div>
-							<div class="input_area">
+							<div class="box">
 								<div class="row_group">
-									<div class="text"><span>비밀번호</span></div> 
-									<input type="text" name="name" class="delete_input" required>
+									<div class="input_area"><span style="margin-right: 15px;">비밀번호</span>
+									<input type="password" name="deletePwd" class="delete_input find_input" required></div> 
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">

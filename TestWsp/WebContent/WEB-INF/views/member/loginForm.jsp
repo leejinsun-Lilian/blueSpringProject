@@ -70,7 +70,7 @@
 	
 	
 			<div id="login_banner_area">
-				<a href="${contextPath}/mypage/main.do"><img id="login_banner"></a>
+				<img id="login_banner" src="${contextPath}/resources/img/login_banner.jpg">
 			</div>
 			
 		<!-- container 끝 -->
