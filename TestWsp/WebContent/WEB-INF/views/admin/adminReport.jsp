@@ -102,7 +102,7 @@
                         <c:forEach var="report" items="${rList}">
                             <tr>
                             	<td><input type="checkbox" name="selectClick" value="${report.targetId}"></td>
-                                <th><a href="#" onclick="window.open('${contextPath}/admin/reportPage.do','name','resizable=no width=600 height=300');return false">${report.reportNo}</a></th>
+                                <th><a href="#" onclick="window.open('${contextPath}/admin/reportPage.do?rn=${report.reportNo}','name','resizable=no width=400 height=400');return false">${report.reportNo}</a></th>
                                 <td>${report.reportType}</td>
                                 <td>${report.boardNo}</td>
                                 <td>${report.reportCategoryNo}</td>                               

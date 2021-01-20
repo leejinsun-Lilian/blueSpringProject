@@ -28,30 +28,29 @@
 			</form>
 		</div>
 		<div class="content">
-			<div class="board">
+			<div class="notice">
 				<div class="board_item">
 					<div class="board_title">정부정책</div>
 					<div class="board_content">
-						<table class="table table-sm table-borderless">
-						  <tbody>
-					<c:choose>
-                    <c:when test="${empty aList}">
-                        <tr>
-                            <td colspan="3">존재하는 게시글이 없습니다.</td>
-                        </tr>
-                    </c:when>
-    
-                    <c:otherwise>                      
-                        <c:forEach var="board" items="${aList}">
-						  
-						    <tr>
-						      <th scope="row">${board.boardNo}</th>
-						      <td colspan="3"><a href="#"></a>${board.boardTitle}</td>
-						    </tr>
-						 </c:forEach>
-                    </c:otherwise>
-                </c:choose>		    
-						  </tbody>
+						<table class="table table-sm table-borderless notice_table">
+						  	<tbody>
+								<c:choose>
+									<c:when test="${empty nList}">
+										<tr>
+											<td colspan="4">존재하는 게시글이 없습니다.</td>
+										</tr>
+									</c:when>
+
+									<c:otherwise>
+										<c:forEach var="notice" items="${nList}">
+											<tr>
+												<th scope="row">${notice.noticeNo}</th>
+												<td colspan="3"><a href="#">${notice.noticeTitle}</a></td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
 						</table>
 					</div>
 					<div class="board_more">
@@ -61,33 +60,25 @@
 				<div class="board_item">
 					<div class="board_title">자유게시판</div>
 					<div class="board_content">
-						<table class="table table-sm table-borderless">
-						  <tbody>
-						    <tr>
-						      <th scope="row">[자유]</th>
-						      <td colspan="3"><a href="#">동네 상담 센터에 상담 다녀온 후기</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[고민]</th>
-						      <td colspan="3"><a href="#">코로나에 걸릴까봐 너무 무서워요 ㅠㅠ</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[취미]</th>
-						      <td colspan="3"><a href="#">요즘 할게 없어서 이것 저것 한 것 올려봅니다</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[자유]</th>
-						      <td colspan="3"><a href="#">작년부터 코딩 배우는 중입니다.</a><td>
-						    </tr>
-							<tr>
-						      <th scope="row">[일상]</th>
-						      <td colspan="3"><a href="#">수세미 뜨개질 해서 친구들 선물해줬어요!</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[자유]</th>
-						      <td colspan="3"><a href="#">새해 기념 음악방송 합니다. 들어오세요.</a><td>
-						    </tr>						    					    
-						  </tbody>
+						<table class="table table-sm table-borderless board_table">
+						  	<tbody>
+								<c:choose>
+									<c:when test="${empty bList}">
+										<tr>
+											<td colspan="4">존재하는 게시글이 없습니다.</td>
+										</tr>
+									</c:when>
+
+									<c:otherwise>
+										<c:forEach var="board" items="${bList}">
+											<tr id="b-${board.boardNo}">
+												<th scope="row">[${board.categoryName}]</th>
+												<td colspan="3">${board.boardTitle}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
 						</table>
 					</div>
 					<div class="board_more">
@@ -97,38 +88,25 @@
 				<div class="board_item">
 					<div class="board_title">챌린지목록</div>
 					<div class="board_content">
-						<table class="table table-sm table-borderless">
-						  <tbody>
-						    <tr>
-						      <th scope="row">[취미]</th>
-						      <td colspan="3"><a href="#">미니멀 리스트 도전하기 (하루에 1개씩 물건 버리기)</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[역량]</th>
-						      <td colspan="3"><a href="#">일주일에 정해진 책 1권 읽기</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[취미]</th>
-						      <td colspan="3"><a href="#">원격 방송으로 주말에 함께 노래 듣기</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[건강]</th>
-						      <td colspan="3"><a href="#">매일 30분씩 런데이/산책 하기</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[돈관리]</th>
-						      <td colspan="3"><a href="#">하루에 10000원 이하로 지출 하기</a><td>
-						    </tr>	
-						    <tr>
-						      <th scope="row">[공부]</th>
-						      <td colspan="3"><a href="#">매일 2시간 공부 하기 (공부 주제: 자유)</a><td>
-						    </tr>	
-						    <tr>
-						      <th scope="row">[취미]</th>
-						      <td colspan="3"><a href="#">뜨개질 만들기 (이번주: 곱창밴드)</a><td>
-						    </tr>	
-						    			    
-						  </tbody>
+						<table class="table table-sm table-borderless challenge_table">
+						  	<tbody>
+								<c:choose>
+									<c:when test="${empty cList}">
+										<tr>
+											<td colspan="4">존재하는 게시글이 없습니다.</td>
+										</tr>
+									</c:when>
+
+									<c:otherwise>
+										<c:forEach var="challenge" items="${cList}">
+											<tr id="b-${challenge.chlngNo}">
+												<th scope="row">[${challenge.chlngCateNm}]</th>
+												<td colspan="3">${challenge.chlngTitle}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
 						</table>
 					</div>
 					<div class="board_more">
@@ -138,37 +116,25 @@
 				<div class="board_item">
 					<div class="board_title">인증게시판</div>
 					<div class="board_content">
-						<table class="table table-sm table-borderless">
-						  <tbody>
-						    <tr>
-						      <th scope="row">[취미]</th>
-						      <td colspan="3"><a href="#">미니멀 리스트 도전 (문제집 버렸어요.)</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[건강]</th>
-						      <td colspan="3"><a href="#">01/12 조깅 30분 (런데이어플) 사진 인증합니다.</a></td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[역량]</th>
-						      <td colspan="3"><a href="#">01/12 '시선으로부터' 완독 후기</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[취미]</th>
-						      <td colspan="3"><a href="#">미니멀 리스트 도전 (옷 버리기)</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[건강]</th>
-						      <td colspan="3"><a href="#">01/12 산책 30분 인증합니다.</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[공부]</th>
-						      <td colspan="3"><a href="#">하루에 공부 2시간 (영어 공부 인증)</a><td>
-						    </tr>
-						    <tr>
-						      <th scope="row">[돈관리]</th>
-						      <td colspan="3"><a href="#">하루 지출 10000원 이하 하기 인증합니다.</a><td>
-						    </tr>					    
-						  </tbody>
+						<table class="table table-sm table-borderless challengeCrtfd_table">
+						  	<tbody>
+								<c:choose>
+									<c:when test="${empty crtList}">
+										<tr>
+											<td colspan="4">존재하는 게시글이 없습니다.</td>
+										</tr>
+									</c:when>
+
+									<c:otherwise>
+										<c:forEach var="challengeCrtfd" items="${crtList}">
+											<tr id="b-${challengeCrtfd.chlngBoardNo}">
+												<th scope="row">[${challengeCrtfd.chlngCateNm}]</th>
+												<td colspan="3">${challengeCrtfd.chlngBoardTitle}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
 						</table>
 					</div>
 					<div class="board_more">
@@ -180,6 +146,42 @@
 		<div style="clear: both;"></div>
 		<jsp:include page="WEB-INF/views/common/footer.jsp"></jsp:include>
 	</div>
+	
+	
+	<script>
+		// 정부 정책 상세 조회
+		$(".notice_table tr > *").on("click", function(){
+			var noticeNo = $(this).parent().children().eq(0).text();
+			
+			location.href = "notice/view.do?cp=1&no="+noticeNo;
+		});
+	
+		// 자유 게시판 상세 조회
+		$(".board_table tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var boardNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "board/view.do?cp=1&no="+boardNo;
+		});
+		
+		// 챌린지 게시판 상세 조회
+		$(".challenge_table tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var challengeNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "challenge/view.do?cp=1&no="+challengeNo;
+		});
+		
+		// 챌린지 인증 게시판 상세 조회
+		$(".challengeCrtfd_table tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var challengeCrtfdNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "challengeCrtfd/view.do?cp=1&no="+challengeCrtfdNo;
+		});
+	
+	</script>
+	
 	
 </body>
 </html>

@@ -24,8 +24,8 @@ SELECT COUNT(*) FROM V_REPORT
 </entry>
 
 <!-- 신고 페이지 상세 조회 -->
-<entry key="selectReporPagetList">
-SELECT REPORT_NO, BRD_NO, MEM_ID, REPORT_CATE_NO, REPORT_CONTENT
+<entry key="selectReportPagetList">
+SELECT REPORT_NO, BRD_NO, MEM_ID, REPORT_CATE_NO, REPORT_CONTENT, REPORT_TYPE
 FROM V_REPORT
 WHERE REPORT_NO = ?
 </entry>
@@ -51,6 +51,12 @@ SELECT * FROM
 FROM
 (SELECT CENTER_NO, CENTER_CLA, CENTER_AREA1, CENTER_AREA2, CENTER_NM, CENTER_TEL, CENTER_URL, CENTER_DEL_FL FROM V_CENTER ORDER BY CENTER_NO DESC)V) 
 WHERE RNUM BETWEEN ? AND ?
+</entry>
+
+<!-- 센터 페이지 상세 조회 -->
+<entry key="selectCenterPagetList">
+SELECT * FROM P_CENTER
+WHERE CENTER_NO = ?
 </entry>
 
 <!-- 회원정보 관리 전체 게시글 수 조회 -->

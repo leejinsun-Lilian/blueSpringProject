@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -7,7 +9,7 @@
     <title>기관 상세 페이지</title>
     <style>
     .admin_content { 
-        width: 70%; 
+        width: 90%; 
         height: 100%;
         margin: auto;
     }
@@ -30,29 +32,26 @@
 </head>
 <body>
     <div class="wrapper">
-    	<%-- <jsp:include page="../common/header.jsp"></jsp:include> --%>
-
         <div class="admin_content">
             <div class="centerPage_view">
                 <div class="centerPage_category">
-                    <p>상담센터</p>
+                    <h3>분류 : ${center.centerCla}</h3>
                 </div>
                 <div class="centerPage_title">
-                    <p>강남구정신건강복지센터</p>
+                    <h4>기관명 : ${center.centerName}</h4>
                 </div>
                 <div class="centerPage_content">
                     <p></p>
-                    지역(시/도) : 서울특별시<br>
-                    지역(구/군) : 강남구<br>
-                    전화번호 : 02-2226-0344<br>
-                    홈페이지 : #<br>
-                    상세주소: 서울특별시 강남구 일원로9길 38, 3층(일원동)<br>
+                    센터번호 : ${center.centerNo}<br>
+                    지역(시/도) : ${center.centerArea1}<br>
+                    지역(구/군) : ${center.centerArea2}<br>
+                    전화번호 : ${center.centerTel}<br>
+                    홈페이지 : ${center.centerUrl}<br>
+                    주소: ${center.centerAddr}<br>
+               ${center.centerAddrDtl}<br>
                 </div>
             </div>
         </div>
-    
-    <div style="clear: both;"></div>
-    <%-- <jsp:include page="../common/footer.jsp"></jsp:include> --%>
     </div>
 </body>
 </html>

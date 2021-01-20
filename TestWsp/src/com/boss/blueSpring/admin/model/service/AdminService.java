@@ -81,6 +81,17 @@ public class AdminService {
 		close(conn);
 		return rList;
 	}
+	
+	/** [신고] 페이지 상세조회 Service
+	    * @param reportNo
+	    * @return report
+	    * @throws Exception
+	    */
+		public Report selectReport(int reportNo) throws Exception {
+			Connection conn = getConnection();
+			Report report = dao.selectReport(conn, reportNo);
+			return report;
+		}
 
 	
 	// ************************************************************************* 센터
@@ -109,7 +120,19 @@ public class AdminService {
 		close(conn);
 		return cList;
 	}
+	
+	/** [센터] 페이지 상세조회 Service
+	 * @param centerNo
+	 * @return center
+	 * @throws Exception
+	 */
+	public Center selectCenter(int centerNo) throws Exception {
+		Connection conn = getConnection();
+		Center center = dao.selectCenter(conn, centerNo);
+		return center;
+	}
 
+	
 	// ************************************************************************* 회원정보
 	
 	/** [회원정보] 관리 : 페이징 처리를 위한 값 계산 Service
@@ -223,22 +246,11 @@ public class AdminService {
 		return crtList;
 	}
 
-	
-	/** [메인] 공지사항 조회 Service
-	 * @return
-	 * @throws Exception
-	 */
 
-   /** [신고] 페이지 상세조회 Service
-    * @param reportNo
-    * @return report
-    * @throws Exception
-    */
-//	public Report selectReport(int reportNo) throws Exception {
-//		Connection conn = getConnection();
-//		Report report = dao.selectReport(conn, reportNo);
-//		return report;
-//	}
+
+	
+	
+
 
 
 

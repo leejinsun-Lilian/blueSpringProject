@@ -36,7 +36,6 @@ public class AdminController extends HttpServlet {
 		String uri = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = uri.substring((contextPath + "/admin").length());
-		
 
 		String path = null;
 		RequestDispatcher view = null;
@@ -50,7 +49,6 @@ public class AdminController extends HttpServlet {
 		try {
 			AdminService service = new AdminService();
 			
-			
 			// 관리자 메인 페이지 Controller ***********************************************
 			if (command.equals("/adminMain.do")) {
 				errorMsg = "관리자 메인 페이지 조회 중 오류 발생.";
@@ -59,7 +57,7 @@ public class AdminController extends HttpServlet {
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-			}		
+			}
 			
 			// 회원 정보 조회 Controller **************************************************
 			else if (command.equals("/adminMemberInfo.do")) {
@@ -96,26 +94,24 @@ public class AdminController extends HttpServlet {
 	            request.setAttribute("rList", rList);
 	            request.setAttribute("rpInfo", rpInfo);
 
-	            System.out.println(rList);
-	            
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
-//			// 신고 목록 상세 페이지 조회 Controller ******************************************
-//			else if (command.equals("/reportPage.do")) {
-//				errorMsg = "신고 상세페이지 조회 중 오류 발생.";
-//				
-//				int reportNo = Integer.parseInt(request.getParameter("no"));
-//				System.out.println("reportNo : " + reportNo);
-//				Report report = service.selectReport(reportNo);
-//				
-//				path = "/WEB-INF/views/admin/adminReportPage.jsp";
-//				
-//				request.setAttribute("report", report);
-//				view = request.getRequestDispatcher(path);
-//				view.forward(request, response);
-//			}
+			// 신고 상세 페이지 조회 Controller ******************************************
+			else if (command.equals("/reportPage.do")) {
+				errorMsg = "신고 상세페이지 조회 중 오류 발생.";
+				
+				int reportNo = Integer.parseInt(request.getParameter("rn"));
+				
+				Report report = service.selectReport(reportNo);
+				
+				path = "/WEB-INF/views/admin/adminReportPage.jsp";
+				
+				request.setAttribute("report", report);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
 			
 			// 블랙리스트 조회 Controller **************************************************
 			else if (command.equals("/adminBlacklistInfo.do")) {
@@ -136,7 +132,7 @@ public class AdminController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 기관 조회 Controller **************************************************
+			// 기관(센터) 조회 Controller **************************************************
 			else if (command.equals("/adminCenterInfo.do")) {
 				errorMsg = "기관 목록 조회 중 오류 발생.";
 				
@@ -155,17 +151,42 @@ public class AdminController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 기관 상세페이지 Controller **************************************************
+			// 기관(센터) 상세페이지 Controller **************************************************
 			else if (command.equals("/centerPage.do")) {
 				errorMsg = "기관 상세페이지 조회 중 오류 발생.";
 				
+				int centerNo = Integer.parseInt(request.getParameter("cn"));
+				
+				Center center = service.selectCenter(centerNo);
+				
 				path = "/WEB-INF/views/admin/adminCenterPage.jsp";
+				
+				request.setAttribute("center", center);
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-				
-			
 			}
+			
+			// 기관(센터) 등록 페이지 Controller ***************************************************
+			else if (command.equals("/centerAdd.do")) {
+				errorMsg = "기관 등록 페이지 조회 중 오류 발생.";
+				
+				path = "/WEB-INF/views/admin/adminCenterAdd.jsp";
+
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
+			// 기관(센터) 수정 페이지 Controller ***************************************************
+			else if (command.equals("/centerUpdate.do")) {
+				errorMsg = "기관 수정 페이지 조회 중 오류 발생.";
+				
+				path = "/WEB-INF/views/admin/adminCenterUpdate.jsp";
+
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
+			}
+			
 			
 			// 자유게시판 관리 (목록 조회) Controller **************************************************
 			else if (command.equals("/adminBoard.do")) {
@@ -229,18 +250,6 @@ public class AdminController extends HttpServlet {
 				
 			}
 			
-			// 메인 공지사항 조회 Controller
-			else if (command.equals("/notice.do")) {
-				errorMsg = "메인 공지사항 페이지 조회 중 오류 발생.";
-				
-				path = "/WEB-INF/views/main/mainNotice.jsp";
-				
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-			}
-			
-			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			path = "/WEB-INF/views/common/errorPage.jsp";
