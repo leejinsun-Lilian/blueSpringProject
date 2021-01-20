@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.boss.blueSpring.board.model.service.BoardService;
 import com.boss.blueSpring.board.model.vo.Attachment;
@@ -74,8 +75,16 @@ public class BoardController extends HttpServlet {
 			else if(command.equals("/view.do")) {
 				errorMsg = "게시글 상세 조회 과정에서 오류 발생.";
 				
+				HttpSession session = request.getSession();
+				
 				int boardNo = Integer.parseInt(request.getParameter("no"));
-				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+				int memberNo = 0;
+				
+				Member member = (Member)session.getAttribute("loginMember");		
+				
+				if(member != null) {
+					memberNo = member.getMemberNo();
+				}
 				
 				Board board = service.selectBoard(boardNo);
 				
@@ -83,15 +92,15 @@ public class BoardController extends HttpServlet {
 				Like likeInfo = service.selectLike(boardNo, memberNo);
 				
 				if(board != null) {
-					// 첨부파일 조회 추가 작업 필요
-					
-					//
-					
-					path = "/WEB-INF/views/board/boardView.jsp";
-					request.setAttribute("board", board);
-					request.setAttribute("likeInfo", likeInfo);
-					view = request.getRequestDispatcher(path);
-					view.forward(request, response);
+				// 첨부파일 조회 추가 작업 필요
+				
+				//
+				
+				path = "/WEB-INF/views/board/boardView.jsp";
+				request.setAttribute("board", board);
+				request.setAttribute("likeInfo", likeInfo);
+				view = request.getRequestDispatcher(path);
+				view.forward(request, response);
 					
 				} else { // 상세조회 실패
 					request.getSession().setAttribute("swalIcon", "error");
