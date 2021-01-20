@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="${contextPath}/resources/css/board/boardWrite.css">
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
 
 </head>
 <body>
@@ -26,10 +26,10 @@
                 <input id="b-title" name="b-title" type="text"> <br>
             </div>
             
-            <div class="form-inline mb-2">
+<%--             <div class="form-inline mb-2">
 							<label class="input-group-addon mr-3 insert-label">작성자</label>
 							<h5 class="my-0" id="writer">${loginMember.memberNo}</h5>
-						</div>
+						</div> --%>
   
             <div id="category-wrapper">
                 <label>카테고리</label>
@@ -49,9 +49,6 @@
 
             <div id="content-wrapper">
                 <label>내용</label> <br>    
-            <textarea name="b-content" id="b-content" cols="3000" rows="1000">
-    					 editordata
-                </textarea> <br> 
                 <textarea id="b-content" name="b-content" class="summernote"></textarea>
                 
             </div>
@@ -107,7 +104,7 @@
 			/**
 			   * 이미지 파일 업로드
 			   */
-		  function uploadSummernoteImageFile(file, editor) {
+/* 		  function uploadSummernoteImageFile(file, editor) {
 	      data = new FormData();
 	      data.append("file", file);
 	      $.ajax({
@@ -121,7 +118,7 @@
 	            $(editor).summernote('insertImage', data.url);
 	         }
 	      });
-   		}  
+   		}   */
 			   
     </script>
 
