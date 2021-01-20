@@ -121,9 +121,23 @@ public class ChSearchService {
 	public List<Challenge> searchChallengeList(Map<String, Object> map, PageInfo pInfo) throws Exception{
 		Connection conn = getConnection();
 		
+//		좋아요 정렬 부분 코드
+		String sort = null;
+		
+		 sort = (String)map.get("sort") == null ? "" : (String)map.get("sort");
+		 
+		 String orderBy = null;
+		 //String end = null;
+		 
+		if(sort.equals("like")) {
+			orderBy = " LIKE_COUNT DESC, ";
+		}else {
+			orderBy = "";
+		}
+		
 		String condition = createCondition(map);   //
 		 
-		List<Challenge> list = dao.searchChallengelist(conn, pInfo, condition);
+		List<Challenge> list = dao.searchChallengelist(conn, pInfo, condition, orderBy);
  
 		close(conn);
 		

@@ -51,8 +51,20 @@ public class ChCategorySearchService {
 	 */
 	public List<Challenge> searchChallengeList(Map<String, Object> map, PageInfo pInfo) throws Exception {
 		Connection conn = getConnection();
+		String sort = null;
 		
-		List<Challenge> cList = dao.searchChallengeList(conn, pInfo, map);
+		 sort = (String)map.get("sort") == null ? "" : (String)map.get("sort");
+		 
+		 String orderBy = null;
+		 //String end = null;
+		 
+		if(sort.equals("like")) {
+			orderBy = " LIKE_COUNT DESC, ";
+		}else {
+			orderBy = "";
+		}
+		
+		List<Challenge> cList = dao.searchChallengeList(conn, pInfo, map, orderBy);
 		
 		close(conn);
 		

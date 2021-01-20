@@ -25,7 +25,11 @@ public class ChallengeCategorySearch extends HttpServlet {
 		String searchKey = request.getParameter("sk");
 		String searchValue = request.getParameter("sv");
 		String cp = request.getParameter("cp");	
+		String sort = request.getParameter("sort");
 		
+		System.out.println(123);
+		
+	//	System.out.println(sort);
 //		System.out.println(searchKey);
 //		System.out.println(searchValue);
 //		System.out.println(categoryName);
@@ -40,7 +44,9 @@ public class ChallengeCategorySearch extends HttpServlet {
 			map.put("chlngCategoryNm", chlngCategoryNm);
 			map.put("searchValue", searchValue);
 			map.put("searchKey", searchKey);
-			map.put("currentPage", cp);			
+			map.put("currentPage", cp);		
+			map.put("sort", sort);		
+			
 			
 			PageInfo pInfo = service.getPageInfo(map);
 			

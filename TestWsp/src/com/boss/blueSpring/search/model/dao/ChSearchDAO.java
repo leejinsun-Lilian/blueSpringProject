@@ -55,10 +55,11 @@ public class ChSearchDAO {
 	 * @param conn
 	 * @param pInfo
 	 * @param condition
+	 * @param orderBy 
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Challenge> searchChallengelist(Connection conn, PageInfo pInfo, String condition) throws Exception{
+	public List<Challenge> searchChallengelist(Connection conn, PageInfo pInfo, String condition, String orderBy) throws Exception{
 		List<Challenge> list = null;
 		
 		String query = 
@@ -67,7 +68,7 @@ public class ChSearchDAO {
 				"    FROM" + 
 				"        (SELECT * FROM V_CHLNG_MISSION_LIST " + 
 				"        WHERE " + condition + 
-				"        AND CHLNG_FL = 'N' ORDER BY CHLNG_NO DESC) V )" + 
+				"        AND CHLNG_FL = 'N' ORDER BY " + orderBy + "CHLNG_NO DESC) V )" + 
 				"WHERE RNUM BETWEEN ? AND ?";
 		
 		try {
@@ -91,6 +92,7 @@ public class ChSearchDAO {
 				challenge.setChlngStartDt(  rset.getTimestamp ("STR_DT")  );
 				challenge.setChlngEndDt(  rset.getTimestamp ("END_DT")  );
 				challenge.setLikeCount(  	rset.getInt("LIKE_COUNT")  );
+				challenge.setchlngCateNm(  	rset.getString("CHLNG_CATE_NM")  );
 				
 				list.add(challenge);
 			}
