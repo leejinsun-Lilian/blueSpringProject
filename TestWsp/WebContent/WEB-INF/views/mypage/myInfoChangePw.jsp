@@ -30,6 +30,10 @@
     margin-left: 43px;
     margin-right: 43px;
 }
+
+.back{
+	width : 600px;
+}
 </style>
 </head>
 <body>
@@ -39,7 +43,7 @@
 			<div class="content">
 
 					<div class="back">
-				<form action="${contextPath}/mypage/myInfoChange.do" method="post" name="myInfoChangePw" id="changeInfoPwForm">
+				<form action="${contextPath}/mypage/myInfoPwCheck.do" method="post" name="myInfoChangePw" id="changeInfoPwForm">
 					
 					<div class="findForm">
 						<div class="text_area">
@@ -48,7 +52,7 @@
 							<div class="input_area">
 								<div class="row_group">
 									<div class="text"><span>비밀번호</span></div> 
-									<input type="text" name="name" class="find_input" required>
+									<input type="password" name="pwd" class="find_input" required>
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">

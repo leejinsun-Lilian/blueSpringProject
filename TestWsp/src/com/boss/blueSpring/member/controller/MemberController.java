@@ -228,7 +228,7 @@ public class MemberController extends HttpServlet {
 				String memberPwd = request.getParameter("pswd1");
 				String memberNm = request.getParameter("name");
 				
-				String postcode = request.getParameter("postcode");
+				String postcode = request.getParameter("post");
 				String address1 = request.getParameter("address1");
 				String address2 = request.getParameter("address2");
 				

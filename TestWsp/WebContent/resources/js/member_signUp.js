@@ -207,6 +207,7 @@ function sample6_execDaumPostcode() {
     }).open();
 	
 	validateCheck.address = true;
+
 }
 
 
@@ -369,6 +370,7 @@ function validate(){
 
 
 
+
 // 비밀번호 변경 js
 function pwdValidate(){
 
@@ -394,3 +396,79 @@ function pwdValidate(){
 }
 
 
+// 회원 정보 수정--------------------------------------
+// 회원 정보 수정 유효성 검사
+
+   var updateCheck = {
+		"nickname":false,
+		"address" : false,
+		"phone" : false
+	};
+
+$("#changeNickName").on("input", function(){
+	 var regExp = /^[a-zA-z\d-_가-힣]{2,20}$/;
+	 var value = $("#changeNickName").val();
+	
+	if(!regExp.test(value)){
+		if(value.trim().length == 0){
+			$("#nickNameMsg").text("입력해주세요.").css("color", "red");
+		} else{
+        	$("#nickNameMsg").text("2~20자 내  소문자, 한글, 숫자,  _, - 사용").css("color", "red");
+		}
+		$("#changeNickName").css("border", "1px solid red");
+		validateCheck.nickname = false;
+	} else {
+		$.ajax({
+			url : "nicknameDubCheck.do",
+			data : {"nickname" : value},
+			type : "post",
+			success : function(result){
+				if(result == 0){
+					$("#nickNameMsg").text("");
+					$("#changeNickName").css("border", "1px solid #8cb0f7");
+					validateCheck.nickname = true;
+				}else{
+					$("#nickNameMsg").text("이미 사용 중인 닉네임입니다.").css("color", "red");
+					$("#changeNickName").css("border", "1px solid red");
+				}
+			}
+			
+		});
+	}
+});
+
+
+ 
+function memberUpdateValidate(){
+
+   var regExp1 = /^[a-zA-z\d-_가-힣]{2,20}$/; // 닉네임
+   var regExp2 = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/; // 핸드폰 번호
+
+
+
+
+    // 전화번호 유효성 검사
+    var p = $("#phone").val();
+    if(!regExp2.test(p)){
+        updateCheck.phone = false;
+    }else{
+        updateCheck.phone = true;
+    }
+	
+	var post = $("#post").val();
+	var addr1 = $("#address1").val();
+	var addr2 = $("#address2").val();
+	 
+	if(post == "" || addr1 == "" || add2 == ""){
+		updateCheck.address = true;
+	} else{
+			updateCheck.address = false;
+	}
+	
+    for(var key in updateCheck){
+        if(!updateCheck[key]){
+            swal("일부 값이 유효하지 않습니다.");
+            return false;
+        }
+    }
+}

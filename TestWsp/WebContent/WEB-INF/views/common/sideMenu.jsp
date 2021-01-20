@@ -48,7 +48,7 @@
 		<ul>
 			<li class="sideMenu_list">
 				<div class="sideMenu_title_area">
-					<a id="changeInfo" class="sideMenu_title" href="${contextPath}/mypage/myinfochangepw.do">회원 정보 수정</a>
+					<a id="changeInfo" class="sideMenu_title" href="${contextPath}/mypage/myInfoPwCheck.do">회원 정보 수정</a>
 				</div>
 			</li>
 			<li class="sideMenu_list">

@@ -37,7 +37,11 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form action="${contextPath}/member/changePwComplete.do?num=${memNo}" method="post" name="newPwForm" onsubmit="return pwdValidate();">
+				<form action="
+					<c:if test="${empty loginMember}">${contextPath}/member/changePwComplete.do?num=${memNo}</c:if>
+					<c:if test="${!empty loginMember}">${contextPath}/mypage/changePwComplete.do</c:if>
+				" method="post" name="newPwForm" onsubmit="return pwdValidate();">
+				
 					<div class="idFindForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>

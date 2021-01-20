@@ -134,6 +134,4 @@ public class MemberService {
 		else rollback(conn);
 		return result;
 	}
-	
-	
 }
