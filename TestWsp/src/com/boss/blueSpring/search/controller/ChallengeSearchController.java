@@ -21,15 +21,16 @@ public class ChallengeSearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		String searchKey = request.getParameter("sk");
 		String searchValue = request.getParameter("sv");
 		String cp = request.getParameter("cp");
+		String chlngCategoryNm = request.getParameter("cn");
 		
 		try {
 			ChSearchService service = new ChSearchService();
 			
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("chlngCategoryNm", chlngCategoryNm);
 			map.put("searchKey", searchKey);
 			map.put("searchValue", searchValue);
 			map.put("currentPage", cp);
@@ -42,6 +43,7 @@ public class ChallengeSearchController extends HttpServlet {
 			 
 			// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 			String path = "/WEB-INF/views/challenge/challengeList.jsp";			
+			
 			request.setAttribute("list", list);
 			request.setAttribute("pInfo", pInfo);
 			

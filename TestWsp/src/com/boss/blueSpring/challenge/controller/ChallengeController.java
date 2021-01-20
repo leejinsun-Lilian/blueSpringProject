@@ -32,13 +32,16 @@ public class ChallengeController extends HttpServlet {
 			ChallengeService service = new ChallengeService();
 			
 			String cp = request.getParameter("cp");
-			String skk = request.getParameter("temp");
-			System.out.println(skk);
+	 
 			//챌린지 목록 페이지 이동
 			if(command.equals("/list.do")) {
+				
+				String sort = request.getParameter("sort");
+				String cn = request.getParameter("cn");
+				
 				PageInfo pInfo = service.getPageInfo(cp);
 				
-				List<Challenge> list = service.selectList(pInfo);
+				List<Challenge> list = service.selectList(pInfo, sort, cn);
 				
 				path="/WEB-INF/views/challenge/challengeList.jsp";
 				request.setAttribute("list", list);

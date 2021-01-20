@@ -59,26 +59,51 @@ public class ChSearchService {
 		
 		String searchKey = (String)map.get("searchKey");
 		String searchValue = (String)map.get("searchValue");
+		String chlngCategoryNm = (String)map.get("chlngCategoryNm");
 		
-		// 검색 조건(searckey)에 따라 SQL 조합
-		switch(searchKey) {
-		case "title" : 
-			condition = " CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%' ";
-						// "NOTICE_TITLE LIKE '%' || 49 || '%' "
-			break;
-			
-		case "content" : 
-			condition = " CHLNG_CONTENT LIKE '%' || '" + searchValue + "' || '%' ";
-			break;
-			
-		case "titcont" : 
-			condition = " (CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%' "
-						+ "OR CHLNG_CONTENT LIKE '%' || '" + searchValue + "' || '%') ";
-			break;
-			
-		case "writer" : 
-			condition = " MEM_NICKNAME LIKE '%' || '" + searchValue + "' || '%' ";
-			break;
+		int flag;
+		
+		
+		if(chlngCategoryNm.length() > 0) {
+			switch(searchKey) {
+			case "title" : 
+				condition = " CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%' AND CHLNG_CATE_NM = " + "'" +  chlngCategoryNm + "'";
+							
+				break;
+				
+			case "content" : 
+				condition = " CHLNG_CONTENT LIKE '%' || '" + searchValue + "' || '%' AND CHLNG_CATE_NM = " + "'" +  chlngCategoryNm + "'";
+				break;
+				
+			case "titcont" : 
+				condition = " (CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%' "
+							+ "OR CHLNG_CONTENT LIKE '%' || '" + searchValue + "' || '%') AND CHLNG_CATE_NM = "  + "'" +  chlngCategoryNm + "'";
+				break;
+				
+			case "writer" : 
+				condition = " MEM_NICKNAME LIKE '%' || '" + searchValue + "' || '%' AND CHLNG_CATE_NM = " + "'" +  chlngCategoryNm + "'";
+				break;
+			}
+		} else {
+			switch(searchKey) {
+			case "title" : 
+				condition = " CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%'";
+							// "NOTICE_TITLE LIKE '%' || 49 || '%' "
+				break;
+				
+			case "content" : 
+				condition = " CHLNG_CONTENT LIKE '%' || '" + searchValue + "' || '%'";
+				break;
+				
+			case "titcont" : 
+				condition = " (CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%'"
+							+ "OR CHLNG_CONTENT LIKE '%' || '" + searchValue + "' || '%')";
+				break;
+				
+			case "writer" : 
+				condition = " MEM_NICKNAME LIKE '%' || '" + searchValue + "' || '%'";
+				break;
+			}
 		}
 		
 		return condition;

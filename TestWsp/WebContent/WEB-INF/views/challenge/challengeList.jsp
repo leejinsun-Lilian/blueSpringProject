@@ -37,7 +37,7 @@
                 <a id="cat-mg" class="cat-float" href="${contextPath}/challenge/list.do">전체</a>
                 <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=건강">건강</a>
                 <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=관계">관계</a> 
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=생황">생활</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=생활">생활</a> 
                 <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=역량">역량</a> 
             </div> 
             <div class="cat-2">
@@ -53,12 +53,12 @@
 
 		<!-- 정렬 -->
 		<div class="sort">
-			<form action="#" >
-				<select name="skk" class="form-control">
-					<option name="new" value="new">최신순</option>
-					<option name="like" value="like">좋아요순</option>
+			<!-- <form action="#" > -->
+				<select id="skk" name="skk" class="form-control">
+					<option value="new">최신순</option>
+					<option value="like">좋아요순</option>
 				</select>
-			</form>
+			<!-- </form> -->
 		</div>
 
 
@@ -114,13 +114,18 @@
         
 		<%---------------------- Pagination ----------------------%>
 	 	<c:choose>
-			
+			 <%-- 검색 후 생상된 페이지일 경우 --%>   
 			<c:when test="${!empty param.sk && !empty param.sv }">     
-				<c:url var="pageUrl" value=""/>
-				
-				
-				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}"/>
+				<c:url var="pageUrl" value="/challengeSearch.do"/>
+				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}"/>
 			</c:when>
+			<%-- 카테고리 선택 후 생성된 페이지일 경우 --%>
+			<%-- <c:when test="${!empty param.cn}"> 
+				<c:url var="pageUrl" value="/challengeCategorySearch.do"/>
+				<c:set var="searchStr" value="&cn=${param.cn}"/>
+			</c:when> --%>
+			<%-- 정렬  --%>
+			
 			
 			<c:otherwise>
 				<c:url var="pageUrl" value="/challenge/list.do"/>
@@ -184,6 +189,11 @@
         			<option value="writer">작성자(닉네임)</option>
         		</select>
         		<input type="text" name="sv" class="s-form-control2">
+        		<input id="hidden-cn" type="text" name="cn" value="${param.cn}">
+        		<input id="hidden-cn" type="text" name="cn" value="${param.sort}">
+        		
+        		<!--  -->
+        		
         		<button class="s-form-control3">검색</button> 
         	</form>
         </div>
@@ -214,6 +224,7 @@
 	(function(){
 		var searchKey = "${param.sk}";
 		var searchValue = "${param.sv}";
+		var chlngCategoryNm = "${param.cn}"
 		
 		//select 부분에 선택되어있도록
 		$("select[name=sk] > option").each(function(index, item){
@@ -230,10 +241,32 @@
 		$("input[name=sv]").val(searchValue);
 			
 		// 검색어 입력창에 카테고리네임
+		$("input[name=cn]").val(chlngCategoryNm);
+		//console.log(chlngCategoryNm);
+		
 		
 	})();
     
     
+ 	// 조회순, 좋아요순
+ 	$("#skk").on("change", function(){
+ 		var sort = $("#skk").val();  // new / like
+ 		location.href = "list.do?cn=${param.cn}&sort=" + sort;
+ 		
+ 	});
+ 	
+ 	// 정렬 방식 유지
+ 	(function(){
+ 		$("#skk > option").each(function(index, item){
+ 			// index : 현재 접근중인 요소의 인덱스
+			// item : 현재 접근중인 요소
+			if(  $(item).val() == "${param.sort}"  ){   //new   ==  like
+				$(item).prop("selected", true);
+			}
+		});
+ 	})();
+ 	
+ 	
     </script>
     
 </body>

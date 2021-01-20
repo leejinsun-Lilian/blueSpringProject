@@ -16,7 +16,7 @@ public class Challenge {
 	private Timestamp chlngCreateDt;		// 챌린지 미션 작성일
 	private Timestamp chlngUpdateDt;		// 챌린지 미션 수정일
 	private int memberNo;			// 회원번호
-	private int chlngCategoryNo;	// 챌린지 카테고리 번호
+	private String chlngCateNm;	// 챌린지 카테고리 이름
 	private String memberId;		// 회원 아이디
 	private int likeCount;
 
@@ -25,7 +25,7 @@ public class Challenge {
 
 	public Challenge(int chlngNo, String chlngTitle, String chlngContent, Timestamp chlngStartDt, Timestamp chlngEndDt,
 			int currNumMem, int accNumMem, char chlngFl, Timestamp chlngCreateDt, Timestamp chlngUpdateDt, int memberNo,
-			int chlngCategoryNo, String memberId, int likeCount) {
+			String chlngCateNm, String memberId, int likeCount) {
 		super();
 		this.chlngNo = chlngNo;
 		this.chlngTitle = chlngTitle;
@@ -38,7 +38,7 @@ public class Challenge {
 		this.chlngCreateDt = chlngCreateDt;
 		this.chlngUpdateDt = chlngUpdateDt;
 		this.memberNo = memberNo;
-		this.chlngCategoryNo = chlngCategoryNo;
+		this.chlngCateNm = chlngCateNm;
 		this.memberId = memberId;
 		this.likeCount = likeCount;
 	}
@@ -143,12 +143,12 @@ public class Challenge {
 		this.memberNo = memberNo;
 	}
 
-	public int getChlngCategoryNo() {
-		return chlngCategoryNo;
+	public String getchlngCateNm() {
+		return chlngCateNm;
 	}
 
-	public void setChlngCategoryNo(int chlngCategoryNo) {
-		this.chlngCategoryNo = chlngCategoryNo;
+	public void setchlngCateNm(String chlngCateNm) {
+		this.chlngCateNm = chlngCateNm;
 	}
 
 	public String getMemberId() {
@@ -173,7 +173,7 @@ public class Challenge {
 		return "Challenge [chlngNo=" + chlngNo + ", chlngTitle=" + chlngTitle + ", chlngContent=" + chlngContent
 				+ ", chlngStartDt=" + chlngStartDt + ", chlngEndDt=" + chlngEndDt + ", currNumMem=" + currNumMem
 				+ ", accNumMem=" + accNumMem + ", chlngFl=" + chlngFl + ", chlngCreateDt=" + chlngCreateDt
-				+ ", chlngUpdateDt=" + chlngUpdateDt + ", memberNo=" + memberNo + ", chlngCategoryNo=" + chlngCategoryNo
+				+ ", chlngUpdateDt=" + chlngUpdateDt + ", memberNo=" + memberNo + ", chlngCateNm=" + chlngCateNm
 				+ ", memberId=" + memberId + ", likeCount=" + likeCount + "]";
 	}
 

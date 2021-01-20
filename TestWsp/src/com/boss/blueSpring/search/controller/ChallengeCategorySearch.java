@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.boss.blueSpring.board.model.vo.Board;
-import com.boss.blueSpring.board.model.vo.PageInfo;
-import com.boss.blueSpring.search.model.service.CategorySearchService;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.PageInfo;
+import com.boss.blueSpring.search.model.service.ChCategorySearchService;
 
 @WebServlet("/challengeCategorySearch.do")
 public class ChallengeCategorySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		String categoryName = request.getParameter("cn");
+		String chlngCategoryNm = request.getParameter("cn");
 		String searchKey = request.getParameter("sk");
 		String searchValue = request.getParameter("sv");
 		String cp = request.getParameter("cp");	
@@ -34,21 +34,21 @@ public class ChallengeCategorySearch extends HttpServlet {
 		RequestDispatcher view = null;
 		
 		try {
-			CategorySearchService service = new CategorySearchService();
+			ChCategorySearchService service = new ChCategorySearchService();
 			
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("categoryName", categoryName);
+			map.put("chlngCategoryNm", chlngCategoryNm);
 			map.put("searchValue", searchValue);
 			map.put("searchKey", searchKey);
 			map.put("currentPage", cp);			
 			
 			PageInfo pInfo = service.getPageInfo(map);
 			
-			List<Board> bList = service.searchBoardList(map, pInfo);
+			List<Challenge> list = service.searchChallengeList(map, pInfo);
 			
-			path = "/WEB-INF/views/board/boardMain.jsp";
+			path = "/WEB-INF/views/challenge/challengeList.jsp";
 			
-			request.setAttribute("bList", bList);
+			request.setAttribute("list", list);
 			request.setAttribute("pInfo", pInfo);
 			
 			view = request.getRequestDispatcher(path);

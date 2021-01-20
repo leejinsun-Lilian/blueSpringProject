@@ -62,14 +62,22 @@ public class ChallengeDAO {
 
 	/** 공지사항 목록 조회
 	 * @param conn
+	 * @param orderBy
+	 * @param end 
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Challenge> selectList(Connection conn, PageInfo pInfo) throws Exception{
+	public List<Challenge> selectList(Connection conn, PageInfo pInfo, String orderBy, String end) throws Exception{
 		List<Challenge> list = null;
 		
-		String query = prop.getProperty("selectList");
-		
+		//String query = prop.getProperty("selectList");
+		String query = "SELECT* FROM " + 
+						"	(SELECT ROWNUM RNUM, V.* " + 
+						"	FROM\r\n" + 
+						"		(SELECT * FROM V_CHLNG_MISSION_LIST WHERE CHLNG_FL = 'N' " +
+				    	" ORDER BY " + orderBy + " CHLNG_NO DESC) V ) " + 
+						"WHERE RNUM BETWEEN ? AND ? " + end
+						;
 		try {
 			// SQL 구문 조건절에 대입할 변수 생성
 			int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;    // 시작은 1부터 
