@@ -39,13 +39,33 @@ public class ChallengeService {
 	}
 
 	/** 챌린지 목록 조회
+	 * @param pInfo
+	 * @param sort
+	 * @param cn 
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Challenge> selectList(PageInfo pInfo) throws Exception{
+	public List<Challenge> selectList(PageInfo pInfo, String sort, String cn) throws Exception{
 		Connection conn = getConnection();
 		
-		List<Challenge> list = dao.selectList(conn, pInfo);
+		 sort = sort == null ? "" : sort;
+		 cn = cn == null ? "" : cn;
+		
+		 String orderBy = null;
+		 String end = null;
+		 
+		if(sort.equals("like")) {
+			orderBy = " LIKE_COUNT DESC, ";
+		}else {
+			orderBy = "";
+		}
+		
+		if(cn != null) {
+			end = "AND CHLNG_CATE_NM = " + "'" + cn + "'";
+		}
+		List<Challenge> list = dao.selectList(conn, pInfo, orderBy, end);
+		
+		
 		close(conn);
 		return list;
 	}

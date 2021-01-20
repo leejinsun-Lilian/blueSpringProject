@@ -55,7 +55,7 @@ public class ChSearchDAO {
 	 * @param conn
 	 * @param pInfo
 	 * @param condition
-	 * @return List
+	 * @return list
 	 * @throws Exception
 	 */
 	public List<Challenge> searchChallengelist(Connection conn, PageInfo pInfo, String condition) throws Exception{
