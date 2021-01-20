@@ -2,6 +2,7 @@ package com.boss.blueSpring.admin.model.dao;
 
 import static com.boss.blueSpring.common.JDBCTemplate.*;
 
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,14 +18,12 @@ import com.boss.blueSpring.admin.model.vo.ChallCrtfdPageInfo;
 import com.boss.blueSpring.admin.model.vo.ChallPageInfo;
 import com.boss.blueSpring.admin.model.vo.MemberPageInfo;
 import com.boss.blueSpring.admin.model.vo.ReportPageInfo;
-import com.boss.blueSpring.board.model.dao.BoardDAO;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
-import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
 public class AdminDAO {
@@ -37,7 +36,7 @@ public class AdminDAO {
 
 	
 	public AdminDAO() {
-		String fileName = BoardDAO.class.getResource("/com/boss/blueSpring/sql/admin/admin-query.xml").getPath();
+		String fileName = AdminDAO.class.getResource("/com/boss/blueSpring/sql/admin/admin-query.xml").getPath();
 		try {
 			prop = new Properties();
 			prop.loadFromXML(new FileInputStream(fileName)); 
@@ -167,6 +166,33 @@ public class AdminDAO {
 		return rList;
 	}
 	
+   /** [신고] 페이지 상세조회 DAO
+    * @param reportNo
+    * @return report
+    * @throws Exception
+    */
+	public Report selectReport(Connection conn, int reportNo) throws Exception {
+		Report report = null;
+		String query = prop.getProperty("selectReportPagetList");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, reportNo);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				report = new Report();
+				report.setReportNo(rset.getInt("REPORT_NO"));
+				report.setReportType(rset.getString("REPORT_TYPE"));
+				report.setBoardNo(rset.getInt("BRD_NO"));			
+				report.setMemberId(rset.getString("MEM_ID"));
+				report.setReportCategoryNo(rset.getInt("REPORT_CATE_NO"));
+				report.setReportContent(rset.getString("REPORT_CONTENT"));
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return report;
+	}
 	
 	// ************************************************************************* 센터
 	
@@ -191,7 +217,6 @@ public class AdminDAO {
 		return listCount;
 	}
 
-	
 	/** [센터] 관리 : 목록 조회 DAO
 	 * @param conn
 	 * @param cpInfo
@@ -228,6 +253,38 @@ public class AdminDAO {
 		return cList;
 	}
 
+   /** [센터] 페이지 상세조회 DAO
+    * @param centerNo
+    * @return center
+    * @throws Exception
+    */
+	public Center selectCenter(Connection conn, int centerNo) throws Exception {
+		Center center = null;
+		String query = prop.getProperty("selectCenterPagetList");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, centerNo);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				center = new Center();
+				center.setCenterNo(rset.getInt("CENTER_NO"));
+				center.setCenterCla(rset.getString("CENTER_CLA"));			
+				center.setCenterArea1(rset.getString("CENTER_AREA1"));
+				center.setCenterArea2(rset.getString("CENTER_AREA2"));
+				center.setCenterName(rset.getString("CENTER_NM"));
+				center.setCenterTel(rset.getString("CENTER_TEL"));
+				center.setCenterUrl(rset.getString("CENTER_URL"));
+				center.setCenterAddr(rset.getString("CENTER_ADDR"));
+				center.setCenterAddrDtl(rset.getString("CENTER_ADDR_DTL"));
+				center.setCenterDeleteFl(rset.getString("CENTER_DEL_FL").charAt(0));
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return center;
+	}
+	
 
 	// ************************************************************************* 회원정보
 	
@@ -466,38 +523,9 @@ public class AdminDAO {
 		return crtList;
 	}
 
-	/** [메인] 공지사항 조회 DAO
-	 * @param conn
-	 * @return
-	 * @throws Exception
-	 */
 
-   /** [신고] 페이지 상세조회 DAO
-    * @param reportNo
-    * @return report
-    * @throws Exception
-    */
-//	public Report selectReport(Connection conn, int reportNo) throws Exception {
-//		Report report = null;
-//		String query = prop.getProperty("selectReporPagetList");
-//		try {
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, reportNo);
-//			rset = pstmt.executeQuery();
-//			if (rset.next()) {
-//				report = new Report();
-//				report.setReportNo(rset.getInt("REPORT_NO"));
-//				report.setBoardNo(rset.getInt("BRD_NO"));			
-//				report.setMemberId(rset.getString("MEM_ID"));
-//				report.setReportCategoryNo(rset.getInt("REPORT_CATE_NO"));
-//				report.setReportContent(rset.getString("REPORT_CONTENT"));
-//			}
-//		} finally {
-//			close(rset);
-//			close(pstmt);
-//		}
-//		return report;
-//	}
+
+
 
 
 	

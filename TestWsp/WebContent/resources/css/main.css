@@ -98,3 +98,14 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
 }
 
 #search_input:focus { outline: none; }
+
+
+
+.board_item tr > *{
+	cursor: pointer;
+}
+
+.board_item tr:hover{
+	background-color: #eee;
+}
+

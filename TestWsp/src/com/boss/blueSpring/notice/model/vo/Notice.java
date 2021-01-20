@@ -28,6 +28,14 @@ public class Notice {
 		this.memberId = memberId;
 		this.noticeViews = noticeViews;
 	}
+	
+	// main 공지사항 조회용 생성자
+	public Notice(int noticeNo, String noticeTitle) {
+		super();
+		this.noticeNo = noticeNo;
+		this.noticeTitle = noticeTitle;
+	}
+	
 
 	public int getNoticeNo() {
 		return noticeNo;

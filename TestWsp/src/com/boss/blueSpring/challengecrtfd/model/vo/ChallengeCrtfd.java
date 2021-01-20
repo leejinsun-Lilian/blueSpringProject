@@ -11,13 +11,16 @@ public class ChallengeCrtfd {
 	private int memberNo;				// 회원번호
 	private int chlngNo;				// 챌린지 번호
 	private String memberId;			// 회원아이디
+	private String chlngBoardTitle;		// 챌린지 인증글 제목
+	private String chlngBoardContent;	// 챌린지 인증글 내용
+	private String chlngCateNm;			// 챌린지 카테고리명
 
 	public ChallengeCrtfd() {
 		
 	}
 
 	public ChallengeCrtfd(int chlngBoardNo, Date chlngBoardCrtDt, char chlngBoardDelFl, int chlngBoardViews,
-			int memberNo, int chlngNo, String memberId) {
+			int memberNo, int chlngNo, String memberId, String chlngBoardTitle, String chlngBoardContent, String chlngCateNm) {
 		super();
 		this.chlngBoardNo = chlngBoardNo;
 		this.chlngBoardCrtDt = chlngBoardCrtDt;
@@ -26,6 +29,9 @@ public class ChallengeCrtfd {
 		this.memberNo = memberNo;
 		this.chlngNo = chlngNo;
 		this.memberId = memberId;
+		this.chlngBoardTitle = chlngBoardTitle;
+		this.chlngBoardContent = chlngBoardContent;
+		this.chlngCateNm = chlngCateNm;
 	}
 
 	
@@ -94,11 +100,36 @@ public class ChallengeCrtfd {
 		this.memberId = memberId;
 	}
 
+	public String getChlngBoardTitle() {
+		return chlngBoardTitle;
+	}
+
+	public void setChlngBoardTitle(String chlngBoardTitle) {
+		this.chlngBoardTitle = chlngBoardTitle;
+	}
+
+	public String getChlngBoardContent() {
+		return chlngBoardContent;
+	}
+
+	public void setChlngBoardContent(String chlngBoardContent) {
+		this.chlngBoardContent = chlngBoardContent;
+	}
+
+	public String getChlngCateNm() {
+		return chlngCateNm;
+	}
+
+	public void setChlngCateNm(String chlngCateNm) {
+		this.chlngCateNm = chlngCateNm;
+	}
+
 	@Override
 	public String toString() {
 		return "ChallengeCrtfd [chlngBoardNo=" + chlngBoardNo + ", chlngBoardCrtDt=" + chlngBoardCrtDt
 				+ ", chlngBoardDelFl=" + chlngBoardDelFl + ", chlngBoardViews=" + chlngBoardViews + ", memberNo="
-				+ memberNo + ", chlngNo=" + chlngNo + ", memberId=" + memberId + "]";
+				+ memberNo + ", chlngNo=" + chlngNo + ", memberId=" + memberId + ", chlngBoardTitle=" + chlngBoardTitle
+				+ ", chlngBoardContent=" + chlngBoardContent + ", chlngCateNm=" + chlngCateNm + "]";
 	}
 
 	

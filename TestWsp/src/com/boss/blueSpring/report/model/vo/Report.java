@@ -48,9 +48,10 @@ public class Report {
 	}
 	
 	// admin 신고 상세 페이지 조회 생성자
-	public Report(int reportNo, int boardNo, String memberId, int reportCategoryNo, String reportContent) {
+	public Report(int reportNo, String reportType, int boardNo, String memberId, int reportCategoryNo, String reportContent) {
 		super();
 		this.reportNo = reportNo;
+		this.reportType = reportType;
 		this.boardNo = boardNo;
 		this.memberId = memberId;
 		this.reportCategoryNo = reportCategoryNo;

@@ -17,7 +17,7 @@
 
 </head>
 <body>
-
+	<c:set var="notice" value="${noticeNo}"></c:set>
 		<div class="content">
 			<div class="board">
 				<div class="board_item">
@@ -25,23 +25,22 @@
 					<div class="board_content">
 						<table class="table table-sm table-borderless">
 						  <tbody>
-					<c:choose>
-                    <c:when test="${empty nList}">
+ 					<c:choose>
+                    <c:when test="${empty notice}">
                         <tr>
                             <td colspan="3">존재하는 게시글이 없습니다.</td>
                         </tr>
                     </c:when>
     
-                    <c:otherwise>                      
-                        <c:forEach var="board" items="${nList}">
-						  
+                    <c:otherwise>
+                    	<c:forEach var="notice" items="${contextPath}/main/notice.do?no=${noticeNo}">                      
 						    <tr>
 						      <th scope="row">${notice.noticeNo}</th>
 						      <td colspan="3"><a href="#"></a>${notice.noticeTitle}</td>
 						    </tr>
-						 </c:forEach>
+						</c:forEach>
                     </c:otherwise>
-                </c:choose>		    
+                </c:choose>	   
 						  </tbody>
 						</table>
 					</div>

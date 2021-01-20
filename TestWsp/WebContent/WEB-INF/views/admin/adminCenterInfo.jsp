@@ -114,7 +114,7 @@
                                 <td>${center.centerCla}</td>
                                 <td>${center.centerArea1}</td>
                                 <td>${center.centerArea2}</td>
-								<td><a href="#" onclick="window.open('${contextPath}/admin/centerPage.do','name','resizable=no width=700 height=500');return false">${center.centerName}</a></td>
+								<td><a href="#" onclick="window.open('${contextPath}/admin/centerPage.do?cn=${center.centerNo}','name','resizable=no width=400 height=280');return false">${center.centerName}</a></td>
 								<td>${center.centerTel}</td>
 		                        <td>${center.centerUrl}</td>
 		                        <td>${center.centerDeleteFl}</td>
