@@ -180,10 +180,9 @@
 					// 게시글 번호 얻어오기
 					var boardNo = $(this).parent().children().eq(0).text();
  					var memberNo = ${memberNo};
-					
-					console.log(memberNo);
-		
-					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&memberNo=" + memberNo + "&no=" + boardNo + "${searchStr}";
+
+					// &memberNo=" + memberNo + "
+					var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 					// var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 					location.href = url;
 				});

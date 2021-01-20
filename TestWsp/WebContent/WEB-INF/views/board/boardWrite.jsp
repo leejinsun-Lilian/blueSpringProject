@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="${contextPath}/resources/css/board/boardWrite.css">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
 </head>
 <body>
@@ -40,14 +42,16 @@
             </div>
 
             <div id="file-wrapper">
-                <label>첨부하기</label> <br>
+                <label for="File">첨부하기&nbsp;&nbsp;</label> 
+                <input type="file" name="file" id="file-btn"/>
+                <i class="fas fa-file-image"></i>
             </div>
 
             <div id="content-wrapper">
                 <label>내용</label> <br>    
-<!--            <textarea name="b-content" id="b-content" cols="3000" rows="1000">
-     editordata
-                </textarea> <br> -->
+            <textarea name="b-content" id="b-content" cols="3000" rows="1000">
+    					 editordata
+                </textarea> <br> 
                 <textarea id="b-content" name="b-content" class="summernote"></textarea>
                 
             </div>
@@ -87,7 +91,7 @@
 				}
 			}
 			
-/* 			$(document).ready(function() {
+ 			$(document).ready(function() {
 				//여기 아래 부분
 				$('#b-content').summernote({
 					  height: 300,                 // 에디터 높이
@@ -98,26 +102,26 @@
 					  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
 			          
 				});
-			}); */
+			}); 
 			
 			/**
 			   * 이미지 파일 업로드
 			   */
-/*  			   function uploadSummernoteImageFile(file, editor) {
-			      data = new FormData();
-			      data.append("file", file);
-			      $.ajax({
-			         data : data,
-			         type : "POST",
-			         url : "${contextPath}/board/write.do",
-			         contentType : false,
-			         processData : false,
-			         success : function(data) {
-			               //항상 업로드된 파일의 url이 있어야 한다.
-			            $(editor).summernote('insertImage', data.url);
-			         }
-			      });
-			   }  */
+		  function uploadSummernoteImageFile(file, editor) {
+	      data = new FormData();
+	      data.append("file", file);
+	      $.ajax({
+	         data : data,
+	         type : "POST",
+	         url : "${contextPath}/board/write.do",
+	         contentType : false,
+	         processData : false,
+	         success : function(data) {
+	               //항상 업로드된 파일의 url이 있어야 한다.
+	            $(editor).summernote('insertImage', data.url);
+	         }
+	      });
+   		}  
 			   
     </script>
 

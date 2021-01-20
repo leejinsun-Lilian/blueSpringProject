@@ -46,7 +46,24 @@ label {
 /* 파일첨부 */
 #file-wrapper {
     text-align: left;
+    position: relative;
 }
+
+#file-btn {
+    width: 20px;
+    opacity: 0;
+}
+
+.fa-file-image {
+    position: absolute;
+    left: 90px;
+    top: 15px;
+    z-index: -10;
+}
+
+/* #file-btn:hover {
+    cursor: pointer;
+} */
 
 /* 내용 */
 #content-wrapper {
