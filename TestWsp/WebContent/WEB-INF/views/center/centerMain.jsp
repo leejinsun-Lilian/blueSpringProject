@@ -129,11 +129,15 @@
 		var gugun15 = ["거제시","김해시","마산시","밀양시","사천시","양산시","진주시","진해시","창원시","통영시","거창군","고성군","남해군","산청군","의령군","창녕군","하동군","함안군","함양군","합천군"];
 		var gugun16 = ["서귀포시","제주시","남제주군","북제주군"];
 		
-		var address = ""; // 주소 담기
+		var address = ""; // 주소 담을 변수
+		var centerNameAry = new Array(); // 센터 명 배열에 담기
+		var centerName = ""; // 센터명 담을 변수
 		var flagNum = 0; //
 		var flagNum2 = 0; //
 		var positionX = new Array(); // x좌표 담기
 		var positionY = new Array(); // y좌표 담기
+		
+		var searchOn = 0;
 		
 		// 찾기 버튼 클릭 시
 		$("#search-btn").on("click", function() {
@@ -159,8 +163,7 @@
 					
 					$.each(cList, function(index, item){
 						var li = $("<li>").addClass("center-row");
-						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn").attr("onclick", "placeSearch("+item.centerAddr+", this)");
-						
+						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn").attr("onclick", "placeSearch(this)");
 						
 						var div = $("<div>");						
 						
@@ -177,11 +180,11 @@
 						
 						$("#centerList").append(li);
 						
-						address = item.centerAddr;
-						
-						searchAddress();		
+						address = item.centerAddr;						
+						centerName = item.centerName;
+						searchAddress(centerName);		
 
-						flagNum = flagNum + 1;
+						flagNum = flagNum + 1;						
 					
 					});
  						
@@ -192,8 +195,18 @@
 		});
 		
 		
+		// 위치찾기 버튼 클릭 시
+		function placeSearch(ele){
+				var thisAddr = $(ele).prev().prev().text()
+				centerName = $(ele).prev().prev().prev().prev().prev().prev().prev().text();
+				placeSearchMarker(thisAddr);
+		};
 		
-		function searchAddress() {
+		
+		// 구/군 선택 시 위도 경도 배열에 담기
+		function searchAddress(centerName) {
+			centerNameAry = new Array();
+			searchOn = 0;
 			positionX = new Array(); // x좌표 담기
 			positionY = new Array(); // y좌표 담기
 			// =================================== 위도 경도 =====================================
@@ -205,7 +218,8 @@
 				   	 flagNum2 = flagNum2 + 1;
 		  			 positionX.push(data['documents'][0]['x']);
 			       positionY.push(data['documents'][0]['y']); 
-			       
+
+				   	 centerNameAry.push(centerName);
 			       if(flagNum2 == flagNum) {
 			    	   pickMarkers();
 			       }
@@ -215,15 +229,32 @@
 			   },						   				
 			});									
 		}
-
-	
+		
+		// 위치 찾기 시 위도 경도 담기
+		function placeSearchMarker(thisAddr) {
+			searchOn = 0;
+			$.ajax({
+         url:'https://dapi.kakao.com/v2/local/search/address.json?query='+encodeURIComponent(thisAddr),
+         type:'GET',
+         headers: {'Authorization' : 'KakaoAK 95bd3f68d02962b41f5efde3edf2ad26'},
+			   success:function(data){
+				   	 searchOn = 1;
+				   	 var x = data['documents'][0]['x'];
+				   	 var y = data['documents'][0]['y']; 
+				   	 pickMarkers(x, y);
+			   },			   
+			   error : function(e){
+			       console.log(e);
+			   },						   				
+			});									
+		}      
 		
 		// =================================== 지도 =====================================	
-		function pickMarkers() {
+		function pickMarkers(x, y) {
 			var container = document.getElementById('mapArea'); //지도를 담을 영역의 DOM 레퍼런스
 			var options = { //지도를 생성할 때 필요한 기본 옵션  
 				center: new kakao.maps.LatLng(positionY[0], positionX[0]), //지도의 중심좌표.
-				level: 2 //지도의 레벨(확대, 축소 정도)
+				level: 3 //지도의 레벨(확대, 축소 정도)
 			};
 			
 			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴		
@@ -233,12 +264,6 @@
 			for(var i = 0; i < positionY.length; ++i) {
 				points[i] = new kakao.maps.LatLng(positionY[i], positionX[i]);
 			}
-				    
-				    
-/* 			var points = [   */  
-/* 	 				new kakao.maps.LatLng(33.452671, 126.574792),
-				    new kakao.maps.LatLng(33.451744, 126.572441) */
-/* 			]; */   
 			
 			// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 			var bounds = new kakao.maps.LatLngBounds();    
@@ -248,6 +273,20 @@
 			    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
 			    marker =     new kakao.maps.Marker({ position : points[i] });
 			    marker.setMap(map);
+			    
+			    // 마커마다 윈도우 표시하기 //////////////////////////
+			    var iwContent = '<div style="padding:5px;">' + centerNameAry[i] + '</div>',
+			    iwPosition = new kakao.maps.LatLng(positionY[i], positionX[i]);
+		    
+			    var infowindow = new kakao.maps.InfoWindow({
+			        position : iwPosition, 
+			        content : iwContent 
+			    });
+			      
+			    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+			    infowindow.open(map, marker); 
+			    ////////////////////////////////////////////
+			    
 			    
 			    // LatLngBounds 객체에 좌표를 추가합니다
 			    bounds.extend(points[i]);
@@ -259,44 +298,20 @@
 			    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
 			    map.setBounds(bounds);
 			}
-		}
-		
+			
+			// 만약 위치 찾기 버튼 클릭하면
+				if(searchOn == 1) {
+					
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+					
+					var moveLatLon = new kakao.maps.LatLng(y, x);
+				    
+			    // 지도 중심을 부드럽게 이동시킵니다
+			    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+				  map.panTo(moveLatLon);  
+				}
+		     
+		}	
 		
 		
 
