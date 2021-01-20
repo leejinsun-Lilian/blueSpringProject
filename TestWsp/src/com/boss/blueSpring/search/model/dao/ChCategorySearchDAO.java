@@ -58,10 +58,11 @@ public class ChCategorySearchDAO {
 	 * @param conn
 	 * @param pInfo
 	 * @param map
+	 * @param orderBy 
 	 * @return bList
 	 * @throws Exception
 	 */
-	public List<Challenge> searchChallengeList(Connection conn, PageInfo pInfo, Map<String, Object> map) throws Exception {
+	public List<Challenge> searchChallengeList(Connection conn, PageInfo pInfo, Map<String, Object> map, String orderBy) throws Exception {
 		List<Challenge> cList = null;
 		
 		String query = 		
@@ -70,8 +71,8 @@ public class ChCategorySearchDAO {
 				"FROM " +
 				"    (SELECT * FROM V_CHLNG_MISSION_LIST "
 				+ "WHERE CHLNG_CATE_NM = ? AND CHLNG_FL = 'N' "
-				+ "ORDER BY CHLNG_NO DESC) V ) " + 
-				"WHERE RNUM BETWEEN ? AND ?";
+				+ "ORDER BY " + orderBy + " CHLNG_NO DESC) V ) " + 
+				"WHERE RNUM BETWEEN ? AND ? " ;
 
 		try {
 			// SQL 구문 조건절에 대입할 변수 생성
@@ -95,7 +96,7 @@ public class ChCategorySearchDAO {
 				challenge.setChlngStartDt(  rset.getTimestamp ("STR_DT")  );
 				challenge.setChlngEndDt(  rset.getTimestamp ("END_DT")  );
 				challenge.setLikeCount(  	rset.getInt("LIKE_COUNT")  );
-				
+				challenge.setchlngCateNm(  	rset.getString("CHLNG_CATE_NM")  );
 				
 				cList.add(challenge);
 			}

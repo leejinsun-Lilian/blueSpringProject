@@ -63,20 +63,19 @@ public class ChallengeDAO {
 	/** 공지사항 목록 조회
 	 * @param conn
 	 * @param orderBy
-	 * @param end 
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Challenge> selectList(Connection conn, PageInfo pInfo, String orderBy, String end) throws Exception{
+	public List<Challenge> selectList(Connection conn, PageInfo pInfo, String orderBy) throws Exception{
 		List<Challenge> list = null;
 		
-		//String query = prop.getProperty("selectList");
+		//String query = prop.getProperty("selectList");         //+ end
 		String query = "SELECT* FROM " + 
 						"	(SELECT ROWNUM RNUM, V.* " + 
 						"	FROM\r\n" + 
 						"		(SELECT * FROM V_CHLNG_MISSION_LIST WHERE CHLNG_FL = 'N' " +
 				    	" ORDER BY " + orderBy + " CHLNG_NO DESC) V ) " + 
-						"WHERE RNUM BETWEEN ? AND ? " + end
+						"WHERE RNUM BETWEEN ? AND ? " 
 						;
 		try {
 			// SQL 구문 조건절에 대입할 변수 생성
@@ -101,6 +100,8 @@ public class ChallengeDAO {
 				challenge.setChlngStartDt(  rset.getTimestamp ("STR_DT")  );
 				challenge.setChlngEndDt(  rset.getTimestamp ("END_DT")  );
 				challenge.setLikeCount(  	rset.getInt("LIKE_COUNT")  );
+				challenge.setchlngCateNm(  	rset.getString("CHLNG_CATE_NM")  );
+				
 				
 				list.add(challenge);
 				

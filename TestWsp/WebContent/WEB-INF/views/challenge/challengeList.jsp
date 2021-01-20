@@ -34,18 +34,18 @@
         <hr>  <!-- 차후 이미지로 교체 예정  -->
         <div class="cat-area">
             <div class="cat">
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challenge/list.do">전체</a>
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=건강">건강</a>
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=관계">관계</a> 
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=생활">생활</a> 
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=역량">역량</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challenge/list.do?sort=${param.sort}">전체</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=건강&sort=${param.sort}">건강</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=관계&sort=${param.sort}">관계</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=생활&sort=${param.sort}">생활</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=역량&sort=${param.sort}">역량</a> 
             </div> 
             <div class="cat-2">
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=자산">자산</a> 
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=취미">취미</a>
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=공부">공부</a>
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=돈 관리">돈 관리</a>
-                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=그 외">그 외</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=자산&sort=${param.sort}">자산</a> 
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=취미&sort=${param.sort}">취미</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=공부&sort=${param.sort}">공부</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=돈 관리&sort=${param.sort}">돈 관리</a>
+                <a id="cat-mg" class="cat-float" href="${contextPath}/challengeCategorySearch.do?cn=그 외&sort=${param.sort}">그 외</a>
             </div>
         </div>
             <hr>
@@ -80,6 +80,8 @@
 							<div class="ch-img">
 								<!-- 이미지 들어갈 부분 -->
 								<!-- 해당 챌린지 상세페이지로  -->
+								${challenge.chlngCateNm}
+								123
 							</div>
 
 							<div class="ch-sb">
@@ -117,7 +119,7 @@
 			 <%-- 검색 후 생상된 페이지일 경우 --%>   
 			<c:when test="${!empty param.sk && !empty param.sv }">     
 				<c:url var="pageUrl" value="/challengeSearch.do"/>
-				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}"/>
+				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}&sort=${param.sort}"/>
 			</c:when>
 			<%-- 카테고리 선택 후 생성된 페이지일 경우 --%>
 			<%-- <c:when test="${!empty param.cn}"> 
@@ -190,7 +192,7 @@
         		</select>
         		<input type="text" name="sv" class="s-form-control2">
         		<input id="hidden-cn" type="text" name="cn" value="${param.cn}">
-        		<input id="hidden-cn" type="text" name="cn" value="${param.sort}">
+        		<input id="hidden-cn" type="text" name="sort" value="${param.sort}"> 
         		
         		<!--  -->
         		
@@ -250,9 +252,20 @@
     
  	// 조회순, 좋아요순
  	$("#skk").on("change", function(){
- 		var sort = $("#skk").val();  // new / like
- 		location.href = "list.do?cn=${param.cn}&sort=" + sort;
  		
+ 		var sort = $("#skk").val();  // new / like
+ 		//location.href = "list.do?sort=" + sort;    //cn=${param.cn}&???????????
+ 			
+ 		if("${param.cn}" != ""){
+	 		location.href = "challengeCategorySearch.do?sort=" + sort + "&cn=${param.cn}"  ; 
+ 		}else{
+	 		location.href = "list.do?sort=" + sort; 
+ 			
+ 		}
+ 		
+ 		///>>>??????????????????????????????????검색 후 정렬??????????????????????????????????///////////////////////
+ 				
+ 				
  	});
  	
  	// 정렬 방식 유지
@@ -260,7 +273,7 @@
  		$("#skk > option").each(function(index, item){
  			// index : 현재 접근중인 요소의 인덱스
 			// item : 현재 접근중인 요소
-			if(  $(item).val() == "${param.sort}"  ){   //new   ==  like
+			if(  $(item).val() == "${param.sort}"  ){   
 				$(item).prop("selected", true);
 			}
 		});

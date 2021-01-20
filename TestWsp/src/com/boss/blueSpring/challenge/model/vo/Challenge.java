@@ -19,6 +19,7 @@ public class Challenge {
 	private String chlngCateNm;	// 챌린지 카테고리 이름
 	private String memberId;		// 회원 아이디
 	private int likeCount;
+	
 
 	public Challenge() {
 	}
@@ -44,9 +45,19 @@ public class Challenge {
 	}
 
 	
+	
+	
+	public Challenge(int chlngNo, String chlngTitle, char chlngFl, String chlngCateNm, String memberId) {
+		super();
+		this.chlngNo = chlngNo;
+		this.chlngTitle = chlngTitle;
+		this.chlngFl = chlngFl;
+		this.chlngCateNm = chlngCateNm;
+		this.memberId = memberId;
+	}
+	
 	// admin 챌린지 조회 용
 	// CHLNG_NO, CHLNG_TITLE, MEM_ID, CHLNG_FL
-	
 	public Challenge(int chlngNo, String chlngTitle, String memberId, char chlngFl) {
 		super();
 		this.chlngNo = chlngNo;

@@ -25,6 +25,8 @@ public class ChallengeSearchController extends HttpServlet {
 		String searchValue = request.getParameter("sv");
 		String cp = request.getParameter("cp");
 		String chlngCategoryNm = request.getParameter("cn");
+		String sort = request.getParameter("sort");
+		System.out.println(sort);
 		
 		try {
 			ChSearchService service = new ChSearchService();
@@ -34,6 +36,7 @@ public class ChallengeSearchController extends HttpServlet {
 			map.put("searchKey", searchKey);
 			map.put("searchValue", searchValue);
 			map.put("currentPage", cp);
+			map.put("sort", sort);
 			
 			// 페이징 처리를 위한 데이터를 계산하고 저장하는 객체 PageInfo 얻어오기
 			PageInfo pInfo = service.getPageInfo(map);
