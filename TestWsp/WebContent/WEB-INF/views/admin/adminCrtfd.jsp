@@ -73,6 +73,7 @@
                         <th scope="col"><input type="checkbox" id="ck_all"></th>
                         <th scope="col">인증글번호</th>
                         <th scope="col">챌린지번호</th>
+                        <th scope="col">제목</th>
                         <th scope="col">작성자</th>
                         <th scope="col">삭제여부</th>
                       </tr>
@@ -90,6 +91,7 @@
                             	<td><input type="checkbox" name="selectClick" value="${challenge.chlngBoardNo}"></td>
                                 <th>${challenge.chlngBoardNo}</th>
                                 <td>${challenge.chlngNo}</td>
+                                <td>${challenge.chlngBoardTitle}</td>
                                 <td>${challenge.memberId}</td>
                                 <td>${challenge.chlngBoardDelFl}</td>
 							</tr>
@@ -105,7 +107,7 @@
 			<c:choose>
 				<%-- 검색 내용이 파라미터에 존재할 때 == 검색을 통해 만들어진 페이지인가? --%>
 				<c:when test="${!empty param.sk && !empty param.sv }">
-					<c:url var="pageUrl" value="/search.do"/>
+					<c:url var="pageUrl" value="/adminSearch/challCrtfd.do"/>
 					
 					<%-- 쿼리스트링으로 사용할 내용을 변수에 저장 --%>
 					<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />

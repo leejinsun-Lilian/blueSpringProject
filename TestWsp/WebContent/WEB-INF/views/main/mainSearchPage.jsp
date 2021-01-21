@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -42,6 +45,14 @@
 	.page-item>a, .page-item>a:hover {
 		color: black;
 	}
+	
+	#search-table > tbody > tr:hover {
+		cursor: pointer;
+		background-color: #eee;
+	}
+	
+	.pagination > li > a, .pagination > li > a:hover { color: black; }
+	
 	</style>
 </head>
 <body>
@@ -50,66 +61,139 @@
 
         <div class="search_content">
             <div class="search_title">
-                <h4>@@ 검색 결과</h4>
+                <h4>"${param.sv}" 검색 결과</h4>
             </div>
 
-            <div class="admin_board">
-                <table class="table table-striped">
-                    <thead>
+            <div class="adminBoard_board">
+                <table class="table table-sm" id="search-table">
+                
+                    <thead class="thead-dark">
                       <tr>
-                        <th scope="col">번호</th>
+                        <th scope="col">게시판명</th>
                         <th scope="col">제목</th>
                         <th scope="col">내용</th>
+                        <th scope="col">작성일</th>
                       </tr>
                     </thead>
+                    
+                    
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td><a href="#">안녕하세요. 가입인사 합니다.</a></td>
-                        <td>안녕하세요. 사이트 여러군데 찾아보다가 여기가 제일 분위기가
-                            도란도란 한 것 같아서 가입했습니다. 정부정책도 최신글로 많이 올라오고
-                            챌린지 게시판도 참여율이 높은 것 같아요. 저도 자주 들러서 글 올리겠습니다.
-                            모두들 좋은하루 되세요.
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td><a href="#">제목2</a></td>
-                        <td>내용2</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td><a href="#">제목3</a></td>
-                        <td>내용3</td>
-                      </tr>
+                    
+                    <c:choose>
+                    <c:when test="${empty mList}">
+                        <tr>
+                            <td colspan="4">검색결과가 없습니다.</td>
+                        </tr>
+                    </c:when>
+    
+                    <c:otherwise>                      
+                        <c:forEach var="search" items="${mList}">
+                            <tr id="${search.type}-${search.no}">
+                                <th>
+                                	<c:choose>
+                                		<c:when test="${search.type == 1}">자유게시판</c:when>
+                                		<c:when test="${search.type == 2}">정부정책</c:when>
+                                		<c:when test="${search.type == 3}">챌린지</c:when>
+                                		<c:when test="${search.type == 4}">챌린지인증</c:when>
+                                	</c:choose>
+                                </th>
+                                <td>${search.title}</td>
+                                <td>${search.content}</td>
+                                <td>${search.crtDt}</td>
+							</tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                
                     </tbody>
                   </table>
-
-                
-                  <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                
-
             </div>
+
+            <%---------------------- Pagination ----------------------%>
+			<%-- 페이징 처리 주소를 쉽게 사용할 수 있도록 미리 변수에 저장 --%>
+			<c:url var="pageUrl" value="mainSearch.do">
+				<c:param name="sv">${param.sv}</c:param>
+			</c:url>
+
+			<!-- 화살표에 들어갈 주소를 변수로 생성 -->
+			 
+			<c:set var="firstPage" value="${pageUrl}&cp=1"/>
+			<c:set var="lastPage" value="${pageUrl}&cp=${mpInfo.maxPage}"/>
+			 
+			 <fmt:parseNumber var="c1" value="${(mpInfo.currentPage - 1) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="prev" value="${ c1 * 10 }" integerOnly="true" />
+			 <c:set var="prevPage" value="${pageUrl}&cp=${prev}" />
+			 
+			 <fmt:parseNumber var="c2" value="${(mpInfo.currentPage + 9) / 10 }" integerOnly="true" />
+			 <fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />
+			 <c:set var="nextPage" value="${pageUrl}&cp=${next}" />
+
+
+
+			<div class="page_area">
+				<ul class="pagination justify-content-center">
+
+					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
+					<c:if test="${mpInfo.currentPage > 10}">
+						<li>
+							<!-- 첫 페이지로 이동(<<) --> <a class="page-link" href="${firstPage}">&lt;&lt;</a>
+						</li>
+
+						<li>
+							<!-- 이전 페이지로 이동 (<) --> <a class="page-link" href="${prevPage}">&lt;</a>
+						</li>
+					</c:if>
+
+					<!-- 페이지 목록 -->
+					<c:forEach var="page" begin="${mpInfo.startPage}"
+						end="${mpInfo.endPage}">
+						<c:choose>
+							<c:when test="${mpInfo.currentPage == page }">
+								<li><a class="page-link">${page}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a class="page-link"
+									href="${pageUrl}&cp=${page}">${page}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
+					<c:if test="${next <= mpInfo.maxPage}">
+						<li>
+							<!-- 다음 페이지로 이동 (>) --> <a class="page-link" href="${nextPage}">&gt;</a>
+						</li>
+						<li>
+							<!-- 마지막 페이지로 이동(>>) --> <a class="page-link" href="${lastPage}">&gt;&gt;</a>
+						</li>
+
+					</c:if>
+
+				</ul>
+			</div>
         </div>
 		<div style="clear: both;"></div>
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 	</div>
+	
+	
+	<script>
+		$("#search-table > tbody > tr *").on("click",function(){
+			var id = $(this).parent().attr("id").split("-");
+			var type = id[0];
+			var no = id[1];
+			
+			var url;
+			switch(type){
+			case '1' : url = "board/view.do?cp=1&no="+no; break;
+			case '2' : url = "notice/view.do?cp=1&no="+no; break;
+			case '3' : url = "board/view.do?cp=1&no="+no; break;
+			case '4' : url = "board/view.do?cp=1&no="+no; break;
+			}
+			
+			location.href = url;
+		});
+	</script>
 	
 </body>
 </html>

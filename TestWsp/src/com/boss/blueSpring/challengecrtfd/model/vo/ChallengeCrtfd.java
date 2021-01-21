@@ -36,10 +36,11 @@ public class ChallengeCrtfd {
 
 	
 	// admin 챌린지 인증 게시글 목록 조회용
-	public ChallengeCrtfd(int chlngNo, int chlngBoardNo, String memberId, char chlngBoardDelFl) {
+	public ChallengeCrtfd(int chlngNo, int chlngBoardNo, String chlngBoardTitle, String memberId, char chlngBoardDelFl) {
 		super();
 		this.chlngNo = chlngNo;
 		this.chlngBoardNo = chlngBoardNo;
+		this.chlngBoardTitle = chlngBoardTitle;
 		this.memberId = memberId;
 		this.chlngBoardDelFl = chlngBoardDelFl;
 	}

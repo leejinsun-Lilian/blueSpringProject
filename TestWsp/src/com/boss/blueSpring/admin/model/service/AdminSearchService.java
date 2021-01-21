@@ -328,6 +328,9 @@ public class AdminSearchService {
 		map.put("currentPage",
 				(map.get("currentPage") == null) ? 1 : Integer.parseInt((String) map.get("currentPage")));
 		String condition = createChallCondition(map);
+		
+		map.put("condition", condition);
+		
 		int listCount = dao.getChallListCount(conn, condition);
 		close(conn);
 		return new ChallPageInfo((int) map.get("currentPage"), listCount);

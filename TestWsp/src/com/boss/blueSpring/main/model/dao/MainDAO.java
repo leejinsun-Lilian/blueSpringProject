@@ -14,6 +14,9 @@ import java.util.Properties;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
+import com.boss.blueSpring.main.model.vo.MainPageInfo;
+import com.boss.blueSpring.main.model.vo.MainSearch;
+import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.notice.model.vo.Notice;
 
 public class MainDAO {
@@ -136,6 +139,70 @@ public class MainDAO {
 		}
 		return crtList;
 	}
+
+
+	public int getListCount(Connection conn, String sv) throws Exception {
+		int result = 0;
+		
+		String query = prop.getProperty("getListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, sv);
+			pstmt.setString(2, sv);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		
+		return result;
+	}
+
+
+	public List<MainSearch> searchMainList(Connection conn, MainPageInfo mpInfo, String sv) throws Exception {
+		List<MainSearch> mList = null;
+		String query = prop.getProperty("searchMainList");
+		
+		try {
+			int startRow = (mpInfo.getCurrentPage() - 1) * mpInfo.getLimit() + 1;
+			int endRow = startRow + mpInfo.getLimit() - 1;
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, sv);
+			pstmt.setString(2, sv);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			mList = new ArrayList<MainSearch>();
+			while (rset.next()) {
+					MainSearch mainsearch = new MainSearch(
+							rset.getInt("NO"),
+							rset.getString("TITLE"),
+							rset.getString("CONTENT"), 
+							rset.getDate("CRT_DT"),
+							rset.getInt("TYPE"),
+							rset.getString("DEL_FL")); 
+							mList.add(mainsearch);
+					}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return mList;
+	}
+	
+	
+	
 	
 	
 	

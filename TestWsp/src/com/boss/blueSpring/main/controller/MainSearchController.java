@@ -1,7 +1,9 @@
 package com.boss.blueSpring.main.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,51 +12,57 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.boss.blueSpring.board.model.vo.Board;
-import com.boss.blueSpring.challenge.model.vo.Challenge;
-import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.main.model.service.MainService;
-import com.boss.blueSpring.notice.model.vo.Notice;
+import com.boss.blueSpring.main.model.vo.MainPageInfo;
+import com.boss.blueSpring.main.model.vo.MainSearch;
 
-@WebServlet("/main")
-public class MainController extends HttpServlet {
+@WebServlet("/mainSearch.do")
+public class MainSearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String uri = request.getRequestURI();
-		String contextPath = request.getContextPath();
-		String command = uri.substring((contextPath + "/main").length());
-
 		String path = null;
 		RequestDispatcher view = null;
-
-		String swalIcon = null;
-		String swalTitle = null;
-		String swalText = null;
-
 		String errorMsg = null;
-
+		
 		try {
 			MainService service = new MainService();
 			
-			// 메인 공지사항(정부정책) 조회 Controller ****************************************
-			errorMsg = "메인 공지사항 페이지 조회 중 오류 발생.";
+			// 메인 검색 페이지 Controller **************************************************
+			errorMsg = "전체 검색 페이지 조회 중 오류 발생.";
 			
-			List<Notice> nList = service.selectMainNotice();
-			List<Board> bList = service.selectMainBoard();
-			List<Challenge> cList = service.selectMainChallenge();
-			List<ChallengeCrtfd> crtList = service.selectMainChallengeCrtfd();
+			String searchKey = request.getParameter("sk");
+			String searchValue = request.getParameter("sv");
+			String cp = request.getParameter("cp");
 			
-			request.setAttribute("nList", nList);
-			request.setAttribute("bList", bList);
-			request.setAttribute("cList", cList);
-			request.setAttribute("crtList", crtList);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("searchKey", searchKey);
+			map.put("searchValue", searchValue);
+			map.put("currentPage", cp);
 			
-			view = request.getRequestDispatcher("index.jsp");
+			MainPageInfo mpInfo = service.getPageInfo(map);
+			
+			List<MainSearch> mList = service.searchMainList(map, mpInfo);
+			
+			path = "/WEB-INF/views/main/mainSearchPage.jsp";
+			
+			request.setAttribute("mList", mList);
+			request.setAttribute("mpInfo", mpInfo);
+
+			view = request.getRequestDispatcher(path);
 			view.forward(request, response);
-		
 			
+			
+			
+			
+			
+			
+			
+			
+				
+				
+						
 		} catch (Exception e) {
 			e.printStackTrace();
 			path = "/WEB-INF/views/common/errorPage.jsp";
@@ -62,7 +70,6 @@ public class MainController extends HttpServlet {
 			view = request.getRequestDispatcher(path);
 			view.forward(request, response);
 		}
-	
 	
 	}
 
