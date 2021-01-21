@@ -58,29 +58,12 @@ public class BoardReportController extends HttpServlet {
 			
 			if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
 				int blindCheck = service.boardBlind(map);
-				if(blindCheck > 0) {
-					swalIcon = "success";
-					swalTitle = "신고 접수가 완료되었습니다.";
-//					path = "WEB-INF/views/board/boardReport.jsp";
-				} else {
-					swalIcon = "error";
-					swalTitle = "신고 접수에 성공했으나 게시글 블라인드 처리 과정에서 오류 발생.";
-//					path = "WEB-INF/views/board/boardReport.jsp";
-				}
-
-			} else {
-				swalIcon = "error";
-				swalTitle = "신고 접수 중 오류 발생.";
-//				path = "WEB-INF/views/board/boardReport.jsp";
-			}		
+				
+				if(blindCheck > 0) result = 1;
+				else result = 0;
+			}
 			
-			session.setAttribute("swalIcon", swalIcon);
-			session.setAttribute("swalTitle", swalTitle);
-			
-//			RequestDispatcher view = request.getRequestDispatcher(path);
-//			view.forward(request, response);
-			
-//			response.sendRedirect(url);
+			response.getWriter().print(result);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -41,11 +41,11 @@
                 <input type="radio" name="b-category" id="free" value="60"> <label class="radio-check">자유</label> <br>
             </div>
 
-            <div id="file-wrapper">
+<!--             <div id="file-wrapper">
                 <label for="File">첨부하기&nbsp;&nbsp;</label> 
                 <input type="file" name="file" id="file-btn"/>
                 <i class="fas fa-file-image"></i>
-            </div>
+            </div> -->
 
             <div id="content-wrapper">
                 <label>내용</label> <br>    
@@ -81,6 +81,8 @@
 					return false;
 				}
 		
+				
+				
 				if ($("#boardContent").val().trim().length == 0) {
 					alert("내용을 입력해 주세요.");
 					$("#boardContent").focus();
@@ -88,6 +90,8 @@
 				}
 			}
 			
+			
+			// 이미지 업로드
  			$(document).ready(function() {
 				//여기 아래 부분
 				$('#b-content').summernote({
@@ -96,15 +100,22 @@
 					  maxHeight: null,             // 최대 높이
 					  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 					  lang: "ko-KR",					// 한글 설정
-					  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+					  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
 			          
+					  callbacks: {
+						  onImageUploat: function(files, eidtor, welEditable) {
+							  for(var i = files.length - 1; i >= 0; i--) {
+								  uploadSummernoteImageFile(files[i], this);
+							  }
+						  }
+					  }
 				});
 			}); 
 			
 			/**
 			   * 이미지 파일 업로드
 			   */
-/* 		  function uploadSummernoteImageFile(file, editor) {
+ 		  function uploadSummernoteImageFile(file, el) {
 	      data = new FormData();
 	      data.append("file", file);
 	      $.ajax({
@@ -115,10 +126,11 @@
 	         processData : false,
 	         success : function(data) {
 	               //항상 업로드된 파일의 url이 있어야 한다.
-	            $(editor).summernote('insertImage', data.url);
+             $(editor).summernote('insertImage', url); 
+					//		$(el).summernote('editor.insertImage', img_name);
 	         }
 	      });
-   		}   */
+   		}   
 			   
     </script>
 

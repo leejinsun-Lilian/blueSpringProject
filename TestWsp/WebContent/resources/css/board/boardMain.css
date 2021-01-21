@@ -1,3 +1,7 @@
+.shadow {
+    text-shadow: 1px 1px 2px black;
+}
+
 h1 {
     margin: 50px 0;
     width: 100%;
@@ -15,22 +19,31 @@ h1 {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     margin-bottom: 30px;
+    padding: 0;
 }
 
 #board-category li {
     list-style: none;
     font-size: 24px;
     font-weight: bold;
+    width: 15%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
 }
 
 #board-category a {
     text-decoration: none;
     color: black;
+    display: block;  
+    transition: 1s;
 }
 
 #board-category a:hover {
-    color: white;
-    background-color: green;
+    font-size: 1.2em;
+    color: rgb(89, 100, 248);
+    box-shadow: 0 80px 0 0 rgb(220, 229, 235) inset, 0 -80px 0 0  rgb(220, 229, 235) inset;
+    transition: 1.5s;
 } 
 
 /* 게시판 메인 */
@@ -110,26 +123,22 @@ h1 {
     background-color: lightblue;
 }
 
-#board-nav a:hover {
-    font-weight: bold;
-    opacity: 0.5;
-}
-
 /*  */
 #board-nav{
-    
+    margin: 0;
 }
-#board-nav li {
-    margin: 0 1px;
-    padding: 5px 5px;
+.page-li {
+    width: 30px;
+    color: black;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
     list-style: none;
-    /* background-color: lightgray; */
-    border-radius: 10%;
     display: inline-block;
+    transition: 0.2s;
 }
 #board-nav a{
     text-decoration: none;
-    color: black;
 }
 
 /*  */
@@ -140,10 +149,14 @@ h1 {
 
 
 /* 공용 */
-#board-nav > li:hover {
+.page-li:hover {
     color : #283e69;
-    background-color : #dee2e6; 
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    width: 35px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 #hidden-cn {

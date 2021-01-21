@@ -19,12 +19,12 @@
     
     <jsp:include page="../common/header.jsp"></jsp:include>
 
-    <h1>자유게시판</h1>  
+    <h1 class="shadow">자유게시판</h1>  
 
     <div id="board-view">
 
         <div id="titleReport">
-            <h2 id="board-title">${board.boardTitle}</h2>
+            <h2 id="board-title" class="shadow">${board.boardTitle}</h2>
             <!-- 로그인이 되어있고 글 작성자가 아닌 경우 --> 
             <c:if test="${!empty loginMember && (board.memberId != loginMember.memberId)}">
             	<button type="button" id="boardReportBtn">신고하기</button>
@@ -35,9 +35,9 @@
         
         <div id="board-info">
             <div id="board-box1">
-                <span>${board.memberId}</span> 
+                <span class="shadow">${board.memberId}</span> 
             </div>
-            <div id="board-box2">
+            <div id="board-box2" class="shadow">
                 <span>
                 	작성일 : <fmt:formatDate value="${board.boardCreateDate}" pattern="yyyy년 MM월 dd일HH:mm:ss"/>
                 	<br>

@@ -171,7 +171,6 @@ public class BoardService {
 			commit(conn);
 			// 삽입 성공 시 상세 조회 화면으로 이동해야되기 때문에
 			// 글번호를 반환할 수 있도록 result에 boardNo 대입
-//			result = boardNo;
 			result = boardNo;
 		} else {
 			rollback(conn);

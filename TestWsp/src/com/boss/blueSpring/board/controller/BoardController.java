@@ -136,6 +136,42 @@ public class BoardController extends HttpServlet {
 				List<Attachment> fList = new ArrayList<Attachment>();				
 				Enumeration<String> files = multiRequest.getFileNames();
 				
+				System.out.println(files);
+				
+//				while(files.hasMoreElements()) { // 다음 요소가 있다면
+//					
+//					// 현재 접근한 요소 값 반환
+////					String name = files.nextElement(); // img0
+////					System.out.println("name : " + name);
+////					System.out.println("원본 파일명 : " + multiRequest.getOriginalFileName(name));
+////					System.out.println("변경된 파일명 : " + multiRequest.getFilesystemName(name));
+////					
+//					// 제출받은 file태그 요소 중 업로드된 파일이 있을 경우
+////					while(multiRequest.getFilesystemName(name) != null) {
+////						
+////						// Attachment 객체에 파일 정보 저장
+////						Attachment temp = new Attachment();
+////						
+////						temp.setFileName(multiRequest.getFilesystemName(name));
+////						temp.setFilePath(filePath);
+////						
+//						// name 속성에 따라 fileLevel 지정
+////						int fileLevel = 0;
+////						switch(name) {
+////						case "files" : fileLevel = 0; break;
+////						case "img1" : fileLevel = 1; break;
+////						case "img2" : fileLevel = 2; break;
+////						case "img3" : fileLevel = 3; break;
+////						}
+//						
+//						
+//						
+////						temp.setFileLevel(fileLevel);
+//						
+//						// fList에 추가
+//						fList.add(temp);
+//					}		
+//				}
 				
 				// 파일 외 
 				// 폼 태그에서 enctype="multipart/form-data"을 작성해서 일반적인 request로는 값을 받아올 수 없다.
@@ -150,7 +186,7 @@ public class BoardController extends HttpServlet {
 //				System.out.println(boardWriter);
 				
 				Map<String, Object> map = new HashMap<String, Object>();
-//				map.put("fList", fList);
+				map.put("fList", fList);
 				map.put("boardTitle", boardTitle);
 				map.put("boardContent", boardContent);
 				map.put("categoryCode", categoryCode);
