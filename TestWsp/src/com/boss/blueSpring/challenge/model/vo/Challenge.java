@@ -19,6 +19,7 @@ public class Challenge {
 	private String chlngCateNm;	// 챌린지 카테고리 이름
 	private String memberId;		// 회원 아이디
 	private int likeCount;
+	private String memNickname; //작성자 닉네임
 	
 
 	public Challenge() {
@@ -26,7 +27,7 @@ public class Challenge {
 
 	public Challenge(int chlngNo, String chlngTitle, String chlngContent, Timestamp chlngStartDt, Timestamp chlngEndDt,
 			int currNumMem, int accNumMem, char chlngFl, Timestamp chlngCreateDt, Timestamp chlngUpdateDt, int memberNo,
-			String chlngCateNm, String memberId, int likeCount) {
+			String chlngCateNm, String memberId, int likeCount, String memNickname) {
 		super();
 		this.chlngNo = chlngNo;
 		this.chlngTitle = chlngTitle;
@@ -42,6 +43,7 @@ public class Challenge {
 		this.chlngCateNm = chlngCateNm;
 		this.memberId = memberId;
 		this.likeCount = likeCount;
+		this.memNickname = memNickname;
 	}
 
 	
@@ -179,14 +181,24 @@ public class Challenge {
 		this.likeCount = likeCount;
 	}
 
+	public String getMemNickname() {
+		return memNickname;
+	}
+
+	public void setMemNickname(String memNickname) {
+		this.memNickname = memNickname;
+	}
+
 	@Override
 	public String toString() {
 		return "Challenge [chlngNo=" + chlngNo + ", chlngTitle=" + chlngTitle + ", chlngContent=" + chlngContent
 				+ ", chlngStartDt=" + chlngStartDt + ", chlngEndDt=" + chlngEndDt + ", currNumMem=" + currNumMem
 				+ ", accNumMem=" + accNumMem + ", chlngFl=" + chlngFl + ", chlngCreateDt=" + chlngCreateDt
 				+ ", chlngUpdateDt=" + chlngUpdateDt + ", memberNo=" + memberNo + ", chlngCateNm=" + chlngCateNm
-				+ ", memberId=" + memberId + ", likeCount=" + likeCount + "]";
+				+ ", memberId=" + memberId + ", likeCount=" + likeCount + ", memNickname=" + memNickname + "]";
 	}
+
+
 
 	
 	

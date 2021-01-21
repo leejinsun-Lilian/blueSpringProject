@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.boss.blueSpring.challenge.model.dao.ChallengeDAO;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 import com.boss.blueSpring.notice.model.vo.Notice;
 
@@ -50,7 +51,6 @@ public class ChallengeService {
 		 sort = sort == null ? "" : sort;
 		
 		 String orderBy = null;
-		 //String end = null;
 		 
 		if(sort.equals("like")) {
 			orderBy = " LIKE_COUNT DESC, ";
@@ -58,9 +58,7 @@ public class ChallengeService {
 			orderBy = "";
 		}
 		
-//		if(cn != null) {
-//			end = "AND CHLNG_CATE_NM = " + "'" + cn + "'";
-//		}
+
 		List<Challenge> list = dao.selectList(conn, pInfo, orderBy);   //, end
 		
 		
@@ -68,12 +66,39 @@ public class ChallengeService {
 		return list;
 	}
 
-	public List<Challenge> selectList1(PageInfo pInfo, String sort) {
-		// TODO Auto-generated method stub
-		return null;
+
+	/** 챌린지 상세조회 Service
+	 * @param challengeNo
+	 * @return challenge
+	 * @throws Exception
+	 */
+	public Challenge selectChallenge(int challengeNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		Challenge challenge = dao.selectChallenge(conn, challengeNo);
+		
+		close(conn);
+		
+		return challenge;
 	}
-	
-	
+//
+//	/** 챌린지 좋아요 가져오기 Service
+//	 * @param challengeNo
+//	 * @param memberNo
+//	 * @return likeInfo
+//	 */
+//	public Like selectLike(int challengeNo, int memberNo) throws Exception {
+//		Connection conn = getConnection();
+//		
+//		Like likeInfo = dao.selectLike(conn, challengeNo, memberNo);
+//		
+//		close(conn);
+//		
+//		return likeInfo;
+//	}
+//	
+//	
 	
 	
 	

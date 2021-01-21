@@ -27,7 +27,6 @@ public class ChallengeCategorySearch extends HttpServlet {
 		String cp = request.getParameter("cp");	
 		String sort = request.getParameter("sort");
 		
-		System.out.println(123);
 		
 	//	System.out.println(sort);
 //		System.out.println(searchKey);
@@ -51,7 +50,6 @@ public class ChallengeCategorySearch extends HttpServlet {
 			PageInfo pInfo = service.getPageInfo(map);
 			
 			List<Challenge> list = service.searchChallengeList(map, pInfo);
-			
 			path = "/WEB-INF/views/challenge/challengeList.jsp";
 			
 			request.setAttribute("list", list);
