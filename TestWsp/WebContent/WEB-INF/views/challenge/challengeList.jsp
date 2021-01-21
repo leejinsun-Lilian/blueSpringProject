@@ -215,6 +215,16 @@
     	
     	var url = "${contextPath}/challenge/view.do?cp=${pInfo.currentPage}&no=" + chlngNo +"${searchStr}";
     	
+    	var cn = "${param.cn}";
+    	var sort = "${param.sort}";
+    	    
+    	if(cn != ""){
+    		url += "&cn=" + cn;
+    	}
+    	
+    	if(sort != ""){
+    		url += "&sort=" + sort;
+    	}
     	location.href = url;
     	
     });
@@ -257,10 +267,10 @@
  		//location.href = "list.do?sort=" + sort;    //cn=${param.cn}&???????????
  			
  		if("${param.cn}" != ""){
-	 		location.href = "challengeCategorySearch.do?sort=" + sort + "&cn=${param.cn}"  ; 
+	 		location.href = "${contextPath}/challengeCategorySearch.do?sort=" + sort + "&cn=${param.cn}"  ; 
  		}
  		else if("${param.sk}" != "" && "${param.sv}" != ""){   /* 검색  후 정렬 */
-	 		location.href = "challengeSearch.do?sort=" + sort + "&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}"  ; 
+	 		location.href = "${contextPath}/challengeSearch.do?sort=" + sort + "&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}"  ; 
  		}
  		
  		

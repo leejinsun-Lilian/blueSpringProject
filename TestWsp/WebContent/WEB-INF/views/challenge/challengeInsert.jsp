@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>챌린지 등록 페이지</title>
-<link rel="stylesheet" href="resources/css/ch_insert.css" type="text/css">
+<link rel="stylesheet" href="${contextPath}/resources/css/challenge/ch_insert.css" type="text/css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
 		<hr>
 		
 		
-		<form action="#">
+		<form action="${contextPath}/challenge">
 			<!-- 개설 정보 입력 -->
 			<div class="input">
 				<label class="input-area">제목</label>

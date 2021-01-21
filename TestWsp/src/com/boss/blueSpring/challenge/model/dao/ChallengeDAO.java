@@ -1,6 +1,6 @@
 package com.boss.blueSpring.challenge.model.dao;
 
-import static com.boss.blueSpring.common.JDBCTemplate.close;
+import static com.boss.blueSpring.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 
 public class ChallengeDAO {
@@ -114,6 +115,93 @@ public class ChallengeDAO {
 		
 		return list;
 	}
+
+
+	/** 챌린지 상세 조회 DAO
+	 * @param conn
+	 * @param challengeNo
+	 * @return challenge
+	 * @throws Exception
+	 */
+	public Challenge selectChallenge(Connection conn, int challengeNo) throws Exception{
+		Challenge challenge = null;
+		
+		String query = prop.getProperty("selectChallenge");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, challengeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			//챌린지 번호 , 제목, 내용, 작성자(닉네임), 시작일, 종료일, 카테고리, 좋아요
+			if(rset.next()) {
+				challenge = new Challenge();
+				
+				challenge.setChlngNo(rset.getInt("CHLNG_NO"));
+				challenge.setChlngTitle(rset.getString("CHLNG_TITLE"));
+				challenge.setChlngContent(rset.getString("CHLNG_CONTENT"));
+				challenge.setMemNickname(rset.getString("MEM_NICKNAME"));
+				challenge.setChlngStartDt(rset.getTimestamp("STR_DT"));
+				challenge.setChlngEndDt(rset.getTimestamp("END_DT"));
+				challenge.setchlngCateNm(rset.getString("CHLNG_CATE_NM"));
+				challenge.setLikeCount(rset.getInt("LIKE_COUNT"));
+				challenge.setMemberId(rset.getString("MEM_ID"));
+			}
+			
+			
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+	
+		}
+		return challenge;
+	}
+
+
+//	/** 챌린지 좋아요 가져오기DAO
+//	 * @param conn
+//	 * @param challengeNo
+//	 * @param memberNo
+//	 * @return likeInfo
+//	 * @throws Exception
+//	 */
+//	public Like selectLike(Connection conn, int challengeNo, int memberNo) throws Exception{
+//
+//		Like likeInfo = null;
+//		
+//		String query = "SELECT * FROM CHALLENGE_LIKES WHERE CHLNG_NO = ? AND MEM_NO = ?";
+//		
+//		try {
+//		
+//			pstmt = conn.prepareStatement(query);
+//			
+//			pstmt.setInt(1, challengeNo);
+//			pstmt.setInt(2, memberNo);
+//			
+//			rset = pstmt.executeQuery();
+//			
+//			likeInfo = new Like();
+//			
+//			if(rset.next()) {
+//				Like like = new Like();
+//				
+//				like.setChallengeNo(rset.getInt("CHLNG_NO"));
+//				like.setMemberNo(rset.getInt("MEM_NO"));
+//				
+//				likeInfo = like;
+//			}
+//			
+//			
+//		} finally {
+//			close(rset);
+//			close(pstmt);
+//		}
+//		
+//		return likeInfo;
+//	}
 
 
 	

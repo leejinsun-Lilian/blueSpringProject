@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>챌린지 조회 페이지</title>
-<link rel="stylesheet" href="resources/css/ch_view.css" type="text/css">
+<title>챌린지 상세 조회 페이지</title>
+<link rel="stylesheet" href="${contextPath}/resources/css/challenge/ch_view.css" type="text/css">
 </head>
 
 <body>
@@ -21,82 +22,116 @@
 		<!-- 개설 정보 입력 -->
 		<div class="input">
 			<label class="input-area">제목 </label> 
-			<span class="input-area2">제목 들어갈 부분</span>
+			<span class="input-area2">${challenge.chlngTitle}</span>
 			<div class="writer">
-				<label class="input-area">작성자 </label> 작성자이름
+				<label class="input-area">작성자 </label>${challenge.memNickname}
 			</div>
 
 			<br>
 			<br> 
-			<label class="input-area">시작일</label> 
-			<span class="input-area2">2020-12-01 ~ 2020-12-31</span>
+			<label class="input-area">기간</label> 
+			<span class="input-area2">
+				<fmt:formatDate var="startDate" value="${challenge.chlngStartDt}" pattern="yyyy-MM-dd"  />
+				${startDate}
+				&nbsp;&nbsp;~&nbsp;&nbsp;
+				<fmt:formatDate var="endDate" value="${challenge.chlngEndDt}" pattern="yyyy-MM-dd"  />
+				${endDate}
+			</span>
 
 
 			<div class="health">
-				<label class="input-area">카테고리</label> 건강
+				<label class="input-area">카테고리</label>${challenge.chlngCateNm}
 			</div>
 
 			<br>
 			<br>
-
-<%-- 		<!-- 이미지 출력 -->
+			
+<%-- 			<!-- 이미지 출력 -->
 			<c:if test="${!empty fList}">
 				<!-- 이미지가 없으면 그 슬라이드 공간을 차지하지 않음 -->
-				<div class="carousel slide boardImgArea" id="board-image">
-					<!-- 이미지 선택 버튼 -->
-					<ol class="carousel-indicators">
+				<div>
+				
+					<div>
 						<c:forEach var="file" items="${fList}" varStatus="vs">
-							<li data-slide-to="${vs.index}" data-target="#board-image"
-								<c:if test="${vs.first}"> class="active" </c:if>></li>
-						</c:forEach>
-					</ol>
-
-					<!-- 출력되는 이미지 -->
-					<div class="carousel-inner active">
-						<c:forEach var="file" items="${fList}" varStatus="vs">
-
-							<div class="carousel-item <c:if test="${vs.first}">active</c:if>">
-								<img class="d-block w-100 boardImg" id="${file.fileNo}"
-									src="${contextPath}/resources/uploadImages/${file.fileName}">
+							<div class="imgFile" align="center">
+								<img class="d-block w-100 boardImg" id="${file.fileNo}" 
+											src="${contextPath}/resources/uploadImages/notice/${file.fileName}">
 							</div>
-
 						</c:forEach>
-
 					</div>
-
-					<!-- 좌우 화살표 -->
-					<a class="carousel-control-prev" href="#board-image"
-						data-slide="prev"><span class="carousel-control-prev-icon"></span>
-						<span class="sr-only">Previous</span></a> <a
-						class="carousel-control-next" href="#board-image"
-						data-slide="next"><span class="carousel-control-next-icon"></span>
-						<span class="sr-only">Next</span></a>
+					
 				</div>
-			</c:if>
- --%>
-
+			</c:if> --%>
 
 
 
 
 			<div class="rule-area">
-				<label class="input-area">인증방법</label> 매일 아침 8시에 일어나서 세면대에서 손과 함께 찍은
-				사진을 올려주세요.
+				 ${challenge.chlngContent}
 			</div>
 
 			<br>
 
-			<div class="introduce">내용들어갈 부분</div>
+			<!-- <div class="introduce">내용들어갈 부분</div> -->
 			
 		</div>
 
 		<hr>
+		
+		<!-- 로그인한 회원이 글 작성자면 버튼 보이게 -->
 
-		<!-- 목록, 수정, 삭제  버튼 -->
+		<!-- 목록, 수정, 삭제  버튼 -->    <!-- !~!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!멤버아이디     !!!!버튼  -->
 		<div class="text-center">
-			<button id="deleteBtn" class="btn">삭제</button>
-			<a href="#" class="btn btn-update">수정</a>
-			<a href="#" class="btn btn-update" onclick="location.href='challengeList.jsp'">목록</a>
+			<c:if test="${!empty loginMember && (challenge.memberId == loginMember.memberId) }">
+				<button id="deleteBtn" class="btn">삭제</button>
+				
+				<c:if test="${!empty param.sv && !empty param.sk && !empty param.cn && !empty param.sort}">
+					<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}&cn=${param.cn}&sort=${param.sort}" />
+				</c:if>
+				
+				<a href="updateForm.do?cp=${param.cp}&no=${param.no}${searchStr}&cn=${param.cn}$sort=${param.sort}" class="btn btn-update">수정</a>
+			</c:if>
+			
+			
+			<!-- 목록 버튼 -->
+			<c:choose>
+				<c:when test="${!empty param.sk && !empty param.sv }">
+					<c:url var="goToList" value="../challengeSearch.do">
+						<c:param name="cp">${param.cp}</c:param>
+						<c:param name="sk">${param.sk}</c:param>
+						<c:param name="sv">${param.sv}</c:param>
+						<%-- <c:param name="cn">${param.cn}</c:param>
+						<c:param name="sort">${param.sort}</c:param> --%>
+					</c:url>
+				</c:when>
+				
+				<%-- <c:otherwise test="${!empty param.cn && !empty param.sort}" > 
+					<c:url var="goToList" value="../challengeCategorySearch.do">
+				
+						<c:param name="cn">${param.cn}</c:param>
+					</c:url>
+				
+				</c:otherwise> --%>
+				
+				
+				<c:otherwise>
+					<c:url var="goToList" value="list.do">  <!-- 상대경로 방식 -->
+						<c:param name="cp">${param.cp}</c:param>
+					</c:url>
+				</c:otherwise>
+				
+				
+			</c:choose>
+			
+			<c:if test="${!empty param.cn}">
+				<c:set var="goToList" value="${goToList}&cn=${param.cn}" />
+			</c:if>
+			
+			<c:if test="${!empty param.sort}">
+				<c:set var="goToList" value="${goToList}&sort=${param.sort}" />
+			</c:if>
+			
+			<a href="${goToList}" class="btn btn-update">목록</a>
 		</div>
 
 
@@ -108,7 +143,13 @@
 
 
 	<script>
-    	// 유효성 검사
+	("#deleteBtn").on("click", function(){                     // window.confirm 윈도우에서 제공하는 내장객체
+		
+		if(window.confirm("정말 삭제 하시겠습니까?")){
+			location.href = "delete.do?no=${notice.noticeNo}";
+		}
+		
+	});
     
     	
     </script>
