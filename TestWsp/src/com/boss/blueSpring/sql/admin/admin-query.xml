@@ -39,7 +39,7 @@ FROM
 WHERE RNUM BETWEEN ? AND ?
 </entry>
 
-<!-- 센터 목록 관리 전체 게시글 수 조회 -->
+<!-- 센터[기관] 목록 관리 전체 게시글 수 조회 -->
 <entry key="getCenterListCount">
 SELECT COUNT(*) FROM V_CENTER
 </entry>
@@ -57,6 +57,19 @@ WHERE RNUM BETWEEN ? AND ?
 <entry key="selectCenterPagetList">
 SELECT * FROM P_CENTER
 WHERE CENTER_NO = ?
+</entry>
+
+<!-- 센터등록 기관명 중복 체크 -->
+<entry key="centerNameDubCheck">
+SELECT COUNT(*) FROM CENTER
+WHERE CENTER_NM = ?
+AND CENTER_DEL_FL = 'N'
+</entry>
+
+<!-- 센터 등록하기 -->
+<entry key="centerAdd">
+INSERT INTO CENTER VALUES(SEQ_CNO.NEXTVAL, ?, ?, ?, 
+?, ?, ?, ?, ?, 'N')
 </entry>
 
 <!-- 회원정보 관리 전체 게시글 수 조회 -->

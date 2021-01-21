@@ -21,6 +21,18 @@ import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
+/**
+ * @author sl631
+ *
+ */
+/**
+ * @author sl631
+ *
+ */
+/**
+ * @author sl631
+ *
+ */
 public class AdminService {
 	
 	private AdminDAO dao = new AdminDAO();
@@ -244,6 +256,34 @@ public class AdminService {
 		List<ChallengeCrtfd> crtList = dao.selectChallCrtfdList(conn, crtpInfo);
 		close(conn);
 		return crtList;
+	}
+
+	
+	
+	/** [센터등록] 기관명 중복 체크 Service
+	 * @param centerName
+	 * @return result
+	 * @throws Exception
+	 */
+	public int centerNameDubCheck(String centerName) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.centerNameDubCheck(conn, centerName);
+		close(conn);
+		return result;
+	}
+
+	/** [센터등록] 기관 등록 Service
+	 * @param center
+	 * @return result
+	 * @throws Exception
+	 */
+	public int centerAdd(Center center) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.centerAdd(conn, center);
+		if(result > 0) commit(conn);
+		else commit(conn);
+		close(conn);
+		return result;
 	}
 
 

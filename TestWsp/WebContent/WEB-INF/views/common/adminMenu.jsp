@@ -3,18 +3,23 @@
 	<style>
 	
 	
+	* {
+	font-family: 'Noto Sans KR', sans-serif;
+	}
+	
 	.adminMenu_area{
-		width: 20%;
-		margin : 20px 0 0 3px; /* 위  오른쪽 아래 왼쪽 */
+		width: 200px;
+		margin : 0 0 0 3px;
 		padding : 0;
 		display : inline-block;
 		border : 1px solid rgb(166 167 169 / 89%);
-		float: left;
+		float : left;
 	}
 	
 	.adminMenu {
 		margin : auto;
 		width : 90%;
+		
 	}
 	
 	.adminMenu > ul {
@@ -23,14 +28,14 @@
 	}
 	
 	.adminMenu_list {
-		background-color: rgb(210 212 218 / 89%);
+		background-color: rgb(243 243 243 / 76%);
 	}
 	
 	.adminMenu > ul > li {
 		text-align: center;
 		padding : 5px 0 5px;
 		margin : 8px 0 8px;
-		list-style-type: none;
+		cursor : pointer;
 	}
 	
 	.adminMenu_title {

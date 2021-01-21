@@ -114,7 +114,7 @@
                                 <td>${center.centerCla}</td>
                                 <td>${center.centerArea1}</td>
                                 <td>${center.centerArea2}</td>
-								<td><a href="#" onclick="window.open('${contextPath}/admin/centerPage.do?cn=${center.centerNo}','name','resizable=no width=400 height=280');return false">${center.centerName}</a></td>
+								<th><a href="#" onclick="window.open('${contextPath}/admin/centerPage.do?cn=${center.centerNo}','name','resizable=no width=400 height=280');return false">${center.centerName}</a></th>
 								<td>${center.centerTel}</td>
 		                        <td>${center.centerUrl}</td>
 		                        <td>${center.centerDeleteFl}</td>
@@ -216,8 +216,8 @@
             </form>
             
             <div class="center_page_btn">
-            <button id="center_btn2">센터등록</button>
-            <button id="center_btn3">센터수정</button>
+            <button id="center_btn2" onClick="location.href='${contextPath}/admin/centerAdd.do'">센터등록</button>
+            <button id="center_btn3" onClick="location.href='${contextPath}/admin/centerUpdate.do'">센터수정</button>
             <button id="center_btn4">센터삭제</button></div>
 			
         </div>
