@@ -56,7 +56,7 @@
                <div class="community nav_title">커뮤니티</div>
                <div class="sub">
                   <ul>
-                     <li><a href="${contextPath}/board/list.do">자유게시판</a></li>
+                     <li><a href="${contextPath}/board/list.do?cp=1">자유게시판</a></li>
                   </ul>
                </div>
             </li>

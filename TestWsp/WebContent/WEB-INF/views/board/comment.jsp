@@ -6,6 +6,9 @@
 <title>Insert title here</title>
 
 <style>
+	.cWriter, .cDate {
+    	text-shadow: 1px 1px 2px black;
+	}
     #comment-area {
         border-top: 1px solid lightgray;
         border-bottom: 1px solid lightgray;
@@ -140,19 +143,23 @@
                         var cDate = $("<p>").addClass("cDate").text("작성일 : " + item.comCreateDate);
                         
                         var div = $("<div>");
-                        div.append(cWriter).append(cDate);
+                        //div.append(cWriter).append(cDate);
                         
+                       	div.append(cWriter);
+                        div.append(cDate);
+                       	
                         if(item.memberId != loginMemberId) {
-                        	div.append(cWriter).append(reportBtn);
+                        	div.append(reportBtn);
                         }
+                        
                         
                         var cContent = $("<p>").addClass("cContent").html(item.comContent);
                         
                         li.append(div).append(cContent);                     
                         
                         // 현재 댓글의 작성자와 로그인한 멤버의 아이디가 같을 때 버튼 추가
-                        console.log(item.memberId);
-                        console.log(loginMemberId);
+/*                      console.log(item.memberId);
+                        console.log(loginMemberId); */
                         if(item.memberId == loginMemberId){
                             // console.log(item.memberId);
                             // 댓글, 수정, 삭제 버튼 영역

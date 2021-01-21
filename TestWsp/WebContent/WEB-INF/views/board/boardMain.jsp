@@ -26,18 +26,16 @@
     	</c:otherwise>
     </c:choose>
     
-    ${memberNo}
-    
-    <h1>자유게시판</h1>       
+    <h1 class="shadow">자유게시판</h1>       
     <div id="board-main">
         <ul id="board-category">
-        		<li><a href="${contextPath}/board/list.do">전체</a></li>
-            <li><a href="${contextPath}/categorySearch.do?cn=정보">정보</a></li>
-            <li><a href="${contextPath}/categorySearch.do?cn=일상">일상</a></li>
-            <li><a href="${contextPath}/categorySearch.do?cn=취미">취미</a></li>
-            <li><a href="${contextPath}/categorySearch.do?cn=고민">고민</a></li>
-            <li><a href="${contextPath}/categorySearch.do?cn=취업">취업</a></li>
-            <li><a href="${contextPath}/categorySearch.do?cn=자유">자유</a></li>
+        		<li class="shadow"><a href="${contextPath}/board/list.do?cp=1">전체</a></li>
+            <li class="shadow"><a href="${contextPath}/categorySearch.do?cn=정보">정보</a></li>
+            <li class="shadow"><a href="${contextPath}/categorySearch.do?cn=일상">일상</a></li>
+            <li class="shadow"><a href="${contextPath}/categorySearch.do?cn=취미">취미</a></li>
+            <li class="shadow"><a href="${contextPath}/categorySearch.do?cn=고민">고민</a></li>
+            <li class="shadow"><a href="${contextPath}/categorySearch.do?cn=취업">취업</a></li>
+            <li class="shadow"><a href="${contextPath}/categorySearch.do?cn=자유">자유</a></li>
         </ul>
         
         
@@ -135,24 +133,24 @@
         <ul id="board-nav">
 					<%-- 현재 페이지가 10페이지 초과인 경우 --%>
 					<c:if test="${pInfo.currentPage > 10}">			
-						<li><a class="page-link" href="${firstPage}">&lt;&lt;</a></li>					
-						<li><a class="page-link" href="${prevPage}">&lt;</a></li>				
+						<li class="page-li"><a class="page-link" href="${firstPage}">&lt;&lt;</a></li>					
+						<li class="page-li"><a class="page-link" href="${prevPage}">&lt;</a></li>				
 					</c:if>				
 					<!-- 페이지 목록 -->
 					<c:forEach var="page" begin="${pInfo.startPage}" end="${pInfo.endPage}">						
 						<c:choose>
 							<c:when test="${pInfo.currentPage == page}">
-								<li><a class="page-link">${page}</a></li>
+								<li class="page-li"><a class="page-link shadow">${page}</a></li>
 							</c:when>			
 							<c:otherwise>
-								<li><a class="page-link" href="${pageUrl}?cp=${page}${searchStr}">${page}</a></li>
+								<li class="page-li"><a class="page-link shadow" href="${pageUrl}?cp=${page}${searchStr}">${page}</a></li>
 							</c:otherwise>			
 						</c:choose>						
 					</c:forEach>				
 					<%-- 다음 페이지가 마지막 페이지 이하인 경우 --%>
 					<c:if test="${next <= pInfo.maxPage}">			
-						<li><a class="page-link" href="${nextPage}">&gt;</a></li>				
-						<li><a class="page-link" href="${lastPage}">&gt;&gt;</a></li>									
+						<li class="page-li"><a class="page-link shadow" href="${nextPage}">&gt;</a></li>				
+						<li class="page-li"><a class="page-link shadow" href="${lastPage}">&gt;&gt;</a></li>									
 					</c:if>
         </ul>
 
@@ -186,12 +184,11 @@
 				});
 				
 				$("#board td").hover(function() {
-                    $(this).parent().css("backgroundColor", "lightgray");
+                    $(this).parent().css("backgroundColor", "lightgray").css("transition", "0.3s");
                 }, function(){
-                    $(this).parent().css("backgroundColor", "white");
+                    $(this).parent().css("backgroundColor", "white").css("transition", "0.3s");
                 });
-				
-    
+   
 			 // 검색 내용이 있을 경우 검색창에 해당 내용을 작성해주는 기능 
 				(function(){
 					var searchKey = "${param.sk}";
@@ -217,8 +214,16 @@
 					
 					// 검색어 입력창에 categoryName 값 출력
 					$("input[name=cn]").val(categoryName);
-//					console.log(categoryName);
-					
+                    //console.log(categoryName);
+                    
+                    // 현재 선택된 페이지 숫자 이벤트
+                    $.each($(".page-link"), function(index, item){
+                        if($(".page-link")[index].text == "${param.cp}") {
+                            $(this).css("font-size", "24px");
+                            $(this).parent().css("display", "inline-block").css("width", "30px").css("text-align", "center").css("color", " #283e69").css("font-weight", "bold");
+                            $(this).parent().removeClass("page-li");
+                        }
+                    });
 				})();
     </script>
 

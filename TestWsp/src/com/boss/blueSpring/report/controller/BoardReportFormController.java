@@ -15,7 +15,7 @@ public class BoardReportFormController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 
-		String boradNo = request.getParameter("brdNo");
+		String boardNo = request.getParameter("brdNo");
 		String memberId = request.getParameter("memNo");
 		String target = request.getParameter("target");
 		
@@ -28,7 +28,7 @@ public class BoardReportFormController extends HttpServlet {
 		
 		try {
 			
-			request.setAttribute("boradNo", boradNo);
+			request.setAttribute("boardNo", boardNo);
 			request.setAttribute("memberId", memberId);
 			request.setAttribute("target", target);
 			

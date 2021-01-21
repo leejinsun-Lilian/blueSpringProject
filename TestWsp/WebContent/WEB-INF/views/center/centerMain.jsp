@@ -171,9 +171,11 @@
 						var centerCla = $("<p>").addClass("centerCla").text(item.centerCla);
 						var centerName = $("<p>").addClass("centerName").text(item.centerName);
 						var centerPhone = $("<p>").addClass("centerPhone").text(item.centerTel);
-						var centerUrl = $("<a>").addClass("centerUrl").attr("href", item.centerUrl).text(item.centerUrl);
+						var centerUrl = $("<a>").addClass("centerUrl").attr("href", "http://"+item.centerUrl).text(item.centerUrl);
 						var centerAddr = $("<p>").addClass("centerAddr").text(item.centerAddr);
 						var centerAddr2 = $("<p>").addClass("centerAddr2").text(item.centerAddrDtl);
+						// 
+						console.log(item.centerUrl);
 						
             div.append(centerTitle).append(centerCla).append(centerName).append(centerPhone).append(centerUrl).append(centerAddr).append(centerAddr2).append(placeSearchBtn);
 						li.append(div);
@@ -215,14 +217,19 @@
          type:'GET',
          headers: {'Authorization' : 'KakaoAK 95bd3f68d02962b41f5efde3edf2ad26'},
 			   success:function(data){
-				   	 flagNum2 = flagNum2 + 1;
-		  			 positionX.push(data['documents'][0]['x']);
-			       positionY.push(data['documents'][0]['y']); 
+				   	 try {
+					   	 flagNum2 = flagNum2 + 1;
+					       positionY.push(data['documents'][0]['y']); 
+				  			 positionX.push(data['documents'][0]['x']);
 
-				   	 centerNameAry.push(centerName);
-			       if(flagNum2 == flagNum) {
-			    	   pickMarkers();
-			       }
+						   	 centerNameAry.push(centerName);
+					       if(flagNum2 == flagNum) {
+					    	   pickMarkers();
+					       }			   		 
+				   	 } catch(error) {
+				   		 
+				   	 }
+
 			   },			   
 			   error : function(e){
 			       console.log(e);

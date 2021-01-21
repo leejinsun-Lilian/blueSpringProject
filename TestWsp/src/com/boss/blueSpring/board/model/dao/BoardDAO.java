@@ -227,6 +227,7 @@ public class BoardDAO {
 	}
 
 	
+	
 	/** 게시글 수정 DAO
 	 * @param conn
 	 * @param map
