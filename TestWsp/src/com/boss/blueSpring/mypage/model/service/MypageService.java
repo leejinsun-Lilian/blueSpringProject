@@ -3,7 +3,10 @@ package com.boss.blueSpring.mypage.model.service;
 import static com.boss.blueSpring.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.List;
 
+import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.mypage.model.dao.MypageDAO;
@@ -87,6 +90,36 @@ public class MypageService {
 		
 		close(conn);
 		return result;
+	}
+
+	
+	/** 페이징 처리를 위한 값 계산 Service
+	 * @param cp
+	 * @return pInfo
+	 * @throws Exception
+	 */
+	public PageInfo getPageInfo(String cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
+		
+		int listCount = dao.getListCount(conn); 
+		
+		close(conn);
+		
+		return new PageInfo(currentPage, listCount);
+	}
+
+	/** 게시글 목록 조회 Service
+	 * @param pInfo
+	 * @return bList
+	 * @throws Exception
+	 */
+	public List<Board> selectBoardList(PageInfo pInfo, String cn) throws Exception {
+		Connection conn = getConnection();
+		List<Board> bList = dao.selectBoardList(conn, pInfo, cn);
+		close(conn);
+		return bList;
 	}
 	
 

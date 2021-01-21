@@ -5,10 +5,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static com.boss.blueSpring.common.JDBCTemplate.*;
 
+import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
 
@@ -150,4 +154,69 @@ public class MypageDAO {
 		return result;
 	}
 
+	/** 페이징 처리를 위한 값 계산 DAO
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int getListCount(Connection conn) throws Exception {
+		int result = 0;
+		
+		String query = prop.getProperty("getListCount");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return result;
+	}
+	
+	/** 게시글 목록 조회 DAO
+	 * @param conn
+	 * @param pInfo
+	 * @return bList
+	 * @throws Exception
+	 */
+	public List<Board> selectBoardList(Connection conn, PageInfo pInfo, String cn) throws Exception {
+List<Board> bList = null;
+		
+		String query = prop.getProperty("selectBoardList");
+		
+		try {
+			int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;
+			int endRow = startRow + pInfo.getLimit() - 1;
+			
+			pstmt = conn.prepareStatement(query);
+//			pstmt.setString(1, cn);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			bList = new ArrayList<Board>();
+			
+			while(rset.next()) {
+				Board board = new Board(rset.getInt("BRD_NO"), 
+						rset.getString("BRD_TITLE"),
+						rset.getString("MEM_ID"), 
+						rset.getInt("BRD_VIEWS"),
+						rset.getString("CATEGORY_NM"), 
+						rset.getTimestamp("BRD_CRT_DT"),
+						rset.getInt("LIKES"));
+				bList.add(board);
+			}
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return bList;
+	}
 }

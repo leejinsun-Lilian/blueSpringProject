@@ -36,4 +36,10 @@ MEM_SCSN_FL = 'Y'
 WHERE MEM_NO = ?
 </entry>
 
+<entry key="getListCount">
+SELECT COUNT(*) FROM V_BOARD
+WHERE BRD_DEL_FL = 'N' 
+AND MEM_ID = ?
+</entry>
+
 </properties>
