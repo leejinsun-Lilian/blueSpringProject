@@ -13,8 +13,9 @@
     }
 
     .admin_title{
+    	margin-top: 4%;
         font-size: 25px;
-        color:rgb(40, 62, 105);
+        color: rgb(40, 62, 105);
         text-align: center;
     }
 	</style>
@@ -26,7 +27,7 @@
 		  <div class="admin_content">
 				<jsp:include page="../common/adminMenu.jsp"></jsp:include>
              <div class="admin_title">
-                <h1>관리자 페이지</h1>
+                <h2>관리자 페이지에 오신것을 환영합니다 ^.^</h2>
              </div>
 				
 

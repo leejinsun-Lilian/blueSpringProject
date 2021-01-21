@@ -177,6 +177,80 @@ public class AdminController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
+			// 기관(센터) 기관명 중복 체크 Controller *******************************************
+			else if(command.equals("/centerDubCheck.do")) {
+				errorMsg = "기관명 중복 검사 과정에서 오류가 발생했습니다.";
+				
+				String centerName = request.getParameter("centerName");
+				centerName += "'" + centerName + "'";
+						
+				try {
+					int result = service.centerNameDubCheck(centerName);
+					response.getWriter().print(result);
+					
+				}catch (Exception e) {
+					e.printStackTrace();
+					path = "/WEB-INF/views/common/errorPage.jsp";
+			        request.setAttribute("errorMsg", errorMsg);
+			        view = request.getRequestDispatcher(path);
+			        view.forward(request, response);
+				}
+			}
+			
+			// ********************* 기관(센터) 등록 페이지 Controller *********************
+			else if(command.equals("/centerComplete.do")) {
+				errorMsg = "센터등록 과정에서 오류가 발생했습니다.";
+				
+				path = "";
+				String centerCla = request.getParameter("cla");
+				String centerName = request.getParameter("centerName");
+				String centerArea1 = request.getParameter("sido1");
+				String centerArea2 = request.getParameter("gugun1");
+				
+				String postcode = request.getParameter("post");
+				String address1 = request.getParameter("address1");
+				String centerAddrDtl = request.getParameter("address2");
+				
+				String centerAddr = postcode + "," + address1;
+				
+				String centerTel = request.getParameter("phone");
+				String centerUrl = request.getParameter("homepage");
+				
+				Center center = new Center(centerCla, centerArea1, centerArea2, 
+						centerName, centerTel, centerUrl, 
+						centerAddr, centerAddrDtl);
+				try {
+					int result = service.centerAdd(center);
+					
+					if(result > 0) {
+						path="/WEB-INF/views/member/signUpComplete.jsp";
+						view = request.getRequestDispatcher(path);
+						view.forward(request, response);
+					} else {
+						
+						HttpSession session = request.getSession();
+						
+						swalIcon = "error";
+						swalTitle = "센터등록 실패";
+						swalText = "";
+						
+						session.setAttribute("swalIcon", swalIcon);
+						session.setAttribute("swalTitle", swalTitle);
+						session.setAttribute("swalText", swalText);
+						response.sendRedirect(request.getContextPath());
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					request.setAttribute("errorMsg", errorMsg);
+					path = "/WEB-INF/views/common/errorPage.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				}
+			}
+				
+			
+			
 			// 기관(센터) 수정 페이지 Controller ***************************************************
 			else if (command.equals("/centerUpdate.do")) {
 				errorMsg = "기관 수정 페이지 조회 중 오류 발생.";

@@ -523,6 +523,59 @@ public class AdminDAO {
 		return crtList;
 	}
 
+	
+	
+	/** [센터등록] 기관명 중복 체크 DAO
+	 * @param conn
+	 * @param centerName
+	 * @return result
+	 * @throws Exception
+	 */
+	public int centerNameDubCheck(Connection conn, String centerName) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("centerNameDubCheck");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, centerName);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+	/** [센터등록] 기관 등록 DAO
+	 * @param center
+	 * @return result
+	 * @throws Exception
+	 */
+	public int centerAdd(Connection conn, Center center) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("centerAdd");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+		
+			pstmt.setString(1, center.getCenterCla());
+			pstmt.setString(2, center.getCenterArea1());
+			pstmt.setString(3, center.getCenterArea2());
+			pstmt.setString(4, center.getCenterName());
+			pstmt.setString(5, center.getCenterTel());
+			pstmt.setString(6, center.getCenterUrl());
+			pstmt.setString(7, center.getCenterAddr());
+			pstmt.setString(8, center.getCenterAddrDtl());
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 
 

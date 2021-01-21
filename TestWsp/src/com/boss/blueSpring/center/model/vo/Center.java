@@ -30,8 +30,6 @@ public class Center {
 		this.centerAddrDtl = centerAddrDtl;
 		this.centerDeleteFl = centerDeleteFl;
 	}
-	
-	
 
 	public Center(int centerNo, String centerCla, String centerArea1, String centerArea2, String centerName,
 			String centerTel, String centerUrl, String centerAddr) {
@@ -59,7 +57,22 @@ public class Center {
 		this.centerUrl = centerUrl;
 		this.centerDeleteFl = centerDeleteFl;
 	}
-
+	
+	// admin 센터 등록하기 생성자
+	public Center(String centerCla, String centerArea1, String centerArea2, String centerName, String centerTel,
+			String centerUrl, String centerAddr, String centerAddrDtl) {
+		super();
+		this.centerCla = centerCla;
+		this.centerArea1 = centerArea1;
+		this.centerArea2 = centerArea2;
+		this.centerName = centerName;
+		this.centerTel = centerTel;
+		this.centerUrl = centerUrl;
+		this.centerAddr = centerAddr;
+		this.centerAddrDtl = centerAddrDtl;
+	}
+	
+	
 	public int getCenterNo() {
 		return centerNo;
 	}
