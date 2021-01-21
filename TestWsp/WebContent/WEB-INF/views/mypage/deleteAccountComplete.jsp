@@ -32,9 +32,12 @@
 	text-align: center;
 }
 
-.backgroundColor {
-	border: 1px solid #f1833c;
+
+.back{
+	width : 600px;
 }
+
+.findForm{width:410px;}
 </style>
 </head>
 <body>
@@ -43,14 +46,14 @@
 		<div class="container">
 			<div class="content">
 				<h1>푸른봄</h1>
-				<div class="backgroundColor">
+				<div class="back">
 					<div class="findForm">
 						<div class="text_area">
 							<h3>회원 탈퇴가 완료되었습니다.</h3>
 						</div>
 						<div class="row_group">
 							<div class="nextBtn_area">
-								<button type="submit" class="btn" id="nextBtn">메인으로</button>
+								<button type="button" class="btn" id="nextBtn" onclick="location.href ='${contextPath}/member/login.do'">메인으로</button>
 							</div>
 						</div>
 					</div>

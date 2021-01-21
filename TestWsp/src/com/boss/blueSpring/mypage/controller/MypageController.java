@@ -1,6 +1,7 @@
 package com.boss.blueSpring.mypage.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.boss.blueSpring.board.model.vo.Board;
+import com.boss.blueSpring.board.model.vo.PageInfo;
 import com.boss.blueSpring.member.model.service.MemberService;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.mypage.model.service.MypageService;
@@ -221,6 +224,17 @@ public class MypageController extends HttpServlet {
 			
 			// 작성한 게시글 조회
 			else if(command.equals("/myBoardList.do")) {
+				String cp = request.getParameter("cp" );
+				PageInfo pInfo = mService.getPageInfo(cp);
+				String cn = getInitParameter("cn");
+				
+				List<Board> bList = mService.selectBoardList(pInfo, cn);
+				
+				
+				
+				
+				
+				
 				path="/WEB-INF/views/mypage/myBoardList.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
