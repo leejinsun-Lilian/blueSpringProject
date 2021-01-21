@@ -21,18 +21,6 @@ import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
-/**
- * @author sl631
- *
- */
-/**
- * @author sl631
- *
- */
-/**
- * @author sl631
- *
- */
 public class AdminService {
 	
 	private AdminDAO dao = new AdminDAO();

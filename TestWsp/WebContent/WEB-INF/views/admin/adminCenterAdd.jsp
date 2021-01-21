@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>푸른봄: 센터등록</title>
+<title>푸른봄: 센터 등록</title>
 
 <link href="${contextPath}/resources/css/member/signUp.css" rel="stylesheet" type="text/css">
 

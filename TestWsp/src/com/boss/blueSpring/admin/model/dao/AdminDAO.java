@@ -512,6 +512,7 @@ public class AdminDAO {
 				ChallengeCrtfd challengeCrtfd = new ChallengeCrtfd(
 							rset.getInt("CHLNG_NO"),
 							rset.getInt("CHLNG_BRD_NO"),
+							rset.getString("CHLNG_BRD_TITLE"),
 							rset.getString("MEM_ID"), 
 							rset.getString("CHLNG_BRD_DEL_FL").charAt(0));
 							crtList.add(challengeCrtfd);

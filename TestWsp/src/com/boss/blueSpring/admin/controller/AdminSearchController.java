@@ -182,7 +182,6 @@ public class AdminSearchController extends HttpServlet {
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-				
 			}			
 
 			// 챌린지 관리자 검색 Controller *************************************************
@@ -209,7 +208,6 @@ public class AdminSearchController extends HttpServlet {
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-				
 			}
 			// 챌린지 인증게시판 관리자 검색 Controller *************************************************
 			else if(command.equals("/challCrtfd.do")) {
@@ -235,9 +233,7 @@ public class AdminSearchController extends HttpServlet {
 				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-				
 			}			
-			
 			
 			
 		} catch (Exception e) {

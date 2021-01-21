@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -23,8 +24,8 @@
 
 		<div class="title">
 			<img id="mainImg" src="resources/img/mainImg.png">
-			<form action="${contextPath}/main/mainSearchPage.do" method="get" name="search_input">
-				<input type="text" id="search_input" class="input" placeholder="관심있는 내용을 검색해 보세요!">
+			<form action="${contextPath}/mainSearch.do" method="get" name="search_input">
+				<input type="text" id="search_input" class="input" name="sv" placeholder="관심있는 내용을 Enter로 검색해 보세요!" autocomplete="off">
 			</form>
 		</div>
 		<div class="content">

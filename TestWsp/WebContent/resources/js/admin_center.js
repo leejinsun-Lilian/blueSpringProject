@@ -1,10 +1,7 @@
 var validateCheck = {
-    "cla" : true, // 분류
 	"centerName" : false, // 기관명
-	"area" : true, // 지역
 	"address" : false, // 주소
 	"phone" : false, // 전화번호
-	"homepage" : true // 홈페이지
 }
 
 // 기관명 중복 검사
@@ -123,12 +120,9 @@ function validate(){
 		if(!validateCheck[key]){
 			var msg;
 			switch(key) {
-				case  	"cla" : msg="분류가"; break;
 				case	"centerName" :  msg="기관명이"; break;
-				case    "area" :  msg="지역이"; break;
 				case	"address" :  msg="주소가"; break;
 				case	"phone" :  msg="전화번호가"; break;
-				case    "homepage" :  msg="홈페이지가"; break;
 			}
 			swal(msg+" 유효하지 않습니다.");
 			
@@ -143,10 +137,10 @@ function validate(){
 // 기관 정보 수정 유효성 검사
 
    var updateCheck = {
-		"cla": false, // 분류
-		"centerName": false, // 기관명
-		"address" : false, // 주소
+		
+		"area" : false,		// 지역
 		"phone" : false, // 전화번호
+		"address" : false, // 주소
 		"homepage" : false // 홈페이지
 	};
 
@@ -184,7 +178,7 @@ $("#changeCenterName").on("input", function(){
 
 
  
-function memberUpdateValidate(){
+function centerUpdateValidate(){
 
    var regExp1 = /^[a-zA-z\d-_가-힣]{2,20}$/; // 닉네임
    var regExp2 = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/; // 핸드폰 번호
