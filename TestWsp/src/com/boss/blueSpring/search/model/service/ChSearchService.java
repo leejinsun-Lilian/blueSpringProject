@@ -88,7 +88,6 @@ public class ChSearchService {
 			switch(searchKey) {
 			case "title" : 
 				condition = " CHLNG_TITLE LIKE '%' || '" + searchValue + "' || '%'";
-							// "NOTICE_TITLE LIKE '%' || 49 || '%' "
 				break;
 				
 			case "content" : 
