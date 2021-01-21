@@ -53,6 +53,11 @@ public class ChallengeController extends HttpServlet {
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
+			}
+			
+			else if(command.equals("/view.do")) {
+				
+				
 				
 				
 			}
