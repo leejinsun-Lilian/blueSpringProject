@@ -264,26 +264,6 @@
 		}
 	});
 	
-	// 클릭 시 새창으로 신고 접수 페이지 보기
-	
-/*   		$("#boardReportBtn").on("click", function() {
-			if(window.confirm("보고 있는 게시글을 신고하시겠습니까?")) {
-				/* $(board.memberId); 
-				var memberId = ${loginMember.memberNo};
-				var target = "${board.memberId}";
-				var boardNo = ${board.boardNo};
-				
-				var url = "${contextPath}/boardReportForm.do?brdNo=" + boardNo + "&memNo=" + memberId + "&target=" + target;
-				var title = "신고하기";
-				var option = "width = 700, height = 400, top = 300, left = 600, location = no";
-				
-				window.open(url, title, option);
-			}
-		}); */
-	
-	
-	
-	
 	</script>
 </body>
 </html>

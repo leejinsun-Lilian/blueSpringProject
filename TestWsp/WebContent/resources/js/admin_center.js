@@ -12,8 +12,9 @@ $("#centerName").on("input", function(){
 	if(!regExp.test(value)){
 		if(value.trim().length == 0){
 			$("#centerNameMsg").text("필수 정보입니다.").css("color", "red");
-		$("#centerName").css("border", "1px solid red");
-		validateCheck.centerName = false;}
+			$("#centerName").css("border", "1px solid red");
+			validateCheck.centerName = false;
+		}
 	} else {
 		$.ajax({
 			url : "centerDubCheck.do",
@@ -28,8 +29,9 @@ $("#centerName").on("input", function(){
 					$("#centerNameMsg").text("이미 사용 중인 기관명입니다.").css("color", "red");
 					$("#centerName").css("border", "1px solid red");
 				}
+			},error : function(){
+				console.log("error");
 			}
-			
 		});
 	}
 });
@@ -137,58 +139,18 @@ function validate(){
 // 기관 정보 수정 유효성 검사
 
    var updateCheck = {
-		
-		"area" : false,		// 지역
-		"phone" : false, // 전화번호
-		"address" : false, // 주소
-		"homepage" : false // 홈페이지
+		"phone" : false,	// 전화번호
+		"address" : false, 	// 주소
 	};
 
-$("#changeCenterName").on("input", function(){
-	 var regExp = /^[가-힣\d]{2,30}$/;
-	 var value = $("#changeCenterName").val();
-	
-	if(!regExp.test(value)){
-		if(value.trim().length == 0){
-			$("#centerNameMsg").text("입력해주세요.").css("color", "red");
-		} else{
-        	$("#centerNameMsg").text("2~20자 내  소문자, 한글, 숫자,  _, - 사용").css("color", "red");
-		}
-		$("#changeCenterName").css("border", "1px solid red");
-		validateCheck.centerName = false;
-	} else {
-		$.ajax({
-			url : "centerNameDubCheck.do",
-			data : {"centerName" : value},
-			type : "post",
-			success : function(result){
-				if(result == 0){
-					$("#centerNameMsg").text("");
-					$("#changecenterName").css("border", "1px solid #8cb0f7");
-					validateCheck.nickname = true;
-				}else{
-					$("#nickNameMsg").text("이미 사용 중인 닉네임입니다.").css("color", "red");
-					$("#changeNickName").css("border", "1px solid red");
-				}
-			}
-			
-		});
-	}
-});
 
-
- 
 function centerUpdateValidate(){
 
-   var regExp1 = /^[a-zA-z\d-_가-힣]{2,20}$/; // 닉네임
-   var regExp2 = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/; // 핸드폰 번호
-
-
-
+   var regExp = /^([0-9]{2,3})-?([0-9]{3,4})-?([0-9]{4})$/;
 
     // 전화번호 유효성 검사
     var p = $("#phone").val();
-    if(!regExp2.test(p)){
+    if(!regExp.test(p)){
         updateCheck.phone = false;
     }else{
         updateCheck.phone = true;

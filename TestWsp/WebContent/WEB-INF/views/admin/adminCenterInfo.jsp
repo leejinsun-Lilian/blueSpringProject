@@ -50,6 +50,18 @@
 	
 	.pagination > li > a, .pagination > li > a:hover{ color: black; }
 	
+	
+	
+	#center_btn0 {
+		background-color: white;
+		color: black;
+		border : none;
+	}
+	
+	#center_btn0:hover { 
+		color: #95c2de;
+	}
+	
 	#center_btn { 
 	    background-color: #343a40;
 	    color: snow;
@@ -61,11 +73,6 @@
 	}
 	
 	#center_btn3 { 
-	    background-color: rgb(152, 173, 216);
-	    color: snow;
-	}
-	
-	#center_btn4 { 
 	    background-color: #dc3545;
 	    color: snow;
 	}
@@ -110,7 +117,10 @@
                         <c:forEach var="center" items="${cList}">
                             <tr>
                             	<td><input type="checkbox" name="selectClick" value="${center.centerNo}"></td>
-                                <th>${center.centerNo}</th>
+                                <td>
+                               	 	${center.centerNo}
+                                	<button type="button" id="center_btn0" onclick="updateCenter(${center.centerNo})">수정</button>
+                                </td>
                                 <td>${center.centerCla}</td>
                                 <td>${center.centerArea1}</td>
                                 <td>${center.centerArea2}</td>
@@ -217,8 +227,7 @@
             
             <div class="center_page_btn">
             <button id="center_btn2" onClick="location.href='${contextPath}/admin/centerAdd.do'">센터등록</button>
-            <button id="center_btn3" onClick="location.href='${contextPath}/admin/centerUpdate.do'">센터수정</button>
-            <button id="center_btn4">센터삭제</button></div>
+            <button id="center_btn3">센터삭제</button></div>
 			
         </div>
     </div>
@@ -251,7 +260,7 @@
     // 삭제
     var clicks = new Array();
     
-	$("#center_btn4").on("click", function() {			
+	$("#center_btn3").on("click", function() {			
 		
         $("input:checkbox[name='selectClick']:checked").each(function(){
         	clicks.push($(this).val());
@@ -277,7 +286,9 @@
 		}
 	});
 	
-	
+	function updateCenter(centerNo){
+		location.href = "centerUpdate.do?no=" + centerNo;
+	}
 	
 	</script>
 	

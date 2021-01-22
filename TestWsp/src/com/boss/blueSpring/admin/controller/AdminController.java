@@ -1,6 +1,7 @@
 package com.boss.blueSpring.admin.controller;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -24,7 +25,6 @@ import com.boss.blueSpring.center.model.vo.Center;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.member.model.vo.Member;
-import com.boss.blueSpring.notice.model.vo.Notice;
 import com.boss.blueSpring.report.model.vo.Report;
 
 @WebServlet("/admin/*")
@@ -45,6 +45,8 @@ public class AdminController extends HttpServlet {
 		String swalText = null;
 
 		String errorMsg = null;
+		
+		HttpSession session = request.getSession();
 
 		try {
 			AdminService service = new AdminService();
@@ -183,17 +185,8 @@ public class AdminController extends HttpServlet {
 				String centerName = request.getParameter("centerName");
 				centerName += "'" + centerName + "'";
 						
-				try {
-					int result = service.centerNameDubCheck(centerName);
-					response.getWriter().print(result);
-					
-				}catch (Exception e) {
-					e.printStackTrace();
-					path = "/WEB-INF/views/common/errorPage.jsp";
-			        request.setAttribute("errorMsg", errorMsg);
-			        view = request.getRequestDispatcher(path);
-			        view.forward(request, response);
-				}
+				int result = service.centerNameDubCheck(centerName);
+				response.getWriter().print(result);
 			}
 			
 			// ********************* 기관(센터) 등록 Controller *********************
@@ -220,8 +213,6 @@ public class AdminController extends HttpServlet {
 					
 					if(result > 0) {
 						
-						HttpSession session = request.getSession();
-						
 						swalIcon = "success";
 						swalTitle = "기관 등록 성공";
 						swalText = "";
@@ -229,11 +220,10 @@ public class AdminController extends HttpServlet {
 						session.setAttribute("swalIcon", swalIcon);
 						session.setAttribute("swalTitle", swalTitle);
 						session.setAttribute("swalText", swalText);
+						
 						response.sendRedirect("adminCenterInfo.do");
 						
 					} else {
-						
-						HttpSession session = request.getSession();
 						
 						swalIcon = "error";
 						swalTitle = "기관 등록 실패";
@@ -259,12 +249,71 @@ public class AdminController extends HttpServlet {
 			else if (command.equals("/centerUpdate.do")) {
 				errorMsg = "기관 수정 페이지 조회 중 오류 발생.";
 				
+				int centerNo = Integer.parseInt(request.getParameter("no"));
+				
+				Center center = service.selectCenter(centerNo);
+				
 				path = "/WEB-INF/views/admin/adminCenterUpdate.jsp";
 
+				request.setAttribute("center", center);
+				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
+			// ********************* 기관(센터) 수정 Controller *********************
+
+			else if(command.equals("/updateAction.do")) {
+				errorMsg = "센터 수정 중 오류가 발생했습니다.";
+				
+				int centerNo = Integer.parseInt(request.getParameter("no"));
+				String centerArea1 = request.getParameter("sido1");
+				String centerArea2 = request.getParameter("gugun1");
+				String postcode = request.getParameter("post");
+				String address1 = request.getParameter("address1");
+				String centerAddrDtl = request.getParameter("address2");
+				String centerAddr = postcode + "," + address1;
+				String centerTel = request.getParameter("phone");
+				String centerUrl = request.getParameter("homepage");
+				
+				Center center = new Center();
+				center.setCenterNo(centerNo);
+				center.setCenterArea1(centerArea1);
+				center.setCenterArea2(centerArea2);
+				center.setCenterAddr(centerAddr);
+				center.setCenterAddrDtl(centerAddrDtl);
+				center.setCenterTel(centerTel);
+				center.setCenterUrl(centerUrl);
+				
+				System.out.println(center);
+				try {
+					int result = service.updateCenter(center);
+					
+					if(result > 0) {
+						swalIcon = "success";
+						swalTitle = "수정 완료";
+						swalText = "센터 정보가 수정되었습니다.";
+						
+					} else {
+						swalIcon = "error";
+						swalTitle = "수정 실패";
+						swalText = "회원 정보 수정을 실패했습니다.";
+					}
+					
+					session.setAttribute("swalIcon", swalIcon);
+					session.setAttribute("swalTitle", swalTitle);
+					session.setAttribute("swalText", swalText);
+					
+					response.sendRedirect("adminCenterInfo.do");
+					
+				} catch (Exception e) {
+			         e.printStackTrace();
+			         path = "/WEB-INF/views/common/errorPage.jsp";
+			         request.setAttribute("errorMsg", errorMsg);
+			         view = request.getRequestDispatcher(path);
+			         view.forward(request, response);
+				}
+			}
 			
 			
 			// 자유게시판 관리 (목록 조회) Controller **************************************************
@@ -305,7 +354,6 @@ public class AdminController extends HttpServlet {
 
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
-				
 				
 			}
 			

@@ -68,7 +68,6 @@ public class AdminService {
 		close(conn);
 		return new ReportPageInfo(currentPage, listCount);
 	}
-		
 	
 	/** [신고] 관리 : 목록 조회 Service
 	 * @param rpInfo
@@ -130,6 +129,45 @@ public class AdminService {
 		Connection conn = getConnection();
 		Center center = dao.selectCenter(conn, centerNo);
 		return center;
+	}
+
+	/** [센터등록] 기관명 중복 체크 Service
+	 * @param centerName
+	 * @return result
+	 * @throws Exception
+	 */
+	public int centerNameDubCheck(String centerName) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.centerNameDubCheck(conn, centerName);
+		close(conn);
+		return result;
+	}
+
+	/** [센터등록] 기관 등록 Service
+	 * @param center
+	 * @return result
+	 * @throws Exception
+	 */
+	public int centerAdd(Center center) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.centerAdd(conn, center);
+		if(result > 0) commit(conn);
+		else commit(conn);
+		close(conn);
+		return result;
+	}
+	
+	/** [센터수정] 기관 수정 Service
+	 * @param center
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateCenter(Center center) throws Exception {
+		Connection conn = getConnection();
+		int result = dao.updateCenter(conn, center);
+		if(result > 0) commit(conn);
+		else rollback(conn);
+		return result;
 	}
 
 	
@@ -245,55 +283,6 @@ public class AdminService {
 		close(conn);
 		return crtList;
 	}
-
-	
-	
-	/** [센터등록] 기관명 중복 체크 Service
-	 * @param centerName
-	 * @return result
-	 * @throws Exception
-	 */
-	public int centerNameDubCheck(String centerName) throws Exception {
-		Connection conn = getConnection();
-		int result = dao.centerNameDubCheck(conn, centerName);
-		close(conn);
-		return result;
-	}
-
-	/** [센터등록] 기관 등록 Service
-	 * @param center
-	 * @return result
-	 * @throws Exception
-	 */
-	public int centerAdd(Center center) throws Exception {
-		Connection conn = getConnection();
-		int result = dao.centerAdd(conn, center);
-		if(result > 0) commit(conn);
-		else commit(conn);
-		close(conn);
-		return result;
-	}
-
-
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
 	
 	
 	

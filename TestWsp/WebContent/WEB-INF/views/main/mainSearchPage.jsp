@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -98,7 +99,30 @@
                                 	</c:choose>
                                 </th>
                                 <td>${search.title}</td>
-                                <td>${search.content}</td>
+                                
+                                <td>
+                                
+                                
+                                	<c:set var="content" value="${fn:split(search.content,'<br>')}" />
+
+									<c:forEach var="cont" items="${content}" varStatus="vs">
+							     		<c:if test="${vs.count <= 2}">
+									     	
+									     	<c:set var="c" value="${cont}"/>
+									     	
+									     	<c:if test="${fn:length(c) > 30 }">
+									     		<c:set var="c" value="${fn:substring(c,0,30)}..."/>
+									     	</c:if>
+									     
+									     	${c}
+									     	
+									     	<c:if test="${vs.count == 1}"><br></c:if>
+								    	</c:if>
+									</c:forEach> 
+
+                                </td>
+                                
+                                
                                 <td>${search.crtDt}</td>
 							</tr>
                         </c:forEach>
@@ -187,8 +211,8 @@
 			switch(type){
 			case '1' : url = "board/view.do?cp=1&no="+no; break;
 			case '2' : url = "notice/view.do?cp=1&no="+no; break;
-			case '3' : url = "board/view.do?cp=1&no="+no; break;
-			case '4' : url = "board/view.do?cp=1&no="+no; break;
+			case '3' : url = "challenge/view.do?cp=1&no="+no; break;
+			case '4' : url = "challengeCrtfd/view.do?cp=1&no="+no; break;
 			}
 			
 			location.href = url;

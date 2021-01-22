@@ -22,16 +22,8 @@ public class MainController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String uri = request.getRequestURI();
-		String contextPath = request.getContextPath();
-		String command = uri.substring((contextPath + "/main").length());
-
 		String path = null;
 		RequestDispatcher view = null;
-
-		String swalIcon = null;
-		String swalTitle = null;
-		String swalText = null;
 
 		String errorMsg = null;
 

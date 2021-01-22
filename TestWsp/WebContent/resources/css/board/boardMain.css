@@ -41,8 +41,8 @@ h1 {
 
 #board-category a:hover {
     font-size: 1.2em;
-    color: rgb(89, 100, 248);
-    box-shadow: 0 80px 0 0 rgb(220, 229, 235) inset, 0 -80px 0 0  rgb(220, 229, 235) inset;
+    color: white;
+    box-shadow: 0 80px 0 0 rgba(3, 3, 59, 0.87) inset, 0 -80px 0 0  rgba(3, 3, 59, 0.87) inset;
     transition: 1s;
 } 
 
@@ -121,12 +121,23 @@ h1 {
 
 #board-write:hover {
     background-color: lightblue;
+    cursor: pointer;
 }
 
 /*  */
 #board-nav{
     margin: 0;
 }
+
+/*  */
+#board-search {
+    display: flex;
+    align-items: center;
+}
+
+
+/* 공용 */
+/* 페이징 스타일 */
 .page-li {
     width: 30px;
     color: black;
@@ -141,14 +152,6 @@ h1 {
     text-decoration: none;
 }
 
-/*  */
-#board-search {
-    display: flex;
-    align-items: center;
-}
-
-
-/* 공용 */
 .page-li:hover {
     color : #283e69;
     font-weight: bold;
@@ -159,6 +162,7 @@ h1 {
     transition: 0.2s;
 }
 
+/* 숨길 항목 */
 #hidden-cn {
     display: none;
 }

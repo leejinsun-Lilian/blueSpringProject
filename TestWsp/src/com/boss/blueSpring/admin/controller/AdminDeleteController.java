@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.boss.blueSpring.admin.model.service.AdminDeleteService;
 
 
-
 @WebServlet("/adminDelete/*")
 public class AdminDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,15 +27,7 @@ public class AdminDeleteController extends HttpServlet {
 		String path = null;
 		RequestDispatcher view = null;
 
-		String swalIcon = null;
-		String swalTitle = null;
-		String swalText = null;
-
 		String errorMsg = null;
-		
-		String searchKey = request.getParameter("sk");
-		String searchValue = request.getParameter("sv");
-		String cp = request.getParameter("cp");
 		
 		try {
 			AdminDeleteService service = new AdminDeleteService();
