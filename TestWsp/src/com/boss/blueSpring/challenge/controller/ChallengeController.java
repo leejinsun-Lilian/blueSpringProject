@@ -44,17 +44,29 @@ public class ChallengeController extends HttpServlet {
 			String cp = request.getParameter("cp");
 			
 	 
-			//챌린지 목록 페이지 이동
+			//챌린지 목록 페이지 이동 **********************************************************
 			if(command.equals("/list.do")) {
 				
 				String sort = request.getParameter("sort");
-
 				PageInfo pInfo = service.getPageInfo(cp);
-
+				
+				
 //				if(request.getParameter("cn") != null) {
 //				}
 //				List<Challenge> list = service.selectList(pInfo, sort, cn);
 				List<Challenge> list = service.selectList(pInfo, sort);
+				
+				
+				/*대표 이미지 조회 관련 코드 부분*/
+				if(list != null) {
+					// 대표 이미지 조회 부분
+					List<Attachment> fmList = service.selectThumbFiles(pInfo);
+					
+					if(!fmList.isEmpty()) {
+						request.setAttribute("fmList", fmList);
+					}
+				
+				}
 				
 				
 				path="/WEB-INF/views/challenge/challengeList.jsp";
@@ -70,7 +82,6 @@ public class ChallengeController extends HttpServlet {
 				int challengeNo = Integer.parseInt(request.getParameter("no"));
 				int memberNo = 0;
 				
-				
 				//좋아요
 //				Member member = (Member)session.getAttribute("loginMember");		
 //				if(member != null) { //로그인한 멤버가 있으면
@@ -80,11 +91,11 @@ public class ChallengeController extends HttpServlet {
 				Challenge challenge = service.selectChallenge(challengeNo);
 				
 				// 이미지 파일 조회 부분
-				//List<Attachment> cList = service.selectChallengeFiles(challengeNo);
+				List<Attachment> fList = service.selectChallengeFiles(challengeNo);
 				
-//				if(!cList.isEmpty()) {
-//					request.setAttribute("cList", cList);
-//				}
+				if(!fList.isEmpty()) {
+					request.setAttribute("fList", fList);
+				}
 				
 				path="/WEB-INF/views/challenge/challengeView.jsp";
 				request.setAttribute("challenge", challenge);
@@ -113,7 +124,7 @@ public class ChallengeController extends HttpServlet {
 					= new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 				// 전달 받은 파일 정보를 저장
-				List<Attachment> cList = new ArrayList<Attachment>();
+				List<Attachment> fList = new ArrayList<Attachment>();
 				
 				Enumeration<String> files = multiRequest.getFileNames();
 				
@@ -136,8 +147,8 @@ public class ChallengeController extends HttpServlet {
 						
 						temp.setFileLevel(fileLevel);
 						
-						// fList에 추가
-						cList.add(temp);
+						// cList에 추가
+						fList.add(temp);
 					}
 				} // end while
 				
@@ -166,7 +177,7 @@ public class ChallengeController extends HttpServlet {
 				System.out.println(chlngeWriter);
 				
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("cList", cList);
+				map.put("fList", fList);
 				map.put("chlngTitle", chlngTitle);
 				map.put("chlngContent", chlngContent);
 				map.put("chlngStartDt", chlngStartDt);

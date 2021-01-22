@@ -68,6 +68,20 @@ public class ChallengeService {
 		return list;
 	}
 
+	/** 파일 레벨이 0인 사진(대표사진)을 가져오기 위한 Service 
+	 * @param challengeNo
+	 * @return fmList
+	 */
+	public List<Attachment> selectThumbFiles(PageInfo pInfo) throws Exception{
+		Connection conn = getConnection();
+		
+		List<Attachment> fmList = dao.selectThumbFiles(conn, pInfo);
+		
+		close(conn);
+		
+		return fmList;
+	
+	}
 
 	/** 챌린지 상세조회 Service
 	 * @param challengeNo
@@ -148,7 +162,7 @@ public class ChallengeService {
 						
 						// 파일 정보가 저장된 Attachment 객체에 
 						// 해당 파일이 작성된 게시글 번호를 추가 세팅
-						at.setParentChlngeNo(chlngNo);
+						at.setParentChNo(chlngNo);
 						
 						result = dao.insertAttachment(conn, at);
 						System.out.println("f : " + result);
@@ -242,6 +256,22 @@ public class ChallengeService {
 		
 		return result;
 	}
+
+	/** 해당 글에 포함되는 이미지들 목록 조회Service
+	 * @param challengeNo
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectChallengeFiles(int challengeNo) throws Exception{
+		Connection conn = getConnection();
+		
+		List<Attachment> fList = dao.selectChallengeFiles(conn, challengeNo);
+		
+		close(conn);
+		
+		return fList;
+	}
+
 	
 	
 	

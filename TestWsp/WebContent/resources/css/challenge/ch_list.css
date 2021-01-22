@@ -112,10 +112,13 @@ div{
     width: 100%;
     height: 280px;
 }
-.ch-img > a > img{
+.ch-img > img{
 	width : 100%;
-	height : 100%;
+	/* height : 100%; */
+    /* display: inline-block; */
 } 
+
+.ch-img:hover{ cursor : pointer;}
 
 /* 제목, 기간, 좋아요 이미지, 좋아요 수 */
 .ch-sb{

@@ -153,6 +153,8 @@ public class NoticeController extends HttpServlet {
 				map.put("noticeContent", noticeContent);
 				map.put("noticeWriter", noticeWriter);
 
+				//System.out.println(map);
+				
 				// 4. 공지글 등록 비지니스 로직 수행 후 결과 반환받기
 				int result = service.insertNotice(map);
 				

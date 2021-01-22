@@ -23,6 +23,7 @@
             </div>
             <div id="ch-s" class="ch-float">
                 <ul>
+                <!-- 로그인한 회원만 챌린지 등록, 인증글 작성 가능    -- 나중에 눌렀을 때 로그인된 회원이 아니면 로그인 창으로 이동 -->
                 <c:if test="${!empty loginMember}">
                     <li><a href="${contextPath}/challenge/insertForm.do" >챌린지 <strong>개설</strong>하러 가기 -></a></li>
                     <li><a href="${contextPath}/challengeCrtfd/insertForm.do">챌린지 <strong>인증 게시판</strong> 가기 -></a></li>
@@ -79,13 +80,18 @@
 						<!-- 1챌린지 선택 -->
 						<!-- 데이터가 있는만큼 보여지기 위해서 데이터가 있는만큼 반복 -->
 						<div class="ch-sb-area" id="${challenge.chlngNo}">
-							<div class="ch-img">
-								<!-- 이미지 들어갈 부분 -->
-								<!-- 해당 챌린지 상세페이지로  -->
-								${challenge.chlngCateNm}
-								123
-							</div>
-
+							
+							<!-- 이미지 들어갈 부분 -->
+							<!-- 해당 챌린지 상세페이지로  -->
+							<c:forEach var="file" items="${fmList}">
+								<c:if test="${challenge.chlngNo == file.parentChNo}">
+									<div class="ch-img">
+										<img src="${contextPath}/resources/uploadImages/challenge/${file.fileName}">
+									</div>
+								</c:if>
+							</c:forEach>
+						
+							<!-- 정부 부분 -->
 							<div class="ch-sb">
 
 								<div class="ch-title">${challenge.chlngTitle}</div>
@@ -105,8 +111,9 @@
 									<div id="like" class="ch-s-float">${challenge.likeCount}
 									</div>
 								</div>
-
 							</div>
+							<!-- 정부 부분 -->
+							
 						</div>
 
 						</c:forEach>

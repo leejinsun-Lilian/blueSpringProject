@@ -6,7 +6,7 @@ public class Attachment {
 	private String filePath;
 	private String fileName;
 	private int fileLevel;
-	private int parentchlngBrdNo;
+	private int parentChNo;
 	
 	public Attachment() {}
 
@@ -21,13 +21,13 @@ public class Attachment {
 
 
 
-	public Attachment(int fileNo, String filePath, String fileName, int fileLevel, int parentchlngBrdNo) {
+	public Attachment(int fileNo, String filePath, String fileName, int fileLevel, int parentChNo) {
 		super();
 		this.fileNo = fileNo;
 		this.filePath = filePath;
 		this.fileName = fileName;
 		this.fileLevel = fileLevel;
-		this.parentchlngBrdNo = parentchlngBrdNo;
+		this.parentChNo = parentChNo;
 	}
 
 	public int getFileNo() {
@@ -62,19 +62,25 @@ public class Attachment {
 		this.fileLevel = fileLevel;
 	}
 
-	public int getParentChlngeNo() {
-		return parentchlngBrdNo;
+	public int getParentChNo() {
+		return parentChNo;
 	}
 
-	public void setParentChlngeNo(int parentchlngBrdNo) {
-		this.parentchlngBrdNo = parentchlngBrdNo;
+
+
+	public void setParentChNo(int parentChNo) {
+		this.parentChNo = parentChNo;
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "Attachment [fileNo=" + fileNo + ", filePath=" + filePath + ", fileName=" + fileName + ", fileLevel="
-				+ fileLevel + ", parentNoticeNo=" + parentchlngBrdNo + "]";
+				+ fileLevel + ", parentChNo=" + parentChNo + "]";
 	}
+
+
 
 
 
