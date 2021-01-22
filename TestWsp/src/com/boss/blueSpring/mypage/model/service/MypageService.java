@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.comment.model.vo.Comment;
 import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.mypage.model.dao.MypageDAO;
@@ -98,12 +99,12 @@ public class MypageService {
 	 * @return pInfo
 	 * @throws Exception
 	 */
-	public PageInfo getPageInfo(String cp) throws Exception {
+	public PageInfo getPageInfo(String cp, String memId) throws Exception{
 		Connection conn = getConnection();
 		
 		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
 		
-		int listCount = dao.getListCount(conn); 
+		int listCount = dao.getListCount(conn, memId); 
 		
 		close(conn);
 		
@@ -112,15 +113,52 @@ public class MypageService {
 
 	/** 게시글 목록 조회 Service
 	 * @param pInfo
+	 * @param memId 
 	 * @return bList
 	 * @throws Exception
 	 */
-	public List<Board> selectBoardList(PageInfo pInfo, String cn) throws Exception {
+	public List<Board> selectBoardList(PageInfo pInfo, String cn, String memId) throws Exception {
 		Connection conn = getConnection();
-		List<Board> bList = dao.selectBoardList(conn, pInfo, cn);
+		List<Board> bList = dao.selectBoardList(conn, pInfo, cn, memId);
 		close(conn);
 		return bList;
 	}
+
+	/** 댓글 목록 조회 Service
+	 * @param parentBoardNo
+	 * @param memId
+	 * @return cList
+	 * @throws Exception
+	 */
+	public List<Comment> selectList(PageInfo pInfo, String cn, String memId) throws Exception {
+		Connection conn = getConnection();
+		List<Comment> cList = dao.selectList(conn, pInfo, cn, memId);
+		close(conn);
+		return cList;
+	}
+
+	/** 댓글 페이징 처리를 위한 값 계산 Service
+	 * @param cp
+	 * @param memId
+	 * @return pInfo
+	 * @throws Exception
+	 */
+	public PageInfo getCommentPageInfo(String cp, String memId) throws Exception {
+		Connection conn = getConnection();
+		
+		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
+		
+		int listCount = dao.getCommentPageInfo(conn, memId); 
+		
+		close(conn);
+		
+		return new PageInfo(currentPage, listCount);
+	}
+
+
+
+
+
 	
 
 }
