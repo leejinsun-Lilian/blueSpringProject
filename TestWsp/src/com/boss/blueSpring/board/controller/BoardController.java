@@ -118,66 +118,48 @@ public class BoardController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
+			// 
+			else if (command.equals("/insertImage.do")) {
+		         String root = request.getSession().getServletContext().getRealPath("/");
+		         String savePath = root + "resources\\uploadImages\\board\\";
+		         int maxSize = 1024 * 1024 * 20;  // 업로드 사이즈 제한 10M 이하
+		         
+		         MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "utf-8",new MyFileRenamePolicy());
+		         
+		         // 단일 파일 업로드
+		         Enumeration<String> files = multiRequest.getFileNames();
+		         String saveFile = null;
+		         String originFile = null;
+		         if(files.hasMoreElements()) {
+		            
+		            String name = files.nextElement();
+		            System.out.println(name);
+		            if(multiRequest.getFilesystemName(name) != null) {
+		               saveFile = multiRequest.getFilesystemName(name);
+		               originFile = multiRequest.getOriginalFileName(name);
+		            }
+		         }
+		         
+		         //System.out.println(saveFile);
+		         //System.out.println(originFile);
+		         
+		         
+		         String reqPath = request.getContextPath()+"/resources/uploadImages/board/";
+		         
+		         String uploadFile = reqPath + saveFile;
+		         
+		         response.getWriter().print(uploadFile);
+			}
+			
 			// ===== 게시글 등록 Controller =====
 			else if(command.equals("/write.do")) {
 				errorMsg = "게시글 삽입 과정에서 오류 발생";
 				
-				// 전송 파일 용량 지정 (byte단위) 
-				int maxSize = 20 * 1024 * 1024; // 20MB == 20 * 1024KB == 20 * 1024 * 1024
 				
-				String root = request.getSession().getServletContext().getRealPath("/");
-				String filePath = root + "resources/img/";
-
-				System.out.println("filePath : " + filePath);
-				
-				// 파일관련 작성할 곳
-				MultipartRequest multiRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-				
-				List<Attachment> fList = new ArrayList<Attachment>();				
-				Enumeration<String> files = multiRequest.getFileNames();
-				
-				System.out.println(files);
-				
-//				while(files.hasMoreElements()) { // 다음 요소가 있다면
-//					
-//					// 현재 접근한 요소 값 반환
-////					String name = files.nextElement(); // img0
-////					System.out.println("name : " + name);
-////					System.out.println("원본 파일명 : " + multiRequest.getOriginalFileName(name));
-////					System.out.println("변경된 파일명 : " + multiRequest.getFilesystemName(name));
-////					
-//					// 제출받은 file태그 요소 중 업로드된 파일이 있을 경우
-////					while(multiRequest.getFilesystemName(name) != null) {
-////						
-////						// Attachment 객체에 파일 정보 저장
-////						Attachment temp = new Attachment();
-////						
-////						temp.setFileName(multiRequest.getFilesystemName(name));
-////						temp.setFilePath(filePath);
-////						
-//						// name 속성에 따라 fileLevel 지정
-////						int fileLevel = 0;
-////						switch(name) {
-////						case "files" : fileLevel = 0; break;
-////						case "img1" : fileLevel = 1; break;
-////						case "img2" : fileLevel = 2; break;
-////						case "img3" : fileLevel = 3; break;
-////						}
-//						
-//						
-//						
-////						temp.setFileLevel(fileLevel);
-//						
-//						// fList에 추가
-//						fList.add(temp);
-//					}		
-//				}
-				
-				// 파일 외 
 				// 폼 태그에서 enctype="multipart/form-data"을 작성해서 일반적인 request로는 값을 받아올 수 없다.
-				String boardTitle = multiRequest.getParameter("b-title");
-				String boardContent = multiRequest.getParameter("b-content");
-				int categoryCode = Integer.parseInt(multiRequest.getParameter("b-category"));
+				String boardTitle = request.getParameter("b-title");
+				String boardContent = request.getParameter("b-content");
+				int categoryCode = Integer.parseInt(request.getParameter("b-category"));
 				
 				// 세션에서 로그인한 회원의 번호 얻어오기
 				Member loginMember = (Member)request.getSession().getAttribute("loginMember");
@@ -186,7 +168,6 @@ public class BoardController extends HttpServlet {
 //				System.out.println(boardWriter);
 				
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("fList", fList);
 				map.put("boardTitle", boardTitle);
 				map.put("boardContent", boardContent);
 				map.put("categoryCode", categoryCode);
@@ -245,16 +226,14 @@ public class BoardController extends HttpServlet {
 			else if(command.equals("/update.do")) {
 				errorMsg = "게시글 수정 과정에서 오류 발생";
 				
-				int maxSize = 20 * 1024 * 1024;
-				String root = request.getSession().getServletContext().getRealPath("/");
-				String filePath = root + "resources/img/";
-				
-				MultipartRequest mRequest = new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-				
-				String boardTitle = mRequest.getParameter("b-title");
-				String boardContent = mRequest.getParameter("b-content");
-				int categoryCode = Integer.parseInt(mRequest.getParameter("b-category"));
-				int boardNo = Integer.parseInt(mRequest.getParameter("no"));
+//				int maxSize = 20 * 1024 * 1024;
+//				String root = request.getSession().getServletContext().getRealPath("/");
+//				String filePath = root + "resources/img/";
+								
+				String boardTitle = request.getParameter("b-title");
+				String boardContent = request.getParameter("b-content");
+				int categoryCode = Integer.parseInt(request.getParameter("b-category"));
+				int boardNo = Integer.parseInt(request.getParameter("no"));
 				
 //				System.out.println(Integer.parseInt(mRequest.getParameter("no")));
 				
@@ -274,8 +253,8 @@ public class BoardController extends HttpServlet {
 				
 				path = "view.do?cp=" + cp + "&no=" + boardNo + "&memberNo=" + boardWriter;
 				
-			 	String sk = mRequest.getParameter("sk");
-			 	String sv = mRequest.getParameter("sv");
+			 	String sk = request.getParameter("sk");
+			 	String sv = request.getParameter("sv");
 			 	
 			 	if(sk != null && sv != null) {
 			 		path += "&sk=" + sk + "&sv=" + sv;

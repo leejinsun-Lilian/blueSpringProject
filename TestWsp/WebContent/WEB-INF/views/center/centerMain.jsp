@@ -9,26 +9,19 @@
 	
 	h1 {
 		text-align: center;
+		text-shadow: 1px 1px 2px black;
 	}
 
 	#centerArea {
 		margin-bottom: 100px;
-		min-height: 800px;
 	}
 
-  #searchWrapper {
-  	min-height: 400px;
-  	
-  }
+	#searchWrapper {
+		min-height: 400px;		
+	}
 
 	#selectArea {
-		width: 15%;
-		float: left;
-	}
-
-	#centerListArea {
-		width: 30%;	
-		float: left;
+		width: 70%;
 	}
     
     #sidoSelect {
@@ -38,27 +31,38 @@
 	#gugunSelectArea {
 		overflow-x: hidden;
 		overflow-y: scroll;
-		width: 200px;
-		height: 300px;
+		text-align: left;
+		width: 80%;
+		height: 50px;
 	}
 	
 	#centerSelectArea {
 		overflow-x: hidden;
 		overflow-y: scroll;
-		width: 600px;
+		width: 100%;
 		height: 700px;
 	}
 
-  #mapArea {
-   margin: auto;
-	 width: 55%;
-	 height: 800px;
-  }
+	#listMap {
+		display: flex;
+	}
+
+	#centerListArea {
+		width: 40%;	
+	}
+
+	#mapArea {
+		width: 60%;
+		height: 800px;
+	}
   
-  label {
-  	display: block;
-  	width: 100px;
-  }
+	label {
+		width: 100px;
+	}
+
+	#centerList > li {
+		border: 1px solid black;
+	}
     
 </style>
 
@@ -67,39 +71,37 @@
     <jsp:include page="../common/header.jsp"></jsp:include>
     
     <h1>기관찾기</h1>
-	
-	<div id="centerArea">		    
+		    
 			<!-- 기관 검색 -->
-		<div id="searchArea">
 			
-				<div id ="selectArea">
-					<h2>기관 검색</h2>
-					시/도 : <select name="sidoSelect" id="sidoSelect"></select>
-					
-						<div id="gugunSelectArea">
-							
-						</div>   
-						<br>
-						<button id="search-btn">찾기</button> 
-				</div>
+			<div id ="selectArea">
+				시/도 : <select name="sidoSelect" id="sidoSelect"></select>
 				
-				<!-- 기관 목록 -->
-				<div id="centerListArea">
-					<h2>기관 목록</h2>
-					
-					<div id="centerSelectArea">
-							<ul id="centerList">
-							
-							</ul>
-					</div>  
-				</div>		
+					<div id="gugunSelectArea">
+						
+					</div>   
+					<br>
+					<button id="search-btn">찾기</button> 
+			</div>		
+		
+		<div id="listMap">
+			<!-- 기관 목록 -->
+			<div id="centerListArea">
+				
+				<div id="centerSelectArea">
+						<ul id="centerList">
+						
+						</ul>
+				</div>  
+			</div>	
 
-	</div>
-			
 			<!-- 지도 -->
 			<div id="mapArea">
 
 			</div>
+		</div>
+			
+			
 
 	</div>
 
@@ -138,6 +140,8 @@
 		var positionY = new Array(); // y좌표 담기
 		
 		var searchOn = 0;
+					
+		console.log(address);
 		
 		// 찾기 버튼 클릭 시
 		$("#search-btn").on("click", function() {
@@ -165,7 +169,8 @@
 						var li = $("<li>").addClass("center-row");
 						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn").attr("onclick", "placeSearch(this)");
 						
-						var div = $("<div>");						
+						var div = $("<div>");
+						var br = $("<br>");					
 						
 						var centerTitle = $("<h2>").addClass("centerName").text(item.centerName);
 						var centerCla = $("<p>").addClass("centerCla").text(item.centerCla);
@@ -177,7 +182,8 @@
 						// 
 						console.log(item.centerUrl);
 						
-            div.append(centerTitle).append(centerCla).append(centerName).append(centerPhone).append(centerUrl).append(centerAddr).append(centerAddr2).append(placeSearchBtn);
+						div.append(centerTitle).append(centerCla).append(centerPhone).append(centerUrl).append(centerAddr).append(centerAddr2).append(placeSearchBtn);
+						
 						li.append(div);
 						
 						$("#centerList").append(li);
@@ -203,7 +209,10 @@
 				centerName = $(ele).prev().prev().prev().prev().prev().prev().prev().text();
 				placeSearchMarker(thisAddr);
 		};
+
+			
 		
+
 		
 		// 구/군 선택 시 위도 경도 배열에 담기
 		function searchAddress(centerName) {
@@ -221,7 +230,6 @@
 					   	 flagNum2 = flagNum2 + 1;
 					       positionY.push(data['documents'][0]['y']); 
 				  			 positionX.push(data['documents'][0]['x']);
-
 						   	 centerNameAry.push(centerName);
 					       if(flagNum2 == flagNum) {
 					    	   pickMarkers();
@@ -343,12 +351,13 @@
 
 			// 서울
 			if(sidoIndex == 1) {
-				for(var j = 0; j < gugun1.length; ++j) {
-	/* 	 				if(j % 2 == 0) {
-							$("#gugunSelectArea").append("<br>");
-				}	  */ 				
-				$("#gugunSelectArea").append("<label><input type='checkbox' name='gugunSelect' class='gugunSelect' value=" + gugun1[j] + ">" + gugun1[j] +"</label>");	  			
-					}    		
+				for(var j = 0; j < gugun1.length; ++j) {  				
+					$("#gugunSelectArea").append("<label><input type='checkbox' name='gugunSelect' class='gugunSelect' value=" + gugun1[j] + ">" + gugun1[j] +"</label>");	 
+					if(j > 1 && j % 10 == 0) {
+						$("#gugunSelectArea").append("<br>");
+					}	  			
+				}  
+				  		
 			}
 			
 			// 인천
