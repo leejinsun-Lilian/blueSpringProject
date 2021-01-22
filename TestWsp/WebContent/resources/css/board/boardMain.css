@@ -43,7 +43,7 @@ h1 {
     font-size: 1.2em;
     color: rgb(89, 100, 248);
     box-shadow: 0 80px 0 0 rgb(220, 229, 235) inset, 0 -80px 0 0  rgb(220, 229, 235) inset;
-    transition: 1.5s;
+    transition: 1s;
 } 
 
 /* 게시판 메인 */
