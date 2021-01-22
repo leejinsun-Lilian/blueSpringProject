@@ -7,6 +7,9 @@ import java.util.List;
 
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.challenge.model.vo.Attachment;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.comment.model.vo.Comment;
 import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
@@ -153,6 +156,89 @@ public class MypageService {
 		close(conn);
 		
 		return new PageInfo(currentPage, listCount);
+	}
+
+	
+	/** 내가 참여한 챌린지 수 계산 Service
+	 * @param cp
+	 * @param memId
+	 * @return pInfo
+	 * @throws Exception
+	 */
+	public PageInfo getMyChallengeCount(String cp, String memId) throws Exception{
+		Connection conn = getConnection();
+		
+		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
+
+		int listCount = dao.getMyChallengeCount(conn, memId);
+		
+		close(conn);
+	
+		return new PageInfo(currentPage, listCount);
+
+	}
+
+	/** 내 챌린지 목록 조회 Service
+	 * @param pInfo
+	 * @param sort
+	 * @param memId
+	 * @return list
+	 * @throws Exception
+	 */
+	public List<Challenge> selectChallengeList(PageInfo pInfo, String sort, String memId) throws Exception {
+		Connection conn = getConnection();
+		
+		 sort = sort == null ? "" : sort;
+		
+
+		List<Challenge> list = dao.selectChallengeList(conn, pInfo, memId);   //, end
+		
+		close(conn);
+		return list;
+	}
+
+	/** 썸네일 목록 조회 Service
+	 * @param pInfo
+	 * @return fList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectThumbnailList(PageInfo pInfo) throws Exception {
+
+	      Connection conn = getConnection();
+	      
+	      List<Attachment> fList = dao.selectThumbnailList(conn, pInfo);
+	      
+	      close(conn);
+	      
+	      return fList;
+	}
+
+	/** 챌린지 인증게시글 계산 Service
+	 * @param cp
+	 * @param memId
+	 * @return pInfo
+	 * @throws Exception
+	 */
+	public PageInfo getcrtfdPageInfo(String cp, String memId) throws Exception{
+		Connection conn = getConnection();
+		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
+		int listCount = dao.getcrtfdPageInfo(conn, memId); 
+		close(conn);
+		return new PageInfo(currentPage, listCount);
+	}
+
+	/** 챌린지 인증게시글 조회 Service
+	 * @param pInfo
+	 * @param cn
+	 * @param memId
+	 * @return 
+	 * @throws Exception
+	 */
+	public List<ChallengeCrtfd> selectcrtfdList(PageInfo pInfo, String cn, String memId) throws Exception{
+		Connection conn = getConnection();
+		List<ChallengeCrtfd> bList = dao.selectcrtfdList(conn, pInfo, cn, memId);
+		close(conn);
+		return bList;
 	}
 
 
