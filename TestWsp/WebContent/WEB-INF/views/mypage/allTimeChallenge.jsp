@@ -74,11 +74,20 @@
 						<tr>
 							<td>
 								<div class="cThumbnail_area">
+								<c:if test="${!empty fList}">
 									<c:forEach var="thumbnail" items="${fList}">
-										<c:if test="${challenge.chlngNo == thumbnail.parentChlngeNo}">
-											<img class="cThumbnail" src="${contextPath}/resources/uploadImages/${thumbnail.fileName}"></img>
+										<c:if test="${challenge.chlngNo == thumbnail.parentChNo}">
+											<img class="cThumbnail" src="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}"></img>
 										</c:if>
 									</c:forEach>
+								</c:if>
+								
+								<c:if test="${empty fList}">
+									<img class="cThumbnail" src="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}"></img>
+								</c:if>
+								
+								
+								
 								</div>
 								<div class="cTitle_area">
 									<h4 class="title">${challenge.chlngTitle}</h4>
