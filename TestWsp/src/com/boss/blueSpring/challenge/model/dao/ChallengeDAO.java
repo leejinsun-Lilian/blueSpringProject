@@ -1,6 +1,6 @@
 package com.boss.blueSpring.challenge.model.dao;
 
-import static com.boss.blueSpring.common.JDBCTemplate.*;
+import static com.boss.blueSpring.common.JDBCTemplate.close;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -9,10 +9,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
+import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
-import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 
 public class ChallengeDAO {
@@ -161,6 +162,139 @@ public class ChallengeDAO {
 	}
 
 
+	/** 다음 챌릴지 번호 조회
+	 * @param conn
+	 * @return chlngNo
+	 * @throws Exception
+	 */
+	public int selectNextNo(Connection conn) throws Exception{
+		int chlngNo = 0;
+		String query = prop.getProperty("selectNextNo");
+		
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				chlngNo = rset.getInt(1);
+			}
+			
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return chlngNo;
+	}
+
+
+	/** 챌린지 삽입
+	 * @param conn
+	 * @param map
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertChallenge(Connection conn, Map<String, Object> map) throws Exception{
+
+		int result = 0;
+		
+		String query = prop.getProperty("insertChallenge");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, (int)map.get("chlngNo"));
+			pstmt.setString(2, (String)map.get("chlngTitle"));
+			pstmt.setString(3, (String)map.get("chlngContent"));
+			pstmt.setString(4, (String)map.get("chlngStartDt"));
+			pstmt.setString(5, (String)map.get("chlngEndDt"));
+			pstmt.setInt(6, (int)map.get("chlngeWriter"));    // 글을 작성한 멤버 번호가 들어가있음
+			pstmt.setInt(7, (int)map.get("chlngCateNo"));
+			
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	/** 파일 정보 삽입
+	 * @param conn
+	 * @param at
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertAttachment(Connection conn, Attachment at) throws Exception{
+		int result = 0;
+		
+		String query = prop.getProperty("insertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, at.getFilePath());
+			pstmt.setString(2, at.getFileName());
+			pstmt.setInt(3, at.getParentChlngeNo());
+			pstmt.setInt(4, at.getFileLevel());
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	
+	
+	
+	
+	
+	/** 챌린지 삭제 여부 (상테 업데이트) DAO
+	 * @param conn
+	 * @param chlngNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateChFl(Connection conn, int chlngNo) throws Exception{
+		int result = 0;
+		
+		String query = prop.getProperty("updateChFl");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, chlngNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 //	/** 챌린지 좋아요 가져오기DAO
 //	 * @param conn
 //	 * @param challengeNo

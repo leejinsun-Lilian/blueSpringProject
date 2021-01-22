@@ -46,7 +46,7 @@
 										<c:forEach var="notice" items="${nList}">
 											<tr>
 												<th scope="row">${notice.noticeNo}</th>
-												<td colspan="3"><a href="#">${notice.noticeTitle}</a></td>
+												<td colspan="3">${notice.noticeTitle}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>

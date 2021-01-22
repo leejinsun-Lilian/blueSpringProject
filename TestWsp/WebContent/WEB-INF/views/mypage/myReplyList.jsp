@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,53 +27,28 @@
 				<h3>작성한 댓글 조회</h3>
 				<div class="list-wrapper">
 					<table class="table" id="list-table">
-						<thead>
 							<tr>
-								<th>번호</th>
-								<th>제목</th>
-								<th>작성자</th>
+								<th>게시글 번호</th>
+								<th>내용</th>
 								<th>작성일</th>
 							</tr>
-						</thead>
-
-						<tbody>
-
-							<!-- 조회된 목록이 없을 때   -->
-							<!-- <tr>
-                  <td colspan="5">존재하는 인증글이 없습니다</td>
-               </tr> -->
-							<tr>
-								<td>112</td>
-								<td>제목 출력</td>
-								<td>작성자 출력</td>
-								<td>날짜 출력</td>
-							</tr>
-							<tr>
-								<td>113</td>
-								<td>제목 출력</td>
-								<td>작성자 출력</td>
-								<td>날짜 출력</td>
-							</tr>
-							<tr>
-								<td>114</td>
-								<td>제목 출력</td>
-								<td>작성자 출력</td>
-								<td>날짜 출력</td>
-							</tr>
-							<tr>
-								<td>115</td>
-								<td>제목 출력</td>
-								<td>작성자 출력</td>
-								<td>날짜 출력</td>
-							</tr>
-							<tr>
-								<td>116</td>
-								<td>제목 출력</td>
-								<td>작성자 출력</td>
-								<td>날짜 출력</td>
-							</tr>
-
-						</tbody>
+				
+					<c:choose>
+						<c:when test= "${empty cList}">
+							<td colspan="4">작성한 댓글이 없습니다.</td> 
+						</c:when>
+					
+					
+					<c:otherwise>
+ 						<c:forEach var="comment" items="${cList}">
+								<tr>
+									<td>${comment.parentBoardNo}</td>
+									<td>${comment.comContent}</td>
+									<td>${comment.comCreateDate}</td>
+								</tr>
+							</c:forEach> 
+						</c:otherwise>
+						</c:choose>
 					</table>
 				</div>
 

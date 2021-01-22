@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -81,8 +82,8 @@
 	                            <td colspan="12">존재하는 회원정보가 없습니다.</td>
 	                        </tr>
 	                    </c:when>
-    
-                    <c:otherwise>                      
+	                    
+                    <c:otherwise>
                         <c:forEach var="member" items="${mList}">
                             <tr>
 		                        <td>${member.memberNo}</td>
@@ -92,7 +93,7 @@
 		                        <td>${member.memberBirth}</td>
 		                        <td>${member.memberGender}</td>
 		                        <td>${member.memberPhone}</td>
-		                        <td>${member.memberAddr}</td>
+		                        <td>${fn:split(member.memberAddr,',')[1]}</td>
 		                        <td>${member.memberJoined}</td>
 		                        <td>${member.memberScsnFl}</td>
 		                        <td>${member.memberBlackList}</td>

@@ -53,15 +53,6 @@ public class MainSearchController extends HttpServlet {
 			view = request.getRequestDispatcher(path);
 			view.forward(request, response);
 			
-			
-			
-			
-			
-			
-			
-			
-				
-				
 						
 		} catch (Exception e) {
 			e.printStackTrace();
