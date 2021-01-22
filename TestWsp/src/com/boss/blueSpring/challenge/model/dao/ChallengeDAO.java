@@ -237,7 +237,7 @@ public class ChallengeDAO {
 			
 			pstmt.setString(1, at.getFilePath());
 			pstmt.setString(2, at.getFileName());
-			pstmt.setInt(3, at.getParentChlngeNo());
+			pstmt.setInt(3, at.getParentChNo());
 			pstmt.setInt(4, at.getFileLevel());
 			
 			result = pstmt.executeUpdate();
@@ -276,6 +276,95 @@ public class ChallengeDAO {
 		}
 		
 		return result;
+	}
+
+
+	/** 해당 글에 포함되는 이미지들 목록 조회 DAO
+	 * @param conn
+	 * @param challengeNo
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Attachment> selectChallengeFiles(Connection conn, int challengeNo) throws Exception{
+
+		List<Attachment> fList = null;
+		
+		String query = prop.getProperty("selectChallengeFiles");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, challengeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			fList = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment(
+						rset.getInt("CHLNG_IMG_NO"),
+						rset.getString("C_FILE_NAME"),
+						rset.getInt("FILE_LEVEL"));
+				
+				at.setFilePath(rset.getString("FILE_PATH"));
+				
+				fList.add(at);
+			}
+		
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return fList;
+	}
+
+
+	/** 파일 레벨이 0인 사진(대표사진)을 가져오기 위한  DAO
+	 * @param conn
+	 * @param challengeNo
+	 * @return fmList
+	 * @throws Exception
+	 */
+	public List<Attachment> selectThumbFiles(Connection conn, PageInfo pInfo) throws Exception{
+		List<Attachment> fmList = null;
+		
+		String query = prop.getProperty("selectThumbFiles");
+		
+		try {
+			// 위치홀더에 들어갈 시작행, 끝 행번호 계산
+			int startRow = (pInfo.getCurrentPage()-1) * pInfo.getLimit() + 1;    // 1행부터 시작
+			int endRow = startRow + pInfo.getLimit() -1;
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			fmList = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				
+				Attachment at = new Attachment();
+				at.setParentChNo(rset.getInt("CHLNG_NO"));
+				at.setFileName(rset.getString("C_FILE_NAME"));
+				
+				
+				fmList.add(at);
+			}
+		
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return fmList;
 	}
 
 

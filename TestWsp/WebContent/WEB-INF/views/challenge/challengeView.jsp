@@ -49,18 +49,16 @@
  			<!-- 이미지 출력 -->
 			<c:if test="${!empty fList}">
 				<!-- 이미지가 없으면 그 슬라이드 공간을 차지하지 않음 -->
-				<div>
 				
 					<div>
 						<c:forEach var="file" items="${fList}" varStatus="vs">
 							<div class="imgFile" align="center">
-								<img class="d-block w-100 boardImg" id="${file.fileNo}" 
+								<img class="d-block w-100 chImg" id="${file.fileNo}" 
 											src="${contextPath}/resources/uploadImages/challenge/${file.fileName}">
 							</div>
 						</c:forEach>
 					</div>
-					
-				</div>
+				
 			</c:if> 
 
 
