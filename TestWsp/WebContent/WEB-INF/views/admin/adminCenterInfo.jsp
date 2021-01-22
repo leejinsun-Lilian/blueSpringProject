@@ -70,11 +70,13 @@
 	#center_btn2 { 
 	    background-color: rgb(40, 62, 105);
 	    color: snow;
+	    border : none;
 	}
 	
 	#center_btn3 { 
 	    background-color: #dc3545;
 	    color: snow;
+	    border : none;
 	}
 	
 	.center_page_btn { float: right; }
@@ -222,7 +224,7 @@
 	                <option value="centerNm">기관명</option>
 	            </select>
             <input type="text" name="sv">
-            <button id="senter_btn">검색</button><br>
+            <button id="center_btn">검색</button><br>
             </form>
             
             <div class="center_page_btn">
