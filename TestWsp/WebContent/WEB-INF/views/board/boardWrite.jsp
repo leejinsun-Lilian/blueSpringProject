@@ -20,7 +20,7 @@
         <h2>글작성</h2>
 
         <form action="${contextPath}/board/write.do" method="post" 
-				  		enctype="multipart/form-data" role="form" onsubmit="return boardValidate();">
+				  		role="form" onsubmit="return boardValidate();">
             <div id="title-wrapper">
                 <label>글 제목</label> 
                 <input id="b-title" name="b-title" type="text"> <br>
@@ -103,10 +103,8 @@
 					  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
 			          
 					  callbacks: {
-						  onImageUploat: function(files, eidtor, welEditable) {
-							  for(var i = files.length - 1; i >= 0; i--) {
-								  uploadSummernoteImageFile(files[i], this);
-							  }
+						  onImageUpload: function(files, eidto) {
+								  uploadSummernoteImageFile(files[0], this);
 						  }
 					  }
 				});
@@ -121,12 +119,12 @@
 	      $.ajax({
 	         data : data,
 	         type : "POST",
-	         url : "${contextPath}/board/write.do",
+	         url : "${contextPath}/board/insertImage.do",
 	         contentType : false,
 	         processData : false,
 	         success : function(data) {
 	               //항상 업로드된 파일의 url이 있어야 한다.
-             $(editor).summernote('insertImage', url); 
+             $(el).summernote('editor.insertImage', data); 
 					//		$(el).summernote('editor.insertImage', img_name);
 	         }
 	      });

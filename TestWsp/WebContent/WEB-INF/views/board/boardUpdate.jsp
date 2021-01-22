@@ -23,7 +23,7 @@
 				</c:if>
 				
 				<form action="update.do?cp=${param.cp}&no=${param.no}${searchStr}" method="post" 
-					  enctype="multipart/form-data" role="form" onsubmit="return updateValidate();">
+					  role="form" onsubmit="return updateValidate();">
             <div id="title-wrapper">
                 <label>글 제목</label> 
                 <input id="b-title" name="b-title" type="text" value="${board.boardTitle}"><br>
@@ -46,7 +46,7 @@
 
             <div id="content-wrapper">
                 <label>내용</label> <br>    
-                <textarea name="b-content" id="b-content" cols="3000" rows="1000">${board.boardContent}</textarea> <br>
+                <textarea name="b-content" id="summernote" cols="3000" rows="1000"></textarea> <br>
             </div>
 
             <button type="submit" id="update-btn">수 정</button>
@@ -88,7 +88,46 @@
 				});
 
 			});
-					
+			
+			
+			$(document).ready(function() {
+		     $('#summernote').summernote({
+							 height: 300,                 // 에디터 높이
+							 minHeight: null,             // 최소 높이
+							 maxHeight: null,
+		           focus: true, 
+		           lang : 'ko-KR',
+		           
+					  callbacks: {
+						  onImageUpload: function(files, eidto) {
+								  uploadSummernoteImageFile(files[0], this);
+						  }
+					  }
+		     });
+		     // Summernote에 글 내용 추가하는 코드
+		     $("#summernote").summernote('code', '${board.boardContent}');
+		   });
+				
+			
+			/**
+			   * 이미지 파일 업로드
+			   */
+		  function uploadSummernoteImageFile(file, el) {
+	      data = new FormData();
+	      data.append("file", file);
+	      $.ajax({
+	         data : data,
+	         type : "POST",
+	         url : "${contextPath}/board/insertImage.do",
+	         contentType : false,
+	         processData : false,
+	         success : function(data) {
+	               //항상 업로드된 파일의 url이 있어야 한다.
+           $(el).summernote('editor.insertImage', data); 
+					//		$(el).summernote('editor.insertImage', img_name);
+	         }
+	      });
+ 			}   
     </script>
 </body>
 </html>

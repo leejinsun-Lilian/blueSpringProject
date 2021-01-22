@@ -27,7 +27,7 @@ public class CenterDAO {
 	public List<Center> selectCenterList(Connection conn, String condition1, String condition2) throws Exception {
 		List<Center> cList = null;
 		
-		String query = "SELECT * FROM V_CENTER WHERE" + condition1 + condition2;
+		String query = "SELECT * FROM CENTER WHERE" + condition1 + condition2;
 		
 		try {
 			stmt = conn.createStatement();
