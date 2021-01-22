@@ -21,7 +21,10 @@
 	}
 
 	#selectArea {
-		width: 70%;
+		box-shadow: 5px 5px 5px 5px rgb(146, 161, 230) inset;
+		width: 10%;
+		border: 2px solid lightgray;
+		padding: 15px;
 	}
     
     #sidoSelect {
@@ -29,63 +32,70 @@
     }
     
 	#gugunSelectArea {
-		overflow-x: hidden;
-		overflow-y: scroll;
 		text-align: left;
 		width: 80%;
-		height: 50px;
+		height: 70px;
 	}
 	
 	#centerSelectArea {
 		overflow-x: hidden;
 		overflow-y: scroll;
 		width: 100%;
-		height: 700px;
+		height: 800px;
+		padding: 0;
 	}
+
 
 	#listMap {
 		display: flex;
 	}
 
 	#centerListArea {
-		width: 40%;	
+		box-shadow: 5px 5px 5px 5px rgb(146, 161, 230) inset;
+		border-top: 2px solid lightgray;
+		border-bottom: 2px solid lightgray;
+		width: 25%;	
 	}
 
 	#mapArea {
-		width: 60%;
+		width: 65%;
 		height: 800px;
 	}
   
 	label {
 		width: 100px;
+		display: block;
+	}
+
+	#centerList {
+
 	}
 
 	#centerList > li {
-		border: 1px solid black;
+		width: 100%;
+		border-bottom: 2px solid lightgray;
 	}
     
 </style>
-
+<link rel="stylesheet" href="${contextPath}/resources/css/common/btnStyle.css">
 </head>
 <body>
     <jsp:include page="../common/header.jsp"></jsp:include>
     
     <h1>기관찾기</h1>
 		    
-			<!-- 기관 검색 -->
-			
+			<!-- 기관 검색 -->	
+		
+		<div id="listMap">
+			<!-- 기관 목록 -->
 			<div id ="selectArea">
 				시/도 : <select name="sidoSelect" id="sidoSelect"></select>
-				
+				<button id="search-btn" class="btn-style1">찾기</button> 
 					<div id="gugunSelectArea">
 						
 					</div>   
 					<br>
-					<button id="search-btn">찾기</button> 
-			</div>		
-		
-		<div id="listMap">
-			<!-- 기관 목록 -->
+			</div>	
 			<div id="centerListArea">
 				
 				<div id="centerSelectArea">
@@ -167,7 +177,7 @@
 					
 					$.each(cList, function(index, item){
 						var li = $("<li>").addClass("center-row");
-						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn").attr("onclick", "placeSearch(this)");
+						var placeSearchBtn = $("<button>").text("위치찾기").addClass("placeSearchBtn btn-style1").attr("onclick", "placeSearch(this)");
 						
 						var div = $("<div>");
 						var br = $("<br>");					
@@ -353,9 +363,9 @@
 			if(sidoIndex == 1) {
 				for(var j = 0; j < gugun1.length; ++j) {  				
 					$("#gugunSelectArea").append("<label><input type='checkbox' name='gugunSelect' class='gugunSelect' value=" + gugun1[j] + ">" + gugun1[j] +"</label>");	 
-					if(j > 1 && j % 10 == 0) {
-						$("#gugunSelectArea").append("<br>");
-					}	  			
+					// if(j > 1 && j % 10 == 0) {
+					// 	$("#gugunSelectArea").append("<br>");
+					// }	  			
 				}  
 				  		
 			}
