@@ -16,11 +16,30 @@ SELECT* FROM
 WHERE RNUM BETWEEN ? AND ?
 </entry>
 
+<!-- 챌린지 상세 조회 -->
 <entry key="selectChallenge">
 SELECT * FROM V_CHLNG_MISSION_LIST
 WHERE CHLNG_NO = ?
 AND CHLNG_FL = 'N'
 </entry>
+
+<!-- 다음글 번호 조회 -->
+<entry key="selectNextNo">
+SELECT SEQ_CMNO.NEXTVAL FROM DUAL
+</entry>
+
+<!-- 챌린지 삽입 -->
+<entry key="insertChallenge">
+INSERT INTO CHALLENGE_MISSION
+VALUES(?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?)
+</entry>
+
+<!-- 파일 정보 삽입 -->
+<entry key="insertAttachment">
+INSERT INTO CHALLENGE_MISSION_IMG
+VALUES(SEQ_FCMNO.NEXTVAL, ?, ?, ?, ?)
+</entry>
+
 
 
 

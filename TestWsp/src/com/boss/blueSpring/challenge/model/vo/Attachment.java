@@ -1,4 +1,4 @@
-package com.boss.blueSpring.notice.model.vo;
+package com.boss.blueSpring.challenge.model.vo;
 
 public class Attachment {
 
@@ -6,7 +6,7 @@ public class Attachment {
 	private String filePath;
 	private String fileName;
 	private int fileLevel;
-	private int parentNoticeNo;
+	private int parentchlngBrdNo;
 	
 	public Attachment() {}
 
@@ -21,13 +21,13 @@ public class Attachment {
 
 
 
-	public Attachment(int fileNo, String filePath, String fileName, int fileLevel, int parentNoticeNo) {
+	public Attachment(int fileNo, String filePath, String fileName, int fileLevel, int parentchlngBrdNo) {
 		super();
 		this.fileNo = fileNo;
 		this.filePath = filePath;
 		this.fileName = fileName;
 		this.fileLevel = fileLevel;
-		this.parentNoticeNo = parentNoticeNo;
+		this.parentchlngBrdNo = parentchlngBrdNo;
 	}
 
 	public int getFileNo() {
@@ -62,22 +62,23 @@ public class Attachment {
 		this.fileLevel = fileLevel;
 	}
 
-	public int getParentNoticeNo() {
-		return parentNoticeNo;
+	public int getParentChlngeNo() {
+		return parentchlngBrdNo;
 	}
 
-	public void setParentNoticeNo(int parentNoticeNo) {
-		this.parentNoticeNo = parentNoticeNo;
+	public void setParentChlngeNo(int parentchlngBrdNo) {
+		this.parentchlngBrdNo = parentchlngBrdNo;
 	}
 
 	@Override
 	public String toString() {
 		return "Attachment [fileNo=" + fileNo + ", filePath=" + filePath + ", fileName=" + fileName + ", fileLevel="
-				+ fileLevel + ", parentNoticeNo=" + parentNoticeNo + "]";
+				+ fileLevel + ", parentNoticeNo=" + parentchlngBrdNo + "]";
 	}
 
 
 
+	
 	
 	
 }
