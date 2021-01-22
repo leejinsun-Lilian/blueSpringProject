@@ -21,7 +21,7 @@
 	<div class="wrap">
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
-			<jsp:include page="../common/sideMenu.jsp"></jsp:include>
+			<jsp:include page="../common/mypageSideMenu.jsp"></jsp:include>
 			<div class="content">
 			<h3>역대 챌린지</h3>
 				<div class="cBack">

@@ -9,10 +9,7 @@
 <title>푸른봄: 작성한 글 조회</title>
 
 <link href="${contextPath}/resources/css/mypage/boardList.css" rel="stylesheet" type="text/css">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
-	rel="stylesheet">
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>

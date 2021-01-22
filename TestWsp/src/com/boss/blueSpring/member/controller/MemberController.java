@@ -36,7 +36,7 @@ public class MemberController extends HttpServlet {
 		String path = null;
 		RequestDispatcher view = null;
 		
-		String errorMsg = null;
+		String errorMsg = null; 
 		
 		String swalIcon = null;
 		String swalTitle = null;
@@ -57,6 +57,14 @@ public class MemberController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
+			
+			else if(command.equals("/error.do")) {
+				errorMsg = "에러페이지 테스트";			
+				 path = "/WEB-INF/views/common/errorPage.jsp";
+		         request.setAttribute("errorMsg", errorMsg);
+		         view = request.getRequestDispatcher(path);
+		         view.forward(request, response);
+			}
 			
 			// ****************************************************************** 로그인  Controller ******************************************************************
 			else if(command.equals("/loginAction.do")) {

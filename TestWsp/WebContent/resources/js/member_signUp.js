@@ -256,7 +256,7 @@ $("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
 			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
 			$("#birth_dd").css("border", "1px solid red").text("");
 			validateCheck.birthdd = false;
-		}else if(Number(value3) < 0 || Number(value3) > 31) {
+		}else if((Number(value3) < 0) || (Number(value3) > 31)) {
 		
 			$("#birthdayMsg").text("태어난 일 2자리를 정확하게 입력하세요.").css("color", "red");	
 			validateCheck.birthdd = false;
@@ -286,7 +286,7 @@ $("#gender").on("change", function(){
 
 
 $("#phone").on("input", function(){
-	var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+	var regExp = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
 	var value = $("#phone").val();
 	
 	if(!regExp.test(value)){
@@ -400,9 +400,9 @@ function pwdValidate(){
 // 회원 정보 수정 유효성 검사
 
    var updateCheck = {
-		"nickname":false,
-		"address" : false,
-		"phone" : false
+		"nickname2":false,
+		"address2" : false,
+		"phone2" : false
 	};
 
 $("#changeNickName").on("input", function(){
@@ -416,7 +416,7 @@ $("#changeNickName").on("input", function(){
         	$("#nickNameMsg").text("2~20자 내  소문자, 한글, 숫자,  _, - 사용").css("color", "red");
 		}
 		$("#changeNickName").css("border", "1px solid red");
-		validateCheck.nickname = false;
+		updateCheck.nickname2 = false;
 	} else {
 		$.ajax({
 			url : "nicknameDubCheck.do",
@@ -426,10 +426,11 @@ $("#changeNickName").on("input", function(){
 				if(result == 0){
 					$("#nickNameMsg").text("");
 					$("#changeNickName").css("border", "1px solid #8cb0f7");
-					validateCheck.nickname = true;
+					updateCheck.nickname2 = true;
 				}else{
 					$("#nickNameMsg").text("이미 사용 중인 닉네임입니다.").css("color", "red");
 					$("#changeNickName").css("border", "1px solid red");
+					updateCheck.nickname2 = true;
 				}
 			}
 			
@@ -438,35 +439,32 @@ $("#changeNickName").on("input", function(){
 });
 
 
- 
+
 function memberUpdateValidate(){
-
-   var regExp1 = /^[a-zA-z\d-_가-힣]{2,20}$/; // 닉네임
-   var regExp2 = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/; // 핸드폰 번호
-
-
-
-
+	
+	    var regExp1 = /^[a-zA-z\d-_가-힣]{2,20}$/; // 닉네임
+   var regExp2 = /^(010|011|016|017|018|019)-[^0][0-9]{3,4}-[0-9]{4}/; // 핸드폰 번호
     // 전화번호 유효성 검사
-    var p = $("#phone").val();
+    var p = $("#changeTel").val();
     if(!regExp2.test(p)){
-        updateCheck.phone = false;
+        updateCheck.phone2 = false;
     }else{
-        updateCheck.phone = true;
+        updateCheck.phone2 = true;
     }
 	
 	var post = $("#post").val();
 	var addr1 = $("#address1").val();
 	var addr2 = $("#address2").val();
 	 
-	if(post == "" || addr1 == "" || add2 == ""){
-		updateCheck.address = true;
+	if(post == null || addr1 == null || add2 == null){
+		updateCheck.address2 = true;
 	} else{
-			updateCheck.address = false;
+		updateCheck.address2 = false;
 	}
+
 	
     for(var key in updateCheck){
-        if(!updateCheck[key]){
+        if(updateCheck[key] == false){
             swal("일부 값이 유효하지 않습니다.");
             return false;
         }
