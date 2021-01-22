@@ -183,7 +183,6 @@ public class AdminController extends HttpServlet {
 				errorMsg = "기관명 중복 검사 과정에서 오류가 발생했습니다.";
 				
 				String centerName = request.getParameter("centerName");
-				centerName += "'" + centerName + "'";
 						
 				int result = service.centerNameDubCheck(centerName);
 				response.getWriter().print(result);
