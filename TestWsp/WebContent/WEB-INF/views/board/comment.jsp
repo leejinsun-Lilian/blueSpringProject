@@ -55,7 +55,7 @@
     }
 
 </style>
-
+<link rel="stylesheet" href="${contextPath}/resources/css/common/btnStyle.css">
 </head>
 <body>
     <div id="comment-area">
@@ -67,7 +67,7 @@
                     <textarea rows="3" id="comment-content" class="comment-content-box" placeholder="댓글을 작성하세요."></textarea>
                 </td>
                 <td>
-                    <button id="add-comment">
+                    <button id="add-comment" class="btn-style1">
 						댓글<br>등록
 					</button>
                 </td>
@@ -81,11 +81,11 @@
 					<!-- 로그인 x 또는 댓글 작성자가 아닌 회원의 화면 -->
 					<li class="comment-row">
 						<div>
-							<p class="cWriter">작성자</p>
-							<p class="cDate">작성일 : 2021년 01월 11일 10:30</p>
+							<p class="cWriter"></p>
+							<p class="cDate"></p>
 						</div>
 						
-						<p class="cContent">댓글 내용1</p>
+						<p class="cContent"></p>
 
 					</li>
 		
@@ -93,15 +93,15 @@
 					<!-- 로그인한 회원이 댓글 작성자인 경우 -->
 					<li class="comment-row">
 						<div>
-							<p class="cWriter">작성자</p>
-							<p class="cDate">작성일 : 2021.01.11 10:30</p>
+							<p class="cWriter"></p>
+							<p class="cDate"></p>
 						</div>
 		
-						<p class="cContent">댓글 내용2</p>
+						<p class="cContent"></p>
 						
 						<div class="commentBtnArea">
-							<button class="" onclick="showUpdateComment(2, this)">수정</button>
-							<button class="" onclick="deleteComment(2)">삭제</button>
+<!-- 							<button class="" onclick="showUpdateComment(2, this)"></button>
+							<button class="" onclick="deleteComment(2)"></button> -->
 						</div>
 					</li>
 			
@@ -138,7 +138,7 @@
                     
                     $.each(cList, function(index, item){
                         var li = $("<li>").addClass("comment-row");
-                        var reportBtn = $("<button>").text("신고하기").attr("id", "commentReportBtn").attr("onclick", "reportComment("+item.comNo+")");
+                        var reportBtn = $("<button>").text("신고하기").addClass("btn-style3").attr("id", "commentReportBtn").attr("onclick", "reportComment("+item.comNo+")");
                         var cWriter = $("<p>").addClass("cWriter").text(item.memberId);
                         var cDate = $("<p>").addClass("cDate").text("작성일 : " + item.comCreateDate);
                         
@@ -166,8 +166,8 @@
                             var commentBtnArea = $("<div>").addClass("commentBtnArea");
                             
                             // ** 추가되는 댓글에 onclick 이벤트를 부여하여 버튼 클릭 시 수정, 삭제를 수행할 수 있는 함수를 이벤트 핸들러로 추가함. 
-                            var showUpdate = $("<button>").addClass("").text("수정").attr("onclick", "showUpdateComment("+item.comNo+", this)");
-                            var deleteComment = $("<button>").addClass("").text("삭제").attr("onclick", "deleteComment("+item.comNo+")");
+                            var showUpdate = $("<button>").addClass("").text("수정").addClass("btn-style2").attr("onclick", "showUpdateComment("+item.comNo+", this)");
+                            var deleteComment = $("<button>").addClass("").text("삭제").addClass("btn-style3").attr("onclick", "deleteComment("+item.comNo+")");
                             
                             commentBtnArea.append(showUpdate).append(deleteComment);
                             

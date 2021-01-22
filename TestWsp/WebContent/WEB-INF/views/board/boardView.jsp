@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="${contextPath}/resources/css/board/boardView.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/common/btnStyle.css">
 
 </head>
 <body>
@@ -27,7 +28,7 @@
             <h2 id="board-title" class="shadow">${board.boardTitle}</h2>
             <!-- 로그인이 되어있고 글 작성자가 아닌 경우 --> 
             <c:if test="${!empty loginMember && (board.memberId != loginMember.memberId)}">
-            	<button type="button" id="boardReportBtn">신고하기</button>
+            	<button type="button" id="boardReportBtn" class="btn-style3">신고하기</button>
             </c:if>         
         </div>
 
@@ -72,17 +73,18 @@
         
 				<jsp:include page="comment.jsp"></jsp:include>
     
-    <button type="button" id="back-board-main" onclick="location.href='list.do?cp=${param.cp}'">목록으로</button>	
+    <button type="button" id="back-board-main" class="btn-style1" onclick="location.href='list.do?cp=${param.cp}'">목록으로</button>	
 		<%-- 로그인된 회원과 해당 글 작성자가 같은 경우--%>
  		<c:if test="${!empty loginMember && (board.memberId == loginMember.memberId)}">
-			<button id="deleteBtn">삭제</button> 
+			<button type="button" id="updateBtn" class="btn-style2" onclick="location.href = 'updateBoardForm.do?cp=${param.cp}&no=${param.no}${searchStr}'">수정</button>	
+			<button id="deleteBtn" class="btn-style3">삭제</button> 
 			
 			<%-- 게시글 수정 후 상세조회 페이지로 돌아오기 위한 url 조합 --%>
 			<%-- 검색된 내용 들어온 상세 조회 페이지인 경우 --%>
  			<c:if test="${!empty param.sk && !empty param.sv}">	
 				<c:set var="searchStr" value="&sk=${param.sk}&sv=${param.sv}" />
  			</c:if>	 
-			<button type="button" id="updateBtn" onclick="location.href = 'updateBoardForm.do?cp=${param.cp}&no=${param.no}${searchStr}'">수정</button>
+			
  		</c:if>      
       			
     </div>
