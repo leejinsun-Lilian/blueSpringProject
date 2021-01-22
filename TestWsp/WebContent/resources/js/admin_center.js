@@ -12,8 +12,9 @@ $("#centerName").on("input", function(){
 	if(!regExp.test(value)){
 		if(value.trim().length == 0){
 			$("#centerNameMsg").text("필수 정보입니다.").css("color", "red");
-		$("#centerName").css("border", "1px solid red");
-		validateCheck.centerName = false;}
+			$("#centerName").css("border", "1px solid red");
+			validateCheck.centerName = false;
+		}
 	} else {
 		$.ajax({
 			url : "centerDubCheck.do",
@@ -28,6 +29,8 @@ $("#centerName").on("input", function(){
 					$("#centerNameMsg").text("이미 사용 중인 기관명입니다.").css("color", "red");
 					$("#centerName").css("border", "1px solid red");
 				}
+			},error : function(){
+				console.log("error");
 			}
 		});
 	}
