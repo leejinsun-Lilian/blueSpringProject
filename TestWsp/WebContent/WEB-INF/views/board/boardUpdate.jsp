@@ -59,15 +59,15 @@
     <script>
 		 // 유효성 검사 
 			function updateValidate() {
-				if ($("#boardTitle").val().trim().length == 0) {
+				if ($("#b-title").val().trim().length == 0) {
 					alert("제목을 입력해 주세요.");
-					$("#boardTitle").focus();
+					$("#b-title").focus();
 					return false;
 				}
 	
-				if ($("#boardContent").val().trim().length == 0) {
+				if ($("#b-content").val().trim().length == 0) {
 					alert("내용을 입력해 주세요.");
-					$("#boardContent").focus();
+					$("#b-content").focus();
 					return false;
 				}
 			}
@@ -112,22 +112,26 @@
 			/**
 			   * 이미지 파일 업로드
 			   */
-		  function uploadSummernoteImageFile(file, el) {
-	      data = new FormData();
-	      data.append("file", file);
-	      $.ajax({
-	         data : data,
-	         type : "POST",
-	         url : "${contextPath}/board/insertImage.do",
-	         contentType : false,
-	         processData : false,
-	         success : function(data) {
-	               //항상 업로드된 파일의 url이 있어야 한다.
-           $(el).summernote('editor.insertImage', data); 
-					//		$(el).summernote('editor.insertImage', img_name);
-	         }
+		function uploadSummernoteImageFile(file, el) {
+			if($(':radio[name="b-category"]:checked').length < 1){
+				alert('태그를 선택해주세요');                        
+				event.preventDefault();
+			}
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "${contextPath}/board/insertImage.do",
+				contentType : false,
+				processData : false,
+				success : function(data) {
+					//항상 업로드된 파일의 url이 있어야 한다.
+			$(el).summernote('editor.insertImage', data); 
+						//		$(el).summernote('editor.insertImage', img_name);
+				}
 	      });
- 			}   
+ 		}   
     </script>
 </body>
 </html>

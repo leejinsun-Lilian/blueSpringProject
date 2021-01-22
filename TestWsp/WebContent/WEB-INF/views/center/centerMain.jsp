@@ -21,9 +21,12 @@
 	}
 
 	#selectArea {
-		box-shadow: 5px 5px 5px 5px rgb(146, 161, 230) inset;
-		width: 10%;
-		border: 2px solid lightgray;
+		border-image: linear-gradient(to right, rgb(146, 161, 230) 90%, lightgray 100%);
+		border-image-slice: 1;
+		border-style: solid;
+		border-image-width: 5px;
+		background: #f7f7f7;
+		width: 10%;	
 		padding: 15px;
 	}
     
@@ -49,11 +52,13 @@
 	#listMap {
 		display: flex;
 	}
-
+	
 	#centerListArea {
-		box-shadow: 5px 5px 5px 5px rgb(146, 161, 230) inset;
-		border-top: 2px solid lightgray;
-		border-bottom: 2px solid lightgray;
+		border-image: linear-gradient(to right, lightgray 0%,  rgb(146, 161, 230)100%);
+		border-image-slice: 1;
+		border-style: solid;
+		border-image-width: 5px;
+		background: #f7f7f7;
 		width: 25%;	
 	}
 
@@ -155,7 +160,12 @@
 		
 		// 찾기 버튼 클릭 시
 		$("#search-btn").on("click", function() {
-			var sido = $("#sidoSelect option:selected").val();
+			if($(':checkbox[name="gugunSelect"]:checked').length < 1){
+				alert('지역을 선택해주세요');                        
+				event.preventDefault();
+			} 
+			else {
+				var sido = $("#sidoSelect option:selected").val();
 			var gugun = new Array();
 
 			$("input:checkbox[name='gugunSelect']:checked").each(function(){
@@ -210,6 +220,8 @@
 			  	   alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 			 	}	
 			}); 		
+		}
+			
 		});
 		
 		
