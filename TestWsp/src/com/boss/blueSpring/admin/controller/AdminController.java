@@ -185,17 +185,8 @@ public class AdminController extends HttpServlet {
 				String centerName = request.getParameter("centerName");
 				centerName += "'" + centerName + "'";
 						
-				try {
-					int result = service.centerNameDubCheck(centerName);
-					response.getWriter().print(result);
-					
-				}catch (Exception e) {
-					e.printStackTrace();
-					path = "/WEB-INF/views/common/errorPage.jsp";
-			        request.setAttribute("errorMsg", errorMsg);
-			        view = request.getRequestDispatcher(path);
-			        view.forward(request, response);
-				}
+				int result = service.centerNameDubCheck(centerName);
+				response.getWriter().print(result);
 			}
 			
 			// ********************* 기관(센터) 등록 Controller *********************
