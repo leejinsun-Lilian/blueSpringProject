@@ -55,13 +55,9 @@
 	#report_btn2 { 
 	    background-color: rgb(40, 62, 105);
 	    color: snow;
+	    border : none;
 	}
-	
-	#report_btn3 { 
-	    background-color: #dc3545;
-	    color: snow;
-	}
-	
+
 	.report_page_btn { float: right; }
 	
 	</style>
@@ -205,7 +201,6 @@
             
             <div class="report_page_btn">
             <button type="button" id="report_btn2">블랙리스트 등록</button></div>
-            <!-- <button type="button" id="report_btn3">삭제</button>-->
         </div>
     </div>
     <div style="clear: both;"></div>

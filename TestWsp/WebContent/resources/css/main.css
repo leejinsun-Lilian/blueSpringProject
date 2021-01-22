@@ -72,8 +72,8 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
     color:rgb(40, 62, 105);
 }
 
-.board_content{
-    height: 78%;
+/* .table > tbody > tr > *{ */
+.table > tbody > tr > td{
     
     /* 내용 길어지면 감추기 */
     overflow: hidden;
@@ -109,3 +109,5 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
 	background-color: #eee;
 }
 
+
+.table{ table-layout : fixed; }

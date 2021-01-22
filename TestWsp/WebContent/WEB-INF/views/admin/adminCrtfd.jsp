@@ -53,6 +53,7 @@
     float: right;
     background-color: #dc3545;
     color: snow;
+    border : none;
     }
 	</style>
 </head>
