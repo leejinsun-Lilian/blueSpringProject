@@ -187,8 +187,8 @@
 			switch(type){
 			case '1' : url = "board/view.do?cp=1&no="+no; break;
 			case '2' : url = "notice/view.do?cp=1&no="+no; break;
-			case '3' : url = "board/view.do?cp=1&no="+no; break;
-			case '4' : url = "board/view.do?cp=1&no="+no; break;
+			case '3' : url = "challenge/view.do?cp=1&no="+no; break;
+			case '4' : url = "challengeCrtfd/view.do?cp=1&no="+no; break;
 			}
 			
 			location.href = url;

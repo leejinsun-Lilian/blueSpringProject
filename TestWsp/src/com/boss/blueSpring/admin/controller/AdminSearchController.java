@@ -41,10 +41,6 @@ public class AdminSearchController extends HttpServlet {
 		String path = null;
 		RequestDispatcher view = null;
 
-		String swalIcon = null;
-		String swalTitle = null;
-		String swalText = null;
-
 		String errorMsg = null;
 		
 		try {

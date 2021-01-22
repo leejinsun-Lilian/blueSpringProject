@@ -66,12 +66,6 @@ WHERE CENTER_NM = ?
 AND CENTER_DEL_FL = 'N'
 </entry>
 
-<!-- 센터 등록하기 -->
-<entry key="centerAdd">
-INSERT INTO CENTER VALUES(SEQ_CNO.NEXTVAL, ?, ?, ?, 
-?, ?, ?, ?, ?, 'N')
-</entry>
-
 <!-- 회원정보 관리 전체 게시글 수 조회 -->
 <entry key="getMemberListCount">
 SELECT COUNT(*) FROM V_MEMBER
@@ -129,5 +123,24 @@ FROM
 WHERE RNUM BETWEEN ? AND ?
 </entry>
 
+<!-- ****************************************** 센터 등록/수정 -->
+
+<!-- 센터 등록하기 -->
+<entry key="centerAdd">
+INSERT INTO CENTER VALUES(SEQ_CNO.NEXTVAL, ?, ?, ?, 
+?, ?, ?, ?, ?, 'N')
+</entry>
+
+<!-- 센터 수정하기 -->
+<entry key="updateCenter">
+UPDATE CENTER 
+SET CENTER_AREA1 = ?,
+	CENTER_AREA2 = ?,
+    CENTER_TEL = ?,
+    CENTER_URL = ?,
+    CENTER_ADDR = ?,
+    CENTER_ADDR_DTL = ?
+WHERE CENTER_NO = ?
+</entry>
 
 </properties>
