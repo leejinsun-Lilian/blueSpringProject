@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,40 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
-.side
+.page-no-area{
+   width: 100%;
+   height: 60px;
+   margin-top : 20px;
+}
+
+.page-no-area ul{  /* 중앙에 두는 방법 */
+   width : 70%;
+   height : 100%;
+   margin : auto;
+    text-align: center;
+}
+.page-no-area ul li{
+    border : 1px solid gray;
+   width : 7%;
+   height : 100%;
+    display: inline-block;
+    margin-right: -6px;
+    list-style-type: none;
+    text-align: center;
+}
+.page-no-area li a{
+   width : 100%;
+   height : 100%;
+    text-decoration: none;
+    font-size: 30px;
+    color: #3498db;
+    line-height: 50px;
+    display: block;
+}
+.page-no-area  a:hover{
+   color : #283e69;
+   background-color : #dee2e6; 
+}
 </style>
 </head>
 <body>
@@ -26,106 +61,78 @@
 			<h3>역대 챌린지</h3>
 				<div class="cBack">
 					<table id="cTable">
+					<c:choose>
+						<c:when test="${empty list}">
+							<tr>
+								<td colspan="3"> 참여한 챌린지가 없습니다. </td>
+							</tr>
+						</c:when>
+				
+				
+				<c:otherwise> 
+				<c:forEach var="challenge" items="${list}">
 						<tr>
 							<td>
 								<div class="cThumbnail_area">
-									<img class="cThumbnail" src="${contextPath}/resources/img/dog.JPG"></img>
+									<c:forEach var="thumbnail" items="${fList}">
+										<c:if test="${challenge.chlngNo == thumbnail.parentChlngeNo}">
+											<img class="cThumbnail" src="${contextPath}/resources/uploadImages/${thumbnail.fileName}"></img>
+										</c:if>
+									</c:forEach>
 								</div>
 								<div class="cTitle_area">
-									<h4 class="title">강아지 사진 찍기</h4>
+									<h4 class="title">${challenge.chlngTitle}</h4>
 								</div>
 								<div class="cPeriod_area">
-									<span class="period">2021/01/02 - 2021/03/02</span>
-								</div>
-								<div class="check_area">
-									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-								</div>
-							</td>
-
-
-							<td>
-								<div class="cThumbnail_area">
-									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
-								</div>
-								<div class="cTitle_area">
-									<h4 class="title">강아지 사진 찍기</h4>
-								</div>
-								<div class="cPeriod_area">
-									<span class="period">2021/01/02 - 2021/03/02</span>
-								</div>
-								<div class="check_area">
-									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-								</div>
-							</td>
-							
-							<td>
-								<div class="cThumbnail_area">
-									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
-								</div>
-								<div class="cTitle_area">
-									<h4 class="title">강아지 사진 찍기</h4>
-								</div>
-								<div class="cPeriod_area">
-									<span class="period">2021/01/02 - 2021/03/02</span>
+									 <fmt:formatDate var="chlngStartDt" value="${challenge.chlngStartDt}" pattern="yyyy-MM-dd"/>
+									 <fmt:formatDate var="chlngEndDt" value="${challenge.chlngEndDt}" pattern="yyyy-MM-dd"/>
+									<span class="period">${chlngStartDt} - ${chlngEndDt}</span>
 								</div>
 								<div class="check_area">
 									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
 								</div>
 							</td>
 						</tr>
-						
-						
-						
-						<tr>
-							<td>
-								<div class="cThumbnail_area">
-									<img class="cThumbnail" src="${contextPath}/resources/img/dog.JPG"></img>
-								</div>
-								<div class="cTitle_area">
-									<h4 class="title">강아지 사진 찍기</h4>
-								</div>
-								<div class="cPeriod_area">
-									<span class="period">2021/01/02 - 2021/03/02</span>
-								</div>
-								<div class="check_area">
-									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-								</div>
-							</td>
-
-
-							<td>
-								<div class="cThumbnail_area">
-									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
-								</div>
-								<div class="cTitle_area">
-									<h4 class="title">강아지 사진 찍기</h4>
-								</div>
-								<div class="cPeriod_area">
-									<span class="period">2021/01/02 - 2021/03/02</span>
-								</div>
-								<div class="check_area">
-									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-								</div>
-							</td>
-							
-							<td>
-								<div class="cThumbnail_area">
-									<img class="cThumbnail" src="${contextPath}/resources/img/dog2.jpg"></img>
-								</div>
-								<div class="cTitle_area">
-									<h4 class="title">강아지 사진 찍기</h4>
-								</div>
-								<div class="cPeriod_area">
-									<span class="period">2021/01/02 - 2021/03/02</span>
-								</div>
-								<div class="check_area">
-									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-								</div>
-							</td>
-						</tr>
-						
+						</c:forEach>
+						</c:otherwise>
+							</c:choose>
 					</table>
 				</div>
+				
+				
+		<div class="page-no-area">
+			<ul>
+			
+				<c:if test="${pInfo.currentPage > 10}">
+					<li><a href="${firstPage}">&lt;&lt;</a></li>
+					<li><a href="${prevPage}">&lt;</a></li>
+				</c:if>
+				
+				<c:forEach var="page" begin="${pInfo.startPage}" end="${pInfo.endPage}">
+					<c:choose>
+						<c:when test="${pInfo.currentPage == page }">     <!-- 만약 -->
+							<li>
+								<a class="page-link">${page}</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a class="page-link" href="${pageUrl}?cp=${page}${searchStr}">${page}</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				
+				<c:if test="${next <= pInfo.maxPage}">
+					<li><a href="${nextPage}">&gt;</a></li>
+					<li><a href="${lastPage}">&gt;&gt;</a></li>
+				</c:if>
+				
+			</ul>
+        </div>
+				
+				
+				
 			</div>
 		</div>
 		
