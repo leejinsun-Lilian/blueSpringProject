@@ -2,31 +2,12 @@ package com.boss.blueSpring.admin.model.dao;
 
 import static com.boss.blueSpring.common.JDBCTemplate.*;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Properties;
 
 public class AdminDeleteDAO {
 	
 	private Statement stmt = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rset = null;
-	
-	private Properties prop = null;
-	
-//	public AdminDeleteDAO(){
-//		String fileName = AdminDeleteDAO.class.getResource("/com/boss/blueSpring/sql/admin/admin-query.xml").getPath();
-//		try {
-//			prop = new Properties();
-//			prop.loadFromXML(new FileInputStream(fileName));
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	/** [자유게시판] 게시글 삭제 DAO
 	 * @param conn

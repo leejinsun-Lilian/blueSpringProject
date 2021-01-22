@@ -36,7 +36,7 @@
                     	<c:forEach var="notice" items="${contextPath}/main/notice.do?no=${noticeNo}">                      
 						    <tr>
 						      <th scope="row">${notice.noticeNo}</th>
-						      <td colspan="3"><a href="#"></a>${notice.noticeTitle}</td>
+						      <td colspan="3">${notice.noticeTitle}</td>
 						    </tr>
 						</c:forEach>
                     </c:otherwise>

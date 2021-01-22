@@ -32,10 +32,10 @@
 	<div id="wrap">
 		<jsp:include page="../common/header.jsp"></jsp:include>
 		<jsp:include page="../common/login_header.jsp"></jsp:include>
-		
+		<c:set var="address" value="${fn:split(center.centerAddr, ',')}" />
 		
 		<div id="container">
-			<form id="centerAdd" method="post" action="centerComplete.do" name="centerAdd" onsubmit="return validate();">
+			<form id="centerUpdate" method="post" action="updateAction.do?no=${param.no}" name="centerUpdate" onsubmit="return centerUpdateValidate();">
 				<div id="content">
 					<div id="signUp_form">
 						<!-- 분류 -->
@@ -44,9 +44,8 @@
 								<label for="cla" style="margin-bottom: 5px;">분류</label>
 							</span>
 							<span class="sign_input input_id">
-								<input type="text" id="cla" name="cla" class="signUp_int" maxlength="20" autocomplete="off" required>
+								<input type="text" id="changeCla" name="changeCla" class="signUp_int" value="${center.centerCla}" readonly>
 							</span>
-							<span class="error_area" id="claMsg"></span>
 						</div>
 						
 						<!-- 기관명  -->
@@ -55,11 +54,9 @@
 								<label for="centerName" style="margin-bottom: 5px;">기관명</label>
 							</span> 
 							<span class="sign_input input_centerName"> 
-							<input type="text" id="centerName" name="centerName" class="signUp_int" maxlength="30" autocomplete="off" required>
+							<input type="text" id="changeCenterName" name="changeCenterName" class="signUp_int" value="${center.centerName}" readonly>
 							</span> 
-							<span class="error_area" id="centerNameMsg"></span>
 						</div>
-						
 						
 						<!-- 지역 -->
 						<div class="row_group">
@@ -69,8 +66,7 @@
 							<span class="sign_input input_name"> 
 							<select name="sido1" id="sido1"></select>
 							<select name="gugun1" id="gugun1"></select>
-							</span> 
-							<span class="error_area" id="areaMsg"></span>
+							</span>
 						</div>
 						
 	
@@ -84,7 +80,7 @@
 								<label for="postcodify_search_button">우편번호</label>
 							</div>
 							<div class="col-md-3" id="addr1_2">
-								<input type="text" name="post" class="form-control" id="postcode"  autocomplete="off" required>
+								<input type="text" name="post" class="form-control" id="postcode"  autocomplete="off" value="${address[0]}">
 							</div>
 							<div class="col-md-3" id="addr1_3">
 																				
@@ -98,7 +94,7 @@
 								<label for="address1">도로명 주소</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_address" name="address1" id="address1"  autocomplete="off" required>
+								<input type="text" class="form-control postcodify_address" name="address1" id="address1"  autocomplete="off" value="${address[1]}">
 							</div>
 						</div>
 	
@@ -107,7 +103,7 @@
 								<label for="address2">상세주소</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_details" name="address2" id="address2"  autocomplete="off" required>
+								<input type="text" class="form-control postcodify_details" name="address2" id="address2"  autocomplete="off" value="${center.centerAddrDtl}">
 							</div>
 						</div> 
 						<div class="row mb-3 form-row">
@@ -128,7 +124,7 @@
 							<label for="phone" style="margin-bottom: 5px;">전화번호</label>
 						</span> 
 						<span class="sign_input input_phone"> 
-						<input type="tel" id="phone" name="phone" class="signUp_int" maxlength="40" 
+						<input type="tel" id="phone" name="phone" value="${center.centerTel}" class="signUp_int" maxlength="40" 
 							autocomplete="off"  placeholder='"-"를 포함해서 입력해주세요.' required>
 						</span> 
 						<span class="error_area" id="phoneMsg"></span>
@@ -140,15 +136,15 @@
 							<label for="homepage" style="margin-bottom: 5px;">홈페이지</label>
 						</span> 
 						<span class="sign_input input_homepage"> 
-						<input type="text" id="homepage" name="homepage" class="signUp_int" maxlength="40" 
+						<input type="text" id="homepage" name="homepage" value="${center.centerUrl}" class="signUp_int" maxlength="40" 
 							autocomplete="off">
 						</span> 
 						<span class="error_area" id="homepageMsg"></span>
 					</div>
 					
-					<!-- 등록하기 버튼 -->
+					<!-- 수정하기 버튼 -->
 					<div class="btn_area">
-						<button type="submit" id="signBtn" class="btn">등록하기</button>
+						<button type="submit" id="signBtn" class="btn">수정하기</button>
 					</div>
 					</div>
 				</div>
