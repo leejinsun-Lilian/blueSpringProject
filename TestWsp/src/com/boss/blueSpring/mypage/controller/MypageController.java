@@ -13,9 +13,12 @@ import javax.servlet.http.HttpSession;
 
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.comment.model.vo.Comment;
 import com.boss.blueSpring.member.model.service.MemberService;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.mypage.model.service.MypageService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @WebServlet("/mypage/*")
 public class MypageController extends HttpServlet {
@@ -222,27 +225,45 @@ public class MypageController extends HttpServlet {
 				
 			}
 			
+			
+			
 			// 작성한 게시글 조회
 			else if(command.equals("/myBoardList.do")) {
+				errorMsg = "작성한 게시글을 불러오는 도중 오류가 발생했습니다.";
 				String cp = request.getParameter("cp" );
-				PageInfo pInfo = mService.getPageInfo(cp);
+				String memId = loginMember.getMemberId();
+				
+				
+				PageInfo pInfo = mService.getPageInfo(cp, memId);
 				String cn = getInitParameter("cn");
 				
-				List<Board> bList = mService.selectBoardList(pInfo, cn);
-				
-				
-				
-				
-				
-				
+				List<Board> bList = mService.selectBoardList(pInfo, cn, memId);
+				session.setAttribute("pInfo", pInfo);
+				session.setAttribute("bList", bList);
 				path="/WEB-INF/views/mypage/myBoardList.jsp";
+				
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
 			
+			
+			
+			
 			// 작성한 댓글 조회
 			else if(command.equals("/myReplyList.do")) {
+				String cp = request.getParameter("cp" );
+				String memId = loginMember.getMemberId();
+				
+				PageInfo pInfo = mService.getCommentPageInfo(cp, memId);
+				String cn = getInitParameter("cn");
+				List<Comment> cList = mService.selectList(pInfo, cn, memId);
+				
+				Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH:mm").create();
+				gson.toJson(cList, response.getWriter());		
+				
 				path="/WEB-INF/views/mypage/myReplyList.jsp";
+				session.setAttribute("pInfo", pInfo);
+				session.setAttribute("cList", cList);
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}

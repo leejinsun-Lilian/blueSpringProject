@@ -66,16 +66,16 @@
 					<table class="table" id="board">
 							<tr>
 								<th>번호</th>
+								<th>카테고리</th>
 								<th>제목</th>
-								<th>작성자</th>
-								<th>조회수</th>
 								<th>작성일</th>
+								<th>조회수</th>
 							</tr>
 
                <c:choose>
                     <c:when test="${empty bList}"> 
                         <tr>
-                            <td colspan="6" class="none">존재하는 게시글이 없습니다.</td>
+                            <td colspan="4" class="none">존재하는 게시글이 없습니다.</td>
                         </tr>
                     </c:when>
     
@@ -99,27 +99,58 @@
                                     </c:choose>
                                 </td>
                                 <td>${board.readCount}</td>
-                                <td>${board.likeCount}</td>
                             </tr>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
 					</table>
 				</div>
-				        <!-- 페이지 번호 목록 -->
-        <div class="page-no-area">
-         <ul>
-            <li><a href="#">&lt;&lt;</a></li>
-            <li><a href="#">&lt;</a></li>
-         
-            <li>
-               <a href="#">1</a>
-            </li>
-         
-            <li><a href="#">&gt;</a></li>
-            <li><a href="#">&gt;&gt;</a></li>
-         </ul>
+
+		<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
+		<c:set var="lastPage" value="${pageUrl}?cp=${pInfo.maxPage}${searchStr}"/>
+		
+		<fmt:parseNumber  var="c1" value="${( pInfo.currentPage - 1) / 10 }" integerOnly="true" />    
+		<fmt:parseNumber  var="prev" value="${ c1 * 10 }" integerOnly="true" />
+		<c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
+		
+		<fmt:parseNumber var="c2" value="${(pInfo.currentPage + 9) / 10 }" integerOnly="true"/>
+		<fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />     
+		<c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
+			
+
+                <div class="page-no-area">
+			<ul>
+			
+				<c:if test="${pInfo.currentPage > 10}">
+					<li><a href="${firstPage}">&lt;&lt;</a></li>
+					<li><a href="${prevPage}">&lt;</a></li>
+				</c:if>
+				
+				<c:forEach var="page" begin="${pInfo.startPage}" end="${pInfo.endPage}">
+					<c:choose>
+						<c:when test="${pInfo.currentPage == page }">     <!-- 만약 -->
+							<li>
+								<a class="page-link">${page}</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li>
+								<a class="page-link" href="${pageUrl}?cp=${page}${searchStr}">${page}</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				
+				<c:if test="${next <= pInfo.maxPage}">
+					<li><a href="${nextPage}">&gt;</a></li>
+					<li><a href="${lastPage}">&gt;&gt;</a></li>
+				</c:if>
+				
+			</ul>
         </div>
+        
+        
+        
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp"></jsp:include>

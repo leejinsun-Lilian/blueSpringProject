@@ -13,6 +13,7 @@ import static com.boss.blueSpring.common.JDBCTemplate.*;
 
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.comment.model.vo.Comment;
 import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
 
@@ -159,20 +160,22 @@ public class MypageDAO {
 	 * @return result
 	 * @throws Exception
 	 */
-	public int getListCount(Connection conn) throws Exception {
+	public int getListCount(Connection conn, String memId) throws Exception {
 		int result = 0;
 		
 		String query = prop.getProperty("getListCount");
 		
 		try {
-			stmt = conn.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			rset = pstmt.executeQuery();
+			
 			if(rset.next()) {
 				result = rset.getInt(1);
 			}
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		return result;
 	}
@@ -180,11 +183,13 @@ public class MypageDAO {
 	/** 게시글 목록 조회 DAO
 	 * @param conn
 	 * @param pInfo
+	 * @param memId 
 	 * @return bList
 	 * @throws Exception
 	 */
-	public List<Board> selectBoardList(Connection conn, PageInfo pInfo, String cn) throws Exception {
-List<Board> bList = null;
+	public List<Board> selectBoardList(Connection conn, PageInfo pInfo, String cn, String memId) throws Exception {
+		
+		List<Board> bList = null;
 		
 		String query = prop.getProperty("selectBoardList");
 		
@@ -193,9 +198,9 @@ List<Board> bList = null;
 			int endRow = startRow + pInfo.getLimit() - 1;
 			
 			pstmt = conn.prepareStatement(query);
-//			pstmt.setString(1, cn);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			pstmt.setString(1, memId);
 			
 			rset = pstmt.executeQuery();
 			
@@ -219,4 +224,77 @@ List<Board> bList = null;
 		
 		return bList;
 	}
+
+	/** 댓글 목록 DAO
+	 * @param conn
+	 * @param parentBoardNo
+	 * @param memId
+	 * @return cList
+	 * @throws Exception
+	 */
+	public List<Comment> selectList(Connection conn,PageInfo pInfo, String cn, String memId) throws Exception{
+		List<Comment> cList = null;
+		
+		String query = prop.getProperty("selectList");
+		
+		try {
+			int startRow = (pInfo.getCurrentPage() - 1) * pInfo.getLimit() + 1;
+			int endRow = startRow + pInfo.getLimit() - 1;
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			pstmt.setString(3, memId);
+			
+			rset = pstmt.executeQuery();
+			
+			cList = new ArrayList<Comment>();
+			
+
+			
+			while(rset.next()) {
+				Comment comment = new Comment(rset.getInt("COM_NO"), 
+											  rset.getString("COM_CONTENT"),
+											  rset.getTimestamp("COM_CRT_DT"),
+											  rset.getInt("BRD_NO"), 
+											  rset.getString("MEM_ID"), 
+											  rset.getString("COM_DEL_FL"));
+				cList.add(comment);
+			}
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return cList;
+	}
+
+	/** 댓글 페이징 처리를 위한 값 계산 DAO
+	 * @param conn
+	 * @param memId
+	 * @return result
+	 * @throws Exception
+	 */
+	public int getCommentPageInfo(Connection conn, String memId) throws Exception{
+		int result = 0;
+		
+		String query = prop.getProperty("getCommentListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 }

@@ -73,14 +73,13 @@ public class MemberController extends HttpServlet {
 				try {
 					Member loginMember = mService.loginMember(member);
 					
-					response.setContentType("text/html; charset=UTF-8");
+					//response.setContentType("text/html; charset=UTF-8");
 					
 					HttpSession session = request.getSession();
 					
 					
 					
 					if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
-						System.out.println(loginMember);
 						
 						session.setMaxInactiveInterval(60*60);
 						
