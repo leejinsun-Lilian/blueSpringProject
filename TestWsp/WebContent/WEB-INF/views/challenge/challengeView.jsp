@@ -46,7 +46,7 @@
 			<br>
 			<br>
 			
-<%-- 			<!-- 이미지 출력 -->
+ 			<!-- 이미지 출력 -->
 			<c:if test="${!empty fList}">
 				<!-- 이미지가 없으면 그 슬라이드 공간을 차지하지 않음 -->
 				<div>
@@ -55,13 +55,13 @@
 						<c:forEach var="file" items="${fList}" varStatus="vs">
 							<div class="imgFile" align="center">
 								<img class="d-block w-100 boardImg" id="${file.fileNo}" 
-											src="${contextPath}/resources/uploadImages/notice/${file.fileName}">
+											src="${contextPath}/resources/uploadImages/challenge/${file.fileName}">
 							</div>
 						</c:forEach>
 					</div>
 					
 				</div>
-			</c:if> --%>
+			</c:if> 
 
 
 
@@ -143,13 +143,57 @@
 
 
 	<script>
-	("#deleteBtn").on("click", function(){                     // window.confirm 윈도우에서 제공하는 내장객체
+	$("#deleteBtn").on("click", function(){                     // window.confirm 윈도우에서 제공하는 내장객체
 		
 		if(window.confirm("정말 삭제 하시겠습니까?")){
-			location.href = "delete.do?no=${notice.noticeNo}";
+			location.href = "delete.do?no=${challenge.chlngNo}";
 		}
 		
 	});
+	
+	var chlngeWriter = '${challenge.memberId}';
+	var memberId = '${loginMember.memberId}';
+	var chlngNo = ${challenge.chlngNo};
+	var memberNo = ${loginMember.memberNo}; 
+	var likeCount = ${challenge.likeCount};
+	
+	var i;
+	
+	// 좋아요
+	$(document).on("click","#like-btn",function(){
+				//console.log(chlngeWriter);
+				//console.log(memberId);
+				if(chlngeWriter != memberId) {
+					$.ajax({   			
+		    			url : "${contextPath}/challenge/list.do",
+		    			data : {"chlngNo" : chlngNo,
+		    							"memberNo" : memberNo,
+		    							"likeCount" : likeCount}, 
+							success : function(likeFlag) {
+								
+								$("#like-area").html("");
+								
+								if(likeFlag == 1) {		
+										i = $("<i>").addClass("fas fa-heart").attr("id", "like-btn");
+										likeCount = likeCount + 1;
+										$("#like-area").append(i).append("&nbsp;").append(likeCount);
+										
+								} else if(likeFlag == 0) {
+										i = $("<i>").addClass("far fa-heart").attr("id", "like-btn");
+										if(likeCount > 0) {
+											likeCount = likeCount - 1;
+										}							
+										$("#like-area").append(i).append("&nbsp;").append(likeCount);
+								}
+								
+								
+							}, 
+		      		error : function(request, status, error) {
+		       	      alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		       		}    										
+		    		});   		
+				}   		
+  		});
     
     	
     </script>

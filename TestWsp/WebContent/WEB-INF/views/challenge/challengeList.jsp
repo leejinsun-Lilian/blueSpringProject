@@ -23,8 +23,10 @@
             </div>
             <div id="ch-s" class="ch-float">
                 <ul>
+                <c:if test="${!empty loginMember}">
                     <li><a href="${contextPath}/challenge/insertForm.do" >챌린지 <strong>개설</strong>하러 가기 -></a></li>
-                    <li><a href="challengeCrtfdList.jsp">챌린지 <strong>인증 게시판</strong> 가기 -></a></li>
+                    <li><a href="${contextPath}/challengeCrtfd/insertForm.do">챌린지 <strong>인증 게시판</strong> 가기 -></a></li>
+                </c:if>
                 </ul>
             </div>
         </div>
