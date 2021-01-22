@@ -9,6 +9,8 @@ $("#centerName").on("input", function(){
 	 var regExp = /^[가-힣\d]{2,30}$/;
 	 var value = $("#centerName").val();
 	
+	console.log(value);
+	
 	if(!regExp.test(value)){
 		if(value.trim().length == 0){
 			$("#centerNameMsg").text("필수 정보입니다.").css("color", "red");
@@ -21,6 +23,8 @@ $("#centerName").on("input", function(){
 			data : {"centerName" : value},
 			type : "post",
 			success : function(result){
+				console.log(result);
+				
 				if(result == 0){
 					$("#centerNameMsg").text("");
 					$("#centerName").css("border", "1px solid #8cb0f7");
@@ -98,7 +102,8 @@ function maxLengthCheck(object) {
 
 // 전화번호
 $("#phone").on("input", function(){
-	var regExp = /^([0-9]{2,3})-?([0-9]{3,4})-?([0-9]{4})$/;
+	//var regExp = /^([0-9]{2,3})-?([0-9]{3,4})-?([0-9]{4})$/;
+	var regExp = /^([0-9]{2,3})-([0-9]{3,4})-([0-9]{4})$/;
 	var value = $("#phone").val();
 	
 	if(!regExp.test(value)){
