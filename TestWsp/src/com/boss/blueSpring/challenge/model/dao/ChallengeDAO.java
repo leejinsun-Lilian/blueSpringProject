@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 
 public class ChallengeDAO {
@@ -368,64 +369,141 @@ public class ChallengeDAO {
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	/** 챌린지 좋아요 가져오기DAO
-//	 * @param conn
-//	 * @param challengeNo
-//	 * @param memberNo
-//	 * @return likeInfo
-//	 * @throws Exception
-//	 */
-//	public Like selectLike(Connection conn, int challengeNo, int memberNo) throws Exception{
-//
-//		Like likeInfo = null;
-//		
-//		String query = "SELECT * FROM CHALLENGE_LIKES WHERE CHLNG_NO = ? AND MEM_NO = ?";
-//		
-//		try {
-//		
-//			pstmt = conn.prepareStatement(query);
-//			
-//			pstmt.setInt(1, challengeNo);
-//			pstmt.setInt(2, memberNo);
-//			
-//			rset = pstmt.executeQuery();
-//			
-//			likeInfo = new Like();
-//			
-//			if(rset.next()) {
-//				Like like = new Like();
-//				
-//				like.setChallengeNo(rset.getInt("CHLNG_NO"));
-//				like.setMemberNo(rset.getInt("MEM_NO"));
-//				
-//				likeInfo = like;
-//			}
-//			
-//			
-//		} finally {
-//			close(rset);
-//			close(pstmt);
-//		}
-//		
-//		return likeInfo;
-//	}
+	/**  챌린지 좋아요 가져오기DAO
+	 * @param conn
+	 * @param challengeNo
+	 * @param memberNo
+	 * @return likeInfo
+	 * @throws Exception
+	 */
+	public Like selectLike(Connection conn, int challengeNo, int memberNo) throws Exception{
+		Like likeInfo = null;
+		
+		String query = "SELECT * FROM CHALLENGE_LIKES WHERE CHLNG_NO = ? AND MEM_NO = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, challengeNo);
+			pstmt.setInt(2, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			likeInfo = new Like();
+			
+			if(rset.next()) {
+				Like like = new Like();
+				like.setChallengeNo(rset.getInt("CHLNG_NO"));
+				like.setMemberNo(rset.getInt("MEM_NO"));
+				
+				likeInfo = like;
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return likeInfo;
+	}
 
+
+	/** 좋아요 증가
+	 * @param conn
+	 * @param chlngNo
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertLikes(Connection conn, int chlngNo, int memberNo) throws Exception{
+		int result = 0;
+		
+		String query = prop.getProperty("insertLikes");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, chlngNo);
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	/** 좋아요 감소
+	 * @param conn
+	 * @param chlngNo
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteLikes(Connection conn, int chlngNo, int memberNo) throws Exception {
+		int result = 0;
+		
+		String query = prop.getProperty("deleteLikes");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, chlngNo);
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	/** 챌린지 조인 DAO
+	 * @param conn
+	 * @param chlngNo
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int join(Connection conn, int chlngNo, int memberNo) throws Exception{
+		int result = 0;
+		
+		String query = prop.getProperty("join");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, chlngNo);
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	

@@ -11,6 +11,7 @@ import com.boss.blueSpring.challenge.model.dao.ChallengeDAO;
 import com.boss.blueSpring.challenge.model.exception.FileInsertFailedException;
 import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 
 
@@ -270,6 +271,72 @@ public class ChallengeService {
 		close(conn);
 		
 		return fList;
+	}
+
+	public Like selectLike(int challengeNo, int memberNo) throws Exception{
+		Connection conn = getConnection();
+		
+		Like likeInfo = dao.selectLike(conn, challengeNo, memberNo);
+		
+		close(conn);
+		
+		return likeInfo;
+	}
+
+	/** 좋아요 Service
+	 * @param chlngNo
+	 * @param memberNo
+	 * @param likeCount 
+	 * @throws Exception
+	 */
+	public int challengeLike(int chlngNo, int memberNo) throws Exception{
+		Connection conn = getConnection();
+		
+		int like = 0;
+		int result = 0;
+		
+		try{
+			result = dao.insertLikes(conn, chlngNo, memberNo);
+			like = 1;
+		}catch(Exception e){
+			result = dao.deleteLikes(conn, chlngNo, memberNo);
+			like = 0;
+		}
+		
+		if(result > 0)	commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		return like;
+		
+	}
+
+	/** 챌린지 조인 Service
+	 * @param chlngNo
+	 * @param memberNo
+	 * @return join
+	 * @throws Exception
+	 */
+	public int join(int chlngNo, int memberNo) throws Exception{
+		Connection conn = getConnection();
+		
+		int join = 0;
+		int result = 0;
+		
+		try {
+			result = dao.join(conn, chlngNo, memberNo);
+			join = 1;
+		} catch (Exception e) {
+			join = 0;
+		}
+		
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		return join;
 	}
 
 	

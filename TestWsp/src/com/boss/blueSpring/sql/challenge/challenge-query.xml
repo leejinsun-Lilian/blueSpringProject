@@ -62,10 +62,24 @@ WHERE CHLNG_NO
 AND FILE_LEVEL = 0
 </entry>
 
+<!-- 좋아요 증가  -->
+<entry key="insertLikes">
+INSERT INTO CHALLENGE_LIKES 
+VALUES(?, ?)
+</entry>
 
+<!-- 좋아요 감소  -->
+<entry key="deleteLikes">
+DELETE FROM CHALLENGE_LIKES
+WHERE CHLNG_NO = ?
+AND MEM_NO = ?
+</entry>
 
-
-
+<!-- 챌린지 조인   ( 챌린지 참여자 정보 테이블에 정보 입력) -->
+<entry key="join">
+INSERT INTO CHELLENGE_MEMBER_INFO
+VALUES(?, ?)
+</entry>
 
 
 </properties>

@@ -14,13 +14,15 @@ public class ChallengeCrtfd {
 	private String chlngBoardTitle;		// 챌린지 인증글 제목
 	private String chlngBoardContent;	// 챌린지 인증글 내용
 	private String chlngCateNm;			// 챌린지 카테고리명
+	private String memNickname; //작성자 닉네임
 
 	public ChallengeCrtfd() {
 		
 	}
-
+	
 	public ChallengeCrtfd(int chlngBoardNo, Date chlngBoardCrtDt, char chlngBoardDelFl, int chlngBoardViews,
-			int memberNo, int chlngNo, String memberId, String chlngBoardTitle, String chlngBoardContent, String chlngCateNm) {
+			int memberNo, int chlngNo, String memberId, String chlngBoardTitle, String chlngBoardContent,
+			String chlngCateNm, String memNickname) {
 		super();
 		this.chlngBoardNo = chlngBoardNo;
 		this.chlngBoardCrtDt = chlngBoardCrtDt;
@@ -32,9 +34,12 @@ public class ChallengeCrtfd {
 		this.chlngBoardTitle = chlngBoardTitle;
 		this.chlngBoardContent = chlngBoardContent;
 		this.chlngCateNm = chlngCateNm;
+		this.memNickname = memNickname;
 	}
 
-	
+
+
+
 	// admin 챌린지 인증 게시글 목록 조회용
 	public ChallengeCrtfd(int chlngNo, int chlngBoardNo, String chlngBoardTitle, String memberId, char chlngBoardDelFl) {
 		super();
@@ -44,6 +49,7 @@ public class ChallengeCrtfd {
 		this.memberId = memberId;
 		this.chlngBoardDelFl = chlngBoardDelFl;
 	}
+
 
 	public int getChlngBoardNo() {
 		return chlngBoardNo;
@@ -125,15 +131,24 @@ public class ChallengeCrtfd {
 		this.chlngCateNm = chlngCateNm;
 	}
 
+	public String getMemNickname() {
+		return memNickname;
+	}
+
+	public void setMemNickname(String memNickname) {
+		this.memNickname = memNickname;
+	}
+
 	@Override
 	public String toString() {
 		return "ChallengeCrtfd [chlngBoardNo=" + chlngBoardNo + ", chlngBoardCrtDt=" + chlngBoardCrtDt
 				+ ", chlngBoardDelFl=" + chlngBoardDelFl + ", chlngBoardViews=" + chlngBoardViews + ", memberNo="
 				+ memberNo + ", chlngNo=" + chlngNo + ", memberId=" + memberId + ", chlngBoardTitle=" + chlngBoardTitle
-				+ ", chlngBoardContent=" + chlngBoardContent + ", chlngCateNm=" + chlngCateNm + "]";
+				+ ", chlngBoardContent=" + chlngBoardContent + ", chlngCateNm=" + chlngCateNm + ", memNickname="
+				+ memNickname + "]";
 	}
 
-	
+
 
 
 	
