@@ -86,7 +86,7 @@
 			<!-- 수정, 이전으로 버튼 -->
 			<div class="text-center">
 				<button type="submit" class="btn">수정</button>
-				<button type="button" class="btn" onclick="location.href='challengeList.jsp'">목록</button>
+				<button type="button" class="btn" onclick="location.href='${header.referer}'">목록</button>
 			</div>
 		
 		</form>
