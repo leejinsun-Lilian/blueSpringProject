@@ -12,16 +12,12 @@
 		text-shadow: 1px 1px 2px black;
 	}
 
-	#centerArea {
-		margin-bottom: 100px;
-	}
-
 	#searchWrapper {
 		min-height: 400px;		
 	}
 
 	#selectArea {
-		border-image: linear-gradient(to right, rgb(146, 161, 230) 90%, lightgray 100%);
+		border-image: linear-gradient(to right,lightgray 100%, lightgray 100%);
 		border-image-slice: 1;
 		border-style: solid;
 		border-image-width: 5px;
@@ -30,9 +26,9 @@
 		padding: 15px;
 	}
     
-    #sidoSelect {
-    	margin-bottom: 20px;
-    }
+   #sidoSelect {
+   	margin-bottom: 20px;
+   }
     
 	#gugunSelectArea {
 		text-align: left;
@@ -54,7 +50,7 @@
 	}
 	
 	#centerListArea {
-		border-image: linear-gradient(to right, lightgray 0%,  rgb(146, 161, 230)100%);
+		border-image: linear-gradient(to right, lightgray 100%,  rgb(146, 161, 230)100%);
 		border-image-slice: 1;
 		border-style: solid;
 		border-image-width: 5px;
@@ -80,6 +76,7 @@
 		width: 100%;
 		border-bottom: 2px solid lightgray;
 	}
+
     
 </style>
 <link rel="stylesheet" href="${contextPath}/resources/css/common/btnStyle.css">
@@ -161,7 +158,7 @@
 		$(document).ready(function(){
 			var mapContainer = document.getElementById('mapArea'), // 지도를 표시할 div 
 		    mapOption = { 
-		        center: new kakao.maps.LatLng(37.56811, 126.98297), // 지도의 중심좌표
+		        center: new kakao.maps.LatLng(37.56811677175753, 126.98300361156419), // 지도의 중심좌표
 		        level: 3 // 지도의 확대 레벨
 		    };
 		

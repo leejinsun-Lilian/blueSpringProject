@@ -106,7 +106,7 @@
     		success : function(result) {    			
     			if(result > 0) {
                     swal({"icon" : "success" , "title" : "신고가 접수되었습니다."}).then(function(){ 
-                    	opener.parent.location.reload();  
+                    	opener.parent.location.href = "${contextPath}/board/list.do?cp=1"; // 주소 메인으로 넘기기 
                     	window.close(); 
                     });
                    
