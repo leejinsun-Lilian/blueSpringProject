@@ -60,6 +60,20 @@ public class MypageController extends HttpServlet {
 				request.setAttribute("cList", cList);
 				request.setAttribute("acList", acList);
 				
+				
+				// mypage 현재 참여중인 챌린지
+		
+				Challenge nc = mService.nowChallenge(memId);
+					
+//				if(nc != null) {
+//					//List<Attachment> fList = mService.selectThumbnailList(memId);
+//					
+//					if(!fList.isEmpty()) {
+//						request.setAttribute("fList", fList);
+//					}
+//				}
+				
+				
 				path="/WEB-INF/views/mypage/myPage.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -242,12 +256,6 @@ public class MypageController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 참여중인 챌린지 조회
-			else if(command.equals("/progressChallenge.do")) {
-				path="/WEB-INF/views/mypage/progressChallenge.jsp";
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-			}
 			
 			// 역대 챌린지 조회
 			else if(command.equals("/allTimeChallenge.do")) {				

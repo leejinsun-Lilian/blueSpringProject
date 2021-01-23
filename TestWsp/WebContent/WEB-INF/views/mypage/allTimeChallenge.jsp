@@ -73,11 +73,12 @@
 								<c:if test="${vs.index == 0  || vs.index == 3 }">
 									<tr>
 								</c:if>
-
 								<td>
 									<div class="cThumbnail_area">
+									
+									<c:set var="img" value="${contextPath}/resources/img/basicImg.JPG"/>
+									
 									<c:if test="${!empty fList}">
-										<c:set var="flag" value="true"/>
 										<c:forEach var="thumbnail" items="${fList}">
 											<c:if test="${challenge.chlngNo == thumbnail.parentChNo}">
 												<c:set var="img" value="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}"/>
@@ -87,11 +88,7 @@
 										</c:forEach>
 									</c:if>
 									
-									<c:if test="${flag == 'true'}">
-										<c:set var="img" value="${contextPath}/resources/img/basicImg.JPG"/>
-									</c:if>
-									
-										<img class="cThumbnail" src="${img}"></img>
+									<img class="cThumbnail" src="${img}"></img>
 									
 									</div>
 									<div class="cTitle_area">

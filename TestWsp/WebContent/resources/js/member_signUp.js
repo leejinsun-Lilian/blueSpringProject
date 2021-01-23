@@ -217,14 +217,15 @@ function maxLengthCheck(object) {
 }
 
 
-$("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
+$("#birth_yy, #birth_mm, #birth_dd").on("input", function(){
 	var regExp = /^[\d]{4}$/;
-	var regExp2 = /^[\d]{2}$/;
+	//var regExp2 = /^[\d]{2}$/;
+	var regExp2 = /^(0[1-9]|1[0-9]|2[0-9]|3[01])$/;
 	
 	var value = $("#birth_yy").val();
 	var value2 = $("#birth_mm").val();
 	var value3 = $("#birth_dd").val();
-
+	
 	if(!regExp.test(value)){
 		if(value.trim().length == 0){
 			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
@@ -251,12 +252,14 @@ $("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
 	}
 	
 	if(!regExp2.test(value3)) {
+		console.log(value3);
+		
 		if(value3.trim().length == 0){
 			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
 			$("#birth_dd").css("border", "1px solid red").text("");
 			validateCheck.birthdd = false;
 		}else if(Number(value3) < 0 || Number(value3) > 31) {
-		
+			
 			$("#birthdayMsg").text("태어난 일 2자리를 정확하게 입력하세요.").css("color", "red");	
 			validateCheck.birthdd = false;
 		}else if(Number(value3) <= 9){
