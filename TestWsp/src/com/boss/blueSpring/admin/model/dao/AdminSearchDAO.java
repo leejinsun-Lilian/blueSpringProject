@@ -480,7 +480,7 @@ public class AdminSearchDAO {
 				"SELECT * FROM " + 
 				"    (SELECT ROWNUM RNUM , V.* " + 
 				"    FROM " + 
-				"        (SELECT CHLNG_NO, CHLNG_BRD_NO, MEM_ID, CHLNG_BRD_DEL_FL FROM V_CHALLENGERS " + 
+				"        (SELECT CHLNG_NO, CHLNG_BRD_NO, MEM_ID, CHLNG_BRD_DEL_FL, CHLNG_BRD_TITLE FROM V_CHALLENGERS " + 
 				"        WHERE " + condition + 
 				"        ORDER BY CHLNG_BRD_NO DESC) V ) " + 
 				" WHERE RNUM BETWEEN ? AND ?";
