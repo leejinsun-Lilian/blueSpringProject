@@ -14,13 +14,13 @@ public class Board {
 	private String memberId;
 	private String categoryName;
 	private int likeCount;
+	private String memberNickname;
 	
 	public Board() {
 		// TODO Auto-generated constructor stub
 	}
 
 	
-	// 게시글 목록 조회용 생성자
 	public Board(int boardNo, String boardTitle, String memberId, int readCount, String categoryName,
 			Timestamp boardCreateDate, int likeCount) {
 		super();
@@ -30,6 +30,20 @@ public class Board {
 		this.readCount = readCount;
 		this.categoryName = categoryName;
 		this.boardCreateDate = boardCreateDate;
+		this.likeCount = likeCount;
+	}
+	
+	// 게시글 목록 조회용 생성자	
+	public Board(int boardNo, String boardTitle, String memberId, int readCount, String categoryName,
+			Timestamp boardCreateDate, String memberNickname, int likeCount) {
+		super();
+		this.boardNo = boardNo;
+		this.boardTitle = boardTitle;
+		this.memberId = memberId;
+		this.readCount = readCount;
+		this.categoryName = categoryName;
+		this.boardCreateDate = boardCreateDate;
+		this.memberNickname = memberNickname;
 		this.likeCount = likeCount;
 	}
 
@@ -43,9 +57,9 @@ public class Board {
 
 	}
 
-
 	public Board(int boardNo, String boardTitle, Timestamp boardCreateDate, String boardContent, int readCount,
-			String boardStatus, Timestamp boardModifyDate, String memberId, String categoryName, int likeCount) {
+			String boardStatus, Timestamp boardModifyDate, String memberId, String categoryName, int likeCount,
+			String memberNickname) {
 		super();
 		this.boardNo = boardNo;
 		this.boardTitle = boardTitle;
@@ -57,6 +71,7 @@ public class Board {
 		this.memberId = memberId;
 		this.categoryName = categoryName;
 		this.likeCount = likeCount;
+		this.memberNickname = memberNickname;
 	}
 
 
@@ -158,14 +173,26 @@ public class Board {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
+	
+	public String getMemberNickname() {
+		return memberNickname;
+	}
 
+
+	public void setMemberNickname(String boardNickname) {
+		this.memberNickname = boardNickname;
+	}
+	
 
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardCreateDate=" + boardCreateDate
 				+ ", boardContent=" + boardContent + ", readCount=" + readCount + ", boardStatus=" + boardStatus
 				+ ", boardModifyDate=" + boardModifyDate + ", memberId=" + memberId + ", categoryName=" + categoryName
-				+ ", likeCount=" + likeCount + "]";
+				+ ", likeCount=" + likeCount + ", memberNickname=" + memberNickname + "]";
 	}
+
+
+
 	
 }

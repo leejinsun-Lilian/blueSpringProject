@@ -13,6 +13,7 @@
 
 </head>
 <body>
+
     <c:set var="contextPath" scope="application" value="${pageContext.servletContext.contextPath}"></c:set>
     
     <!-- 추후 session의 member로 변경 필요 -->
@@ -36,7 +37,7 @@
         
         <div id="board-info">
             <div id="board-box1">
-                <span class="shadow">${board.memberId}</span> 
+                <span class="shadow">${board.memberNickname}</span> 
             </div>
             <div id="board-box2" class="shadow">
                 <span>
@@ -57,7 +58,7 @@
         <br>
         
         
-        <!-- 로그인 한 상태고 자신의 글이 아닐 시에만  -->
+        <!-- 좋아요 (초기 세팅)  -->
         <div id="like-area">					
 						<c:if test="${likeInfo.boardNo == board.boardNo && likeInfo.memberNo == loginMember.memberNo}">
 								<i id="like-btn" class="fas fa-heart">&nbsp;${board.likeCount}</i>
@@ -121,14 +122,15 @@
   		var boardWriter = '${board.memberId}';
   		var memberId = '${loginMember.memberId}';
 			var boardNo = ${board.boardNo};
-			var memberNo = ${loginMember.memberNo}; // memberNo로 변경 필요
+			var memberNo = ${loginMember.memberNo};
 			var likeCount = ${board.likeCount};
 			
 			var i;
   		
+			// 좋아요
 			$(document).on("click","#like-btn",function(){
-				console.log(boardWriter);
-				console.log(memberId);
+/* 				console.log(boardWriter);
+				console.log(memberId); */
 				if(boardWriter != memberId) {
 					$.ajax({   			
 		    			url : "${contextPath}/board/boardLike.do",

@@ -93,6 +93,7 @@ public class BoardDAO {
 						rset.getInt("BRD_VIEWS"),
 						rset.getString("CATEGORY_NM"), 
 						rset.getTimestamp("BRD_CRT_DT"),
+						rset.getString("MEM_NICKNAME"),
 						rset.getInt("LIKES"));
 				bList.add(board);
 			}
@@ -134,6 +135,7 @@ public class BoardDAO {
 				board.setBoardCreateDate(rset.getTimestamp("BRD_CRT_DT"));
 				board.setBoardModifyDate(rset.getTimestamp("BRD_UPDATE_DT"));
 				board.setCategoryName(rset.getString("CATEGORY_NM"));
+				board.setMemberNickname(rset.getString("MEM_NICKNAME"));
 				board.setLikeCount(rset.getInt("LIKES"));
 			}
 			
