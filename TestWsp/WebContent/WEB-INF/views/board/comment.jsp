@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +59,20 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/common/btnStyle.css">
 </head>
 <body>
+    <c:set var = "loginMember" value="${loginMember}"/> 
+
+    <c:choose>
+    	<c:when  test="${null eq loginMember }">
+    		<c:set var ="loginMemberNo" value = "0"/>
+    		<c:set var ="loginMemberId" value = ""/>
+    	</c:when>
+    	<c:otherwise>
+    		<c:set var ="loginMemberNo" value = "${loginMember.memberNo}"/>
+    		<c:set var ="loginMemberId" value = "${loginMember.memberId}"/>
+    	</c:otherwise>
+    </c:choose>
+
+
     <div id="comment-area">
         <h4>댓글</h4>
         
@@ -77,33 +92,6 @@
         	<!-- 댓글 출력 부분 -->
 			<div class="commentList">
 				<ul id="commentListArea">
-					
-					<!-- 로그인 x 또는 댓글 작성자가 아닌 회원의 화면 -->
-					<li class="comment-row">
-						<div>
-							<p class="cWriter"></p>
-							<p class="cDate"></p>
-						</div>
-						
-						<p class="cContent"></p>
-
-					</li>
-		
-					
-					<!-- 로그인한 회원이 댓글 작성자인 경우 -->
-					<li class="comment-row">
-						<div>
-							<p class="cWriter"></p>
-							<p class="cDate"></p>
-						</div>
-		
-						<p class="cContent"></p>
-						
-						<div class="commentBtnArea">
-<!-- 							<button class="" onclick="showUpdateComment(2, this)"></button>
-							<button class="" onclick="deleteComment(2)"></button> -->
-						</div>
-					</li>
 			
 				</ul>
 			</div>
@@ -114,7 +102,7 @@
 		<!-- 스크립트 영역 -->
     <script> /*"${loginMember.memberId}"*/
 				var loginMemberId = '${loginMember.memberId}'; 
-				var loginMemberNo = ${loginMember.memberNo};
+				var loginMemberNo = ${loginMemberNo};
         var parentBoardNo = ${board.boardNo};
         
         // 페이지 로딩 완료 시 댓글 목록 호출
@@ -132,14 +120,14 @@
                 type : "post", 
                 dataType : "JSON", 
                 success : function(cList) {
-                    console.log(cList);
-                    
                     $("#commentListArea").html("");                   
                     
                     $.each(cList, function(index, item){
+            		
                         var li = $("<li>").addClass("comment-row");
-                        var reportBtn = $("<button>").text("신고하기").addClass("btn-style3").attr("id", "commentReportBtn").attr("onclick", "reportComment("+item.comNo+")");
-                        var cWriter = $("<p>").addClass("cWriter").text(item.memberId);
+                        var reportBtn = $("<button>").text("신고하기").addClass("btn-style3").attr("id", "commentReportBtn").attr("onclick", "reportComment("+item.comNo+", '"+item.memberId+"' )");
+                        																																																	
+                        var cWriter = $("<p>").addClass("cWriter").text(item.memberNickName);
                         var cDate = $("<p>").addClass("cDate").text("작성일 : " + item.comCreateDate);
                         
                         var div = $("<div>");
@@ -148,7 +136,7 @@
                        	div.append(cWriter);
                         div.append(cDate);
                        	
-                        if(item.memberId != loginMemberId) {
+                        if(item.memberId != loginMemberId && loginMemberId != "") {
                         	div.append(reportBtn);
                         }
                         
@@ -257,8 +245,8 @@
     	var textarea = $("<textarea>").addClass("commentUpdateContent comment-content-box").attr("rows", "3").text(beforeContent);
     	$(element).parent().before(textarea);
     	
-    	var updateComment = $("<button>").addClass("").text("수정 하기").attr("onclick", "updateComment(" + commentNo + ", this)");    	
-    	var cancelUpdate = $("<button>").addClass("").text("수정 취소").attr("onclick", "updateCancel(this)");
+    	var updateComment = $("<button>").addClass("btn-style2").text("수정 하기").attr("onclick", "updateComment(" + commentNo + ", this)");    	
+    	var cancelUpdate = $("<button>").addClass("btn-style3").text("수정 취소").attr("onclick", "updateCancel(this)");
     	
     	var commentBtnArea = $(element).parent();
     	
@@ -322,14 +310,16 @@
     }
     
     // 댓글 신고 
-    function reportComment(commentNo){
+    function reportComment(commentNo, commentWriter){
 			if(window.confirm("보고 있는 댓글을 신고하시겠습니까?")) {
 				/* $(board.memberId); */
-				var memberId = 3;
-				var target = "${board.memberId}";
+				var memberNo = ${loginMemberNo};
+				var target = commentWriter;
 				var comNo = commentNo;
 				
-				var url = "${contextPath}/commentReportForm.do?comNo=" + comNo + "&memNo=" + memberId + "&target=" + target;
+				console.log(target);
+				
+				var url = "${contextPath}/commentReportForm.do?comNo=" + comNo + "&memNo=" + memberNo + "&target=" + target;
 				var title = "신고하기";
 				var option = "width = 700, height = 400, top = 300, left = 600, location = no";
 				

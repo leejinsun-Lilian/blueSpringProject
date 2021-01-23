@@ -62,7 +62,7 @@ public class SearchDAO {
 				"    FROM" + 
 				"        (SELECT BRD_NO, BRD_TITLE, BRD_CONTENT, " + 
 				"       MEM_ID, BRD_VIEWS, BRD_CRT_DT, BRD_UPDATE_DT, " + 
-				"       CATEGORY_NM, BRD_DEL_FL, (SELECT COUNT(*) FROM BOARD_LIKES LIKEBRD WHERE LIKEBRD.BRD_NO = VBRD.BRD_NO) LIKES FROM V_BOARD VBRD " + 
+				"       CATEGORY_NM, BRD_DEL_FL, MEM_NICKNAME, (SELECT COUNT(*) FROM BOARD_LIKES LIKEBRD WHERE LIKEBRD.BRD_NO = VBRD.BRD_NO) LIKES FROM V_BOARD VBRD " + 
 				"        WHERE " + condition + 
 				"        AND BRD_DEL_FL = 'N' ORDER BY BRD_NO DESC) V )" + 
 				"WHERE RNUM BETWEEN ? AND ?";
@@ -87,6 +87,7 @@ public class SearchDAO {
 										rset.getInt("BRD_VIEWS"),
 										rset.getString("CATEGORY_NM"), 
 										rset.getTimestamp("BRD_CRT_DT"),
+										rset.getString("MEM_NICKNAME"),
 										rset.getInt("LIKES"));
 				bList.add(board);
 			}
