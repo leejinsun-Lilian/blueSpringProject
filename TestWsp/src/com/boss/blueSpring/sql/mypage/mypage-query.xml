@@ -79,10 +79,10 @@ AND MEM_ID = ?
 <entry key="selectChallengeList">
 SELECT* FROM
 (SELECT ROWNUM RNUM, V.*  FROM
-(SELECT * FROM V_CHLNG_MISSION_LIST WHERE CHLNG_FL = 'N' 
+(SELECT * FROM V_CHLNG_MISSION_LIST WHERE CHLNG_FL = 'N' AND MEM_ID = ?
 ORDER BY  CHLNG_NO DESC) V )
 WHERE RNUM BETWEEN ? AND ?
-AND MEM_ID = ?
+
 </entry>
 
 <entry key="selectThumbnailList">

@@ -232,7 +232,7 @@
 							<div class="cNumRow">
 								<span id="cNum_area" class="sign_input input_email">
 									<input type="text" id="cNum" name="cNum" class="sign_input input_email" autocomplete="off"
-										maxlength="6" required>
+										 required>
 								</span>
 							</div>
 							<div class="cNumRow">

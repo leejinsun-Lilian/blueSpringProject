@@ -343,9 +343,10 @@ public class MypageDAO {
 						
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			pstmt.setString(3, memId);
+			pstmt.setString(1, memId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
 			
 			rset = pstmt.executeQuery();
 			
