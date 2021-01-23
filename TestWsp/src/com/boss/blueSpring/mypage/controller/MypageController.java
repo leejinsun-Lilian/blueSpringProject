@@ -50,6 +50,16 @@ public class MypageController extends HttpServlet {
 		try {
 			// mypage 메인
 			if(command.equals("/main.do")) {
+				String memId = loginMember.getMemberId();
+				List<Board> bList =  mService.selectMainBoard(memId);
+				List<Comment> cList = mService.selectMainComment(memId);
+				List<ChallengeCrtfd> acList = mService.selectMainacList(memId);
+				
+			
+				request.setAttribute("bList", bList);
+				request.setAttribute("cList", cList);
+				request.setAttribute("acList", acList);
+				
 				path="/WEB-INF/views/mypage/myPage.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);

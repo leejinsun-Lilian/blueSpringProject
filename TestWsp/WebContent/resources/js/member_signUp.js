@@ -255,7 +255,7 @@ $("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
 			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
 			$("#birth_dd").css("border", "1px solid red").text("");
 			validateCheck.birthdd = false;
-		}else if((Number(value3) < 0) || (Number(value3) > 31)) {
+		}else if(Number(value3) < 0 || Number(value3) > 31) {
 		
 			$("#birthdayMsg").text("태어난 일 2자리를 정확하게 입력하세요.").css("color", "red");	
 			validateCheck.birthdd = false;

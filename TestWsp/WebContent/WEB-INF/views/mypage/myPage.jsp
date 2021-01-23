@@ -101,6 +101,10 @@
 				<!-- // myInfo 끝 -->
 
 
+
+
+
+
 				<!-- 챌린지 -->
 				<div class="chanllenge_in_progress_area area">
 					<h3>참여중인 챌린지</h3>
@@ -153,73 +157,80 @@
 				</div>
 
 
-			<div class="list_wrapper">
-				<!-- 내가 쓴 게시글 조회 -->
-				<div class="myBoardlistAll area">
-					<h3>내가 쓴 게시글</h3>
-					<div class="list_area">
-						<table id="board_list">
-							<tr>
-								<th>1</th>
-								<td>왜그래 무슨일 있었어?</td>
-							<tr>
-							<tr>
-								<th>2</th>
-								<td>너의 얼굴이 말이 아냐 말해봐</td>
-							<tr>
-							<tr>
-								<th>3</th>
-								<td>지금 뭐하자는거야? 참는데도 한계가 있어 알겠니dssdfsfdfsdsfdsfdsfdsfd</td>
-							<tr>
-						</table>
+				<div class="list_wrapper">
+					<!-- 내가 쓴 게시글 조회 -->
+					<div class="myBoardlistAll area">
+						<h3>내가 쓴 게시글</h3>
+						<div class="list_area">
+							<table id="board_list">
+								<c:choose>
+									<c:when test="${empty bList}">
+										<td colspan="3">작성한 게시글이 없습니다.</td>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="board" items="${bList}">
+											<tr id="b-${board.boardNo}">
+												<th scope="row" width="65">[${board.categoryName}]</th>
+												<td colspan="3">${board.boardTitle}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</table>
+						</div>
+							<a class="more" href="${contextPath}/mypage/myBoardList.do"><span>더보기</span></a>
+					</div>
+
+
+
+					<!-- 내가 쓴 댓글 조회 -->
+					<div class="myReplylistAll area">
+						<h3>내가 쓴 댓글</h3>
+						<div class="list_area">
+							<table id="comment_list">
+								<c:choose>
+									<c:when test="${empty cList}">
+										<td colspan="3">작성한 댓글이 없습니다.</td>
+									</c:when>
+									<c:otherwise>
+										<c:set var="idx" value="0"/>
+										<c:forEach var="comment" items="${cList}">
+											<tr id="b-${comment.parentBoardNo}">
+												<th scope="row">${idx += 1}</th>
+												<td  colspan="3" width="65">${comment.comContent}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</table>
+						</div>
+							<a class="more" href="${contextPath}/mypage/myReplyList.do"><span>더보기</span></a>
+					</div>
+
+
+					<!-- 역대 챌린지 조회 -->
+					<div class="allTimeChallenges_area area">
+						<h3>역대 챌린지 조회</h3>
+						<div class="list_area">
+							<table id="allTimeChallenges_list">
+								<c:choose>
+									<c:when test="${empty acList}">
+										<td colspan="3">참여한 챌린지가 없습니다.</td>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="ac" items="${asList}">
+											<tr id="b-${ac.chlngBoardNo}">
+												<th scope="row">${ac.chlngCateNm}</th>
+												<td  colspan="3" width="65">${ac.chlngBoardTitle}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</table>
+						</div>
+						<a class="more" href="${contextPath}/mypage/allTimeChallenge.do"><span>더보기</span></a>
 					</div>
 				</div>
-				
-				
-				
-				<!-- 내가 쓴 댓글 조회 -->
-				<div class="myReplylistAll area">
-					<h3>내가 쓴 댓글</h3>
-					<div class="list_area">
-						<table id="Reply_list">
-							<tr>
-								<th>1</th>
-								<td>왜그래 무슨일 있었어?</td>
-							<tr>
-							<tr>
-								<th>2</th>
-								<td>너의 얼굴이 말이 아냐 말해봐</td>
-							<tr>
-							<tr>
-								<th>3</th>
-								<td>지금 뭐하자는거야? 참는데도 한계가 있어 알겠니dssdfsfdfsdsfdsfdsfdsfd</td>
-							<tr>
-						</table>
-					</div>
-				</div>
-				
-				
-				<!-- 역대 챌린지 조회 -->
-				<div class="allTimeChallenges_area area">
-				<h3>역대 챌린지 조회</h3>
-									<div class="list_area">
-						<table id="allTimeChallenges_list">
-							<tr>
-								<th>1</th>
-								<td>왜그래 무슨일 있었어?</td>
-							<tr>
-							<tr>
-								<th>2</th>
-								<td>너의 얼굴이 말이 아냐 말해봐</td>
-							<tr>
-							<tr>
-								<th>3</th>
-								<td>지금 뭐하자는거야? 참는데도 한계가 있어 알겠니dssdfsfdfsdsfdsfdsfdsfd</td>
-							<tr>
-						</table>
-					</div>
-				</div>
-			</div>
 
 			</div>
 
@@ -227,7 +238,41 @@
 
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 	</div>
-
+	
+	
+	<script>
+		// 자유 게시판 상세 조회
+		$("#board_list tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var boardNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "../board/view.do?cp=1&no="+boardNo;
+		});
+		
+		$("#comment_list tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var boardNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "../board/view.do?cp=1&no="+boardNo;
+		});
+		
+		// 챌린지 게시판 상세 조회
+		$(".challenge_table tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var challengeNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "challenge/view.do?cp=1&no="+challengeNo;
+		});
+		
+		// 챌린지 인증 게시판 상세 조회
+		$(".challengeCrtfd_table tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var challengeCrtfdNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "challengeCrtfd/view.do?cp=1&no="+challengeCrtfdNo;
+		});
+	
+	</script>
 
 </body>
 </html>

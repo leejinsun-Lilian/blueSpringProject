@@ -14,6 +14,7 @@ import com.boss.blueSpring.comment.model.vo.Comment;
 import com.boss.blueSpring.member.model.dao.MemberDAO;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.mypage.model.dao.MypageDAO;
+import com.boss.blueSpring.notice.model.vo.Notice;
 
 public class MypageService {
 	
@@ -239,6 +240,42 @@ public class MypageService {
 		List<ChallengeCrtfd> bList = dao.selectcrtfdList(conn, pInfo, cn, memId);
 		close(conn);
 		return bList;
+	}
+
+	/** 마이페이지 메인 내가 쓴 게시글
+	 * @param memId
+	 * @return bList
+	 * @throws Exception
+	 */
+	public List<Board> selectMainBoard(String memId) throws Exception {
+		Connection conn = getConnection();
+		List<Board> bList = dao.selectMainBoard(conn, memId);
+		close(conn);
+		return bList;
+	}
+
+	/** 마이페이지 메인 내가 쓴 댓글
+	 * @param memNo
+	 * @return cList
+	 * @throws Exception
+	 */
+	public List<Comment> selectMainComment(String memId) throws Exception{
+		Connection conn = getConnection();
+		List<Comment> cList = dao.selectMainComment(conn, memId);
+		close(conn);
+		return cList;
+	}
+
+	/** 마이페이지 역대 챌린지 조회
+	 * @param memNo
+	 * @return acList
+	 * @throws Exception
+	 */
+	public List<ChallengeCrtfd> selectMainacList(String memId) throws Exception {
+		Connection conn = getConnection();
+		List<ChallengeCrtfd> acList = dao.selectMainacList(conn, memId);
+		close(conn);
+		return acList;
 	}
 
 

@@ -104,7 +104,7 @@
 								<label for="postcodify_search_button">우편번호</label>
 							</div>
 							<div class="col-md-3" id="addr1_2">
-								<input type="text" name="post" class="form-control" id="postcode"  autocomplete="off" required>
+								<input type="text" name="post" class="form-control" id="postcode"  autocomplete="off" readonly required>
 							</div>
 							<div class="col-md-3" id="addr1_3">
 																				
@@ -118,7 +118,7 @@
 								<label for="address1">도로명 주소</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_address" name="address1" id="address1"  autocomplete="off" required>
+								<input type="text" class="form-control postcodify_address" name="address1" id="address1"  autocomplete="off" readonly required>
 							</div>
 						</div>
 	
@@ -127,7 +127,7 @@
 								<label for="address2">상세주소</label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" class="form-control postcodify_details" name="address2" id="address2"  autocomplete="off" required>
+								<input type="text" class="form-control postcodify_details" name="address2" id="address2"  autocomplete="off"  required>
 							</div>
 						</div> 
 						<div class="row mb-3 form-row">
@@ -154,7 +154,7 @@
 						<div class="birthday_area">
 							<div class="birthday_yy">
 								<span class="sign_input">
-									<input type="number" id="birth_yy" name="birth_yy" class="signUp_int" maxLength="4" oninput="maxLengthCheck(this)" required>
+									<input type="number" id="birth_yy" name="birth_yy" class="signUp_int" maxLength="4" oninput="maxLengthCheck(this)"  placeholder="YYYY" required>
 								</span>
 							</div>
 							
@@ -180,7 +180,7 @@
 							
 							<div class="birthday_dd">
 								<span class="sign_input">
-									<input type="number" id="birth_dd" name="birth_dd" class="signUp_int" maxlength="2" oninput="maxLengthCheck(this)" required>
+									<input type="number" id="birth_dd" name="birth_dd" class="signUp_int" maxlength="2" oninput="maxLengthCheck(this)"  placeholder="DD" required>
 								</span>
 							</div>
 							
