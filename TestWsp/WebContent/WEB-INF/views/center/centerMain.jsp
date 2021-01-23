@@ -118,7 +118,7 @@
 			
 			
 
-	</div>
+<!-- 	</div> -->
 
 
      
@@ -146,7 +146,7 @@
 		var gugun15 = ["거제시","김해시","마산시","밀양시","사천시","양산시","진주시","진해시","창원시","통영시","거창군","고성군","남해군","산청군","의령군","창녕군","하동군","함안군","함양군","합천군"];
 		var gugun16 = ["서귀포시","제주시","남제주군","북제주군"];
 		
-		var address = ""; // 주소 담을 변수
+		var address = "${loginMember.memberAddr}"; // 주소 담을 변수
 		var centerNameAry = new Array(); // 센터 명 배열에 담기
 		var centerName = ""; // 센터명 담을 변수
 		var flagNum = 0; //
@@ -155,9 +155,22 @@
 		var positionY = new Array(); // y좌표 담기
 		
 		var searchOn = 0;
-					
-		console.log(address);
+
 		
+		// 최초 지도 표시
+		$(document).ready(function(){
+			var mapContainer = document.getElementById('mapArea'), // 지도를 표시할 div 
+		    mapOption = { 
+		        center: new kakao.maps.LatLng(37.56811, 126.98297), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };
+		
+			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+			var map = new kakao.maps.Map(mapContainer, mapOption);			
+		});
+
+
+
 		// 찾기 버튼 클릭 시
 		$("#search-btn").on("click", function() {
 			if($(':checkbox[name="gugunSelect"]:checked').length < 1){

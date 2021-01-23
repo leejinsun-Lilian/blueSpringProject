@@ -105,7 +105,10 @@
     		type : "post",
     		success : function(result) {    			
     			if(result > 0) {
-                    swal({"icon" : "success" , "title" : "신고가 접수되었습니다."}).then(function(){ window.close(); });
+                    swal({"icon" : "success" , "title" : "신고가 접수되었습니다."}).then(function(){ 
+                    	opener.parent.location.reload();  
+                    	window.close(); 
+                    });
                    
     			} else {
                     swal({"icon" : "error" , "title" : "신고 접수 실패."});

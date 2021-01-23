@@ -85,8 +85,7 @@
     $("#report-btn").on("click", function() {
         reportCategory = $('input[name=reportCategory]:checked').val();
         reportContent = $("#report-content").val().trim()
-        console.log(reportCategory);
-        console.log(reportContent);
+
         if($(':radio[name="reportCategory"]:checked').length < 1){
             alert('신고유형을 선택해주세요');                        
             event.preventDefault();
@@ -102,9 +101,9 @@
     		success : function(result) {    			
     			if(result > 0) {
                     swal({"icon" : "success" , "title" : "신고가 접수되었습니다."}).then(function(){
-                         window.close();                        
-                    });
-                   
+                    		opener.parent.location.reload();  
+	                    	window.close();                          
+                    });                  
     			} else {
                     swal({"icon" : "error" , "title" : "신고 접수 실패."});
                 }		
