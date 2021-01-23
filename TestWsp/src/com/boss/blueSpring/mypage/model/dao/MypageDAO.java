@@ -404,11 +404,13 @@ public class MypageDAO {
 			while(rset.next()) {
 				
 				Attachment at = new Attachment();
+				at.setParentChNo(rset.getInt("CHLNG_NO"));
 				at.setFileName(rset.getString("C_FILE_NAME"));
-				at.setParentChlngeNo(rset.getInt("CHLNG_NO"));
+				
 				
 				fList.add(at);
 			}
+		
 			
 		}finally {
 			close(rset);

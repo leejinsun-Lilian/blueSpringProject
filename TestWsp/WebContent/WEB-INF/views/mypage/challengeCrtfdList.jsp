@@ -81,13 +81,13 @@
                     </c:when>
 						  
                     <c:otherwise>                      
-                        <c:forEach var="board" items="${bList}">
+                        <c:forEach var="challenge" items="${bList}">
                             <tr>
-                                <td>${board.chlngBoardNo}</td>
-                                <td>${board.chlngCateNm}</td>
-                                <td>${board.chlngBoardTitle}</td>
+                                <td>${challenge.chlngBoardNo}</td>
+                                <td>${challenge.chlngCateNm}</td>
+                                <td>${challenge.chlngBoardTitle}</td>
                                 <td>
-                                    <fmt:formatDate var="createDate" value="${board.chlngBoardCrtDt}" pattern="yyyy-MM-dd"/>
+                                    <fmt:formatDate var="createDate" value="${challenge.chlngBoardCrtDt}" pattern="yyyy-MM-dd"/>
                                     <fmt:formatDate var="today" value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd"/>
                                     
                                     <c:choose>
@@ -95,11 +95,11 @@
                                             ${createDate}
                                         </c:when>
                                         <c:otherwise>
-                                            <fmt:formatDate value="${board.chlngBoardCrtDt}" pattern="HH:mm"/>
+                                            <fmt:formatDate value="${challenge.chlngBoardCrtDt}" pattern="HH:mm"/>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td>${board.chlngBoardViews}</td>
+                                <td>${challenge.chlngBoardViews}</td>
                             </tr>
                         </c:forEach>
                     </c:otherwise>
