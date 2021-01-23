@@ -1,7 +1,6 @@
 package com.boss.blueSpring.challenge.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import com.boss.blueSpring.challenge.model.service.ChallengeService;
 import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 import com.boss.blueSpring.common.MyFileRenamePolicy;
 import com.boss.blueSpring.member.model.vo.Member;
@@ -82,13 +82,19 @@ public class ChallengeController extends HttpServlet {
 				int challengeNo = Integer.parseInt(request.getParameter("no"));
 				int memberNo = 0;
 				
+				Member member = (Member)session.getAttribute("loginMember");	
+				
 				//좋아요
-//				Member member = (Member)session.getAttribute("loginMember");		
-//				if(member != null) { //로그인한 멤버가 있으면
-//					memberNo = member.getMemberNo(); 
-//				}
-//				Like likeInfo = service.selectLike(challengeNo, memberNo);
+				if(member != null) { //로그인한 멤버가 있으면
+					memberNo = member.getMemberNo(); 
+				}
+				
 				Challenge challenge = service.selectChallenge(challengeNo);
+				//좋아요 목록 담기 위한 리스트
+				Like likeInfo = service.selectLike(challengeNo, memberNo);
+				
+				// 챌린지 참여자 정보 가져오기
+				
 				
 				// 이미지 파일 조회 부분
 				List<Attachment> fList = service.selectChallengeFiles(challengeNo);
@@ -99,6 +105,7 @@ public class ChallengeController extends HttpServlet {
 				
 				path="/WEB-INF/views/challenge/challengeView.jsp";
 				request.setAttribute("challenge", challenge);
+				request.setAttribute("likeInfo", likeInfo);
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -160,11 +167,11 @@ public class ChallengeController extends HttpServlet {
 				String chlngEndDt = multiRequest.getParameter("endDt");          
 				int chlngCateNo = Integer.parseInt(multiRequest.getParameter("cate"));
 
-				System.out.println(chlngTitle);
-				System.out.println(chlngContent);
-				System.out.println(chlngStartDt);
-				System.out.println(chlngEndDt);
-				System.out.println(chlngCateNo);
+//				System.out.println(chlngTitle);
+//				System.out.println(chlngContent);
+//				System.out.println(chlngStartDt);
+//				System.out.println(chlngEndDt);
+//				System.out.println(chlngCateNo);
 				
 				// 세션에서 로그인한 회원의 번호를 얻어옴
 				//Member loginMember = (Member)request.getSession().getAttribute("loginMember"); 
@@ -172,9 +179,9 @@ public class ChallengeController extends HttpServlet {
 				HttpSession session = request.getSession();
 			    Member loginMember = (Member)session.getAttribute("loginMember");
 			    int chlngeWriter = loginMember.getMemberNo();
-			    System.out.println(loginMember);
+			    //System.out.println(loginMember);
 				
-				System.out.println(chlngeWriter);
+				//System.out.println(chlngeWriter);
 				
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("fList", fList);
@@ -185,10 +192,10 @@ public class ChallengeController extends HttpServlet {
 				map.put("chlngCateNo", chlngCateNo);
 				map.put("chlngeWriter", chlngeWriter);
 				
-				System.out.println(map);
+				//System.out.println(map);
 				
 				int result = service.insertChallenge(map);
-				System.out.println("result : " + result);
+				//System.out.println("result : " + result);
 				
 				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
 					//swalIcon = "success";
@@ -231,11 +238,47 @@ public class ChallengeController extends HttpServlet {
 				
 			
 			// 챌린지 좋아요
+			else if(command.equals("/challengeLike.do")) {
+				errorMsg = "좋아요 등록 과정에서 오류 발생.";
+				
+				int chlngNo = Integer.parseInt(request.getParameter("chlngNo"));
+				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+			
+				
+				int likeFlag = service.challengeLike(chlngNo, memberNo);
+				
+				response.getWriter().print(likeFlag);
+			}
 			
 			
+			// 챌린지 참여자 조인...!!!***************************************************************
+			else if(command.equals("/join.do")) {
+				errorMsg = "챌린지 참여 과정에서 오류 발생.";
+				
+				int chlngNo = Integer.parseInt(request.getParameter("chlngNo"));
+				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 			
+				int join = service.join(chlngNo, memberNo);
+				//System.out.println(joinFlag);
+				
+				if(join > 0) { 
+//					swalIcon = "success";
+//					swalTitle = "챌린지 참여 되었습니다.";
+					path = "view.do";				
+				} else { 					
+//					swalIcon = "error";
+//					swalTitle = "챌린지 참여 실패";
+					path = request.getHeader("referer");
+				}
+				
+				path="/WEB-INF/views/challenge/challengeView.jsp";
+				
+//				view = request.getRequestDispatcher(path);
+//				
+//				view.forward(request, response);
 			
-			
+				
+			}
 			
 			
 			

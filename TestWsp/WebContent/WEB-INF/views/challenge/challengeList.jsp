@@ -83,15 +83,18 @@
 							
 							<!-- 이미지 들어갈 부분 -->
 							<!-- 해당 챌린지 상세페이지로  -->
-							<c:forEach var="file" items="${fmList}">
-								<c:if test="${challenge.chlngNo == file.parentChNo}">
-									<div class="ch-img">
-										<img src="${contextPath}/resources/uploadImages/challenge/${file.fileName}">
-									</div>
-								</c:if>
-							</c:forEach>
+							<div class="ch-img">
+								<c:forEach var="file" items="${fmList}">
+									<c:if test="${challenge.chlngNo == file.parentChNo}">
+											<img src="${contextPath}/resources/uploadImages/challenge/${file.fileName}">
+									</c:if>
+										
+								</c:forEach>
+							</div>
+							
+							
 						
-							<!-- 정부 부분 -->
+							<!-- 정보 부분 -->
 							<div class="ch-sb">
 
 								<div class="ch-title">${challenge.chlngTitle}</div>

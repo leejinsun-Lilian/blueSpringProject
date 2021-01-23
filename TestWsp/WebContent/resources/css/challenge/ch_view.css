@@ -1,8 +1,18 @@
 @charset "UTF-8";
 
+h2 {
+	display: inline-block;
+}
+
+#topWrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
 .wrapper{
     width: 70%;
-    height: 1000px;
+    min-height: 383px ;
 
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto;
@@ -10,7 +20,16 @@
 
 .wrapper > h2{
 	padding-left: 20px;
+	width: 80%;
 }
+#hidden {
+    opacity: 0; /* 불투명도 */
+    
+}
+
+
+
+
 .input-area{
 	margin-right: 25px;
 }
@@ -75,8 +94,11 @@
 .btn{
 	width: 70px;
 	height: 30px;
-	margin-left: 15px;
-	float : right;
+ 	margin-left: 15px;
+ 	display: inline-block;
+ 	float: right;
+}
+.btn:hover{
 	cursor: pointer;
 }
 .btn-update{
