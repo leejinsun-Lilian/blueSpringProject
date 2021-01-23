@@ -278,7 +278,7 @@ public class MypageService {
 		return acList;
 	}
 
-	/** 현재 진행중인 챌린지
+	/** 현재 진행중인 챌린지 조회  Service
 	 * @param memId
 	 * @return nc
 	 * @throws Exception
@@ -288,6 +288,18 @@ public class MypageService {
 		Challenge nc = dao.nowChallenge(conn, memId);
 		close(conn);
 		return nc;
+	}
+
+	/** 현재 참여중인 챌린지 썸네일 조회 Service
+	 * @param memId
+	 * @return thumbnail
+	 * @throws Exception
+	 */
+	public Attachment nowThumbnail(String memId) throws Exception {
+		Connection conn = getConnection();
+		Attachment thumbnail = dao.nowThumbnail(conn, memId);
+		close(conn);
+		return thumbnail;
 	}
 
 

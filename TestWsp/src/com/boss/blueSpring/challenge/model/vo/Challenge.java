@@ -51,6 +51,18 @@ public class Challenge {
 	
 	
 	
+	public Challenge(int chlngNo, String chlngTitle, String chlngContent, Timestamp chlngStartDt, Timestamp chlngEndDt,
+			String chlngCateNm, int likeCount) {
+		super();
+		this.chlngNo = chlngNo;
+		this.chlngTitle = chlngTitle;
+		this.chlngContent = chlngContent;
+		this.chlngStartDt = chlngStartDt;
+		this.chlngEndDt = chlngEndDt;
+		this.chlngCateNm = chlngCateNm;
+		this.likeCount = likeCount;
+	}
+
 	public Challenge(int chlngNo, String chlngTitle, char chlngFl, String chlngCateNm, String memberId) {
 		super();
 		this.chlngNo = chlngNo;

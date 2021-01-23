@@ -31,8 +31,8 @@ public class SendMail extends HttpServlet {
 
         try {
             String fromEmail =    "BlueSpringBoss@gmail.com";
-            String title =      "푸른봄 회원가입을 위한 인증번호입니다.";
-            String contents =   "회원가입을 위한 인증번호입니다.<br>";
+            String title =      "푸른봄 회원가입 및 새로운 비밀번호 설정을 위한 인증번호입니다.";
+            String contents =   "회원가입 및 새로운 비밀번호 설정을 위한 인증번호입니다.<br>";
  
             toEmail = new String(toEmail.getBytes("UTF-8"), "UTF-8");
             fromEmail = new String(fromEmail.getBytes("UTF-8"), "UTF-8");

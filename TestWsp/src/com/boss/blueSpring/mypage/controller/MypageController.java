@@ -56,25 +56,26 @@ public class MypageController extends HttpServlet {
 				List<ChallengeCrtfd> acList = mService.selectMainacList(memId);
 				
 			
-				request.setAttribute("bList", bList);
-				request.setAttribute("cList", cList);
-				request.setAttribute("acList", acList);
+				session.setAttribute("bList", bList);
+				session.setAttribute("cList", cList);
+				session.setAttribute("acList", acList);
 				
 				
 				// mypage 현재 참여중인 챌린지
 		
 				Challenge nc = mService.nowChallenge(memId);
 					
-//				if(nc != null) {
-//					//List<Attachment> fList = mService.selectThumbnailList(memId);
-//					
-//					if(!fList.isEmpty()) {
-//						request.setAttribute("fList", fList);
-//					}
-//				}
+				if(nc != null) {
+					Attachment thumbnail = mService.nowThumbnail(memId);
+					
+					if(thumbnail != null) {
+						session.setAttribute("thumbnail", thumbnail);
+					}
+				}
 				
 				
 				path="/WEB-INF/views/mypage/myPage.jsp";
+				session.setAttribute("nc", nc);
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}

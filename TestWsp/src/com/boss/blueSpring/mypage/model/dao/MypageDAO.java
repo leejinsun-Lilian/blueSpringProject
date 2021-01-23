@@ -2,9 +2,11 @@ package com.boss.blueSpring.mypage.model.dao;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -470,18 +472,18 @@ public class MypageDAO {
 			pstmt.setString(3, memId);
 			
 			rset = pstmt.executeQuery();
-			
-			bList = new ArrayList<ChallengeCrtfd>();
 
+			bList = new ArrayList<ChallengeCrtfd>();
 			while(rset.next()) {
-				ChallengeCrtfd board = new ChallengeCrtfd(rset.getInt("CHLNG_NO"),
+				ChallengeCrtfd board = new ChallengeCrtfd(rset.getInt("CHLNG_BRD_NO"),
 						rset.getDate("CHLNG_BRD_CRT_DT"),
 						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
 						rset.getInt("CHLNG_BRD_VIEWS"), 
-						rset.getInt("CHLNG_BRD_NO"),
-						rset.getString("CHLNG_BRD_TITLE"), 
+						rset.getInt("CHLNG_NO"),
 						rset.getString("MEM_ID"), 
+						rset.getString("CHLNG_BRD_TITLE"), 
 						rset.getString("CHLNG_CATE_NM"));
+						
 				bList.add(board);
 			}
 			
@@ -535,6 +537,7 @@ public class MypageDAO {
 			pstmt.setString(1, memId);
 			rset = pstmt.executeQuery();
 			cList = new ArrayList<Comment>();
+			
 			while(rset.next()) {
 				Comment comment = new Comment(rset.getInt("COM_NO"), 
 											  rset.getString("COM_CONTENT"),
@@ -583,7 +586,7 @@ public class MypageDAO {
 		return acList;
 	}
 
-	/** 현재 참여중인 챌린지
+	/** 현재 참여중인 챌린지 조회 DAO
 	 * @param conn
 	 * @param memId
 	 * @return nc
@@ -593,8 +596,61 @@ public class MypageDAO {
 		Challenge nc = null;
 		
 		String query = prop.getProperty("nowChallenge");
-		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			
+			rset = pstmt.executeQuery();
+	
+			//(int chlngNo, String chlngTitle, String chlngContent, Timestamp chlngStartDt, Timestamp chlngEndDt,
+			//String chlngCateNm, int likeCount)
+		if(rset.next()) {
+			nc = new Challenge(rset.getInt("CHLNG_NO"),
+								rset.getString("CHLNG_TITLE"),
+								rset.getString("CHLNG_CONTENT"),
+								rset.getTimestamp ("STR_DT"),
+								rset.getTimestamp ("END_DT"),
+								rset.getString("CHLNG_CATE_NM"),
+								rset.getInt("LIKE_COUNT")
+								);
+	
+			}
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
 		return nc;
+	}
+
+	/** 현재 참여중인 챌린지 썸네일 DAO
+	 * @param conn
+	 * @param memId
+	 * @return thumbnail
+	 * @throws Exception
+	 */
+	public Attachment nowThumbnail(Connection conn, String memId) throws Exception {
+		Attachment thumbnail = null;
+		
+		String query = prop.getProperty("nowThumbnail");
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+					thumbnail = new Attachment(
+							rset.getString("C_FILE_NAME"),
+							rset.getInt("CHLNG_NO")
+							);
+
+			}
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return thumbnail;
 	}
 
 

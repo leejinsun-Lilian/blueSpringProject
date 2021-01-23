@@ -306,6 +306,8 @@ $("#phone").on("input", function(){
 	}
 });
 
+
+var eCheck = true;
 $("#email").on("input", function(){
 	var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i; 
 	var value = $("#email").val();
@@ -317,6 +319,7 @@ $("#email").on("input", function(){
 			$("#emailMsg").text("올바른 이메일를 입력해주세요").css("color", "red");
 		}
 		validateCheck.email = false;
+		eCheck = false;
 	}  else{
         $.ajax({
             url : "emailDupCheck.do",
@@ -327,10 +330,12 @@ $("#email").on("input", function(){
                     $("#emailMsg").text("");
 					$("#email").css("border", "1px solid #8cb0f7");
                     validateCheck.email = true;
+					eCheck = true;
                 }else{
                     $("#emailMsg").text("이미 사용 중인 이메일입니다.").css("color", "red");
 					$("#email").css("border", "1px solid red");
                     validateCheck.email = false;
+					eCheck = false;
                 }
             },
             error : function(){
@@ -344,29 +349,27 @@ $("#email").on("input", function(){
 var sendKey;
 
 $("#email_btn").on("click",function(){
-
 	$.ajax({
 		url : "../sendMail",
 		data : {toEmail : $("#email").val()},
 		type : "post",
 		async : false,
 		success : function(result){
-			
-			if(result != undefined){
+			if(eCheck && result != undefined){
 				swal({icon : "success", title : "이메일이 전송되었습니다.", text : $("#email").val() + " 에서 확인해주세요."});
 				sendKey = result;
 				validateCheck.emadilNum = true;
+			}else{
+				swal({icon : "error", title : "이메일 전송 실패", text : "이메일을 다시 확인해주세요."});
 			}
-			
-		}, error : function(){
-			swal({icon : "error", title : "이메일 전송이 실패했습니다.", text : "이메일을 다시 확인해주세요."});
+		}
+		, error : function(){
+			swal({icon : "error", title : "이메일 전송 실패", text : "이메일을 다시 확인해주세요."});
 			validateCheck.emadilNum = false;
 			console.log("error");
 		}
 		
-		
 	});
-
 });
 
 
@@ -444,7 +447,7 @@ function pwdValidate(){
 
 // 회원 정보 수정--------------------------------------
 // 회원 정보 수정 유효성 검사
-
+	var saveNickname = $("#changeNickName").val();
    var updateCheck = {
 		"nickname2":false,
 		"address2" : false,
@@ -463,7 +466,8 @@ $("#changeNickName").on("input", function(){
 		}
 		$("#changeNickName").css("border", "1px solid red");
 		updateCheck.nickname2 = false;
-	} else {
+	} 
+	else {
 		$.ajax({
 			url : "nicknameDubCheck.do",
 			data : {"nickname" : value},
@@ -516,7 +520,6 @@ function memberUpdateValidate(){
         }
     }
 }
-
 
 
 

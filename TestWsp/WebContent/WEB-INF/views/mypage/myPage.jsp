@@ -20,6 +20,11 @@
 	margin-left : 30px;
 }
 
+#cThumbnail_area  img {
+	width : 100%;
+	
+}
+
 
 
 </style>
@@ -116,15 +121,26 @@
 							<tr>
 								<td rowspan="2">
 									<!-- 챌린지 썸네일  -->
+
+
+
+
 									<div id="cThumbnail_area">
-										<img id="cThumbnail"
-											src="${contextPath}/resources/img/test.jpeg" id="C">
+										<c:set var="img"
+											value="${contextPath}/resources/img/basicImg.JPG" />
+										<c:if test="${thumbnail != null}">
+											<c:if test="${nc.chlngNo == thumbnail.parentChNo}">
+												<c:set var="img"
+													value="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}" />
+											</c:if>
+										</c:if>
+										<img class="cThumbnail" src="${img}"></img>
 									</div>
 								</td>
 
 								<!-- 챌린지 제목  -->
 								<td class="cTitle_td">
-									<h4 id="cTitle">매일 2L 이상 물 마시기</h4>
+									<h4 id="cTitle">${nc.chlngTitle}</h4>
 								</td>
 								<!-- 인증게시글 -->
 								<td rowspan="4" id="cboard">
@@ -206,7 +222,7 @@
 													<c:if test="${fn:indexOf(content, '<br>') != -1}" >
 														<c:set var="content" value ="${fn:split(content,'<br>')[0] }"/>
 													</c:if>
-													${content }
+													${content}
 												</td>
 											</tr>
 										</c:forEach>
