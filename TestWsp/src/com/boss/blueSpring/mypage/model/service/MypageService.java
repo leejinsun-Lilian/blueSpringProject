@@ -278,6 +278,18 @@ public class MypageService {
 		return acList;
 	}
 
+	/** 현재 진행중인 챌린지
+	 * @param memId
+	 * @return nc
+	 * @throws Exception
+	 */
+	public Challenge nowChallenge(String memId) throws Exception{
+		Connection conn = getConnection();
+		Challenge nc = dao.nowChallenge(conn, memId);
+		close(conn);
+		return nc;
+	}
+
 
 
 

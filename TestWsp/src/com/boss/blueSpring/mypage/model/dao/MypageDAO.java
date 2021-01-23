@@ -245,9 +245,9 @@ public class MypageDAO {
 			int endRow = startRow + pInfo.getLimit() - 1;
 			
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			pstmt.setString(3, memId);
+			pstmt.setString(1, memId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -581,6 +581,20 @@ public class MypageDAO {
 			close(stmt);
 		}
 		return acList;
+	}
+
+	/** 현재 참여중인 챌린지
+	 * @param conn
+	 * @param memId
+	 * @return nc
+	 * @throws Exception
+	 */
+	public Challenge nowChallenge(Connection conn, String memId) throws Exception{
+		Challenge nc = null;
+		
+		String query = prop.getProperty("nowChallenge");
+		
+		return nc;
 	}
 
 

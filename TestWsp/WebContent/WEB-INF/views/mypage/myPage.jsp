@@ -20,6 +20,8 @@
 	margin-left : 30px;
 }
 
+
+
 </style>
 </head>
 
@@ -110,6 +112,7 @@
 					<h3>참여중인 챌린지</h3>
 					<div class="back">
 						<table id="chanllenge_table">
+			
 							<tr>
 								<td rowspan="2">
 									<!-- 챌린지 썸네일  -->
@@ -135,6 +138,7 @@
 											<th scope="row" class="boardNo">2</th>
 											<td colspan="3"><a href="#">오늘은 3L를 마셨어요.</a>
 										</tr>
+						
 									</table>
 								</td>
 							</tr>
@@ -197,7 +201,13 @@
 										<c:forEach var="comment" items="${cList}">
 											<tr id="b-${comment.parentBoardNo}">
 												<th scope="row">${idx += 1}</th>
-												<td  colspan="3" width="65">${comment.comContent}</td>
+												<td  colspan="3" width="65">
+													<c:set var="content" value="${comment.comContent}"/>
+													<c:if test="${fn:indexOf(content, '<br>') != -1}" >
+														<c:set var="content" value ="${fn:split(content,'<br>')[0] }"/>
+													</c:if>
+													${content }
+												</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -218,7 +228,7 @@
 										<td colspan="3">참여한 챌린지가 없습니다.</td>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="ac" items="${asList}">
+										<c:forEach var="ac" items="${acList}">
 											<tr id="b-${ac.chlngBoardNo}">
 												<th scope="row">${ac.chlngCateNm}</th>
 												<td  colspan="3" width="65">${ac.chlngBoardTitle}</td>
@@ -256,14 +266,7 @@
 			location.href = "../board/view.do?cp=1&no="+boardNo;
 		});
 		
-		// 챌린지 게시판 상세 조회
-		$(".challenge_table tr > *").on("click", function(){
-			var id = $(this).parent().attr("id");
-			var challengeNo = id.substring(id.lastIndexOf("-") + 1);
-			
-			location.href = "challenge/view.do?cp=1&no="+challengeNo;
-		});
-		
+
 		// 챌린지 인증 게시판 상세 조회
 		$(".challengeCrtfd_table tr > *").on("click", function(){
 			var id = $(this).parent().attr("id");
