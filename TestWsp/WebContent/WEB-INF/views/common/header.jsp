@@ -18,8 +18,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/summernote/summernote-lite.css">
 <title>header</title>
 <style>
-*{
-}
+#nav { margin-top : 0px;}
 </style>
 </head>
 <body>

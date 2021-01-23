@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/sendMail/*")
+@WebServlet("/sendMail")
 public class SendMail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        SMTPAuthenticator smtpA = new SMTPAuthenticator();
@@ -27,19 +27,15 @@ public class SendMail extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String m_name =     request.getParameter("name");
-        String m_email =    request.getParameter("email");
-        String m_title =    request.getParameter("title");
-        String m_text =     request.getParameter("text");
+        String toEmail =    request.getParameter("toEmail");
 
         try {
-            String mail_from =  m_name + "<" + m_email + ">";
-            String mail_to =    "admin<admin@83rpm.com>";
-            String title =      "hosting.83rpm.com 요청사항 :: " + m_title;
-            String contents =   "보낸 사람 :: " + m_name + "&lt;" + m_email + "&gt;<br><br>" + m_title + "<br><br>" + m_text;
+            String fromEmail =    "BlueSpringBoss@gmail.com";
+            String title =      "푸른봄 회원가입을 위한 인증번호입니다.";
+            String contents =   "회원가입을 위한 인증번호입니다.<br>";
  
-            mail_from = new String(mail_from.getBytes("UTF-8"), "UTF-8");
-            mail_to = new String(mail_to.getBytes("UTF-8"), "UTF-8");
+            toEmail = new String(toEmail.getBytes("UTF-8"), "UTF-8");
+            fromEmail = new String(fromEmail.getBytes("UTF-8"), "UTF-8");
  
             Properties props = new Properties();
             props.put("mail.transport.protocol", "smtp");
@@ -71,8 +67,12 @@ public class SendMail extends HttpServlet {
     				break;
     			}
     		}
+    		
+    		
     		String AuthenticationKey = temp.toString();
-    		System.out.println(AuthenticationKey);
+    		System.out.println("인증 번호 : " + AuthenticationKey);
+    		
+    		contents += AuthenticationKey;
 
     		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
     			protected PasswordAuthentication getPasswordAuthentication() {
@@ -88,20 +88,19 @@ public class SendMail extends HttpServlet {
  
             MimeMessage msg = new MimeMessage(sess);
  
-            msg.setFrom(new InternetAddress(mail_from));
-            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(mail_to));
+            msg.setFrom(new InternetAddress(fromEmail));
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             msg.setSubject(title, "UTF-8");
             msg.setContent(contents, "text/html; charset=UTF-8");
             msg.setHeader("Content-type", "text/html; charset=UTF-8");
  
             Transport.send(msg);
+            
+            response.getWriter().print(AuthenticationKey);
  
-            response.sendRedirect("request_complete.jsp");
         } catch (Exception e) {
-            response.sendRedirect("request_failed.jsp");
-        } finally {
- 
-        }
+        	e.printStackTrace();
+        } 
     }
 
 

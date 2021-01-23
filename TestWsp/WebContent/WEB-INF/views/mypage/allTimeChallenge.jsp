@@ -68,49 +68,73 @@
 							</tr>
 						</c:when>
 				
-				
-				<c:otherwise> 
-				<c:forEach var="challenge" items="${list}">
-						<tr>
-							<td>
-								<div class="cThumbnail_area">
-								<c:if test="${!empty fList}">
-									<c:forEach var="thumbnail" items="${fList}">
-										<c:if test="${challenge.chlngNo == thumbnail.parentChNo}">
-											<img class="cThumbnail" src="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}"></img>
-										</c:if>
-									</c:forEach>
+						<c:otherwise> 
+							<c:forEach var="challenge" items="${list}" varStatus="vs">
+								<c:if test="${vs.index == 0  || vs.index == 3 }">
+									<tr>
 								</c:if>
-								
-								<c:if test="${empty fList}">
-									<img class="cThumbnail" src="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}"></img>
-								</c:if>
-								
-								
-								
-								</div>
-								<div class="cTitle_area">
-									<h4 class="title">${challenge.chlngTitle}</h4>
-								</div>
-								<div class="cPeriod_area">
-									 <fmt:formatDate var="chlngStartDt" value="${challenge.chlngStartDt}" pattern="yyyy-MM-dd"/>
-									 <fmt:formatDate var="chlngEndDt" value="${challenge.chlngEndDt}" pattern="yyyy-MM-dd"/>
-									<span class="period">${chlngStartDt} - ${chlngEndDt}</span>
-								</div>
-								<div class="check_area">
-									<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-								</div>
-							</td>
-						</tr>
+
+								<td>
+									<div class="cThumbnail_area">
+									<c:if test="${!empty fList}">
+										<c:set var="flag" value="true"/>
+										<c:forEach var="thumbnail" items="${fList}">
+											<c:if test="${challenge.chlngNo == thumbnail.parentChNo}">
+												<c:set var="img" value="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}"/>
+												<c:set var="flag" value="false"/>
+											
+											</c:if>
+										</c:forEach>
+									</c:if>
+									
+									<c:if test="${flag == 'true'}">
+										<c:set var="img" value="${contextPath}/resources/img/basicImg.JPG"/>
+									</c:if>
+									
+										<img class="cThumbnail" src="${img}"></img>
+									
+									</div>
+									<div class="cTitle_area">
+										<h4 class="title">${challenge.chlngTitle}</h4>
+									</div>
+									<div class="cPeriod_area">
+										 <fmt:formatDate var="chlngStartDt" value="${challenge.chlngStartDt}" pattern="yyyy-MM-dd"/>
+										 <fmt:formatDate var="chlngEndDt" value="${challenge.chlngEndDt}" pattern="yyyy-MM-dd"/>
+										<span class="period">${chlngStartDt} - ${chlngEndDt}</span>
+									</div>
+									<div class="check_area">
+										<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
+									</div>
+								</td> 
+						
+							<c:if test="${vs.index == 2  || vs.last }">
+								<tr>
+							</c:if>
+						
 						</c:forEach>
-						</c:otherwise>
-							</c:choose>
-					</table>
-				</div>
+					</c:otherwise>
+				</c:choose>
+			</table>
+		</div>
+				
+				
+		<c:set var="firstPage" value="${pageUrl}?cp=1${searchStr}"/>
+		<c:set var="lastPage" value="${pageUrl}?cp=${pInfo.maxPage}${searchStr}"/>
+		
+		<fmt:parseNumber  var="c1" value="${( pInfo.currentPage - 1) / 10 }" integerOnly="true" />    
+		<fmt:parseNumber  var="prev" value="${ c1 * 10 }" integerOnly="true" />
+		<c:set var="prevPage" value="${pageUrl}?cp=${prev}${searchStr}" />
+		
+		<fmt:parseNumber var="c2" value="${(pInfo.currentPage + 9) / 10 }" integerOnly="true"/>
+		<fmt:parseNumber var="next" value="${ c2 * 10 + 1 }" integerOnly="true" />     
+		<c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
+			
 				
 				
 		<div class="page-no-area">
 			<ul>
+			
+			
 			
 				<c:if test="${pInfo.currentPage > 10}">
 					<li><a href="${firstPage}">&lt;&lt;</a></li>

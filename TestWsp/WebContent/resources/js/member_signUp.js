@@ -10,9 +10,8 @@ var validateCheck = {
 	"birthdd" : false,
 	"gender" : false,
 	"phone" : false,
-	"address" : false
-	//"email" : false
-	//"emadilNum" : false
+	"address" : false,
+	"emadilNum" : false
 }
 
 
@@ -338,6 +337,49 @@ $("#email").on("input", function(){
     }
 });
 
+// 이메일 인증 번호 
+var sendKey;
+
+$("#email_btn").on("click",function(){
+
+	$.ajax({
+		url : "../sendMail",
+		data : {toEmail : $("#email").val()},
+		type : "post",
+		async : false,
+		success : function(result){
+			
+			if(result != undefined){
+				swal({icon : "success", title : "이메일이 전송되었습니다.", text : $("#email").val() + " 에서 확인해주세요."});
+				sendKey = result;
+				validateCheck.emadilNum = true;
+			}
+			
+		}, error : function(){
+			swal({icon : "error", title : "이메일 전송이 실패했습니다.", text : "이메일을 다시 확인해주세요."});
+			validateCheck.emadilNum = false;
+			console.log("error");
+		}
+		
+		
+	});
+
+});
+
+
+$("#cNum").on("input",function(){
+	
+	var inputKey = $("#cNum").val();
+	console.log(sendKey == inputKey);
+	if(sendKey == inputKey){
+		$("#cNum").css("border", "1px solid #8cb0f7");
+		$("#emailMsg").text("");
+	}else{
+		$("#emailMsg").text("인증 번호가 일치하지 않습니다.");
+		$("#cNum").css("border", "1px solid red");
+	}
+});
+
 
 function validate(){
 	for(var key in validateCheck){
@@ -356,6 +398,7 @@ function validate(){
 				case	"gender" :  msg="성별이"; break;
 				case	"phone" :  msg="전화번호가"; break;
 				case	"address" :  msg="주소가"; break;
+				case 	"emadilNum" : msg="인증번호가"; break;
 			}
 			swal(msg+" 유효하지 않습니다.");
 			
@@ -470,3 +513,9 @@ function memberUpdateValidate(){
         }
     }
 }
+
+
+
+
+
+

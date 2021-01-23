@@ -248,7 +248,9 @@ public class MypageController extends HttpServlet {
 
 				PageInfo pInfo = mService.getMyChallengeCount(cp, memId);
 
-
+				pInfo.setLimit(6);
+				
+				
 				List<Challenge> list = mService.selectChallengeList(pInfo, sort, memId);
 					
 				if(list != null) {
