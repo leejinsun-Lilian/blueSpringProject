@@ -9,6 +9,7 @@ public class Comment {
 	private int parentBoardNo;			// 댓글이 작성된 게시글 번호
 	private String memberId;			// 댓글 작성 회원
 	private String comStatus;			// 댓글 상태
+	private String memberNickName;			// 댓글 상태
 
 	public Comment() {
 		// TODO Auto-generated constructor stub
@@ -23,6 +24,18 @@ public class Comment {
 		this.parentBoardNo = parentBoardNo;
 		this.memberId = memberId;
 		this.comStatus = comStatus;
+	}
+	
+	public Comment(int comNo, String comContent, Timestamp comCreateDate, int parentBoardNo, String memberId,
+			String comStatus, String memberNickName) {
+		super();
+		this.comNo = comNo;
+		this.comContent = comContent;
+		this.comCreateDate = comCreateDate;
+		this.parentBoardNo = parentBoardNo;
+		this.memberId = memberId;
+		this.comStatus = comStatus;
+		this.memberNickName = memberNickName;
 	}
 
 	public int getComNo() {
@@ -72,11 +85,22 @@ public class Comment {
 	public void setComStatus(String comStatus) {
 		this.comStatus = comStatus;
 	}
+	
+	public String getMemberNickName() {
+		return memberNickName;
+	}
+
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
+	}
 
 	@Override
 	public String toString() {
 		return "Comment [comNo=" + comNo + ", comContent=" + comContent + ", comCreateDate=" + comCreateDate
-				+ ", parentBoardNo=" + parentBoardNo + ", memberId=" + memberId + ", comStatus=" + comStatus + "]";
-	}		
+				+ ", parentBoardNo=" + parentBoardNo + ", memberId=" + memberId + ", comStatus=" + comStatus
+				+ ", memberNickName=" + memberNickName + "]";
+	}
+
+	
 	
 }

@@ -78,69 +78,53 @@ public class MemberController extends HttpServlet {
 				member.setMemberId(memberId);
 				member.setMemberPwd(memberPwd);
 				
-				try {
-					Member loginMember = mService.loginMember(member);
+				Member loginMember = mService.loginMember(member);
+				
+				//response.setContentType("text/html; charset=UTF-8");
+				
+				HttpSession session = request.getSession();
+				
+				if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
 					
-					//response.setContentType("text/html; charset=UTF-8");
+					session.setMaxInactiveInterval(60*60);
 					
-					HttpSession session = request.getSession();
+					session.setAttribute("loginMember", loginMember);
 					
+					Cookie cookie = new Cookie("saveId", memberId);
 					
-					
-					if(loginMember != null && loginMember.getMemberBlackList() == 'N') {
-						
-						session.setMaxInactiveInterval(60*60);
-						
-						session.setAttribute("loginMember", loginMember);
-						
-						Cookie cookie = new Cookie("saveId", memberId);
-						
-						
-						if(idSave != null) {
-							cookie.setMaxAge(60 * 60 * 24 * 7);
-						} else {
-							cookie.setMaxAge(0);
-						}
-						
-						cookie.setPath(request.getContextPath());
-						
-						response.addCookie(cookie);
-						
-						
-						
-						
-						response.sendRedirect(request.getContextPath());
-						
-					} else if(loginMember != null && loginMember.getMemberBlackList() == 'Y') {
-						swalIcon = "error";
-						swalTitle = "로그인 실패";
-						swalText = "접근이 불가능한 계정입니다.";
-						
-						response.sendRedirect(request.getContextPath());
+					if(idSave != null) {
+						cookie.setMaxAge(60 * 60 * 24 * 7);
+					} else {
+						cookie.setMaxAge(0);
 					}
 					
-					else {
-						swalIcon = "error";
-						swalTitle = "로그인 실패";
-						swalText = "아이디와 비밀번호를 확인해주세요.";
-						
-						response.sendRedirect(request.getHeader("referer"));
-						 
-					}
-					session.setAttribute("swalIcon", swalIcon);
-					session.setAttribute("swalTitle", swalTitle);
-					session.setAttribute("swalText", swalText);
+					cookie.setPath(request.getContextPath());
 					
+					response.addCookie(cookie);
 					
-				} catch (Exception e) {
-					e.printStackTrace();
+					response.sendRedirect(request.getContextPath());
 					
-					request.setAttribute("errorMsg", errorMsg);
+				} else if(loginMember != null && loginMember.getMemberBlackList() == 'Y') {
+					swalIcon = "error";
+					swalTitle = "로그인 실패";
+					swalText = "접근이 불가능한 계정입니다.";
 					
-					view = request.getRequestDispatcher("/WEB-INF/views/common/errorPage.jsp");
-					view.forward(request, response);
+					response.sendRedirect(request.getContextPath());
 				}
-			}
+				
+				else {
+					swalIcon = "error";
+					swalTitle = "로그인 실패";
+					swalText = "아이디와 비밀번호를 확인해주세요.";
+					
+					response.sendRedirect(request.getHeader("referer"));
+					 
+				}
+				session.setAttribute("swalIcon", swalIcon);
+				session.setAttribute("swalTitle", swalTitle);
+				session.setAttribute("swalText", swalText);
+						
+				}
 			
 			
 			// ****************************************************************** 로그아웃 Controller ******************************************************************
@@ -219,12 +203,6 @@ public class MemberController extends HttpServlet {
 			
 			
 			
-			
-			
-			
-			
-			
-			
 			// ****************************************************************** 회원가입 Controller ******************************************************************
 			else if(command.equals("/signupComplete.do")) {
 				errorMsg = "회원가입 과정에서 오류가 발생했습니다.";
@@ -258,7 +236,7 @@ public class MemberController extends HttpServlet {
 											memberBirth, memberGender, memberPhone, 
 										   memberAddr, memberEmail, memberNickname);
 				
-				try {
+		
 					int result = mService.signUp(member);
 					
 					if(result > 0) {
@@ -278,18 +256,7 @@ public class MemberController extends HttpServlet {
 						session.setAttribute("swalText", swalText);
 						response.sendRedirect(request.getContextPath());
 					}
-				}catch (Exception e) {
-					e.printStackTrace();
-					request.setAttribute("errorMsg", errorMsg);
-					path = "/WEB-INF/views/common/errorPage.jsp";
-					view = request.getRequestDispatcher(path);
-					view.forward(request, response);
-				}
 			}
-			
-			
-			
-			
 			
 			// ****************************************************************** 아이디 찾기 페이지 Controller ******************************************************************
 			else if(command.equals("/idFind.do")) {				
@@ -305,39 +272,31 @@ public class MemberController extends HttpServlet {
 				errorMsg = "아이디 찾기 과정에서 오류가 발생했습니다.";
 				String name = request.getParameter("name");
 				String email = request.getParameter("email");
-				
-				try {
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("name", name);
-					map.put("email", email);
-					
-					String memberIdFind = mService.idFind(map);
-					HttpSession session = request.getSession();
-					if(memberIdFind != null) {
-						
-						session.setAttribute("memberIdFind", memberIdFind);
-						
-						path="/WEB-INF/views/member/idFindComplete.jsp";
-						
-						view = request.getRequestDispatcher(path);
-						view.forward(request, response);
-					 } else {
-						 swalIcon = "error";
-						 swalTitle = "아이디 찾기 실패";
-						 swalText = "이름과 이메일을 다시 확인해주세요.";
-						
-						session.setAttribute("swalIcon", swalIcon);
-						session.setAttribute("swalTitle", swalTitle);
-						session.setAttribute("swalText", swalText);
-						
-						response.sendRedirect(request.getHeader("referer"));
-					 }
-				} catch (Exception e) {
-					e.printStackTrace();
-					request.setAttribute("errorMsg", errorMsg);
-					path = "/WEB-INF/views/common/errorPage.jsp";
+
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("name", name);
+				map.put("email", email);
+
+				String memberIdFind = mService.idFind(map);
+				HttpSession session = request.getSession();
+				if (memberIdFind != null) {
+
+					session.setAttribute("memberIdFind", memberIdFind);
+
+					path = "/WEB-INF/views/member/idFindComplete.jsp";
+
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
+				} else {
+					swalIcon = "error";
+					swalTitle = "아이디 찾기 실패";
+					swalText = "이름과 이메일을 다시 확인해주세요.";
+
+					session.setAttribute("swalIcon", swalIcon);
+					session.setAttribute("swalTitle", swalTitle);
+					session.setAttribute("swalText", swalText);
+
+					response.sendRedirect(request.getHeader("referer"));
 				}
 			}
 			
@@ -351,50 +310,39 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
-			
-			
 			//  ****************************************************************** 새로운 비밀번호 설정  ******************************************************************
 			
-			else if(command.equals("/changePw.do")) {
+			else if (command.equals("/changePw.do")) {
 				errorMsg = "비밀번호 찾기 과정에서 오류가 발생했습니다.";
-				
+
 				String id = request.getParameter("id");
 				String email = request.getParameter("email");
-				
-				
-				try {
-					Map<String, Object> map = new HashMap<String, Object>(); 
-					map.put("id", id);
-					map.put("email", email); 
-					
-					
-					int result = mService.pwFind(map);
-					HttpSession session = request.getSession();
-					
-					if(result > 0) {
-						session.setAttribute("memNo", result);
-						path="/WEB-INF/views/common/newPwForm.jsp";
-						
-						view = request.getRequestDispatcher(path);
-						view.forward(request, response); 
-					} else {
-						swalIcon = "error";
-						 swalTitle = "비밀번호 찾기 실패";
-						 swalText = "아이디와 이메일을 다시 확인해주세요.";
-						
-						session.setAttribute("swalIcon", swalIcon);
-						session.setAttribute("swalTitle", swalTitle);
-						session.setAttribute("swalText", swalText);
-						
-						response.sendRedirect(request.getHeader("referer"));
-					}
-				}catch (Exception e) {
-					e.printStackTrace();
-					request.setAttribute("errorMsg", errorMsg);
-					path = "/WEB-INF/views/common/errorPage.jsp";
+
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("id", id);
+				map.put("email", email);
+
+				int result = mService.pwFind(map);
+				HttpSession session = request.getSession();
+
+				if (result > 0) {
+					session.setAttribute("memNo", result);
+					path = "/WEB-INF/views/common/newPwForm.jsp";
+
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
+				} else {
+					swalIcon = "error";
+					swalTitle = "비밀번호 찾기 실패";
+					swalText = "아이디와 이메일을 다시 확인해주세요.";
+
+					session.setAttribute("swalIcon", swalIcon);
+					session.setAttribute("swalTitle", swalTitle);
+					session.setAttribute("swalText", swalText);
+
+					response.sendRedirect(request.getHeader("referer"));
 				}
+
 			}
 			
 			

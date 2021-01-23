@@ -161,3 +161,14 @@ h4, h5{
 .list_wrapper h3 {
 	margin-top : 20px;
 }
+
+
+.more{
+	float : right;
+	margin-right : 25px;
+}
+
+.more {
+	text-decoration: none;
+	color : black;
+}

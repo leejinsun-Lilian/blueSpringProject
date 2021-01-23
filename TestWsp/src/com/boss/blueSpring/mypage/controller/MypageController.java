@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.board.model.vo.Board;
 import com.boss.blueSpring.board.model.vo.PageInfo;
+import com.boss.blueSpring.challenge.model.vo.Challenge;
+import com.boss.blueSpring.challengecrtfd.model.vo.ChallengeCrtfd;
 import com.boss.blueSpring.comment.model.vo.Comment;
-import com.boss.blueSpring.member.model.service.MemberService;
 import com.boss.blueSpring.member.model.vo.Member;
 import com.boss.blueSpring.mypage.model.service.MypageService;
 import com.google.gson.Gson;
@@ -48,6 +50,30 @@ public class MypageController extends HttpServlet {
 		try {
 			// mypage 메인
 			if(command.equals("/main.do")) {
+				String memId = loginMember.getMemberId();
+				List<Board> bList =  mService.selectMainBoard(memId);
+				List<Comment> cList = mService.selectMainComment(memId);
+				List<ChallengeCrtfd> acList = mService.selectMainacList(memId);
+				
+			
+				request.setAttribute("bList", bList);
+				request.setAttribute("cList", cList);
+				request.setAttribute("acList", acList);
+				
+				
+				// mypage 현재 참여중인 챌린지
+		
+				Challenge nc = mService.nowChallenge(memId);
+					
+//				if(nc != null) {
+//					//List<Attachment> fList = mService.selectThumbnailList(memId);
+//					
+//					if(!fList.isEmpty()) {
+//						request.setAttribute("fList", fList);
+//					}
+//				}
+				
+				
 				path="/WEB-INF/views/mypage/myPage.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -64,38 +90,27 @@ public class MypageController extends HttpServlet {
 			else if(command.equals("/myInfoPwCheck.do")) {
 				errorMsg = "비밀번호 확인 중 오류가 발생했습니다.";
 				
-				
 				String pwd = request.getParameter("pwd");
 				
-				try {
+				int result = mService.myInfoPwCheck(loginMember.getMemberNo(), pwd);
+	
+				if(result > 0) {
 					
-					int result = mService.myInfoPwCheck(loginMember.getMemberNo(), pwd);
-
-					if(result > 0) {
-						
-						path="/WEB-INF/views/mypage/myInfoChange.jsp";
-						view = request.getRequestDispatcher(path);
-						view.forward(request, response);
-						
-					} else {
-						swalIcon = "error";
-						swalTitle = "비밀번호가 일치하지 않습니다.";
-						swalText ="";
-						
-						response.sendRedirect(request.getHeader("referer"));
-					}
-					session.setAttribute("swalIcon", swalIcon);
-					session.setAttribute("swalTitle", swalTitle);
-					session.setAttribute("swalText", swalText);
+					path="/WEB-INF/views/mypage/myInfoChange.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
 					
-				}catch (Exception e) {
-			         e.printStackTrace();
-			         path = "/WEB-INF/views/common/errorPage.jsp";
-			         request.setAttribute("errorMsg", errorMsg);
-			         view = request.getRequestDispatcher(path);
-			         view.forward(request, response);
+				} else {
+					swalIcon = "error";
+					swalTitle = "비밀번호가 일치하지 않습니다.";
+					swalText ="";
+					
+					response.sendRedirect(request.getHeader("referer"));
 				}
 				
+				session.setAttribute("swalIcon", swalIcon);
+				session.setAttribute("swalTitle", swalTitle);
+				session.setAttribute("swalText", swalText);
 			}
 			
 			
@@ -124,66 +139,47 @@ public class MypageController extends HttpServlet {
 				member.setMemberAddr(addr);
 				member.setMemberPhone(phone);
 				
+				int result = mService.updateMember(member);
 				
-				try {
-					int result = mService.updateMember(member);
+				if(result > 0) {
+					swalIcon = "success";
+					swalTitle = "수정 완료";
+					swalText = "회원 정보가 수정되었습니다.";
 					
-					if(result > 0) {
-						swalIcon = "success";
-						swalTitle = "수정 완료";
-						swalText = "회원 정보가 수정되었습니다.";
-						
-						
-						member.setMemberId(loginMember.getMemberId());
-						member.setMemberNm(loginMember.getMemberNm());
-						member.setMemberBirth(loginMember.getMemberBirth());
-						member.setMemberGender(loginMember.getMemberGender());
-						member.setMemberEmail(loginMember.getMemberEmail());
-						member.setMemberJoined(loginMember.getMemberJoined());
-						member.setMemberScsnFl(loginMember.getMemberScsnFl());
-						member.setMemberBlackList(loginMember.getMemberBlackList());
-						member.setMemberLevel(loginMember.getMemberLevel());
-						
-						session.setAttribute("loginMember", member);
-					} else {
-						swalIcon = "error";
-						swalTitle = "수정 실패";
-						swalText = "회원 정보 수정을 실패했습니다.";
-					}
 					
-					session.setAttribute("swalIcon", swalIcon);
-					session.setAttribute("swalTitle", swalTitle);
-					session.setAttribute("swalText", swalText);
+					member.setMemberId(loginMember.getMemberId());
+					member.setMemberNm(loginMember.getMemberNm());
+					member.setMemberBirth(loginMember.getMemberBirth());
+					member.setMemberGender(loginMember.getMemberGender());
+					member.setMemberEmail(loginMember.getMemberEmail());
+					member.setMemberJoined(loginMember.getMemberJoined());
+					member.setMemberScsnFl(loginMember.getMemberScsnFl());
+					member.setMemberBlackList(loginMember.getMemberBlackList());
+					member.setMemberLevel(loginMember.getMemberLevel());
 					
-					response.sendRedirect("main.do");
-					
-				} catch (Exception e) {
-			         e.printStackTrace();
-			         path = "/WEB-INF/views/common/errorPage.jsp";
-			         request.setAttribute("errorMsg", errorMsg);
-			         view = request.getRequestDispatcher(path);
-			         view.forward(request, response);
+					session.setAttribute("loginMember", member);
+				} else {
+					swalIcon = "error";
+					swalTitle = "수정 실패";
+					swalText = "회원 정보 수정을 실패했습니다.";
 				}
+				
+				session.setAttribute("swalIcon", swalIcon);
+				session.setAttribute("swalTitle", swalTitle);
+				session.setAttribute("swalText", swalText);
+				
+				response.sendRedirect("main.do");
+					
+			
 			}
 			
 			
 			else if(command.equals("/nicknameDubCheck.do")) {
 				errorMsg = "닉네임 중복 검사 과정에서 오류가 발생했습니다.";
-				
 				String nickname = request.getParameter("nickname");
+				int result = mService.nicknameDubCheck(nickname);
+				response.getWriter().print(result);
 				
-				try {
-					int result = mService.nicknameDubCheck(nickname);
-					
-					response.getWriter().print(result);
-				}catch (Exception e) {
-					e.printStackTrace();
-					path = "/WEB-INF/views/common/errorPage.jsp";
-			        request.setAttribute("errorMsg", errorMsg);
-			        view = request.getRequestDispatcher(path);
-			        view.forward(request, response);
-					
-				}
 			}
 			
 			
@@ -201,7 +197,7 @@ public class MypageController extends HttpServlet {
 				String newPw = request.getParameter("newPw1");
 				
 				int memNo = loginMember.getMemberNo();		
-				try {
+			
 					int result = mService.changePw(newPw, memNo); 
 					if(result > 0) {
 						path="/WEB-INF/views/member/pwFindNewPwComplete.jsp";
@@ -215,14 +211,6 @@ public class MypageController extends HttpServlet {
 						path="/WEB-INF/views/member/pwFind.jsp";
 						response.sendRedirect(path);
 					}
-				} catch (Exception e) {
-			         e.printStackTrace();
-			         path = "/WEB-INF/views/common/errorPage.jsp";
-			         request.setAttribute("errorMsg", errorMsg);
-			         view = request.getRequestDispatcher(path);
-			         view.forward(request, response);
-				}
-				
 			}
 			
 			
@@ -268,16 +256,32 @@ public class MypageController extends HttpServlet {
 				view.forward(request, response);
 			}
 			
-			// 참여중인 챌린지 조회
-			else if(command.equals("/progressChallenge.do")) {
-				path="/WEB-INF/views/mypage/progressChallenge.jsp";
-				view = request.getRequestDispatcher(path);
-				view.forward(request, response);
-			}
 			
 			// 역대 챌린지 조회
-			else if(command.equals("/allTimeChallenge.do")) {
+			else if(command.equals("/allTimeChallenge.do")) {				
+				String cp = request.getParameter("cp");
+								
+				String sort = request.getParameter("sort");
+				String memId = loginMember.getMemberId();
+
+				PageInfo pInfo = mService.getMyChallengeCount(cp, memId);
+
+				pInfo.setLimit(6);
+				
+				
+				List<Challenge> list = mService.selectChallengeList(pInfo, sort, memId);
+					
+				if(list != null) {
+					List<Attachment> fList = mService.selectThumbnailList(pInfo);
+					
+					if(!fList.isEmpty()) {
+						request.setAttribute("fList", fList);
+					}
+				}
 				path="/WEB-INF/views/mypage/allTimeChallenge.jsp";
+				request.setAttribute("list", list);
+				request.setAttribute("pInfo", pInfo);
+
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -285,6 +289,19 @@ public class MypageController extends HttpServlet {
 			
 			// 인증 게시글 조회
 			else if(command.equals("/challengeCrtfd.do")) {
+				errorMsg = "작성한 게시글을 불러오는 도중 오류가 발생했습니다.";
+				String cp = request.getParameter("cp" );
+				String memId = loginMember.getMemberId();
+				
+				
+				PageInfo pInfo = mService.getcrtfdPageInfo(cp, memId);
+				String cn = getInitParameter("cn");
+				
+				List<ChallengeCrtfd> bList = mService.selectcrtfdList(pInfo, cn, memId);
+				
+				session.setAttribute("pInfo", pInfo);
+				session.setAttribute("bList", bList);
+			
 				path="/WEB-INF/views/mypage/challengeCrtfdList.jsp";
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
@@ -299,9 +316,6 @@ public class MypageController extends HttpServlet {
 			}
 			
 			
-			
-			
-			
 			// 회원 탈퇴 완료 
 			else if(command.equals("/deleteAccountComplete.do")) {
 				errorMsg = "회원탈퇴 도중 오류가 발생했습니다.";
@@ -309,44 +323,30 @@ public class MypageController extends HttpServlet {
 				
 				int memNo = loginMember.getMemberNo();
 				String url = null;
-				try {
-					int result = mService.updateStatus(pwd, memNo);
-					
-					if(result > 0) {
-						
-						session.invalidate();
-						session = request.getSession();
-						path="/WEB-INF/views/mypage/deleteAccountComplete.jsp";
-						view = request.getRequestDispatcher(path);
-				        view.forward(request, response);
-					}else if(result == 0) {
-						swalIcon = "error";
-			            swalTitle = "회원 탈퇴에 실패했습니다.";
-			            
-			            url = "deleteAccount.do";
-			            response.sendRedirect(url);
-					}else {
-			            swalIcon = "warning";
-			            swalTitle = "현재 비밀번호가 일치하지 않습니다.";
-			            
-			            url = "deleteAccount.do";
-			            response.sendRedirect(url);
-					}
-					
-			         session.setAttribute("swalIcon", swalIcon);
-			         session.setAttribute("swalTitle", swalTitle);
-
-					
-				} catch (Exception e) {
-			         e.printStackTrace();
-			         path = "/WEB-INF/views/common/errorPage.jsp";
-			         request.setAttribute("errorMsg", errorMsg);
-			         view = request.getRequestDispatcher(path);
-			         view.forward(request, response);
+				int result = mService.updateStatus(pwd, memNo);
+				
+				if(result > 0) {
+					session.invalidate();
+					session = request.getSession();
+					path="/WEB-INF/views/mypage/deleteAccountComplete.jsp";
+					view = request.getRequestDispatcher(path);
+			        view.forward(request, response);
+				}else if(result == 0) {
+					swalIcon = "error";
+		            swalTitle = "회원 탈퇴에 실패했습니다.";
+		            
+		            url = "deleteAccount.do";
+		            response.sendRedirect(url);
+				}else {
+		            swalIcon = "warning";
+		            swalTitle = "현재 비밀번호가 일치하지 않습니다.";
+		            
+		            url = "deleteAccount.do";
+		            response.sendRedirect(url);
 				}
 				
-				
-	
+		         session.setAttribute("swalIcon", swalIcon);
+		         session.setAttribute("swalTitle", swalTitle);
 			}
 			
 		}catch (Exception e) {

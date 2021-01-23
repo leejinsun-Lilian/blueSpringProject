@@ -65,7 +65,7 @@
                                 <td>${board.boardNo}</td>
                                 <td>${board.categoryName}</td>
                                 <td>${board.boardTitle}</td>
-                                <td>${board.memberId }</td>
+                                <td>${board.memberNickname}</td>
                                 <td>
                                     <fmt:formatDate var="createDate" value="${board.boardCreateDate}" pattern="yyyy-MM-dd"/>
                                     <fmt:formatDate var="today" value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd"/>

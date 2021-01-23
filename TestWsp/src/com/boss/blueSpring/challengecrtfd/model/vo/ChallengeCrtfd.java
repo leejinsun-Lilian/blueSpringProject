@@ -38,6 +38,10 @@ public class ChallengeCrtfd {
 	}
 
 
+	
+
+	
+	
 
 
 	// admin 챌린지 인증 게시글 목록 조회용
@@ -48,6 +52,22 @@ public class ChallengeCrtfd {
 		this.chlngBoardTitle = chlngBoardTitle;
 		this.memberId = memberId;
 		this.chlngBoardDelFl = chlngBoardDelFl;
+	}
+
+
+	
+	// 마이페이지 챌린지 인증 게시글 목록 조회용
+	public ChallengeCrtfd(int chlngBoardNo, Date chlngBoardCrtDt, char chlngBoardDelFl, int chlngBoardViews,
+			int chlngNo, String memberId, String chlngBoardTitle, String chlngCateNm) {
+		super();
+		this.chlngBoardNo = chlngBoardNo;
+		this.chlngBoardCrtDt = chlngBoardCrtDt;
+		this.chlngBoardDelFl = chlngBoardDelFl;
+		this.chlngBoardViews = chlngBoardViews;
+		this.chlngNo = chlngNo;
+		this.memberId = memberId;
+		this.chlngBoardTitle = chlngBoardTitle;
+		this.chlngCateNm = chlngCateNm;
 	}
 
 

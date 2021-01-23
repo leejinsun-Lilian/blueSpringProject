@@ -10,9 +10,8 @@ var validateCheck = {
 	"birthdd" : false,
 	"gender" : false,
 	"phone" : false,
-	"address" : false
-	//"email" : false
-	//"emadilNum" : false
+	"address" : false,
+	"emadilNum" : false
 }
 
 
@@ -218,14 +217,15 @@ function maxLengthCheck(object) {
 }
 
 
-$("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
+$("#birth_yy, #birth_mm, #birth_dd").on("input", function(){
 	var regExp = /^[\d]{4}$/;
-	var regExp2 = /^[\d]{2}$/;
+	//var regExp2 = /^[\d]{2}$/;
+	var regExp2 = /^(0[1-9]|1[0-9]|2[0-9]|3[01])$/;
 	
 	var value = $("#birth_yy").val();
 	var value2 = $("#birth_mm").val();
 	var value3 = $("#birth_dd").val();
-
+	
 	if(!regExp.test(value)){
 		if(value.trim().length == 0){
 			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
@@ -252,12 +252,14 @@ $("#birth_yy, #birth_mm, #birth_dd").on("change keyup input", function(){
 	}
 	
 	if(!regExp2.test(value3)) {
+		console.log(value3);
+		
 		if(value3.trim().length == 0){
 			$("#birthdayMsg").text("필수 정보입니다.").css("color", "red");
 			$("#birth_dd").css("border", "1px solid red").text("");
 			validateCheck.birthdd = false;
-		}else if((Number(value3) < 0) || (Number(value3) > 31)) {
-		
+		}else if(Number(value3) < 0 || Number(value3) > 31) {
+			
 			$("#birthdayMsg").text("태어난 일 2자리를 정확하게 입력하세요.").css("color", "red");	
 			validateCheck.birthdd = false;
 		}else if(Number(value3) <= 9){
@@ -338,6 +340,49 @@ $("#email").on("input", function(){
     }
 });
 
+// 이메일 인증 번호 
+var sendKey;
+
+$("#email_btn").on("click",function(){
+
+	$.ajax({
+		url : "../sendMail",
+		data : {toEmail : $("#email").val()},
+		type : "post",
+		async : false,
+		success : function(result){
+			
+			if(result != undefined){
+				swal({icon : "success", title : "이메일이 전송되었습니다.", text : $("#email").val() + " 에서 확인해주세요."});
+				sendKey = result;
+				validateCheck.emadilNum = true;
+			}
+			
+		}, error : function(){
+			swal({icon : "error", title : "이메일 전송이 실패했습니다.", text : "이메일을 다시 확인해주세요."});
+			validateCheck.emadilNum = false;
+			console.log("error");
+		}
+		
+		
+	});
+
+});
+
+
+$("#cNum").on("input",function(){
+	
+	var inputKey = $("#cNum").val();
+	console.log(sendKey == inputKey);
+	if(sendKey == inputKey){
+		$("#cNum").css("border", "1px solid #8cb0f7");
+		$("#emailMsg").text("");
+	}else{
+		$("#emailMsg").text("인증 번호가 일치하지 않습니다.");
+		$("#cNum").css("border", "1px solid red");
+	}
+});
+
 
 function validate(){
 	for(var key in validateCheck){
@@ -356,6 +401,7 @@ function validate(){
 				case	"gender" :  msg="성별이"; break;
 				case	"phone" :  msg="전화번호가"; break;
 				case	"address" :  msg="주소가"; break;
+				case 	"emadilNum" : msg="인증번호가"; break;
 			}
 			swal(msg+" 유효하지 않습니다.");
 			
@@ -470,3 +516,9 @@ function memberUpdateValidate(){
         }
     }
 }
+
+
+
+
+
+
