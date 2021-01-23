@@ -16,7 +16,11 @@ import javax.servlet.http.HttpSession;
 import com.boss.blueSpring.member.model.vo.Member;
 // "/notice/insert.do",
 //"/notice/insertForm.do", "/notice/updateForm.do","/notice/update.do", "/notice/delete.do"
-@WebFilter(urlPatterns= {}
+@WebFilter(urlPatterns= { "/admin/adminMain.do", "/admin/adminMemberInfo.do", "/admin/adminReport.do",
+		"/admin/reportPage.do", "/admin/adminBlacklistInfo.do", "/admin/adminCenterInfo.do",
+		"/admin/centerPage.do", "/admin/centerAdd.do", "/admin/centerDubCheck.do", 
+		"/admin/centerComplete.do", "/admin/centerUpdate.do", "/admin/updateAction.do", 
+		"/admin/adminBoard.do", "/admin/adminChall.do", "/admin/adminCrtfd.do" }
 )
 public class AdminFilter implements Filter {
 
