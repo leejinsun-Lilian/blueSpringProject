@@ -493,6 +493,96 @@ public class MypageDAO {
 		return bList;
 	}
 
+	/** 마이페이지 메인 내가 쓴 게시글
+	 * @param conn
+	 * @param memId
+	 * @return bList
+	 * @throws Exception
+	 */
+	public List<Board> selectMainBoard(Connection conn, String memId) throws Exception {
+		List<Board> bList = null;
+		String query = prop.getProperty("selectMainBoard");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			rset = pstmt.executeQuery();
+			bList = new ArrayList<Board>();
+			while(rset.next()) {
+				Board board = new Board();
+				board.setBoardNo(rset.getInt("BRD_NO"));
+				board.setCategoryName(rset.getString("CATEGORY_NM"));
+				board.setBoardTitle(rset.getString("BRD_TITLE"));
+				bList.add(board);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return bList;
+	}
+
+	/** 마이페이지 메인 내가 쓴 댓글
+	 * @param conn
+	 * @param memNo
+	 * @return cList
+	 * @throws Exception
+	 */
+	public List<Comment> selectMainComment(Connection conn, String memId)  throws Exception {
+		List<Comment> cList = null;
+		String query = prop.getProperty("selectMainComment");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			rset = pstmt.executeQuery();
+			cList = new ArrayList<Comment>();
+			while(rset.next()) {
+				Comment comment = new Comment(rset.getInt("COM_NO"), 
+											  rset.getString("COM_CONTENT"),
+											  rset.getTimestamp("COM_CRT_DT"),
+											  rset.getInt("BRD_NO"), 
+											  rset.getString("MEM_ID"), 
+											  rset.getString("COM_DEL_FL"));
+				cList.add(comment);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return cList;
+	}
+
+	/** 마이페이지 메인 역대 챌린지 
+	 * @param conn
+	 * @param memNo 
+	 * @return asList
+	 * @throws Exception
+	 */
+	public List<ChallengeCrtfd> selectMainacList(Connection conn, String memId) throws Exception {
+		List<ChallengeCrtfd> acList = null;
+		String query = prop.getProperty("selectMainctcrtfd");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memId);
+			rset = pstmt.executeQuery();
+			acList = new ArrayList<ChallengeCrtfd>();
+			while(rset.next()) {
+				ChallengeCrtfd crtfd = new ChallengeCrtfd(rset.getInt("CHLNG_NO"),
+						rset.getDate("CHLNG_BRD_CRT_DT"),
+						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
+						rset.getInt("CHLNG_BRD_VIEWS"), 
+						rset.getInt("CHLNG_BRD_NO"),
+						rset.getString("CHLNG_BRD_TITLE"), 
+						rset.getString("MEM_ID"), 
+						rset.getString("CHLNG_CATE_NM"));
+				acList.add(crtfd);
+			}
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return acList;
+	}
+
 
 
 

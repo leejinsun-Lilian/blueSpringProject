@@ -15,41 +15,7 @@
 <style>
 /* ****************************************************************** */
 
-/* 페이지 번호 목록 */
-.page-no-area{
-   width: 100%;
-   height: 60px;
-   margin-top : 20px;
-}
 
-.page-no-area ul{  /* 중앙에 두는 방법 */
-   width : 70%;
-   height : 100%;
-   margin : auto;
-    text-align: center;
-}
-.page-no-area ul li{
-    border : 1px solid gray;
-   width : 7%;
-   height : 100%;
-    display: inline-block;
-    margin-right: -6px;
-    list-style-type: none;
-    text-align: center;
-}
-.page-no-area li a{
-   width : 100%;
-   height : 100%;
-    text-decoration: none;
-    font-size: 30px;
-    color: #3498db;
-    line-height: 50px;
-    display: block;
-}
-.page-no-area  a:hover{
-   color : #283e69;
-   background-color : #dee2e6; 
-}
 </style>
 </head>
 <body>

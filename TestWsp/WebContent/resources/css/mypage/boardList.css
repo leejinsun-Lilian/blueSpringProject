@@ -42,16 +42,21 @@
 
 }
 
-#list-table th {
+#board th {
    text-align: center;
    font-weight: normal;
    padding-top : 10px;
    padding-bottom: 10px;
 }
-#list-table td {
+#board > tbody > tr > td {
    text-align: center;
    padding-top : 10px;
    padding-bottom: 10px;
+   
+   width : 60px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 }
 
 tr:nth-child(2n){
@@ -59,15 +64,52 @@ tr:nth-child(2n){
 }
 
 /* thead th 부분 비율 정하기  */ 
-#list-table th:nth-child(1){ width: 10%; }
-#list-table th:nth-child(2){ width: 48%; }
-#list-table th:nth-child(3){ width: 20%; }
-#list-table th:nth-child(4){ width: 7%; }
-#list-table th:nth-child(5){ width: 15%; }
+/* #board th:nth-child(1){ width: 10%; }
+#board th:nth-child(2){ width: 48%; }
+#board th:nth-child(3){ width: 20%; }
+#board th:nth-child(4){ width: 7%; }
+#board th:nth-child(5){ width: 15%; }
 
-/* tbody td 부분 비율 정하기  */ 
-#list-table td:nth-child(1){ width: 10%; }
-#list-table td:nth-child(2){ width: 48%; }
-#list-table td:nth-child(3){ width: 20%; }
-#list-table td:nth-child(4){ width: 7%; }
-#list-table td:nth-child(5){ width: 15%; }
+tbody td 부분 비율 정하기  
+#board td:nth-child(1){ width: 10%; }
+#board td:nth-child(2){ width: 48%; }
+#board td:nth-child(3){ width: 20%; }
+#board td:nth-child(4){ width: 7%; }
+#board td:nth-child(5){ width: 15%; } */
+
+
+/* 페이지 번호 목록 */
+.page-no-area{
+   width: 100%;
+   height: 60px;
+   margin-top : 20px;
+}
+
+.page-no-area ul{  /* 중앙에 두는 방법 */
+   width : 70%;
+   height : 100%;
+   margin : auto;
+    text-align: center;
+}
+.page-no-area ul li{
+    border : 1px solid gray;
+   width : 7%;
+   height : 100%;
+    display: inline-block;
+    margin-right: -6px;
+    list-style-type: none;
+    text-align: center;
+}
+.page-no-area li a{
+   width : 100%;
+   height : 100%;
+    text-decoration: none;
+    font-size: 30px;
+    color: #3498db;
+    line-height: 50px;
+    display: block;
+}
+.page-no-area  a:hover{
+   color : #283e69;
+   background-color : #dee2e6; 
+}
