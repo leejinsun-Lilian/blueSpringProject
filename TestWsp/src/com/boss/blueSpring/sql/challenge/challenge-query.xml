@@ -82,6 +82,36 @@ VALUES(?, ?)
 </entry>
 
 
+<entry key="check">
+SELECT COUNT(*) FROM CHELLENGE_MEMBER_INFO
+WHERE CHLNG_NO = ? AND MEM_NO = ?
+</entry>
+
+
+
+<entry key="updateChFl">
+UPDATE CHALLENGE_MISSION
+SET CHLNG_FL = 'Y'
+WHERE CHLNG_NO = ?
+</entry>
+
+
+
+<entry key="updateChallenge">
+UPDATE CHALLENGE_MISSION SET
+CHLNG_TITLE = ?,
+CHLNG_CONTENT = ?,
+STR_DT = ?,
+END_DT = ?,
+CHLNG_CATE_NO = (SELECT CHLNG_CATE_NO FROM CHALLENGE_CATEGORY WHERE CHLNG_CATE_NM = ?)
+WHERE CHLNG_NO = ?
+</entry>
+
+<entry key="updateAttachment">
+UPDATE CHALLENGE_MISSION_IMG SET FILE_PATH=? , C_FILE_NAME=? WHERE CHLNG_IMG_NO = ?
+</entry>
+
+
 </properties>
 
 

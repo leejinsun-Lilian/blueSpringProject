@@ -488,6 +488,94 @@ public class ChallengeDAO {
 	}
 
 
+	/** 챌린지 참여 여부
+	 * @param conn
+	 * @param challengeNo
+	 * @param memberNo
+	 * @return check
+	 * @throws Exception
+	 */
+	public int check(Connection conn, int challengeNo, int memberNo) throws Exception{
+
+		int check = 0;
+		
+		String query = prop.getProperty("check");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, challengeNo);
+			pstmt.setInt(2, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				check = rset.getInt(1);
+			}
+			
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return check;
+	}
+
+
+	/** 챌린지 수정 DAO
+	 * @param conn
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateChallenge(Connection conn, Map<String, Object> map) throws Exception {
+		int result = 0;
+		String query = prop.getProperty("updateChallenge");
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, (String)map.get("chlngTitle"));
+			pstmt.setString(2, (String)map.get("chlngContent"));
+			pstmt.setString(3, (String)map.get("chlngStartDt"));
+			pstmt.setString(4, (String)map.get("chlngEndDt"));
+			pstmt.setString(5, (String)map.get("chlngCateNm"));
+			pstmt.setInt(6, (int)map.get("chlngNo"));
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
+	/** 챌린지 파일 정보 수정 DAO
+	 * @param newFile
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateAttachment(Connection conn, Attachment newFile)  throws Exception{
+		int result = 0;
+		String query = prop.getProperty("updateAttachment");
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, newFile.getFilePath());
+			pstmt.setString(2, newFile.getFileName());
+			pstmt.setInt(3, newFile.getFileNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
 	
 	
 	

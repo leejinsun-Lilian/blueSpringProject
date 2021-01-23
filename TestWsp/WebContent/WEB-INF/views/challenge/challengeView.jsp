@@ -19,7 +19,16 @@
 			<h2 style="margin-bottom: 0;">챌린지</h2> 
 			<!-- 회원이고 / 글 작성자가 아니고 / 참여하고 있는 회원이 아니라면 -->   <!-- 참여하고있는 회원이 아니라면  -->
 			<c:if test="${!empty loginMember && (challenge.memberId != loginMember.memberId ) }">
-				<button id="joinBtn" class="btn">참여하기</button>
+				<c:choose>
+					<c:when test="${check == 0}">
+						<button id="joinBtn" class="btn">참여하기</button>
+					</c:when>
+					
+					<c:otherwise>
+						<button onclick="location.href ='${contextPath}/challengeCrtfd/insertForm.do' "  class="btn bbtn" >인증글쓰기</button>
+					</c:otherwise>
+				</c:choose>
+				
 			</c:if>
 		</div>
 		<!-- 참여하고 있는 회원이라면   !! 인증글 작성하러 가기 버튼!!!!!!! 그 쪽으로 연결!-->
@@ -28,7 +37,6 @@
 		
 		
 		
-		<!-- <div id="hidden">으악...진짜 졸려</div> -->
 		
 		<hr style="margin-top:  15px;">
 
@@ -175,7 +183,7 @@
 	/* 조인 버튼 눌렀을 때  */  
 	$("#joinBtn").on("click", function(){
 		if(window.confirm("해당 챌린지에 참여하시겠습니까?")){
-			location.href = "join.do?chlngNo=${challenge.chlngNo}&memberNo=${loginMember.memberNo}";
+			location.href = "join.do?chlngNo=${challenge.chlngNo}&memberNo=${loginMember.memberNo}&cp=${param.cp}";
 		}
 	})
 	
