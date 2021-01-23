@@ -65,7 +65,7 @@
 	margin-right: 16px;
 }
 #fileArea{
-	
+	display: none;
 }
 
 /* 인증 방법 */

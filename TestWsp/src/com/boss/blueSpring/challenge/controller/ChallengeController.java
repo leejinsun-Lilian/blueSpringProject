@@ -22,6 +22,7 @@ import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 import com.boss.blueSpring.common.MyFileRenamePolicy;
 import com.boss.blueSpring.member.model.vo.Member;
+import com.boss.blueSpring.notice.model.vo.Notice;
 import com.oreilly.servlet.MultipartRequest;
 
 @WebServlet("/challenge/*")
@@ -37,13 +38,15 @@ public class ChallengeController extends HttpServlet {
 		RequestDispatcher view = null;
 		
 		String errorMsg = null;
-		
+		String swalIcon = null;
+		String swalTitle = null;
+		String swalText = null;
 		try {
 			ChallengeService service = new ChallengeService();
 			
 			String cp = request.getParameter("cp");
 			
-	 
+			
 			//챌린지 목록 페이지 이동 **********************************************************
 			if(command.equals("/list.do")) {
 				
@@ -93,7 +96,8 @@ public class ChallengeController extends HttpServlet {
 				//좋아요 목록 담기 위한 리스트
 				Like likeInfo = service.selectLike(challengeNo, memberNo);
 				
-				// 챌린지 참여자 정보 가져오기
+				// 챌린지 참여 여부 확인
+				int check = service.check(challengeNo, memberNo);
 				
 				
 				// 이미지 파일 조회 부분
@@ -106,6 +110,7 @@ public class ChallengeController extends HttpServlet {
 				path="/WEB-INF/views/challenge/challengeView.jsp";
 				request.setAttribute("challenge", challenge);
 				request.setAttribute("likeInfo", likeInfo);
+				request.setAttribute("check", check);
 				view = request.getRequestDispatcher(path);
 				view.forward(request, response);
 			}
@@ -215,9 +220,117 @@ public class ChallengeController extends HttpServlet {
 			}
 			
 			
-			// 챌린지 수정 폼
+			// 챌린지 수정 폼****************************************************
+			else if(command.equals("/updateForm.do")) {
+				errorMsg = "챌린지 수정 이동 과정에서 오류 발생";
+				
+				int chlngNo = Integer.parseInt(request.getParameter("no"));
+				
+				Challenge challenge = service.updateView(chlngNo);
+				
+				// 업데이트 화면 출력용 게시글 조회가 성공한 경우
+				if(challenge != null) {
+					// 해당 게시글에 작성된 이미지(파일) 목록 정보 조회
+					List<Attachment> fList = service.selectChallengeFiles(chlngNo);
+					
+					if(!fList.isEmpty()) {  // 조회됐다면
+						request.setAttribute("fList", fList);
+					}
+					request.setAttribute("challenge", challenge);
+					path = "/WEB-INF/views/challenge/challengeUpdate.jsp";
+					view = request.getRequestDispatcher(path);
+					view.forward(request, response);
+				
+				} else {
+					
+					response.sendRedirect(request.getHeader("referer"));
+					//  상세 조회 -> 수정 화면
+				}
+			}
 			
 			// 챌린지 수정
+			else if(command.equals("/update.do")) {
+				errorMsg = "챌린지 수정 과정에서 오류 발생";
+				
+				int maxSize = 20 * 1024 * 1024; // 20MB == 20 * 1024KB == 20 * 1024 * 1024Byte
+				String root = request.getSession().getServletContext().getRealPath("/");
+				String filePath = root + "resources/uploadImages/challenge/";
+				
+				
+				MultipartRequest multiRequest 
+				= new MultipartRequest(request, filePath, maxSize, "UTF-8", new MyFileRenamePolicy());
+		
+				int cureentPage = Integer.parseInt(multiRequest.getParameter("cp"));
+				
+				int chlngNo = Integer.parseInt(multiRequest.getParameter("no"));
+				String chlngTitle = multiRequest.getParameter("chlngTitle");
+				String chlngContent = multiRequest.getParameter("chlngContent");
+				String chlngStartDt = multiRequest.getParameter("strDt");         
+				String chlngEndDt = multiRequest.getParameter("endDt");          
+				String chlngCateNm = multiRequest.getParameter("cate");
+				
+				
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("chlngNo", chlngNo);
+				map.put("chlngTitle", chlngTitle);
+				map.put("chlngContent", chlngContent);
+				map.put("chlngStartDt", chlngStartDt);
+				map.put("chlngEndDt", chlngEndDt);
+				map.put("chlngCateNm", chlngCateNm);
+				
+				System.out.println(map);
+				
+				List<Attachment> fList = new ArrayList<Attachment>();
+				
+				Enumeration<String> files = multiRequest.getFileNames();
+				
+				while(files.hasMoreElements()) { // 다음 요소가 있다면
+					String name = files.nextElement(); //img0
+					
+					if(multiRequest.getFilesystemName(name) != null) {
+						Attachment temp = new Attachment();
+						
+						temp.setFileName(multiRequest.getFilesystemName(name));
+						temp.setFilePath(filePath);
+						
+						// name 속성에 따라 fileLevel 지정
+						int fileLevel = 0;
+						switch(name) {
+						case "img0" : fileLevel = 0; break;
+						case "img1" : fileLevel = 1; break;
+						case "img2" : fileLevel = 2; break;
+						}
+						
+						temp.setFileLevel(fileLevel);
+						
+						// cList에 추가
+						fList.add(temp);
+					}
+				} // end while
+				
+				map.put("fList", fList);
+	
+				
+				int result = service.updatetChallenge(map);
+				
+				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
+					swalIcon = "success";
+					swalTitle = "챌린지 수정 성공";
+					path = "view.do?cp=" + cp + "&no=" + chlngNo;
+				}
+					else {
+					swalIcon = "error";
+					swalTitle = "챌린지 수정 실패";
+					path = "list.do";
+		}
+	//			request.getSession().setAttribute("swalIcon", swalIcon);
+	//			request.getSession().setAttribute("swalTitle", swalTitle);
+	//			System.out.println("path : " + path);
+				
+				response.sendRedirect(path);
+				
+			}
+			
 			
 			// 챌린지 삭제 ****************************************************
 			else if(command.equals("/delete.do")) {
@@ -259,23 +372,23 @@ public class ChallengeController extends HttpServlet {
 				int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 			
 				int join = service.join(chlngNo, memberNo);
-				//System.out.println(joinFlag);
+				//System.out.println(join);
+				
 				
 				if(join > 0) { 
-//					swalIcon = "success";
-//					swalTitle = "챌린지 참여 되었습니다.";
-					path = "view.do";				
+					swalIcon = "success";
+					swalTitle = "챌린지 참여 되었습니다.";
+					//path = "view.do?cp="+ cp + "&no=" + chlngNo;				
+					path = request.getHeader("referer");
 				} else { 					
-//					swalIcon = "error";
-//					swalTitle = "챌린지 참여 실패";
+					swalIcon = "error";
+					swalTitle = "챌린지 참여 실패";
 					path = request.getHeader("referer");
 				}
 				
-				path="/WEB-INF/views/challenge/challengeView.jsp";
-				
-//				view = request.getRequestDispatcher(path);
-//				
-//				view.forward(request, response);
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
+				response.sendRedirect(path);
 			
 				
 			}

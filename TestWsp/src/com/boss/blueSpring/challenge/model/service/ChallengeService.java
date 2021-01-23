@@ -1,9 +1,13 @@
 package com.boss.blueSpring.challenge.model.service;
 
-import static com.boss.blueSpring.common.JDBCTemplate.*;
+import static com.boss.blueSpring.common.JDBCTemplate.close;
+import static com.boss.blueSpring.common.JDBCTemplate.commit;
+import static com.boss.blueSpring.common.JDBCTemplate.getConnection;
+import static com.boss.blueSpring.common.JDBCTemplate.rollback;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +17,7 @@ import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challenge.model.vo.Like;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
+import com.boss.blueSpring.notice.model.vo.Notice;
 
 
 public class ChallengeService {
@@ -148,9 +153,9 @@ public class ChallengeService {
 				
 				// 4. 게시글 부분(제목, 내용, 카테고리)만 challenge 테이블에 삽입하는 DAO 호출
 				result = dao.insertChallenge(conn, map);
-				System.out.println("r : " + result);
+				//System.out.println("r : " + result);
 				// 5. 파일 정보 부분만 ATTACHMENT 테이블에 삽입하는 DAO 호출
-				List<Attachment> cList = (List<Attachment>)map.get("cList");
+				List<Attachment> cList = (List<Attachment>)map.get("fList");
 				
 				// 게시글 부분 삽입 성공 && 파일 정보가 있을 경우
 				if(result > 0 && !cList.isEmpty()) {
@@ -180,8 +185,8 @@ public class ChallengeService {
 				// 4,5번에 대한 추가 작업
 				// 게시글 또는 파일 정보 삽입 중 에러 발생 시 
 				// 서버에 저장된 파일을 삭제하는 작업이 필요.
-				System.out.println("c : " + result);
-				List<Attachment> cList = (List<Attachment>)map.get("cList");
+				//System.out.println("c : " + result);
+				List<Attachment> cList = (List<Attachment>)map.get("fList");
 				
 				if(!cList.isEmpty()) {
 					for(Attachment at : cList) {
@@ -337,6 +342,168 @@ public class ChallengeService {
 		close(conn);
 		
 		return join;
+	}
+
+	/** 챌린지 참여 여부
+	 * @param challengeNo
+	 * @param memberNo
+	 * @return check
+	 * @throws Exception
+	 */
+	public int check(int challengeNo, int memberNo) throws Exception{
+		Connection conn = getConnection();
+		
+		int check = 0;
+		
+		check = dao.check(conn, challengeNo, memberNo);
+		
+		close(conn);
+				
+		return check;
+	}
+
+	/** 챌린지 수정 화면 출력용
+	 * @param chlngNo
+	 * @return challenge
+	 */
+	public Challenge updateView(int chlngNo) throws Exception {
+
+		Connection conn = getConnection();
+		
+		// 이전에 만들어둔 상세조회 DAO 호출
+		Challenge challenge = dao.selectChallenge(conn, chlngNo);
+		
+		// textarea 출력을 위한 개행문자 변경
+		challenge.setChlngContent(challenge.getChlngContent().replaceAll("<br>", "\r\n"));
+		
+		close(conn);
+		
+		return challenge;
+	}
+
+	/** 게시글 수
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	public int updatetChallenge(Map<String, Object> map) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = 0;
+		// 삭제할 파일 정보를 모아둘 List 변수 선언
+		List<Attachment> deleteFiles = null;
+					
+					
+		// 크로스 사이트 스크립팅 방지 처리
+		map.put("chlngTitle", replaceParameter((String)map.get("chlngTitle")));
+		map.put("chlngContent", replaceParameter((String)map.get("chlngContent")));
+		
+		// 개행문자 변경 처리
+		map.put("chlngContent", ((String)map.get("chlngContent")).replaceAll("\r\n", "<br>") );
+		
+		try {
+			result = dao.updateChallenge(conn, map);
+			
+			// DB에서 파일 정보 수정 
+			// 게시글 수정 성공 + fList가 비어있지 않은 경우
+			List<Attachment> newFileList =  (List<Attachment>)map.get("fList");
+			
+			if(result > 0 && !newFileList.isEmpty()) { // 게시글 수정 성공 시
+				
+				// 삭제할 파일 정보를 모아둘 List 객체 생성
+				deleteFiles = new ArrayList<Attachment>();
+				
+				// DB에서 이전 파일 목록을 조회해옴
+				// selectBoardFiles() 수행 시 DB 에서 FILE_PATH도 조회할 수 있도록 수정 필요함!!!!!!!!!!
+				List<Attachment> oldFileList = dao.selectChallengeFiles(conn, (int)map.get("chlngNo"));
+				
+				
+				result = 0; // result 재활용을 위해 0 저장
+				
+				// 새 이미지 목록 반복 접근 
+				for(Attachment newFile : newFileList) {
+					newFile.setParentChNo((int)map.get("chlngNo"));
+					boolean flag = true;
+					
+					// 이전 이미지 목록 반복 접근
+					for(Attachment oldFile : oldFileList) {
+						
+						if(newFile.getFileLevel() == oldFile.getFileLevel()) {
+							
+							flag = false; // 수정 작업을 진행할 수 있도록 flag 값을 false로 변환
+							
+							deleteFiles.add(oldFile); // 삭제할 파일 목록에 oldfile 정보 추가
+							
+							// 새 이미지 정보에 이전 파일번호를 추가 -> 파일 번호를 통해 수정 진행
+							newFile.setFileNo(oldFile.getFileNo());
+							
+							break;
+						}
+						
+					}
+					
+					
+					// 새 이미지의 파일레벨과 이전 이미지 중 파일레벨이 같은 것이 없을 경우 -> 삽입
+					// 새 이미지의 파일레벨과 이전 이미지 중 파일레벨이 같은 것이 있을 경우 -> 수정
+					if(flag) {
+						result = dao.insertAttachment(conn, newFile);
+					}else {
+						result = dao.updateAttachment(conn, newFile);
+					}
+					
+					
+					
+					// 삽입 또는 수정 중 한번이라도 실패 시 break
+					if(result == 0 ) {
+						// 강제로 예외 발생
+						throw new FileInsertFailedException("파일 정보 삽입 실패");
+					}
+					
+				}
+			}
+			
+		}catch (Exception e) {
+			// 파일 시스템에 저장된 이름으로 파일 객체 생성함
+			for(Attachment at : (List<Attachment>)map.get("fList")) {
+				String filePath = at.getFilePath();
+				String fileName = at.getFileName();
+				File failedFile = new File(filePath + fileName);
+				
+				if(failedFile.exists()) {
+					failedFile.delete();
+				}
+			}
+			
+			throw e;
+		}	
+		
+		
+		// 트랜잭션 처리
+		if(result > 0) {
+			commit(conn);
+			
+			
+			if(deleteFiles != null) {
+			
+				// 서버에 저장된 파일 중 수정되서 DB에 정보가 남지 않은 파일을 삭제
+				for(Attachment at : deleteFiles) {
+					System.out.println(at);
+					String savePath = at.getFilePath();
+					String saveFile = at.getFileName();
+					File failedFile = new File(savePath + saveFile);
+	
+					if(failedFile.exists()) {
+						failedFile.delete();
+					}
+				}	
+			}
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+			
+		return result;
 	}
 
 	

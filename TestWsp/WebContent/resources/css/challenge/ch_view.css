@@ -98,6 +98,11 @@ h2 {
  	display: inline-block;
  	float: right;
 }
+
+.bbtn{
+	font-size: 11px;
+}
+
 .btn:hover{
 	cursor: pointer;
 }
