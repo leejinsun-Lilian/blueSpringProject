@@ -30,8 +30,8 @@ public class MainController extends HttpServlet {
 		try {
 			MainService service = new MainService();
 			
-			// 메인 공지사항(정부정책) 조회 Controller ****************************************
-			errorMsg = "메인 공지사항 페이지 조회 중 오류 발생.";
+			// 메인 조회 Controller ****************************************
+			errorMsg = "메인 페이지 게시판 목록 조회 중 오류 발생.";
 			
 			List<Notice> nList = service.selectMainNotice();
 			List<Board> bList = service.selectMainBoard();
