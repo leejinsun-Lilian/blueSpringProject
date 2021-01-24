@@ -350,6 +350,19 @@ public class MypageController extends HttpServlet {
 		         session.setAttribute("swalTitle", swalTitle);
 			}
 			
+			
+			else if(command.equals("/progressBar.do")) {
+				int memNo = Integer.parseInt( request.getParameter("memNo"));
+				int challengeNo = Integer.parseInt( request.getParameter("challengeNo"));
+				
+				int result = mService.progressBar(memNo, challengeNo);
+				
+				if(result >= 0) {
+					response.getWriter().print(result);
+				}
+			}
+			
+			
 		}catch (Exception e) {
 	         e.printStackTrace();
 	         path = "/WEB-INF/views/common/errorPage.jsp";

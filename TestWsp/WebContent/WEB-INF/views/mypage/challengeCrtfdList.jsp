@@ -16,13 +16,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
-/* ****************************************************************** */
-
 /* 페이지 번호 목록 */
-.page-no-area{
+ .page-no-area{
    width: 100%;
-   height: 60px;
-   margin-top : 20px;
+   height: 45px;
+   margin-top : 43px;
 }
 
 .page-no-area ul{  /* 중앙에 두는 방법 */
@@ -32,7 +30,6 @@
     text-align: center;
 }
 .page-no-area ul li{
-    border : 1px solid gray;
    width : 7%;
    height : 100%;
     display: inline-block;
@@ -44,15 +41,21 @@
    width : 100%;
    height : 100%;
     text-decoration: none;
-    font-size: 30px;
-    color: #3498db;
+    font-size: 20px;
+    color: black;
     line-height: 50px;
     display: block;
 }
 .page-no-area  a:hover{
    color : #283e69;
-   background-color : #dee2e6; 
+   border-bottom: 1px solid rgb(249 155 67);
+   transition : .35s ease color;
 }
+
+.page-no-area a:before{
+ transition: .35s ease left;}
+
+
 </style>
 </head>
 <body>
@@ -76,8 +79,10 @@
 				<c:choose>
                     <c:when test="${empty bList}"> 
                         <tr>
-                            <td colspan="4" class="none">존재하는 게시글이 없습니다.</td>
+                            <td colspan="5" class="none">존재하는 게시글이 없습니다. </td>
+                            
                         </tr>
+
                     </c:when>
 						  
                     <c:otherwise>                      
@@ -121,8 +126,10 @@
 		<c:set var="nextPage" value="${pageUrl}?cp=${next}${searchStr}" />
 			
 
-                <div class="page-no-area">
+		<div class="page-no-area">
 			<ul>
+			
+			
 			
 				<c:if test="${pInfo.currentPage > 10}">
 					<li><a href="${firstPage}">&lt;&lt;</a></li>
@@ -151,6 +158,11 @@
 				
 			</ul>
         </div>
+				
+        
+        
+        
+        
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp"></jsp:include>
@@ -161,19 +173,13 @@
 			// 게시글 상세보기 기능 (jquery를 통해 작업)		
 			$("#board td").on("click", function() {
 				// 게시글 번호 얻어오기
+
 				var boardNo = $(this).parent().children().eq(0).text();
 
 				var url = "${contextPath}/challengeCrtfd/list.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
-				// var url = "${contextPath}/board/view.do?cp=${pInfo.currentPage}&no=" + boardNo + "${searchStr}";
 				location.href = url;
+
 			});
-			
-			$("#board td").hover(function() {
-                   $(this).parent().css("backgroundColor", "lightgray");
-               }, function(){
-                   $(this).parent().css("backgroundColor", "white");
-               });
-			
     </script>
 
 </body>

@@ -477,10 +477,13 @@ $("#changeNickName").on("input", function(){
 					$("#nickNameMsg").text("");
 					$("#changeNickName").css("border", "1px solid #8cb0f7");
 					updateCheck.nickname2 = true;
-				}else{
+				} else{
+					if(value == saveNickname){
+					updateCheck.nickname2 = true;
+					}
 					$("#nickNameMsg").text("이미 사용 중인 닉네임입니다.").css("color", "red");
 					$("#changeNickName").css("border", "1px solid red");
-					updateCheck.nickname2 = true;
+					updateCheck.nickname2 = false;
 				}
 			}
 			
@@ -515,7 +518,7 @@ function memberUpdateValidate(){
 	
     for(var key in updateCheck){
         if(updateCheck[key] == false){
-            swal("일부 값이 유효하지 않습니다.");
+            swal(key + " 값이 유효하지 않습니다.");
             return false;
         }
     }
