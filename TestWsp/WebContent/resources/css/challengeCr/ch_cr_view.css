@@ -98,6 +98,13 @@
 	cursor: pointer;
 }
 
+/* 파일 출력 부분  */
+.d-block{
+	max-width: 400px;
+	max-height: 800px;
+}
+
+
 
 
 

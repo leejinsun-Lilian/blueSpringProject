@@ -19,7 +19,7 @@
 		
 		
 		<form action="${contextPath}/challenge/insert.do" method="post" 
-			enctype="multipart/form-data" role="form" onsubmit="return noticeValidate();">
+			enctype="multipart/form-data" role="form" onsubmit="return challengeValidate();">
 			<!-- 개설 정보 입력 -->
 			<div class="input">
 				<label class="input-area">제목</label>
@@ -101,7 +101,7 @@
     
     <script>
     // 유효성 검사
-    function noticeValidate() {
+    function challengeValidate() {
 		if ($("#challengeTitle").val().trim().length == 0) {
 			alert("제목을 입력해 주세요.");
 			$("#challengeTitle").focus();

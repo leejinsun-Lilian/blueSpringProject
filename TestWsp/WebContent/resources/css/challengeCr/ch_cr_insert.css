@@ -13,6 +13,14 @@
 .input-area{
 	margin-right: 18px;
 }
+.title-area{
+	margin-right: 28px;
+}
+.input-title{
+	width: 80%;
+	border:1px solid #cbcbcb;
+}
+
 .input{
 	width: 92%;
 	padding-left: 20px;

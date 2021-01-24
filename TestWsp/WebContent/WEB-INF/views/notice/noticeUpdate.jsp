@@ -64,10 +64,7 @@
 				
 					<div>내용</div>
 
-					<textarea class="form-control" id="noticeContent" name="noticeContent" rows="15" style="resize: none;">
-
-					${notice.noticeContent }
-					</textarea>
+					<textarea class="form-control" id="noticeContent" name="noticeContent" rows="15" style="resize: none;">${notice.noticeContent}</textarea>
 		
 		
 				</div>
