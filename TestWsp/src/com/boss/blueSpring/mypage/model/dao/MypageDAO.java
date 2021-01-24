@@ -629,7 +629,7 @@ public class MypageDAO {
 	 * @return thumbnail
 	 * @throws Exception
 	 */
-	public Attachment nowThumbnail(Connection conn, String memId) throws Exception {
+	public Attachment nowThumbnail(Connection conn, int challengeNo) throws Exception {
 		Attachment thumbnail = null;
 		
 		String query = prop.getProperty("nowThumbnail");
@@ -637,7 +637,7 @@ public class MypageDAO {
 		try {
 
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memId);
+			pstmt.setInt(1, challengeNo);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {

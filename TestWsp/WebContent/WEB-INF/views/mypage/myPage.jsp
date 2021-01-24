@@ -192,7 +192,7 @@ margin : auto;}
 									<div id="cThumbnail_area">
 										<c:set var="img"
 											value="${contextPath}/resources/img/basicImg.JPG" />
-										<c:if test="${thumbnail != null}">
+																	<c:if test="${thumbnail != null}">
 											<c:if test="${nc.chlngNo == thumbnail.parentChNo}">
 												<c:set var="img"
 													value="${contextPath}/resources/uploadImages/challenge/${thumbnail.fileName}" />
@@ -213,7 +213,7 @@ margin : auto;}
 								<td class="progress_area">
 									<h5>달성률</h5>
 								<div class="progress">
-									<div class="progress-done" id="progressV" data-done="50">
+									<div class="progress-done" id="progressV">
 												
 										</div>
 									</div>
@@ -306,7 +306,7 @@ margin : auto;}
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="ac" items="${acList}">
-											<tr id="b-${ac.CHLNG_BRD_NO}">
+											<tr id="b-${ac.chlngBoardNo}">
 												<th scope="row">[${ac.chlngCateNm}]</th>
 												<td  colspan="3" width="65">${ac.chlngBoardTitle}</td>
 											</tr>
@@ -341,11 +341,13 @@ margin : auto;}
 					"memNo" : memNo},
 			type : "post",
 			success : function(result){
+				result = 60;
 				if(result < 10 ){
 					$("#progressV").attr("data-done", result);
 				} else {
 					$("#progressV").attr("data-done", result).text(result + '%')
 				}
+			
 				const progress = document.querySelector('.progress-done');
 
 				progress.style.width = progress.getAttribute('data-done') + '%';

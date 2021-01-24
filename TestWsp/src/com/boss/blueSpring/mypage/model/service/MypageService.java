@@ -295,9 +295,9 @@ public class MypageService {
 	 * @return thumbnail
 	 * @throws Exception
 	 */
-	public Attachment nowThumbnail(String memId) throws Exception {
+	public Attachment nowThumbnail(int challengeNo) throws Exception {
 		Connection conn = getConnection();
-		Attachment thumbnail = dao.nowThumbnail(conn, memId);
+		Attachment thumbnail = dao.nowThumbnail(conn, challengeNo);
 		close(conn);
 		return thumbnail;
 	}

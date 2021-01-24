@@ -65,9 +65,10 @@ public class MypageController extends HttpServlet {
 				// mypage 현재 참여중인 챌린지
 		
 				Challenge nc = mService.nowChallenge(memId);
-					
+				
 				if(nc != null) {
-					Attachment thumbnail = mService.nowThumbnail(memId);
+					int challengeNo = nc.getChlngNo();
+					Attachment thumbnail = mService.nowThumbnail(challengeNo);
 					
 					if(thumbnail != null) {
 						session.setAttribute("thumbnail", thumbnail);
