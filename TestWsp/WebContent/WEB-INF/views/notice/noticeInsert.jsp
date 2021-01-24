@@ -67,7 +67,7 @@
 			<!-- 목록, 완료 버튼 -->
 			<div class="text-center">
 				<button type="submit" class="btn">완료</button>
-				<button type="button" class="btn" onclick="location.href='noticeList.jsp'">목록</button>
+				<button type="button" class="btn" onclick="location.href='${header.referer}'">목록</button>
 			</div>
 		
 		</form>

@@ -88,7 +88,7 @@
 									<c:if test="${challenge.chlngNo == file.parentChNo}">
 											<img src="${contextPath}/resources/uploadImages/challenge/${file.fileName}">
 									</c:if>
-										
+									
 								</c:forEach>
 							</div>
 							

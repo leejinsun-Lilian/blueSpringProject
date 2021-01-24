@@ -2,7 +2,7 @@
 
 .wrapper{
     width: 70%;
-    max-height: 920px;
+    max-height: 1000px;
     min-height: 300px;
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto;
@@ -57,7 +57,7 @@
 /* 참가 소감 작성 */
 .introduce{
 	width: 100%;
-	height: 200px;
+	height: 100px;
 	margin-top: 15px;
 	margin-bottom: 35px;
 }

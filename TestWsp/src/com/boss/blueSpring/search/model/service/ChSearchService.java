@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 import com.boss.blueSpring.search.model.dao.ChSearchDAO;
@@ -143,6 +144,19 @@ public class ChSearchService {
 		return list;
 	}
 
+
+
+
+	public List<Attachment> selectThumbFiles(PageInfo pInfo) throws Exception{
+	Connection conn = getConnection();
+		
+		List<Attachment> fmList = dao.selectThumbFiles(conn, pInfo);
+		
+		close(conn);
+		
+		return fmList;
+	
+	}
 
 
 	
