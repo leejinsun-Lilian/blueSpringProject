@@ -12,6 +12,14 @@ public class Attachment {
 
 	
 	
+	public Attachment(String fileName, int parentChNo) {
+		super();
+		this.fileName = fileName;
+		this.parentChNo = parentChNo;
+	}
+
+
+
 	public Attachment(int fileNo, String fileName, int fileLevel) {
 		super();
 		this.fileNo = fileNo;

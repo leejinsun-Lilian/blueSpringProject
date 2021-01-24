@@ -17,6 +17,32 @@
 .container{
 	padding : 93px 0 310px;
 }
+
+#findCNum{
+	margin-top : 9px;
+	margin-left : 103px;
+}
+
+
+#findEmail_btn{
+	margin-left : 10px;
+	width : 96px;
+	height : 42px;
+	background-color : rgb(241, 135, 35);
+}
+
+.back {
+background-color: #fbf9f9;
+padding : 40px 50px 50px 50px;
+margin : auto;
+width : 600px;
+}
+
+.text_area{
+	margin : auto;
+	width : 700px;
+	text-align: center;
+}
 </style>
 
 
@@ -26,7 +52,7 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form method="post" name="pwFind" action="${contextPath}/member/changePw.do">
+				<form method="post" name="pwFind" action="${contextPath}/member/changePw.do" onsubmit="return validate();">
 					<div class="findForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
@@ -37,14 +63,14 @@
 							<div class="input_area">
 								<div class="row_group">
 									<div class="text">아이디</div> 
-									<input type="text" name="id" class="find_input" required>
+									<input type="text" id="id" name="id" class="find_input" required>
 								</div>
 								<div class="row_group">
 									<div class="text">이메일 주소</div> 
-									<input type="email" name="email" class="find_input" required>
-<!-- 									<button type="button" class="btn" id="emailNumBtn">인증번호 받기</button>
-									<input type="text" name="emailNum" class="find_input" id="emailNum"
-										placeholder="인증번호를 입력해주세요." required> -->
+									<input type="email" id="email" name="email" class="find_input" required>
+								<button type="button" class="btn" id="findEmail_btn">인증번호 받기</button>
+									<input type="text" name="findCNum" class="find_input" id="findCNum"
+										placeholder="인증번호를 입력해주세요." autocomplete="off" required>
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">
@@ -57,7 +83,67 @@
 				</form>
 			</div>
 		</div>
+
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 	</div>
+	
+	
+	<script>
+
+	var sendKey; 
+	var eCheck = true;
+	function validate(){
+			$.ajax({
+				url : "test2.do",
+				data : {email : $("#email").val(),
+						id : $("#id").val()},
+				type : "post",
+				async : false,
+				success : function(result){
+					eCheck = true;
+				}, error : function(){
+					eCheck = false;
+					console.log("error");
+				}
+		});
+	}
+	
+	$("#findEmail_btn").on("click", function(){
+		
+
+	$.ajax({
+		url : "../sendMail",
+		data : {toEmail : $("#email").val()},
+		type : "post",
+		async : false,
+		success : function(result){
+			if(eCheck && result != undefined){
+				swal({icon : "success", title : "이메일이 전송되었습니다.", text : $("#email").val() + " 에서 확인해주세요."});
+				sendKey = result;
+			}else{
+				swal({icon : "error", title : "이메일 전송 실패", text : "이메일을 다시 확인해주세요."});
+			}
+		}
+		, error : function(){
+			swal({icon : "error", title : "이메일 전송 실패", text : "이메일을 다시 확인해주세요."});
+			console.log("error");
+		}
+		});
+	});
+
+	var check = true;
+	$("#findCNum").on("input",function(){
+		
+		var inputKey = $("#findCNum").val();
+		if(sendKey == inputKey){
+			check = true;
+			$("#findCNum").css("border", "1px solid #8cb0f7");
+		}else{
+			check = false;
+			$("#findCNum").css("border", "1px solid red");
+		}
+		request.setAttribute("check", check);
+	});
+	</script>
 </body>
 </html>

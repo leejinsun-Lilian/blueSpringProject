@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,9 +78,15 @@
 					
 					<c:otherwise>
  						<c:forEach var="comment" items="${cList}">
+ 						
 								<tr>
 									<td>${comment.parentBoardNo}</td>
-									<td>${comment.comContent}</td>
+											<td>
+											<c:set var="content" value="${comment.comContent}"/>
+											<c:if test="${fn:indexOf(content, '<br>') != -1}" >
+												<c:set var="content" value ="${fn:split(content,'<br>')[0] }"/>
+											</c:if>
+											${content }</td>
 									<td>${comment.comCreateDate}</td>
 								</tr>
 							</c:forEach> 

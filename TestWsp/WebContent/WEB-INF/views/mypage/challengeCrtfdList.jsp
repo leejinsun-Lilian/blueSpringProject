@@ -64,13 +64,13 @@
 			<div class="content">
 				<h3>인증 게시글 조회</h3>
 				<div class="list-wrapper">
-					<table class="table" id="list-table">
+					<table class="table" id="board">
 							<tr>
 								<th>번호</th>
 								<th>카테고리</th>
 								<th>제목</th>
-								<th>조회수</th>
 								<th>작성일</th>
+								<th>조회수</th>
 							</tr>
 
 				<c:choose>

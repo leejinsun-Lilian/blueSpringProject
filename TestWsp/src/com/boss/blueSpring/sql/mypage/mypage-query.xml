@@ -148,9 +148,20 @@ WHERE RNUM BETWEEN 1 AND 5
 <entry key="nowChallenge">
 SELECT ROWNUM RNUM, V.* FROM V_CHLNG_MISSION_LIST V
 WHERE CHLNG_FL = 'N'
-AND MEM_ID = ? AND ROWNUM = 1;
+AND MEM_ID = ? AND ROWNUM = 1
 </entry>
 
-
+<entry key="nowThumbnail">
+SELECT * 
+FROM CHALLENGE_MISSION_IMG
+WHERE CHLNG_NO
+    IN (SELECT CHLNG_NO FROM
+            (SELECT ROWNUM RNUM, V.* FROM
+                ( SELECT CHLNG_NO FROM V_CHLNG_MISSION_LIST
+                WHERE CHLNG_FL = 'N' AND MEM_ID = ?
+                ORDER BY CHLNG_NO DESC) V)
+    WHERE RNUM = 1)
+AND FILE_LEVEL = 0
+</entry>
 
 </properties>
