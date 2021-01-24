@@ -171,9 +171,6 @@ margin : auto;}
 
 
 
-
-
-
 				<!-- 챌린지 -->
 				<div class="chanllenge_in_progress_area area">
 					<h3>참여중인 챌린지</h3>
@@ -380,7 +377,7 @@ margin : auto;}
 			var id = $(this).parent().attr("id");
 			var challengeCrtfdNo = id.substring(id.lastIndexOf("-") + 1);
 			
-			location.href = "challengeCrtfd/view.do?cp=1&no="+challengeCrtfdNo;
+			
 		});
 		
 		

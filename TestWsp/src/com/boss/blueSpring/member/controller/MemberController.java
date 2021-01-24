@@ -281,44 +281,56 @@ public class MemberController extends HttpServlet {
 			}
 			
 			
-			else if(command.equals("/test2.do")) {
+			
+			//  ****************************************************************** 새로운 비밀번호 설정  ******************************************************************
+			else if(command.equals("/idEmaliChk.do")) {
 				errorMsg = "비밀번호 찾기 과정에서 오류가 발생했습니다.";
-
 				String id = request.getParameter("id");
 				String email = request.getParameter("email");
 
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("id", id);
 				map.put("email", email);
-				int result = mService.pwFind(map);
-				response.getWriter().print(result);
 				
+				System.out.println(id);
+				System.out.println(email);
+				int result = mService.pwFind(map);
+				
+			//	request.setAttribute("memNO", result);
+				System.out.println(result);
+				response.getWriter().print(result);
 			}
-			
-			//  ****************************************************************** 새로운 비밀번호 설정  ******************************************************************
-			
 			else if (command.equals("/changePw.do")) {
 				errorMsg = "비밀번호 찾기 과정에서 오류가 발생했습니다.";
-
-				String falg = (String)request.getAttribute("check");
 				
-				System.out.println(falg);
-				/*if (result > 0) {
-					session.setAttribute("memNo", result);
+
+				
+				
+				HttpSession session = request.getSession();
+
+				String check = request.getParameter("ck");
+				int nm = Integer.parseInt(request.getParameter("mN"));
+				System.out.println(check);
+				System.out.println(nm);
+				if (check.equals("true")) {
+					
+
+					session.setAttribute("memNo", nm);
+					
 					path = "/WEB-INF/views/common/newPwForm.jsp";
 
 					view = request.getRequestDispatcher(path);
 					view.forward(request, response);
 				} else {
+
 					swalIcon = "error";
 					swalTitle = "비밀번호 찾기 실패";
 					swalText = "아이디와 이메일을 다시 확인해주세요.";
 					session.setAttribute("swalIcon", swalIcon);
 					session.setAttribute("swalTitle", swalTitle);
 					session.setAttribute("swalText", swalText);
-*/
-					response.sendRedirect(request.getHeader("referer"));
-//				}
+				
+				}
 
 			}
 			
