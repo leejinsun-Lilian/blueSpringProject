@@ -381,7 +381,7 @@ public class ChallengeService {
 		return challenge;
 	}
 
-	/** 게시글 수
+	/** 게시글 수정
 	 * @param map
 	 * @return
 	 * @throws Exception

@@ -2,8 +2,8 @@
 
 .wrapper{
     width: 70%;
-    height: 800px;
-
+    max-height: 920px;
+    min-height: 300px;
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto;
 }
@@ -97,6 +97,13 @@
 	background-color: #e5e5e5;
 	cursor: pointer;
 }
+
+/* 파일 출력 부분  */
+.d-block{
+	max-width: 400px;
+	max-height: 800px;
+}
+
 
 
 
