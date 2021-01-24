@@ -139,7 +139,11 @@
 				<c:set var="searchStr" value="&cn=${param.cn}"/>
 			</c:when> --%>
 			<%-- 정렬  --%>
-			
+			<%-- 카테고리 선택 후 생성된 페이지일 경우 --%>
+			<c:when test="${!empty param.cn}">
+				<c:url var="pageUrl" value="/challengeCategorySearch.do"/>
+				<c:set var="searchStr" value="&cn=${param.cn}" />
+			</c:when>
 			
 			<c:otherwise>
 				<c:url var="pageUrl" value="/challenge/list.do"/>
