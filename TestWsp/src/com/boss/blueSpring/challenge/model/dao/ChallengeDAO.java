@@ -211,8 +211,6 @@ public class ChallengeDAO {
 			pstmt.setString(5, (String)map.get("chlngEndDt"));
 			pstmt.setInt(6, (int)map.get("chlngeWriter"));    // 글을 작성한 멤버 번호가 들어가있음
 			pstmt.setInt(7, (int)map.get("chlngCateNo"));
-			
-			
 			result = pstmt.executeUpdate();
 			
 		} finally {

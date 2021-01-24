@@ -52,7 +52,7 @@ width : 600px;
 	<jsp:include page="../common/header.jsp"></jsp:include>
 		<div class="container">
 			<div class="content">
-				<form method="post" name="pwFind" action="${contextPath}/member/changePw.do" onsubmit="return validate();">
+				<form method="post" name="pwFind" action="${contextPath}/member/changePw.do" onsubmit="return pwdValidate();">
 					<div class="findForm">
 						<div class="text_area">
 							<h1>푸른봄</h1>
@@ -74,7 +74,7 @@ width : 600px;
 								</div>
 								<div class="row_group">
 									<div class="nextBtn_area">
-										<button type="submit" class="btn" id="nextBtn">다음</button>
+										<button type="button" class="btn" id="nextBtn">다음</button>
 									</div>
 								</div>
 								</div>
@@ -92,25 +92,45 @@ width : 600px;
 
 	var sendKey; 
 	var eCheck = true;
-	function validate(){
+	var numCheck = null;
+	var mN = null;
+	
+	$("#email, #id").on("input", function(){
+		$.ajax({
+			url : "idEmaliChk.do",
+			data : {email : $("#email").val(),
+					id : $("#id").val()},
+			type : "post",
+			async : false,
+			success : function(result){
+				mN = result+"";
+				console.log(mN)
+				eCheck = true;
+			}, error : function(){
+				eCheck = false;
+				console.log("error");
+			}
+	});
+	});
+	
+	/* function validate(){
 			$.ajax({
-				url : "test2.do",
+				url : "idEmaliChk.do",
 				data : {email : $("#email").val(),
 						id : $("#id").val()},
 				type : "post",
 				async : false,
 				success : function(result){
+					mNO = result+"";
 					eCheck = true;
 				}, error : function(){
 					eCheck = false;
 					console.log("error");
 				}
 		});
-	}
+	} */
 	
-	$("#findEmail_btn").on("click", function(){
-		
-
+$("#findEmail_btn").on("click", function(){
 	$.ajax({
 		url : "../sendMail",
 		data : {toEmail : $("#email").val()},
@@ -120,6 +140,7 @@ width : 600px;
 			if(eCheck && result != undefined){
 				swal({icon : "success", title : "이메일이 전송되었습니다.", text : $("#email").val() + " 에서 확인해주세요."});
 				sendKey = result;
+				
 			}else{
 				swal({icon : "error", title : "이메일 전송 실패", text : "이메일을 다시 확인해주세요."});
 			}
@@ -137,13 +158,45 @@ width : 600px;
 		var inputKey = $("#findCNum").val();
 		if(sendKey == inputKey){
 			check = true;
+			numCheck = true;
 			$("#findCNum").css("border", "1px solid #8cb0f7");
 		}else{
 			check = false;
+			numCheck = false;
 			$("#findCNum").css("border", "1px solid red");
 		}
-		request.setAttribute("check", check);
+
 	});
+	
+	
+	// 비밀번호 변경 js
+	function pwdValidate(){
+
+	    var regExp = /^[a-zA-Z\d]{6,12}$/; // 영어 대,소문자 + 숫자, 총 6~12글자
+
+	    if(!regExp.test( $("#newPw1").val() ) ){
+	        swal("비밀번호 형식이 유효하지 않습니다.");
+	        $("#newPw1").focus();
+
+	        return false; 
+	    }
+
+	    // 새로운 비밀번호와 확인이 일치하지 않을 때
+	    if( $("#newPw1").val() != $("#newPw2").val() ){
+	        swal("새로운 비밀번호가 일치하지 않습니다.");
+	        
+	        $("#newPw1").focus(); // 포커스 이동
+	        $("#newPw1").val(""); // newPwd1에 값 지우기 
+	        $("#newPw2").val(""); // newPwd2에 값 지우기 
+
+	        return false;
+	    }
+	}
+	
+	$("#nextBtn").on("click", function(){
+		location.href = "changePw.do?ck="+numCheck + "&mN=" + mN ;
+		
+	}); 
 	</script>
 </body>
 </html>

@@ -476,7 +476,7 @@ public class MypageDAO {
 			bList = new ArrayList<ChallengeCrtfd>();
 			while(rset.next()) {
 				ChallengeCrtfd board = new ChallengeCrtfd(rset.getInt("CHLNG_BRD_NO"),
-						rset.getDate("CHLNG_BRD_CRT_DT"),
+						rset.getTimestamp("CHLNG_BRD_CRT_DT"),
 						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
 						rset.getInt("CHLNG_BRD_VIEWS"), 
 						rset.getInt("CHLNG_NO"),
@@ -570,7 +570,7 @@ public class MypageDAO {
 			acList = new ArrayList<ChallengeCrtfd>();
 			while(rset.next()) {
 				ChallengeCrtfd crtfd = new ChallengeCrtfd(rset.getInt("CHLNG_NO"),
-						rset.getDate("CHLNG_BRD_CRT_DT"),
+						rset.getTimestamp("CHLNG_BRD_CRT_DT"),
 						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
 						rset.getInt("CHLNG_BRD_VIEWS"), 
 						rset.getInt("CHLNG_BRD_NO"),

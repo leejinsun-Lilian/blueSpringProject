@@ -50,6 +50,7 @@ public class MypageController extends HttpServlet {
 		try {
 			// mypage 메인
 			if(command.equals("/main.do")) {
+		
 				String memId = loginMember.getMemberId();
 				List<Board> bList =  mService.selectMainBoard(memId);
 				List<Comment> cList = mService.selectMainComment(memId);

@@ -16,6 +16,10 @@
 	padding : 105px 0 298px;
 }
 
+.input_area {
+margin-left : 40px;
+}
+
 </style>
 </head>
 <body>
