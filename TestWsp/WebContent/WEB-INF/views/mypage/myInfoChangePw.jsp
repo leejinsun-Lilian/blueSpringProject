@@ -34,6 +34,10 @@
 .back{
 	width : 600px;
 }
+
+.text_area >  h3 {
+	 width: 600px;
+}
 </style>
 </head>
 <body>

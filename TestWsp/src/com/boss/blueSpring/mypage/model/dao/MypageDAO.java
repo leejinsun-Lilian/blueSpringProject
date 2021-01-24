@@ -574,8 +574,8 @@ public class MypageDAO {
 						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
 						rset.getInt("CHLNG_BRD_VIEWS"), 
 						rset.getInt("CHLNG_BRD_NO"),
-						rset.getString("CHLNG_BRD_TITLE"), 
 						rset.getString("MEM_ID"), 
+						rset.getString("CHLNG_BRD_TITLE"), 
 						rset.getString("CHLNG_CATE_NM"));
 				acList.add(crtfd);
 			}
@@ -651,6 +651,37 @@ public class MypageDAO {
 			close(pstmt);
 		}
 		return thumbnail;
+	}
+
+	/** 현재 참여중인 챌린지 달성률 DAO
+	 * @param conn
+	 * @param memNo
+	 * @param challengeNo
+	 * @return result 
+	 * @throws Exception
+	 */
+	public int progressBar(Connection conn, int memNo, int challengeNo) throws Exception{
+		int result = 0;
+		String query = prop.getProperty("progressBar");
+		
+		try {
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, memNo);
+			pstmt.setInt(2, challengeNo);
+			pstmt.setInt(3, challengeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} finally {
+			close(rset);
+			close(pstmt);
+			
+		}
+		return result;
 	}
 
 

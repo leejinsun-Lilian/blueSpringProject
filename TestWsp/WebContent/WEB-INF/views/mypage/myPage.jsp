@@ -21,11 +21,73 @@
 }
 
 #cThumbnail_area  img {
-	width : 100%;
+	width : 190px;
+	height : 200px;
 	
+}
+.area{
+	cursor: pointer;
+}
+
+#cTitle{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 210px;
+    margin : auto;
 }
 
 
+.progress_area {
+margin : auto;}
+
+.progress {
+	background-color: #d8d8d8;
+	border-radius: 20px;
+	position: relative;
+	margin : auto;
+	height: 30px;
+	width: 260px;
+	
+}
+
+.progress-done {
+	background: linear-gradient(to left, #F2709C, #FF9472);
+	box-shadow: 0 3px 3px -5px #F2709C, 0 2px 5px #F2709C;
+	border-radius: 20px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 0;
+	opacity: 0;
+	transition: 1s ease 0.3s;
+}
+
+.myInfo_area {
+	cursor: auto;
+}
+
+.myInfo_area button {
+	cursor : pointer;
+ }
+ 
+ .chanllenge_in_progress_area > .back {
+ 	min-height: 207pxpx;
+ }
+ 
+#chanllenge_table {
+ 	margin : auto;
+ }
+ 
+ .area > h3 {
+ 	margin-top : 20px;
+ }
+ 
+ .list_wrapper {
+ margin-top : 13px;
+ }
 
 </style>
 </head>
@@ -117,14 +179,19 @@
 					<h3>참여중인 챌린지</h3>
 					<div class="back">
 						<table id="chanllenge_table">
-			
-							<tr>
+						<c:choose>
+							<c:when test="${empty nc}">
+								<tr>
+									<td style="padding-top:80px;">
+										참여중인 챌린지가 없습니다.
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+							
+							<tr id="b-${nc.chlngNo}">
 								<td rowspan="2">
 									<!-- 챌린지 썸네일  -->
-
-
-
-
 									<div id="cThumbnail_area">
 										<c:set var="img"
 											value="${contextPath}/resources/img/basicImg.JPG" />
@@ -142,36 +209,31 @@
 								<td class="cTitle_td">
 									<h4 id="cTitle">${nc.chlngTitle}</h4>
 								</td>
-								<!-- 인증게시글 -->
-								<td rowspan="4" id="cboard">
-									<h5>인증게시글</h5>
-									<table id="certification_board">
-										<tr>
-											<th scope="row" class="boardNo">1</th>
-											<td colspan="3"><a href="#">오늘의 인증샷</a>
-										</tr>
-										<tr>
-											<th scope="row" class="boardNo">2</th>
-											<td colspan="3"><a href="#">오늘은 3L를 마셨어요.</a>
-										</tr>
-						
-									</table>
-								</td>
-							</tr>
-
+								
+								
 							<!-- 챌린지 달성률  -->
-							<tr>
-								<td class="progress">
+							<!-- <tr>-->
+								<td class="progress_area">
 									<h5>달성률</h5>
-									<div class="progress_area">
-										<div class="progress2 progress-moved">
-											<div class="progress-bar2"></div>
+								<div class="progress">
+									<div class="progress-done" id="progressV" data-done="50">
+												
 										</div>
 									</div>
 								</td>
 								<td></td>
 								<td></td>
 							</tr>
+							
+							
+							
+								<!-- 인증게시글 -->
+							<tr colspan="3" id="cboard">
+									<td colspan="3" style="padding-left:40px;">${nc.chlngContent}</td>
+							</tr>
+							</c:otherwise>
+						</c:choose>
+							
 						</table>
 					</div>
 				</div>
@@ -185,7 +247,9 @@
 							<table id="board_list">
 								<c:choose>
 									<c:when test="${empty bList}">
+									<tr  class="none">
 										<td colspan="3">작성한 게시글이 없습니다.</td>
+										</tr>
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="board" items="${bList}">
@@ -216,11 +280,11 @@
 										<c:set var="idx" value="0"/>
 										<c:forEach var="comment" items="${cList}">
 											<tr id="b-${comment.parentBoardNo}">
-												<th scope="row">${idx += 1}</th>
+												<th scope="row">${idx = idx+ 1}</th>
 												<td  colspan="3" width="65">
 													<c:set var="content" value="${comment.comContent}"/>
 													<c:if test="${fn:indexOf(content, '<br>') != -1}" >
-														<c:set var="content" value ="${fn:split(content,'<br>')[0] }"/>
+														<c:set var="content" value ="${fn:split(content,'<br>')[0]}"/>
 													</c:if>
 													${content}
 												</td>
@@ -246,7 +310,7 @@
 									<c:otherwise>
 										<c:forEach var="ac" items="${acList}">
 											<tr id="b-${ac.chlngBoardNo}">
-												<th scope="row">${ac.chlngCateNm}</th>
+												<th scope="row">[${ac.chlngCateNm}]</th>
 												<td  colspan="3" width="65">${ac.chlngBoardTitle}</td>
 											</tr>
 										</c:forEach>
@@ -267,11 +331,39 @@
 	
 	
 	<script>
+
+
+	var memNo = ${loginMember.memberNo};
+	var challengeNo =${nc.chlngNo};
+
+	
+ 	$(document).ready(function(){
+		$.ajax({
+			url : "progressBar.do",
+			data : {"challengeNo" : challengeNo,
+					"memNo" : memNo},
+			type : "post",
+			success : function(result){
+				if(result < 10 ){
+					$("#progressV").attr("data-done", result);
+				} else {
+					$("#progressV").attr("data-done", result).text(result + '%')
+				}
+				const progress = document.querySelector('.progress-done');
+
+				progress.style.width = progress.getAttribute('data-done') + '%';
+				progress.style.opacity = 1;
+			}
+			
+		}) 
+	}); 
+ 
+	
+	
 		// 자유 게시판 상세 조회
 		$("#board_list tr > *").on("click", function(){
 			var id = $(this).parent().attr("id");
 			var boardNo = id.substring(id.lastIndexOf("-") + 1);
-			
 			location.href = "../board/view.do?cp=1&no="+boardNo;
 		});
 		
@@ -290,7 +382,18 @@
 			
 			location.href = "challengeCrtfd/view.do?cp=1&no="+challengeCrtfdNo;
 		});
+		
+		
+		$(".chanllenge_in_progress_area tr > *").on("click", function(){
+			var id = $(this).parent().attr("id");
+			var challengeCrtfdNo = id.substring(id.lastIndexOf("-") + 1);
+			
+			location.href = "../challenge/view.do?cp=1&no="+challengeCrtfdNo;
+		});
 	
+		
+		
+
 	</script>
 
 </body>

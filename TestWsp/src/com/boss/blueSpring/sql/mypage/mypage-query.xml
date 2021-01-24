@@ -71,17 +71,28 @@ AND MEM_ID = ?
 </entry>
 
 <entry key="getMyChallengeCount">
-SELECT COUNT(*) FROM V_CHLNG_MISSION_LIST
-WHERE CHLNG_FL = 'N'
-AND MEM_ID = ?
+SELECT COUNT(*) FROM
+    (SELECT ROWNUM RNUM, V.*  FROM
+        (SELECT * FROM CHELLENGE_MEMBER_INFO
+        JOIN V_CHLNG_MISSION_LIST USING(CHLNG_NO)
+        WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER 
+                        WHERE MEM_SCSN_FL = 'N'
+                        AND MEM_ID = ?)
+    ORDER BY  CHLNG_NO DESC) V )
 </entry>
 
 <entry key="selectChallengeList">
-SELECT* FROM
-(SELECT ROWNUM RNUM, V.*  FROM
-(SELECT * FROM V_CHLNG_MISSION_LIST WHERE CHLNG_FL = 'N' AND MEM_ID = ?
-ORDER BY  CHLNG_NO DESC) V )
-WHERE RNUM BETWEEN ? AND ?
+SELECT * FROM
+    (SELECT ROWNUM RNUM, V.*  FROM
+        (SELECT C.CHLNG_NO, M.MEM_NO, VCML.MEM_ID, M.MEM_NICKNAME, 
+                CHLNG_TITLE, CHLNG_CONTENT, STR_DT, END_DT,
+                CHLNG_CATE_NO, CHLNG_CATE_NM, CHLNG_FL, LIKE_COUNT
+            FROM CHELLENGE_MEMBER_INFO C 
+            JOIN MEMBER M ON(C.MEM_NO = M.MEM_NO)
+            JOIN V_CHLNG_MISSION_LIST VCML ON(C.CHLNG_NO = VCML.CHLNG_NO)
+            WHERE VCML.CHLNG_FL = 'N' AND VCML.MEM_ID = ?
+            ORDER BY VCML.CHLNG_NO DESC) V )
+    WHERE RNUM BETWEEN ? AND ?
 </entry>
 
 <entry key="selectThumbnailList">
@@ -146,9 +157,15 @@ WHERE RNUM BETWEEN 1 AND 5
 
 
 <entry key="nowChallenge">
-SELECT ROWNUM RNUM, V.* FROM V_CHLNG_MISSION_LIST V
-WHERE CHLNG_FL = 'N'
-AND MEM_ID = ? AND ROWNUM = 1
+SELECT* FROM
+    (SELECT ROWNUM RNUM, V.*  FROM
+        (SELECT * FROM CHELLENGE_MEMBER_INFO
+        JOIN V_CHLNG_MISSION_LIST USING(CHLNG_NO)
+        WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER 
+                        WHERE MEM_SCSN_FL = 'N'
+                        AND MEM_ID = ?)
+    ORDER BY  CHLNG_NO DESC) V )
+    WHERE RNUM = 1
 </entry>
 
 <entry key="nowThumbnail">
@@ -163,5 +180,15 @@ WHERE CHLNG_NO
     WHERE RNUM = 1)
 AND FILE_LEVEL = 0
 </entry>
+
+
+<entry key="progressBar">
+SELECT CEIL((SELECT COUNT(*) FROM V_CHALLENGERS 
+WHERE MEM_NO = ? AND CHLNG_NO = ?) / (END_DT - STR_DT) * 100 ) 
+FROM CHALLENGE_MISSION WHERE CHLNG_NO = ?
+</entry>
+
+
+
 
 </properties>

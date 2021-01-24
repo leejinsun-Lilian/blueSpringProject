@@ -16,10 +16,17 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
-.page-no-area{
+
+
+#cTable > *{
+cursor: pointer;
+}
+
+/* 페이지 번호 목록 */
+ .page-no-area{
    width: 100%;
-   height: 60px;
-   margin-top : 20px;
+   height: 45px;
+   margin-top : 43px;
 }
 
 .page-no-area ul{  /* 중앙에 두는 방법 */
@@ -29,7 +36,6 @@
     text-align: center;
 }
 .page-no-area ul li{
-    border : 1px solid gray;
    width : 7%;
    height : 100%;
     display: inline-block;
@@ -41,14 +47,22 @@
    width : 100%;
    height : 100%;
     text-decoration: none;
-    font-size: 30px;
-    color: #3498db;
+    font-size: 20px;
+    color: black;
     line-height: 50px;
     display: block;
 }
 .page-no-area  a:hover{
    color : #283e69;
-   background-color : #dee2e6; 
+   border-bottom: 1px solid rgb(249 155 67);
+   transition : .35s ease color;
+}
+
+.page-no-area a:before{
+ transition: .35s ease left;}
+ 
+ #cTable{
+margin : auto;
 }
 </style>
 </head>
@@ -69,11 +83,13 @@
 						</c:when>
 				
 						<c:otherwise> 
+							
 							<c:forEach var="challenge" items="${list}" varStatus="vs">
 								<c:if test="${vs.index == 0  || vs.index == 3 }">
-									<tr>
+									<tr id="b-${challenge.chlngNo}">
 								</c:if>
 								<td>
+							
 									<div class="cThumbnail_area">
 									
 									<c:set var="img" value="${contextPath}/resources/img/basicImg.JPG"/>
@@ -99,9 +115,9 @@
 										 <fmt:formatDate var="chlngEndDt" value="${challenge.chlngEndDt}" pattern="yyyy-MM-dd"/>
 										<span class="period">${chlngStartDt} - ${chlngEndDt}</span>
 									</div>
-									<div class="check_area">
+								<%-- 	<div class="check_area">
 										<img class="checkImg" src="${contextPath}/resources/img/challenge_check.png">
-									</div>
+									</div> --%>
 								</td> 
 						
 							<c:if test="${vs.index == 2  || vs.last }">
@@ -130,9 +146,6 @@
 				
 		<div class="page-no-area">
 			<ul>
-			
-			
-			
 				<c:if test="${pInfo.currentPage > 10}">
 					<li><a href="${firstPage}">&lt;&lt;</a></li>
 					<li><a href="${prevPage}">&lt;</a></li>
@@ -168,5 +181,17 @@
 		
 		<jsp:include page="../common/footer.jsp"></jsp:include>
 	</div>
+	
+	 <script>
+			$("#cTable tr > *").on("click", function(){
+				var id = $(this).parent().attr("id");
+				var challengeNo = id.substring(id.lastIndexOf("-") + 1);
+				
+				location.href = "../challenge/view.do?cp=1&no="+challengeNo;
+			});
+			
+			
+			
+    </script>
 </body>
 </html>

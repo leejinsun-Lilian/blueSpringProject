@@ -36,6 +36,10 @@
 }
 
 .findForm{width:410px;}
+
+.text_area{
+ width :  400px;
+}
 </style>
 </head>
 <body>

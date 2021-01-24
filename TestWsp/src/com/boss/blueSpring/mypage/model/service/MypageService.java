@@ -192,7 +192,7 @@ public class MypageService {
 		 sort = sort == null ? "" : sort;
 		
 
-		List<Challenge> list = dao.selectChallengeList(conn, pInfo, memId);   //, end
+		List<Challenge> list = dao.selectChallengeList(conn, pInfo, memId);  
 		
 		close(conn);
 		return list;
@@ -300,6 +300,19 @@ public class MypageService {
 		Attachment thumbnail = dao.nowThumbnail(conn, memId);
 		close(conn);
 		return thumbnail;
+	}
+
+	/** 참여중인 챌린지 달성률
+	 * @param memNo
+	 * @param challengeNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int progressBar(int memNo, int challengeNo) throws Exception{
+		Connection conn = getConnection();
+		int result = dao.progressBar(conn, memNo, challengeNo);
+		close(conn);
+		return result;
 	}
 
 
