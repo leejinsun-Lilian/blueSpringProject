@@ -45,7 +45,7 @@
 									<c:otherwise>
 										<c:forEach var="notice" items="${nList}">
 											<tr>
-												<th scope="row" width="65">${notice.noticeNo}</th>
+												<th scope="row" width="75">${notice.noticeNo}</th>
 												<td colspan="3">${notice.noticeTitle}</td>
 											</tr>
 										</c:forEach>
@@ -73,7 +73,7 @@
 									<c:otherwise>
 										<c:forEach var="board" items="${bList}">
 											<tr id="b-${board.boardNo}">
-												<th scope="row" width="65">[${board.categoryName}]</th>
+												<th scope="row" width="75">[${board.categoryName}]</th>
 												<td colspan="3">${board.boardTitle}</td>
 											</tr>
 										</c:forEach>
@@ -101,7 +101,7 @@
 									<c:otherwise>
 										<c:forEach var="challenge" items="${cList}">
 											<tr id="b-${challenge.chlngNo}">
-												<th scope="row" width="65">[${challenge.chlngCateNm}]</th>
+												<th scope="row" width="75">[${challenge.chlngCateNm}]</th>
 												<td colspan="3">${challenge.chlngTitle}</td>
 											</tr>
 										</c:forEach>
@@ -129,7 +129,7 @@
 									<c:otherwise>
 										<c:forEach var="challengeCrtfd" items="${crtList}">
 											<tr id="b-${challengeCrtfd.chlngBoardNo}">
-												<th scope="row" width="65">[${challengeCrtfd.chlngCateNm}]</th>
+												<th scope="row" width="75">[${challengeCrtfd.chlngCateNm}]</th>
 												<td colspan="3">${challengeCrtfd.chlngBoardTitle}</td>
 											</tr>
 										</c:forEach>
