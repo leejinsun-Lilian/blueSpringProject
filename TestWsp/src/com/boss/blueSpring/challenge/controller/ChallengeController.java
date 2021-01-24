@@ -203,18 +203,18 @@ public class ChallengeController extends HttpServlet {
 				//System.out.println("result : " + result);
 				
 				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
-					//swalIcon = "success";
-					//swalTitle = "챌린지 등록 성공";
+					swalIcon = "success";
+					swalTitle = "챌린지 등록 성공";
 					path = "view.do?cp=1&no=" + result;
 				}
 					else {
-//					swalIcon = "error";
-//					swalTitle = "챌린지 등록 실패";
+					swalIcon = "error";
+					swalTitle = "챌린지 등록 실패";
 					path = "list.do";
 				}
-//				request.getSession().setAttribute("swalIcon", swalIcon);
-//				request.getSession().setAttribute("swalTitle", swalTitle);
-				System.out.println("path : " + path);
+
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
 				
 				response.sendRedirect(path);
 			}
@@ -248,7 +248,7 @@ public class ChallengeController extends HttpServlet {
 				}
 			}
 			
-			// 챌린지 수정
+			// 챌린지 수정 ******************************************************
 			else if(command.equals("/update.do")) {
 				errorMsg = "챌린지 수정 과정에서 오류 발생";
 				
@@ -322,9 +322,9 @@ public class ChallengeController extends HttpServlet {
 					swalIcon = "error";
 					swalTitle = "챌린지 수정 실패";
 					path = "list.do";
-		}
-	//			request.getSession().setAttribute("swalIcon", swalIcon);
-	//			request.getSession().setAttribute("swalTitle", swalTitle);
+					}
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
 	//			System.out.println("path : " + path);
 				
 				response.sendRedirect(path);
@@ -342,10 +342,17 @@ public class ChallengeController extends HttpServlet {
 				int result = service.updateChFl(chlngNo);
 				
 				if(result > 0) {
+					swalIcon = "success";
+					swalTitle = "챌린지 삭제 성공";
 					path = "list.do";
 				}else {
+					swalIcon = "error";
+					swalTitle = "챌린지 삭제 실패";
 					path = request.getHeader("referer");
 				}
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
+				
 				response.sendRedirect(path);
 			}
 				

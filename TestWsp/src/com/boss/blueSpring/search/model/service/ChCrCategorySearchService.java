@@ -59,7 +59,7 @@ public class ChCrCategorySearchService {
 		 String orderBy = null;
 		 //String end = null;
 		 
-		if(sort.equals("views")) {
+		if(sort.equals("view")) {
 			orderBy = " CHLNG_BRD_VIEWS DESC, ";
 		}else {
 			orderBy = "";

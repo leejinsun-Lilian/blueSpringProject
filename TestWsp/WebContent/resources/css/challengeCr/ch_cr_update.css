@@ -2,10 +2,10 @@
 
 .wrapper{
     width: 70%;
-    height: 1000px;
-
+    max-height: 1100px;
+	min-height: 900px;
     /* 해당 요소를 가로 가운데 정렬 */
-    margin : auto
+    margin : auto;
 }
 .wrapper > h2{
 	padding-left: 20px;
