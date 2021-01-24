@@ -166,12 +166,12 @@ public class MypageService {
 	 * @return pInfo
 	 * @throws Exception
 	 */
-	public PageInfo getMyChallengeCount(String cp, String memId) throws Exception{
+	public PageInfo getMyChallengeCount(String cp, int memNo) throws Exception{
 		Connection conn = getConnection();
 		
 		int currentPage = cp == null ? 1 : Integer.parseInt(cp);
 
-		int listCount = dao.getMyChallengeCount(conn, memId);
+		int listCount = dao.getMyChallengeCount(conn, memNo);
 		
 		close(conn);
 	
@@ -186,13 +186,13 @@ public class MypageService {
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Challenge> selectChallengeList(PageInfo pInfo, String sort, String memId) throws Exception {
+	public List<Challenge> selectChallengeList(PageInfo pInfo, String sort, int memNo) throws Exception {
 		Connection conn = getConnection();
 		
 		 sort = sort == null ? "" : sort;
 		
 
-		List<Challenge> list = dao.selectChallengeList(conn, pInfo, memId);  
+		List<Challenge> list = dao.selectChallengeList(conn, pInfo, memNo);  
 		
 		close(conn);
 		return list;

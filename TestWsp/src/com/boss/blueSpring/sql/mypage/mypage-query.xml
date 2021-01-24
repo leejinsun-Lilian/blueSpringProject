@@ -77,7 +77,7 @@ SELECT COUNT(*) FROM
         JOIN V_CHLNG_MISSION_LIST USING(CHLNG_NO)
         WHERE MEM_NO = (SELECT MEM_NO FROM MEMBER 
                         WHERE MEM_SCSN_FL = 'N'
-                        AND MEM_ID = ?)
+                        AND MEM_NO = ? )
     ORDER BY  CHLNG_NO DESC) V )
 </entry>
 
@@ -90,7 +90,7 @@ SELECT * FROM
             FROM CHELLENGE_MEMBER_INFO C 
             JOIN MEMBER M ON(C.MEM_NO = M.MEM_NO)
             JOIN V_CHLNG_MISSION_LIST VCML ON(C.CHLNG_NO = VCML.CHLNG_NO)
-            WHERE VCML.CHLNG_FL = 'N' AND VCML.MEM_ID = ?
+            WHERE VCML.CHLNG_FL = 'N' AND M.MEM_NO = ?
             ORDER BY VCML.CHLNG_NO DESC) V )
     WHERE RNUM BETWEEN ? AND ?
 </entry>

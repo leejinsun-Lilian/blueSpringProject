@@ -295,18 +295,18 @@ margin : auto;}
 					</div>
 
 
-					<!-- 역대 챌린지 조회 -->
+					<!-- 인증게시판 조회 -->
 					<div class="allTimeChallenges_area area">
-						<h3>역대 챌린지 조회</h3>
+						<h3>인증게시글 조회</h3>
 						<div class="list_area">
 							<table id="allTimeChallenges_list">
 								<c:choose>
 									<c:when test="${empty acList}">
-										<td colspan="3">참여한 챌린지가 없습니다.</td>
+										<td colspan="3">작성한 게시글이 없습니다.</td>
 									</c:when>
 									<c:otherwise>
 										<c:forEach var="ac" items="${acList}">
-											<tr id="b-${ac.chlngBoardNo}">
+											<tr id="b-${ac.CHLNG_BRD_NO}">
 												<th scope="row">[${ac.chlngCateNm}]</th>
 												<td  colspan="3" width="65">${ac.chlngBoardTitle}</td>
 											</tr>
@@ -373,19 +373,19 @@ margin : auto;}
 		
 
 		// 챌린지 인증 게시판 상세 조회
-		$(".challengeCrtfd_table tr > *").on("click", function(){
+		$("#allTimeChallenges_list tr > *").on("click", function(){
 			var id = $(this).parent().attr("id");
 			var challengeCrtfdNo = id.substring(id.lastIndexOf("-") + 1);
 			
-			
+			location.href = "../challengeCrtfd/view.do?cp=1&no=" +challengeCrtfdNo;
 		});
 		
 		
 		$(".chanllenge_in_progress_area tr > *").on("click", function(){
 			var id = $(this).parent().attr("id");
-			var challengeCrtfdNo = id.substring(id.lastIndexOf("-") + 1);
+			var board = id.substring(id.lastIndexOf("-") + 1);
 			
-			location.href = "../challenge/view.do?cp=1&no="+challengeCrtfdNo;
+			location.href = "../challenge/view.do?cp=1&no="+board;
 		});
 	
 		

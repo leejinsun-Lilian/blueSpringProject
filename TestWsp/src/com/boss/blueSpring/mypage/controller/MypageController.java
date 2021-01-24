@@ -264,14 +264,15 @@ public class MypageController extends HttpServlet {
 				String cp = request.getParameter("cp");
 								
 				String sort = request.getParameter("sort");
+				int memNo = loginMember.getMemberNo();
 				String memId = loginMember.getMemberId();
 
-				PageInfo pInfo = mService.getMyChallengeCount(cp, memId);
+				PageInfo pInfo = mService.getMyChallengeCount(cp, memNo);
 
 				pInfo.setLimit(6);
 				
 				
-				List<Challenge> list = mService.selectChallengeList(pInfo, sort, memId);
+				List<Challenge> list = mService.selectChallengeList(pInfo, sort, memNo);
 					
 				if(list != null) {
 					List<Attachment> fList = mService.selectThumbnailList(pInfo);

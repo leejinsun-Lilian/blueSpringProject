@@ -307,14 +307,14 @@ public class MypageDAO {
 	 * @return listCount
 	 * @throws Exception
 	 */
-	public int getMyChallengeCount(Connection conn, String memId) throws Exception{
+	public int getMyChallengeCount(Connection conn, int memNo) throws Exception{
 		int listCount = 0;
 		
 		String query = prop.getProperty("getMyChallengeCount");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memId);
+			pstmt.setInt(1, memNo);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -334,7 +334,7 @@ public class MypageDAO {
 	 * @return list
 	 * @throws Exception
 	 */
-	public List<Challenge> selectChallengeList(Connection conn, PageInfo pInfo, String memId) throws Exception {
+	public List<Challenge> selectChallengeList(Connection conn, PageInfo pInfo, int memNo) throws Exception {
 		List<Challenge> list = null;
 		
 		String query = prop.getProperty("selectChallengeList"); 
@@ -345,7 +345,7 @@ public class MypageDAO {
 						
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, memId);
+			pstmt.setInt(1, memNo);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			
@@ -569,11 +569,12 @@ public class MypageDAO {
 			rset = pstmt.executeQuery();
 			acList = new ArrayList<ChallengeCrtfd>();
 			while(rset.next()) {
-				ChallengeCrtfd crtfd = new ChallengeCrtfd(rset.getInt("CHLNG_NO"),
+				ChallengeCrtfd crtfd = new ChallengeCrtfd(
+						rset.getInt("CHLNG_BRD_NO"),
 						rset.getTimestamp("CHLNG_BRD_CRT_DT"),
 						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
 						rset.getInt("CHLNG_BRD_VIEWS"), 
-						rset.getInt("CHLNG_BRD_NO"),
+						rset.getInt("CHLNG_NO"),
 						rset.getString("MEM_ID"), 
 						rset.getString("CHLNG_BRD_TITLE"), 
 						rset.getString("CHLNG_CATE_NM"));
