@@ -36,6 +36,10 @@ public class ChallengecrtfdController extends HttpServlet {
 		String path = null;
 		RequestDispatcher view = null;
 		
+		String swalIcon = null;
+		String swalTitle = null;
+		String swalText = null;
+		
 		String errorMsg = null;
 		
 		try {
@@ -173,18 +177,19 @@ public class ChallengecrtfdController extends HttpServlet {
 				int result = service.insertChallengeCrtfd(map);
 				
 				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
-					//swalIcon = "success";
-					//swalTitle = "챌린지 인증글 등록 성공";
+					swalIcon = "success";
+					swalTitle = "챌린지 인증글 등록 성공";
 					path = "view.do?cp=1&no=" + result;
 				}
 					else {
-//					swalIcon = "error";
-//					swalTitle = "챌린지 인증글 등록 실패";
+					swalIcon = "error";
+					swalTitle = "챌린지 인증글 등록 실패";
 					path = "list.do";
 				}
 				
-				System.out.println("path : " + path);
-				
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
+								
 				response.sendRedirect(path);
 				
 			}
@@ -283,15 +288,17 @@ public class ChallengecrtfdController extends HttpServlet {
 				
 				
 				if(result > 0) {
-//					swalIcon = "success";
-//					swalTitle = "챌린지 수정 성공";
+					swalIcon = "success";
+					swalTitle = "챌린지 인증글 수정 성공";
 					path = "view.do?cp=" + cp + "&no=" + chlngNo;
 					
 				} else {
-//					swalIcon = "error";
-//					swalTitle = "게시글 수정 실패";
+					swalIcon = "error";
+					swalTitle = "챌린지 인증글 수정 실패";
 					path = "list.do";
 				}
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
 			    
 				response.sendRedirect(path);
 			}
@@ -318,8 +325,12 @@ public class ChallengecrtfdController extends HttpServlet {
 				int result = service.updateChCrFl(chlngBoardNo);
 				
 				if(result > 0) {
+					swalIcon = "success";
+					swalTitle = "챌린지 인증글 삭제 성공";
 					path = "list.do";
 				}else {
+					swalIcon = "error";
+					swalTitle = "챌린지 인증글 삭제 실패";
 					path = request.getHeader("referer");
 				}
 				response.sendRedirect(path);

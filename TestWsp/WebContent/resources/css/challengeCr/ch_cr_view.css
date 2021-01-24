@@ -2,8 +2,8 @@
 
 .wrapper{
     width: 70%;
-    height: 800px;
-
+    max-height: 920px;
+    min-height: 300px;
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto;
 }

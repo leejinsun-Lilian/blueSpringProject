@@ -73,6 +73,8 @@ public class ChCrCategorySearchDAO {
 				+ "WHERE CHLNG_CATE_NM = ? AND CHLNG_BRD_DEL_FL = 'N' "
 				+ "ORDER BY " + orderBy + " CHLNG_BRD_NO DESC) V ) " + 
 				"WHERE RNUM BETWEEN ? AND ? " ;
+		
+			System.out.println(query);
 
 		try {
 			// SQL 구문 조건절에 대입할 변수 생성

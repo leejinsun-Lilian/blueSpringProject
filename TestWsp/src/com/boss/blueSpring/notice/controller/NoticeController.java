@@ -37,6 +37,9 @@ public class NoticeController extends HttpServlet {
 
 		String errorMsg = null;
 
+		String swalIcon = null;
+		String swalTitle = null;
+		String swalText = null;
 		try {
 			NoticeService service = new NoticeService();
 

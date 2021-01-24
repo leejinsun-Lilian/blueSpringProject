@@ -61,6 +61,10 @@
 					</div>
 				</div>
 				
+				<div id="fileArea">
+					<input type="file" id="img0" name="img0" onchange="LoadImg(this,0)">  
+				</div>
+				
 				<!-- 참가 소감 작성 -->
 				<div class="input-top-margin">오늘의 참가 소감 작성</div>
 				<textarea class="form-control" id="chlngCrContent" name="chlngCrContent" rows="20" style="resize: none;">${ChallengeCrtfd.chlngBoardContent}</textarea>
