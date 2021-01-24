@@ -569,7 +569,7 @@ public class MypageDAO {
 			rset = pstmt.executeQuery();
 			acList = new ArrayList<ChallengeCrtfd>();
 			while(rset.next()) {
-				ChallengeCrtfd crtfd = new ChallengeCrtfd(
+				ChallengeCrtfd crtfd = new ChallengeCrtfd( 
 						rset.getInt("CHLNG_BRD_NO"),
 						rset.getTimestamp("CHLNG_BRD_CRT_DT"),
 						rset.getString("CHLNG_BRD_DEL_FL").charAt(0),
