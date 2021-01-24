@@ -6,8 +6,8 @@ div{
 
 .wrapper{
     width: 70%;
-    height: 1800px;
-
+    
+	max-height: 1600px;
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto
 }
@@ -94,7 +94,8 @@ div{
 	margin-top : 10px;
     /* border: 1px solid red;  */
     width: 105%;
-    height: 1270px;
+    max-height: 1150px;
+    min-height: 500px;
 }
 
 /* 하나의 전체 영역 */

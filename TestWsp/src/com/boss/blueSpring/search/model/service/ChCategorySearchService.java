@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 import com.boss.blueSpring.search.model.dao.ChCategorySearchDAO;
@@ -32,6 +33,7 @@ public class ChCategorySearchService {
 		
 		// DB에서 조건을 만족하는 게시글의 수를 조회하기
 		int listCount = dao.getListCount(conn, map);
+		System.out.println(listCount);
 		
 		// 커넥션 반환
 		close(conn);
@@ -69,6 +71,19 @@ public class ChCategorySearchService {
 		close(conn);
 		
 		return cList;
+	}
+
+
+
+	public List<Attachment> selectThumbFiles(PageInfo pInfo) throws Exception{
+	Connection conn = getConnection();
+		
+		List<Attachment> fmList = dao.selectThumbFiles(conn, pInfo);
+		
+		close(conn);
+		
+		return fmList;
+	
 	}
 
 }

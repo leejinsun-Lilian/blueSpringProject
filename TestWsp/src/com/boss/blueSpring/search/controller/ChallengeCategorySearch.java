@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 import com.boss.blueSpring.search.model.service.ChCategorySearchService;
@@ -48,8 +49,18 @@ public class ChallengeCategorySearch extends HttpServlet {
 			
 			
 			PageInfo pInfo = service.getPageInfo(map);
-			
+
 			List<Challenge> list = service.searchChallengeList(map, pInfo);
+			
+			if(list != null) {
+				// 대표 이미지 조회 부분
+				List<Attachment> fmList = service.selectThumbFiles(pInfo);
+				
+				if(!fmList.isEmpty()) {
+					request.setAttribute("fmList", fmList);
+				}
+			
+			}
 			path = "/WEB-INF/views/challenge/challengeList.jsp";
 			
 			request.setAttribute("list", list);

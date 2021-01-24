@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.boss.blueSpring.challenge.model.vo.Attachment;
 import com.boss.blueSpring.challenge.model.vo.Challenge;
 import com.boss.blueSpring.challenge.model.vo.PageInfo;
 
@@ -105,6 +106,55 @@ public class ChSearchDAO {
 		return list;
 	}
 
+
+	
+	public List<Attachment> selectThumbFiles(Connection conn, PageInfo pInfo) throws Exception {
+		List<Attachment> fmList = null;
+		
+		String query = "SELECT * " + 
+				"FROM CHALLENGE_MISSION_IMG " + 
+				"WHERE CHLNG_NO" + 
+				"    IN (SELECT CHLNG_NO FROM" + 
+				"            (SELECT ROWNUM RNUM, V.* FROM" + 
+				"                ( SELECT CHLNG_NO FROM V_CHLNG_MISSION_LIST" + 
+				"                WHERE CHLNG_FL = 'N'" + 
+				"                ORDER BY CHLNG_NO DESC) V)" + 
+				"    WHERE RNUM BETWEEN ? AND ?) " + 
+				"AND FILE_LEVEL = 0";
+		
+		try {
+			// 위치홀더에 들어갈 시작행, 끝 행번호 계산
+			int startRow = (pInfo.getCurrentPage()-1) * pInfo.getLimit() + 1;    // 1행부터 시작
+			int endRow = startRow + pInfo.getLimit() -1;
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			fmList = new ArrayList<Attachment>();
+			
+			while(rset.next()) {
+				
+				Attachment at = new Attachment();
+				at.setParentChNo(rset.getInt("CHLNG_NO"));
+				at.setFileName(rset.getString("C_FILE_NAME"));
+				
+				
+				fmList.add(at);
+			}
+		
+			
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return fmList;
+	}
 	
 	
 	

@@ -162,18 +162,18 @@ public class NoticeController extends HttpServlet {
 				int result = service.insertNotice(map);
 				
 				if(result > 0) { // DB 삽입 성공 시 result에는 삽입한 글 번호가 저장되어있다.
-					//swalIcon = "success";
-					//swalTitle = "게시글 등록 성공";
+					swalIcon = "success";
+					swalTitle = "공지글 등록 성공";
 					path = "view.do?cp=1&no=" + result;
 				}
 					else {
-//					swalIcon = "error";
-//					swalTitle = "게시글 등록 실패";
+					swalIcon = "error";
+					swalTitle = "공지글 등록 실패";
 					path = "list.do"; //게시글 목록
 				}
 //
-//				request.getSession().setAttribute("swalIcon", swalIcon);
-//				request.getSession().setAttribute("swalTitle", swalTitle);
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
 				response.sendRedirect(path);
 			}
 			
@@ -290,14 +290,16 @@ public class NoticeController extends HttpServlet {
 					if(sk != null && sv != null) {
 						path += "&sk=" + sk + "&sv=" + sv;
 					}
+					swalIcon = "success";
+					swalTitle = "공지사항 수정 성공";
 					
 				} else {
-//					swalIcon = "error";
-//					swalTitle = "게시글 수정 실패";
+					swalIcon = "error";
+					swalTitle = "공지사항 수정 실패";
 				}
 				
-//				request.getSession().setAttribute("swalIcon", swalIcon);
-//				request.getSession().setAttribute("swalTitle", swalTitle);
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
 				
 				response.sendRedirect(path);
 				
@@ -319,17 +321,17 @@ public class NoticeController extends HttpServlet {
 				// 삭제 성공 시 : 게시글 목록 redirect
 				// 삭제 실패 시 : 삭제 시도한 게시글 상세조회 페이지
 				if(result > 0) {
-//					swalIcon = "success";
-//					swalTitle = "게시글 삭제 성공";
+					swalIcon = "success";
+					swalTitle = "공지글 삭제 성공";
 					path = "list.do";
 				}else {
-//					swalIcon = "error";
-//					swalTitle = "게시글 삭제 실패";
+					swalIcon = "error";
+					swalTitle = "공지글 삭제 실패";
 					path = request.getHeader("referer"); // 삭제전의 상세조회 페이지
 				}
 				
-//				request.getSession().setAttribute("swalIcon", swalIcon);
-//				request.getSession().setAttribute("swalTitle", swalTitle);
+				request.getSession().setAttribute("swalIcon", swalIcon);
+				request.getSession().setAttribute("swalTitle", swalTitle);
 				response.sendRedirect(path);
 				
 			}
