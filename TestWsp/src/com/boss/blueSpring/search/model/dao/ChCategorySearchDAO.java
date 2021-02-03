@@ -72,7 +72,7 @@ public class ChCategorySearchDAO {
 				"(SELECT  ROWNUM RNUM, V.* "+
 				"FROM " +
 				"    (SELECT * FROM V_CHLNG_MISSION_LIST "
-				+ "WHERE CHLNG_CATE_NM = ? AND CHLNG_FL = 'N' "
+				+ "WHERE CHLNG_CATE_NM = ?  AND CHLNG_FL = 'N' "
 				+ "ORDER BY " + orderBy + " CHLNG_NO DESC) V ) " + 
 				"WHERE RNUM BETWEEN ? AND ? " ;
 
@@ -113,7 +113,7 @@ public class ChCategorySearchDAO {
 
 
 
-	public List<Attachment> selectThumbFiles(Connection conn, PageInfo pInfo) throws Exception {
+	public List<Attachment> selectThumbFiles(Connection conn, String chlngCategoryNm, PageInfo pInfo) throws Exception {
 		List<Attachment> fmList = null;
 		
 		String query = "SELECT * " + 
@@ -122,7 +122,7 @@ public class ChCategorySearchDAO {
 				"    IN (SELECT CHLNG_NO FROM" + 
 				"            (SELECT ROWNUM RNUM, V.* FROM" + 
 				"                ( SELECT CHLNG_NO FROM V_CHLNG_MISSION_LIST" + 
-				"                WHERE CHLNG_FL = 'N'" + 
+				"                WHERE CHLNG_FL = 'N' AND CHLNG_CATE_NM = ?" + 
 				"                ORDER BY CHLNG_NO DESC) V)" + 
 				"    WHERE RNUM BETWEEN ? AND ?) " + 
 				"AND FILE_LEVEL = 0";
@@ -134,8 +134,9 @@ public class ChCategorySearchDAO {
 			
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, chlngCategoryNm);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			

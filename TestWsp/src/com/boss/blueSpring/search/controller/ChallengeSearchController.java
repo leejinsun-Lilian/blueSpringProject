@@ -55,7 +55,6 @@ public class ChallengeSearchController extends HttpServlet {
 			
 			}
 			
-			
 			// 조회된 내용과 PageInfo 객체를 request 객체에 담아서 요청 위임
 			String path = "/WEB-INF/views/challenge/challengeList.jsp";			
 			

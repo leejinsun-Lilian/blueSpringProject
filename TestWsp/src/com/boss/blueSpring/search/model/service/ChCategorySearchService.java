@@ -75,10 +75,10 @@ public class ChCategorySearchService {
 
 
 
-	public List<Attachment> selectThumbFiles(PageInfo pInfo) throws Exception{
+	public List<Attachment> selectThumbFiles(String chlngCategoryNm, PageInfo pInfo) throws Exception{
 	Connection conn = getConnection();
 		
-		List<Attachment> fmList = dao.selectThumbFiles(conn, pInfo);
+		List<Attachment> fmList = dao.selectThumbFiles(conn, chlngCategoryNm, pInfo);
 		
 		close(conn);
 		

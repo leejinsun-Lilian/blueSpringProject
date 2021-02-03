@@ -71,7 +71,6 @@ public class ChallengeController extends HttpServlet {
 				
 				}
 				
-				
 				path="/WEB-INF/views/challenge/challengeList.jsp";
 				request.setAttribute("list", list);
 				request.setAttribute("pInfo", pInfo);
