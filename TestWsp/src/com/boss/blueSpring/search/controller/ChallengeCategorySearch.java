@@ -46,7 +46,7 @@ public class ChallengeCategorySearch extends HttpServlet {
 			map.put("searchKey", searchKey);
 			map.put("currentPage", cp);		
 			map.put("sort", sort);		
-			
+			System.out.println(map);
 			
 			PageInfo pInfo = service.getPageInfo(map);
 
@@ -54,13 +54,21 @@ public class ChallengeCategorySearch extends HttpServlet {
 			
 			if(list != null) {
 				// 대표 이미지 조회 부분
-				List<Attachment> fmList = service.selectThumbFiles(pInfo);
+				List<Attachment> fmList = service.selectThumbFiles(chlngCategoryNm, pInfo);
 				
 				if(!fmList.isEmpty()) {
 					request.setAttribute("fmList", fmList);
 				}
-			
+
+				for(Attachment at : fmList) {
+					System.out.print(at.getParentChNo() + "  ");
+				}
+				System.out.println();
 			}
+			for(Challenge ch : list) {
+				System.out.print(ch.getChlngNo() + "  ");
+			}
+			
 			path = "/WEB-INF/views/challenge/challengeList.jsp";
 			
 			request.setAttribute("list", list);
