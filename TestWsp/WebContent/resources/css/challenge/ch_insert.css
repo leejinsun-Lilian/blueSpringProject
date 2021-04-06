@@ -24,6 +24,7 @@
 
 .title-input{
 	margin-top: 17px;
+	margin-left : 15px;
 	width: 80%;
 	height : 25px;
 	border-radius: 3px;
@@ -54,11 +55,11 @@
 }
 
 .title-img{
-	padding-top : 10%;
-	margin-right: 20px;
+	padding-top : 7%;
+	margin-right: 45px;
 }
 .t-img{
-	padding-top : 6%;
+	padding-top : 4%;
 	margin-right: 58px;
 }
 .ch-board-Img{
