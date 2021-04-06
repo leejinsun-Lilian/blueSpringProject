@@ -25,7 +25,7 @@
                 <ul>
                 <!-- 로그인한 회원만 챌린지 등록, 인증글 작성 가능    -- 나중에 눌렀을 때 로그인된 회원이 아니면 로그인 창으로 이동 -->
                 <c:if test="${!empty loginMember}">
-                    <li><a href="${contextPath}/challenge/insertForm.do" >챌린지 <strong>개설</strong>하러 가기 -></a></li>
+                    <li><a href="${contextPath}/challenge/insertForm.do" >챌린지 <strong>개설</strong>하러 가기 -></a></li><br>
                     <li><a href="${contextPath}/challengeCrtfd/list.do">챌린지 <strong>인증 게시판</strong> 가기 -></a></li>
                 </c:if>
                 </ul>
@@ -68,7 +68,7 @@
 
 		<c:choose>
 			<c:when test="${empty list}">
-			없을때
+			<!-- 없을 때 -->
 			
 			</c:when>
 			

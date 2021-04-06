@@ -29,15 +29,20 @@
 				<input type="text" class="title-input" id="noticeTitle" name="noticeTitle" placeholder="공지글 제목을 입력해주세요.">
 			
 				<!-- 이미지 파일 업로드 -->
-				<div class="form-line">
-					<label class="title-img">대표 이미지 </label>
+				<!-- <div class="form-line">
+					 <label class="title-img">대표 이미지 </label>
 					<div class="ch-board-Img noticeImg" id="titleImgArea">
 						<img id="titleImg" width="200" height="200">
-					</div>
-				</div>
+					</div> 
+				</div> -->
 				
 				<div class="form-line-sb">
 					<label class="t-img">업로드<br>이미지</label>
+					
+					<div class="ch-board-Img noticeImg" id="titleImgArea">
+						<img id="titleImg" width="150" height="150">
+					</div>
+					
 					<div class="ch-board-Img noticeImg" id="contentImgArea1">
 						<img id="contentImg1" width="150" height="150">
 					</div>

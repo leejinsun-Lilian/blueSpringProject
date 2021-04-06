@@ -6,8 +6,9 @@ div{
 
 .wrapper{
     width: 70%;
-    
-	max-height: 1600px;
+    min-height: 650px;
+	max-height: 2000px;
+	
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto
 }
@@ -70,7 +71,7 @@ div{
 .cat a, .cat-2 a{
     text-decoration: none;
     color: black;
-    font-size: 17px;
+    font-size: 19px;
     text-align: center;
 
     padding-top: 11px;
@@ -94,8 +95,7 @@ div{
 	margin-top : 10px;
     /* border: 1px solid red;  */
     width: 105%;
-    max-height: 1150px;
-    min-height: 500px;
+    height: 1550px;
 }
 
 /* 하나의 전체 영역 */
@@ -110,11 +110,11 @@ div{
 .ch-img{
    /*  border: 1px solid black; */
     width: 100%;
-    height: 280px;
+    height: 400px;
 }
 .ch-img > img{
 	width : 100%;
-	/* height : 100%; */
+	height: 400px;
     /* display: inline-block; */
 } 
 

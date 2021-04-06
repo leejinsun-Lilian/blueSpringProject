@@ -2,7 +2,7 @@
 
 .wrapper{
     width: 70%;
-    height: 1000px;
+    height: 700px;
 
     /* 해당 요소를 가로 가운데 정렬 */
     margin : auto
@@ -15,10 +15,13 @@
 }
 .title-input{
 	margin-top: 17px;
+	margin-bottom: 20px;
 	width: 80%;
 	height : 25px;
 	border-radius: 3px;
 	border:1px solid #d4d6d4fa;
+	
+	
 }
 .input{
 	width: 95%;
@@ -36,6 +39,7 @@
 	margin-top: 30px;
 }
 .form-line-sb{
+
 	width : 100%;
 	height : 170px;
 	display: flex;
@@ -46,7 +50,7 @@
 	margin-right: 20px;
 }
 .t-img{
-	padding-top : 6%;
+	padding-top : 3.5%;
 	margin-right: 58px;
 }
 .ch-board-Img{
